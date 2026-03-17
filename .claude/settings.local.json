@@ -18,7 +18,8 @@
       "Bash(cd D:/activeplay-store && npx next build 2>&1 | tail -15)",
       "Bash(cd D:/activeplay-store && npx next build 2>&1 | tail -12)",
       "Bash(cd D:/activeplay-store && npx next build 2>&1)",
-      "Bash(npx next:*)"
+      "Bash(npx next:*)",
+      "Bash(cd D:/activeplay-store && npm ls lucide-react 2>&1 | head -5)"
     ]
   }
 }

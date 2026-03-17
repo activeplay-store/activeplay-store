@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Rajdhani, Inter } from 'next/font/google';
 import './globals.css';
+import ChatWidget from '@/components/ChatWidget';
 
 const rajdhani = Rajdhani({
   subsets: ['latin', 'latin-ext'],
@@ -128,6 +129,7 @@ export default function RootLayout({
           <div className="atmosphere-blob atmosphere-blob--purple" />
         </div>
         {children}
+        <ChatWidget />
       </body>
     </html>
   );
