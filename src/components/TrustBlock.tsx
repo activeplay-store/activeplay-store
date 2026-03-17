@@ -3,50 +3,32 @@
 import { useRef } from 'react';
 import { reviews } from '@/data/reviews';
 
-const guarantees = [
-  {
-    icon: (
-      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
-      </svg>
-    ),
-    title: 'Гарантия возврата',
-    text: 'Если подписка не активировалась, вернём деньги за 24 часа',
-  },
-  {
-    icon: (
-      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-    ),
-    title: 'Оформление за 5 минут',
-    text: 'Средняя скорость обработки заказа нашим менеджером',
-  },
-  {
-    icon: (
-      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
-      </svg>
-    ),
-    title: 'Безопасная оплата',
-    text: 'СБП, Сбер, Тинькофф, Альфа-Банк — проверенные методы',
-  },
-];
+// Telegram icon
+const TelegramIcon = () => (
+  <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+    <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+  </svg>
+);
 
-const paymentMethods = ['СБП', 'Сбер', 'Тинькофф', 'Альфа'];
+// VK icon
+const VKIcon = () => (
+  <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+    <path d="M15.684 0H8.316C1.592 0 0 1.592 0 8.316v7.368C0 22.408 1.592 24 8.316 24h7.368C22.408 24 24 22.408 24 15.684V8.316C24 1.592 22.391 0 15.684 0zm3.692 17.123h-1.744c-.66 0-.864-.525-2.05-1.727-1.033-1-1.49-1.135-1.744-1.135-.356 0-.458.102-.458.593v1.575c0 .424-.135.678-1.253.678-1.846 0-3.896-1.12-5.339-3.202-2.17-3.042-2.763-5.32-2.763-5.778 0-.254.102-.491.593-.491h1.744c.44 0 .61.203.78.678.864 2.49 2.303 4.675 2.896 4.675.22 0 .322-.102.322-.66V9.721c-.068-1.186-.695-1.287-.695-1.71 0-.203.17-.407.44-.407h2.744c.373 0 .508.203.508.643v3.473c0 .372.17.508.271.508.22 0 .407-.136.813-.542 1.254-1.406 2.151-3.574 2.151-3.574.119-.254.322-.491.763-.491h1.744c.525 0 .644.27.525.643-.22 1.017-2.354 4.031-2.354 4.031-.186.305-.254.44 0 .78.186.254.796.779 1.203 1.253.745.847 1.32 1.558 1.473 2.05.17.49-.085.744-.576.744z"/>
+  </svg>
+);
 
 export default function TrustBlock() {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   return (
-    <section className="relative z-10 pt-12 pb-10">
+    <section className="relative z-10 pt-20 pb-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold gradient-text text-center mb-12">
+        <h2 className="text-[26px] sm:text-[32px] md:text-[36px] font-bold gradient-text text-center mb-12">
           Почему нам доверяют
         </h2>
 
         {/* Reviews carousel */}
-        <div className="relative mb-12">
+        <div className="relative">
           <div
             ref={scrollRef}
             className="flex gap-4 overflow-x-auto scrollbar-hide pb-4 carousel-scroll"
@@ -54,7 +36,7 @@ export default function TrustBlock() {
             {reviews.map((review) => (
               <div
                 key={review.id}
-                className="flex-shrink-0 w-[300px] sm:w-[340px] rounded-xl bg-[var(--bg-card)] border border-white/[0.06] p-5"
+                className="flex-shrink-0 w-[300px] sm:w-[340px] card-base p-5"
               >
                 {/* Stars */}
                 <div className="flex gap-0.5 mb-3">
@@ -65,48 +47,50 @@ export default function TrustBlock() {
                   ))}
                 </div>
 
-                <p className="text-sm text-[var(--text-primary)] mb-4 leading-relaxed">
+                <p className="text-sm text-[var(--text-body)] mb-4 leading-relaxed">
                   &ldquo;{review.text}&rdquo;
                 </p>
 
-                <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium text-white">{review.author}</span>
+                {/* Author row */}
+                <div className="flex items-center gap-3">
+                  {/* Avatar — realistic photo */}
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={review.avatarImg}
+                    alt={review.author}
+                    className="w-9 h-9 rounded-full object-cover shrink-0"
+                    loading="lazy"
+                  />
+                  <div className="flex-1 min-w-0">
+                    <span className="text-sm font-medium text-white block">{review.author}</span>
+                    <span className="text-xs text-[var(--brand)] block">{review.product}</span>
+                  </div>
+                </div>
+
+                {/* Date + source */}
+                <div className="flex items-center justify-between mt-3 pt-3 border-t border-white/[0.06]">
                   <span className="text-xs text-[var(--text-muted)]">{review.date}</span>
+                  <span className="flex items-center gap-1 text-xs text-[var(--text-muted)]">
+                    {review.source === 'Telegram' ? <TelegramIcon /> : <VKIcon />}
+                    Отзыв из {review.source}
+                  </span>
                 </div>
               </div>
             ))}
           </div>
-          <p className="text-xs text-[var(--text-muted)] mt-3 text-center">
-            Реальные отзывы наших клиентов
-          </p>
-        </div>
-
-        {/* Guarantees */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-10">
-          {guarantees.map((g) => (
-            <div
-              key={g.title}
-              className="rounded-xl bg-[var(--bg-card)] border border-white/[0.06] p-6 text-center card-hover"
+          <div className="text-center mt-6">
+            <a
+              href="https://t.me/PS_PLUS_RUS"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-tertiary text-sm"
             >
-              <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-[var(--primary)]/10 text-[var(--accent)] mb-4">
-                {g.icon}
-              </div>
-              <h4 className="text-base font-bold text-white mb-2">{g.title}</h4>
-              <p className="text-sm text-[var(--text-secondary)]">{g.text}</p>
-            </div>
-          ))}
-        </div>
-
-        {/* Payment methods */}
-        <div className="flex items-center justify-center gap-4 flex-wrap">
-          {paymentMethods.map((method) => (
-            <div
-              key={method}
-              className="px-5 py-2.5 rounded-lg bg-[var(--bg-card)] border border-white/[0.06] text-sm font-medium text-[var(--text-secondary)]"
-            >
-              {method}
-            </div>
-          ))}
+              Читать все отзывы &rarr;
+            </a>
+            <p className="text-xs text-[var(--text-muted)] mt-2">
+              Более 500 отзывов в нашем Telegram-канале
+            </p>
+          </div>
         </div>
       </div>
     </section>

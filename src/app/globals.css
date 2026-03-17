@@ -1,26 +1,53 @@
 @import "tailwindcss";
 
 :root {
+  /* ══════ Brand ActivePlay ══════ */
+  --brand: #00D4FF;
+  --brand-dark: #00A8CC;
+  --brand-glow: rgba(0, 212, 255, 0.3);
+
+  /* ══════ Backgrounds ══════ */
   --bg-base: #060D18;
+  --bg-section-alt: #0A1525;
   --bg-elevated: #0C1A2E;
-  --bg-card: #0F1F35;
-  --bg-card-hover: #142845;
-  --primary: #0070D1;
-  --accent: #00D4FF;
-  --accent-green: #00E676;
-  --accent-orange: #FF9100;
-  --text-primary: #E8ECF2;
+  --bg-card: #0C1A2E;
+  --bg-card-hover: #112240;
+
+  /* ══════ Text ══════ */
   --text-heading: #FFFFFF;
+  --text-body: #D0D8E8;
+  --text-primary: #D0D8E8;
   --text-secondary: #7B8DB0;
   --text-muted: #4A5A78;
-  --border: rgba(255,255,255,0.06);
-  --glow-blue: 0 0 40px rgba(0,112,209,0.3);
-  --glow-cyan: 0 0 40px rgba(0,212,255,0.25);
+
+  /* ══════ Platform brands (badges/accents only) ══════ */
+  --ps-blue: #006FCD;
+  --ps-essential: #C6A220;
+  --ps-extra: #1E3A5F;
+  --ps-deluxe: #4B2D8E;
+  --xbox-green: #107C10;
+
+  /* ══════ Semantic ══════ */
+  --success: #00E676;
+  --warning: #FF9100;
+  --error: #FF5252;
+  --accent-green: #00E676;
+  --accent-orange: #FF9100;
+
+  /* ══════ Borders ══════ */
+  --border: rgba(255, 255, 255, 0.06);
+
+  /* ══════ Shadows ══════ */
+  --glow-brand: 0 4px 20px rgba(0, 212, 255, 0.25);
+  --glow-brand-hover: 0 8px 30px rgba(0, 212, 255, 0.4);
+
+  /* ══════ Parallax ══════ */
+  --scroll-y: 0px;
 }
 
 @theme inline {
   --color-background: var(--bg-base);
-  --color-foreground: var(--text-primary);
+  --color-foreground: var(--text-body);
 }
 
 * {
@@ -33,13 +60,21 @@ html {
 
 body {
   background: var(--bg-base);
-  color: var(--text-primary);
-  font-family: var(--font-outfit), system-ui, -apple-system, sans-serif;
+  color: var(--text-body);
+  font-family: var(--font-body), system-ui, -apple-system, sans-serif;
+  font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* ══════════ ATMOSPHERE BLOBS ══════════ */
+/* ══════════ HEADINGS — Display font ══════════ */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display), system-ui, -apple-system, sans-serif;
+  font-style: normal !important;
+  color: var(--text-heading);
+}
+
+/* ══════════ ANIMATED ATMOSPHERE BLOBS ══════════ */
 .atmosphere-wrapper {
   position: fixed;
   inset: 0;
@@ -58,8 +93,9 @@ body {
   right: -5%;
   width: 600px;
   height: 600px;
-  background: radial-gradient(circle, rgba(0,112,209,0.10) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(0, 212, 255, 0.08) 0%, transparent 70%);
   filter: blur(150px);
+  animation: float1 20s ease-in-out infinite;
 }
 
 .atmosphere-blob--cyan {
@@ -67,8 +103,9 @@ body {
   left: -8%;
   width: 500px;
   height: 500px;
-  background: radial-gradient(circle, rgba(0,212,255,0.07) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(0, 212, 255, 0.06) 0%, transparent 70%);
   filter: blur(120px);
+  animation: float2 25s ease-in-out infinite;
 }
 
 .atmosphere-blob--purple {
@@ -76,14 +113,26 @@ body {
   right: 10%;
   width: 400px;
   height: 400px;
-  background: radial-gradient(circle, rgba(107,47,160,0.05) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(107, 47, 160, 0.05) 0%, transparent 70%);
   filter: blur(140px);
+  animation: float3 30s ease-in-out infinite;
 }
 
-/* ══════════ HEADINGS — force normal style ══════════ */
-h1, h2, h3, h4, h5, h6 {
-  font-style: normal;
-  font-family: var(--font-outfit), system-ui, -apple-system, sans-serif;
+@keyframes float1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-30px, 20px) scale(1.1); }
+  66% { transform: translate(20px, -30px) scale(0.95); }
+}
+
+@keyframes float2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(25px, -15px) scale(1.05); }
+  66% { transform: translate(-20px, 25px) scale(0.9); }
+}
+
+@keyframes float3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(15px, 15px) scale(1.08); }
 }
 
 /* ══════════ GRADIENT TEXT ══════════ */
@@ -97,62 +146,113 @@ h1, h2, h3, h4, h5, h6 {
 
 /* ══════════ GLASSMORPHISM ══════════ */
 .glass {
-  background: rgba(6,13,24,0.85);
+  background: rgba(6, 13, 24, 0.85);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
 }
 
 .glass-card {
-  background: rgba(15,31,53,0.6);
+  background: rgba(15, 31, 53, 0.6);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--border);
 }
 
-/* ══════════ BUTTONS ══════════ */
+/* ══════════ BUTTON SYSTEM — 3 LEVELS ══════════ */
+
+/* PRIMARY — main CTAs */
 .btn-primary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  padding: 0.875rem 2rem;
-  border-radius: 0.875rem;
-  font-weight: 800;
+  padding: 14px 32px;
+  border-radius: 12px;
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  font-style: normal;
   color: #fff;
-  background: linear-gradient(135deg, #0070D1, #00D4FF);
-  box-shadow: 0 0 25px rgba(0,112,209,0.35);
-  transition: all 0.25s ease;
+  background: linear-gradient(135deg, #00D4FF, #0070D1);
+  box-shadow: 0 4px 20px rgba(0, 212, 255, 0.25);
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   cursor: pointer;
   border: none;
-  font-family: inherit;
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  filter: brightness(1.12);
-  box-shadow: 0 0 35px rgba(0,212,255,0.45);
+  filter: brightness(1.1);
+  box-shadow: 0 8px 30px rgba(0, 212, 255, 0.4);
 }
 
+/* SECONDARY — "Написать нам", messenger links */
 .btn-secondary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.75rem;
-  font-weight: 700;
-  color: #fff;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  transition: all 0.25s ease;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  font-style: normal;
+  color: #00D4FF;
+  background: transparent;
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   cursor: pointer;
-  font-family: inherit;
 }
 
 .btn-secondary:hover {
+  background: rgba(0, 212, 255, 0.08);
+  border-color: #00D4FF;
   transform: translateY(-2px);
-  background: var(--bg-card-hover);
-  border-color: rgba(255,255,255,0.12);
+}
+
+/* TERTIARY — nav links, footer links */
+.btn-tertiary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  font-style: normal;
+  color: #7B8DB0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s;
+  text-decoration: none;
+}
+
+.btn-tertiary:hover {
+  color: #00D4FF;
+}
+
+/* ══════════ MESSENGER BUTTONS ══════════ */
+.btn-telegram {
+  background: linear-gradient(135deg, #2AABEE, #229ED9);
+  box-shadow: 0 0 20px rgba(42, 171, 238, 0.3);
+}
+
+.btn-telegram:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(42, 171, 238, 0.45);
+  filter: brightness(1.1);
+}
+
+.btn-vk {
+  background: linear-gradient(135deg, #4680C2, #5B9BD5);
+  box-shadow: 0 0 20px rgba(70, 128, 194, 0.3);
+}
+
+.btn-vk:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(70, 128, 194, 0.45);
+  filter: brightness(1.1);
 }
 
 /* ══════════ PULSE DOT ══════════ */
@@ -161,24 +261,72 @@ h1, h2, h3, h4, h5, h6 {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #00E676;
+  background: var(--success);
   animation: pulse-glow 2s ease-in-out infinite;
 }
 
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(0,230,118,0.5); }
-  50% { box-shadow: 0 0 0 5px rgba(0,230,118,0); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0, 230, 118, 0.5); }
+  50% { box-shadow: 0 0 0 5px rgba(0, 230, 118, 0); }
 }
 
-/* ══════════ CARD TRANSITIONS ══════════ */
-.card-hover {
-  transition: all 0.3s ease;
+/* ══════════ UNIFIED CARD SYSTEM ══════════ */
+.card-base {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.card-hover:hover {
-  transform: translateY(-6px);
-  border-color: rgba(255,255,255,0.12);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+.card-base:hover {
+  transform: translateY(-8px);
+  border-color: rgba(0, 212, 255, 0.2);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 30px rgba(0, 212, 255, 0.1);
+}
+
+.card-popular {
+  border: 2px solid rgba(0, 212, 255, 0.4);
+  box-shadow: 0 0 40px rgba(0, 212, 255, 0.15), 0 20px 60px rgba(0, 0, 0, 0.3);
+  transform: scale(1.02);
+}
+
+.card-popular:hover {
+  transform: scale(1.02) translateY(-8px);
+  box-shadow: 0 0 40px rgba(0, 212, 255, 0.25), 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+/* Orange CTA for popular plans (Extra / Ultimate) */
+.btn-primary-orange {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 14px 32px;
+  border-radius: 12px;
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  font-style: normal;
+  color: #fff;
+  background: linear-gradient(135deg, #FF9100, #FF6D00);
+  box-shadow: 0 4px 20px rgba(255, 145, 0, 0.3);
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  cursor: pointer;
+  border: none;
+}
+
+.btn-primary-orange:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+  box-shadow: 0 8px 30px rgba(255, 145, 0, 0.45);
+}
+
+/* ══════════ SECTION DIVIDER ══════════ */
+.section-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(0, 212, 255, 0.1) 50%, transparent 100%);
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 /* ══════════ SCROLLBAR HIDE ══════════ */
@@ -207,7 +355,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* ══════════ SELECTION ══════════ */
 ::selection {
-  background: rgba(0,212,255,0.25);
+  background: rgba(0, 212, 255, 0.25);
   color: #fff;
 }
 
@@ -229,30 +377,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* ══════════ OVERLAY GRADIENT ══════════ */
 .overlay-gradient {
-  background: linear-gradient(to top, rgba(6,13,24,0.95) 0%, rgba(6,13,24,0.6) 40%, transparent 60%);
-}
-
-/* ══════════ MESSENGER BUTTONS ══════════ */
-.btn-telegram {
-  background: linear-gradient(135deg, #2AABEE, #229ED9);
-  box-shadow: 0 0 20px rgba(42,171,238,0.3);
-}
-
-.btn-telegram:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 30px rgba(42,171,238,0.45);
-  filter: brightness(1.1);
-}
-
-.btn-vk {
-  background: linear-gradient(135deg, #4680C2, #5B9BD5);
-  box-shadow: 0 0 20px rgba(70,128,194,0.3);
-}
-
-.btn-vk:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 30px rgba(70,128,194,0.45);
-  filter: brightness(1.1);
+  background: linear-gradient(to top, rgba(6, 13, 24, 0.95) 0%, rgba(6, 13, 24, 0.6) 40%, transparent 60%);
 }
 
 /* ══════════ ANIMATIONS ══════════ */
@@ -269,4 +394,57 @@ h1, h2, h3, h4, h5, h6 {
 
 .animate-fade-in-up {
   animation: fade-in-up 0.6s ease-out;
+}
+
+/* ══════════ FOMO PULSE ══════════ */
+@keyframes fomo-pulse {
+  0%, 100% { opacity: 0.9; }
+  50% { opacity: 1; }
+}
+
+.animate-fomo-pulse {
+  animation: fomo-pulse 2s ease-in-out infinite;
+}
+
+/* ══════════ SCROLL-TRIGGERED REVEAL ══════════ */
+@keyframes revealUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.reveal-section {
+  opacity: 0;
+}
+
+.reveal-section.visible {
+  animation: revealUp 0.6s ease forwards;
+}
+
+/* Staggered children */
+.reveal-section.visible .reveal-child:nth-child(1) { animation: revealUp 0.5s ease forwards 0ms; opacity: 0; }
+.reveal-section.visible .reveal-child:nth-child(2) { animation: revealUp 0.5s ease forwards 100ms; opacity: 0; }
+.reveal-section.visible .reveal-child:nth-child(3) { animation: revealUp 0.5s ease forwards 200ms; opacity: 0; }
+.reveal-section.visible .reveal-child:nth-child(4) { animation: revealUp 0.5s ease forwards 300ms; opacity: 0; }
+.reveal-section.visible .reveal-child:nth-child(5) { animation: revealUp 0.5s ease forwards 400ms; opacity: 0; }
+.reveal-section.visible .reveal-child:nth-child(6) { animation: revealUp 0.5s ease forwards 500ms; opacity: 0; }
+
+/* ══════════ HERO PARALLAX ══════════ */
+.hero-parallax-bg {
+  transform: translateY(calc(var(--scroll-y) * 0.3));
+  will-change: transform;
+}
+
+/* ══════════ DISPLAY FONT UTILITY ══════════ */
+.font-display {
+  font-family: var(--font-display), system-ui, -apple-system, sans-serif;
+  font-style: normal;
+}
+
+/* ══════════ PRICE DISPLAY ══════════ */
+.price-display {
+  font-family: var(--font-display), system-ui, -apple-system, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  font-variant-numeric: tabular-nums;
+  color: #FFFFFF;
 }

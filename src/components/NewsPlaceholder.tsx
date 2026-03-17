@@ -30,7 +30,7 @@ const placeholderNews = [
 
 export default function NewsPlaceholder() {
   return (
-    <section id="news" className="relative z-10 pt-12 pb-10">
+    <section id="news" className="relative z-10 pt-20 pb-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold gradient-text text-center mb-3">
           Новости
@@ -43,7 +43,7 @@ export default function NewsPlaceholder() {
           {placeholderNews.map((news) => (
             <div
               key={news.id}
-              className="rounded-xl bg-[var(--bg-card)] border border-white/[0.06] overflow-hidden card-hover"
+              className="card-base overflow-hidden"
             >
               {/* Gradient placeholder image */}
               <div className={`h-40 bg-gradient-to-br ${news.gradient}`} />

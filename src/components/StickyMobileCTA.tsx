@@ -33,12 +33,10 @@ export default function StickyMobileCTA() {
           href="https://t.me/activeplay1"
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center justify-center gap-2 w-full font-bold text-white transition-all"
+          className="btn-primary flex items-center justify-center gap-2 w-full"
           style={{
             height: '52px',
             borderRadius: '14px',
-            background: 'linear-gradient(135deg, #0070D1, #00D4FF)',
-            boxShadow: '0 0 20px rgba(0,112,209,0.35)',
             fontSize: '15px',
           }}
         >

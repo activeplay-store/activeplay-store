@@ -9,9 +9,9 @@ export default function PreordersSection() {
   const [popup, setPopup] = useState<{ name: string; price: number } | null>(null);
 
   return (
-    <section id="preorders" className="relative z-10 pt-12 pb-10">
+    <section id="preorders" className="relative z-10 pt-20 pb-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold gradient-text mb-8">
+        <h2 className="text-[26px] sm:text-[32px] md:text-[36px] font-bold gradient-text mb-8">
           Предзаказы
         </h2>
 

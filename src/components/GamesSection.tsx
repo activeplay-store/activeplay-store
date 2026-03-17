@@ -26,11 +26,11 @@ export default function GamesSection() {
   };
 
   return (
-    <section id="games" className="relative z-10 pt-12 pb-10">
+    <section id="games" className="relative z-10 pt-20 pb-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold gradient-text">
+          <h2 className="text-[26px] sm:text-[32px] md:text-[36px] font-bold gradient-text">
             Игры со скидкой
           </h2>
 
@@ -41,7 +41,7 @@ export default function GamesSection() {
                 onClick={() => setFilter(f)}
                 className={`px-4 py-2 text-sm font-medium transition-all cursor-pointer ${
                   filter === f
-                    ? 'bg-[var(--primary)] text-white'
+                    ? 'bg-[var(--brand)] text-white'
                     : 'text-[var(--text-secondary)] hover:text-white'
                 }`}
               >
@@ -71,7 +71,7 @@ export default function GamesSection() {
 
           <div
             ref={scrollRef}
-            className="flex gap-4 overflow-x-auto scrollbar-hide pb-4 carousel-scroll pl-1"
+            className="flex gap-4 overflow-x-auto scrollbar-hide pb-4 carousel-scroll pl-6 pr-6 sm:pl-0 sm:pr-0"
           >
             {filtered.map((game) => (
               <GameCard

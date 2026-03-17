@@ -10,7 +10,7 @@ interface PreorderCardProps {
 
 export default function PreorderCard({ preorder, onOrder }: PreorderCardProps) {
   return (
-    <div className="relative rounded-2xl overflow-hidden group card-hover min-h-[340px] flex flex-col justify-end border border-white/[0.06]">
+    <div className="relative card-base overflow-hidden group min-h-[340px] flex flex-col justify-end">
       {/* Background image */}
       <Image
         src={preorder.cover}
@@ -31,17 +31,17 @@ export default function PreorderCard({ preorder, onOrder }: PreorderCardProps) {
           {preorder.platforms.map((p) => (
             <span
               key={p}
-              className="px-2 py-0.5 rounded text-[10px] font-bold bg-white/10 text-white backdrop-blur-sm"
+              className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-white/10 text-white backdrop-blur-sm"
             >
               {p}
             </span>
           ))}
-          <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[var(--accent-orange)] text-black">
+          <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-[var(--warning)] text-black">
             ПРЕДЗАКАЗ
           </span>
         </div>
 
-        <h3 className="text-xl sm:text-2xl font-extrabold text-white mb-1">
+        <h3 className="text-xl sm:text-2xl font-bold text-white mb-1 font-display" style={{ fontStyle: 'normal' }}>
           {preorder.title}
         </h3>
         <p className="text-sm text-[var(--text-secondary)] mb-1 line-clamp-1">
@@ -52,7 +52,7 @@ export default function PreorderCard({ preorder, onOrder }: PreorderCardProps) {
         </p>
 
         <div className="flex items-center justify-between gap-3">
-          <span className="text-xl sm:text-2xl font-extrabold text-white tabular-nums">
+          <span className="price-display text-[24px] sm:text-[28px]">
             {preorder.price.toLocaleString('ru-RU')} ₽
           </span>
           <button

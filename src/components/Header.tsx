@@ -1,14 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import Image from 'next/image';
-
 const navLinks = [
   { label: 'Подписки', href: '#subscriptions' },
   { label: 'Игры', href: '#games' },
   { label: 'Предзаказы', href: '#preorders' },
   { label: 'Как это работает', href: '#how-it-works' },
-  { label: 'Новости', href: '#news' },
+  { label: 'FAQ', href: '#faq' },
 ];
 
 const messengerLinks = [
@@ -47,52 +45,40 @@ const messengerLinks = [
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [contactOpen, setContactOpen] = useState(false);
-  const [logoError, setLogoError] = useState(false);
-
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 glass border-b border-white/[0.06]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+    <header className="fixed top-0 left-0 right-0 z-50 glass border-b border-white/[0.06]" style={{ height: '100px' }}>
+      <div className="max-w-7xl mx-auto h-full" style={{ padding: '0 40px' }}>
+        <div className="flex items-center justify-between h-full">
           {/* Logo */}
-          <a href="#" className="flex items-center gap-2 shrink-0">
-            {logoError ? (
-              <span className="text-xl font-extrabold" style={{ fontStyle: 'normal' }}>
-                <span className="text-white">ACTIVE</span>
-                <span className="text-[var(--accent)]">PLAY</span>
-              </span>
-            ) : (
-              <Image
-                src="/images/logo/ActivePlay.png"
-                alt="ActivePlay"
-                width={140}
-                height={36}
-                className="h-9 w-auto"
-                priority
-                onError={() => setLogoError(true)}
-              />
-            )}
+          <a href="#" className="flex items-center shrink-0">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/logo/AP_WHITE.png"
+              alt="ActivePlay"
+              style={{ height: '90px', width: 'auto', objectFit: 'contain' }}
+            />
           </a>
 
-          {/* Desktop Nav */}
+          {/* Desktop Nav — Tertiary style */}
           <nav className="hidden lg:flex items-center gap-6">
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="text-sm font-medium text-[var(--text-secondary)] hover:text-white transition-colors"
+                className="text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--brand)] transition-colors"
               >
                 {link.label}
               </a>
             ))}
           </nav>
 
-          {/* Desktop Contact Button */}
+          {/* Desktop Contact Button — Secondary */}
           <div className="hidden lg:block relative">
             <button
               onClick={() => setContactOpen(!contactOpen)}
-              className="btn-secondary text-sm"
+              className="btn-secondary text-sm py-2 px-4"
             >
-              Написать нам ▾
+              Написать нам
             </button>
             {/* Contact Modal Overlay */}
             {contactOpen && (
@@ -127,8 +113,7 @@ export default function Header() {
           <div className="flex items-center gap-2 lg:hidden">
             <button
               onClick={() => { setContactOpen(!contactOpen); setMenuOpen(false); }}
-              className="px-3 py-2 rounded-lg text-sm font-bold text-white cursor-pointer"
-              style={{ background: 'linear-gradient(135deg, var(--primary), var(--accent))' }}
+              className="btn-secondary text-sm py-2 px-3"
             >
               Написать
             </button>
@@ -158,7 +143,7 @@ export default function Header() {
                   href={m.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`flex items-center justify-center gap-3 w-full px-6 py-3.5 rounded-xl font-bold text-white transition-all ${m.className}`}
+                  className={`flex items-center justify-center gap-3 w-full px-6 py-3.5 rounded-xl font-bold text-sm text-white transition-all ${m.className}`}
                   onClick={() => setContactOpen(false)}
                 >
                   {m.icon}
@@ -178,7 +163,7 @@ export default function Header() {
               <a
                 key={link.href}
                 href={link.href}
-                className="block px-3 py-2.5 rounded-lg text-[var(--text-primary)] hover:bg-white/5 transition-colors"
+                className="block px-3 py-2.5 rounded-lg text-[var(--text-body)] hover:bg-white/5 hover:text-[var(--brand)] transition-colors"
                 onClick={() => setMenuOpen(false)}
               >
                 {link.label}

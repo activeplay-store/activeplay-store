@@ -62,21 +62,21 @@ export default function MessengerPopup({ isOpen, onClose, planName, price }: Mes
         </button>
 
         {/* Content */}
-        <h3 className="text-xl font-bold text-white mb-1">{planName}</h3>
-        <p className="text-2xl font-extrabold text-[var(--accent)] tabular-nums mb-6">{price.toLocaleString('ru-RU')} ₽</p>
+        <h3 className="text-xl font-bold text-white mb-1 font-display" style={{ fontStyle: 'normal' }}>{planName}</h3>
+        <p className="price-display text-[28px] !text-[var(--brand)] mb-6">{price.toLocaleString('ru-RU')} ₽</p>
 
         <p className="text-[var(--text-secondary)] mb-5">
           Выберите мессенджер для связи с менеджером:
         </p>
 
-        <div className="space-y-3">
+        <div className="space-y-3 mb-6">
           {messengers.map((m) => (
             <a
               key={m.name}
               href={m.href}
               target="_blank"
               rel="noopener noreferrer"
-              className={`flex items-center justify-center gap-3 w-full px-6 py-3.5 rounded-xl font-bold text-white transition-all ${m.className}`}
+              className={`flex items-center justify-center gap-3 w-full px-6 py-3.5 rounded-xl font-semibold text-white transition-all ${m.className}`}
             >
               {m.icon}
               {m.name}
@@ -84,8 +84,32 @@ export default function MessengerPopup({ isOpen, onClose, planName, price }: Mes
           ))}
         </div>
 
-        <p className="text-center text-xs text-[var(--text-muted)] mt-5">
-          Менеджер ответит в течение 2-3 минут
+        {/* Mini timeline */}
+        <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-4 space-y-3">
+          <div className="flex items-start gap-3">
+            <span className="text-base mt-0.5">✅</span>
+            <div>
+              <p className="text-sm font-medium text-white">Шаг 1: Напишите менеджеру</p>
+              <p className="text-xs text-[var(--text-muted)]">сейчас</p>
+            </div>
+          </div>
+          <div className="flex items-start gap-3">
+            <span className="text-base mt-0.5">⏱</span>
+            <div>
+              <p className="text-sm font-medium text-white">Шаг 2: Оплатите по СБП</p>
+              <p className="text-xs text-[var(--text-muted)]">~1 мин</p>
+            </div>
+          </div>
+          <div className="flex items-start gap-3">
+            <span className="text-base mt-0.5">🎮</span>
+            <div>
+              <p className="text-sm font-medium text-white">Шаг 3: Получите подписку</p>
+              <p className="text-xs text-[var(--text-muted)]">~3 мин</p>
+            </div>
+          </div>
+        </div>
+        <p className="text-center text-xs text-[var(--text-muted)] mt-4">
+          Среднее время от заявки до активации — 5 минут
         </p>
       </div>
     </div>

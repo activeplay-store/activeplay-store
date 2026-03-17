@@ -1,11 +1,16 @@
-import Image from 'next/image';
-
-const navLinks = [
-  { label: 'Подписки', href: '#subscriptions' },
-  { label: 'Игры', href: '#games' },
+const catalogLinks = [
+  { label: 'PS Plus подписки', href: '#subscriptions' },
+  { label: 'Xbox Game Pass', href: '#subscriptions' },
+  { label: 'EA Play', href: '#subscriptions' },
+  { label: 'Игры со скидкой', href: '#games' },
   { label: 'Предзаказы', href: '#preorders' },
+];
+
+const infoLinks = [
   { label: 'Как это работает', href: '#how-it-works' },
   { label: 'Новости', href: '#news' },
+  { label: 'Публичная оферта', href: '#' },
+  { label: 'Политика конфиденциальности', href: '#' },
 ];
 
 const socialLinks = [
@@ -19,31 +24,48 @@ const paymentMethods = ['СБП', 'Сбер', 'Тинькофф', 'Альфа'];
 export default function Footer() {
   return (
     <footer className="relative z-10 border-t border-white/[0.06] bg-[var(--bg-elevated)]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {/* Logo & copyright */}
-          <div>
-            <Image
-              src="/images/logo/ActivePlay.png"
-              alt="ActivePlay"
-              width={140}
-              height={36}
-              className="h-8 w-auto mb-4"
-            />
-            <p className="text-sm text-[var(--text-muted)]">
-              &copy; 2020–2025 ActivePlay. Будь в игре.
-            </p>
-          </div>
+      {/* Top: logo + description */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-8">
+        <div className="mb-8">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/images/logo/AP_WHITE.png"
+            alt="ActivePlay"
+            style={{ height: '32px', width: 'auto' }}
+          />
+          <p className="text-sm text-[var(--text-secondary)] mt-2 leading-relaxed">
+            Игровые подписки для России с 2020 года
+          </p>
+        </div>
 
-          {/* Navigation */}
+        {/* Middle: 3 columns */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mb-10">
+          {/* Catalog */}
           <div>
-            <h4 className="text-sm font-bold text-white mb-3">Навигация</h4>
+            <h4 className="text-sm font-semibold text-white mb-3 font-display" style={{ fontStyle: 'normal' }}>Каталог</h4>
             <ul className="space-y-2">
-              {navLinks.map((link) => (
-                <li key={link.href}>
+              {catalogLinks.map((link) => (
+                <li key={link.label}>
                   <a
                     href={link.href}
-                    className="text-sm text-[var(--text-secondary)] hover:text-white transition-colors"
+                    className="text-[14px] leading-relaxed text-[var(--text-secondary)] hover:text-[var(--brand)] transition-colors"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Info */}
+          <div>
+            <h4 className="text-sm font-semibold text-white mb-3 font-display" style={{ fontStyle: 'normal' }}>Информация</h4>
+            <ul className="space-y-2">
+              {infoLinks.map((link) => (
+                <li key={link.label}>
+                  <a
+                    href={link.href}
+                    className="text-[14px] leading-relaxed text-[var(--text-secondary)] hover:text-[var(--brand)] transition-colors"
                   >
                     {link.label}
                   </a>
@@ -54,7 +76,7 @@ export default function Footer() {
 
           {/* Social */}
           <div>
-            <h4 className="text-sm font-bold text-white mb-3">Мы в соцсетях</h4>
+            <h4 className="text-sm font-semibold text-white mb-3 font-display" style={{ fontStyle: 'normal' }}>Мы в соцсетях</h4>
             <ul className="space-y-2">
               {socialLinks.map((link) => (
                 <li key={link.href}>
@@ -62,7 +84,7 @@ export default function Footer() {
                     href={link.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm text-[var(--text-secondary)] hover:text-white transition-colors"
+                    className="text-[14px] leading-relaxed text-[var(--text-secondary)] hover:text-[var(--brand)] transition-colors"
                   >
                     {link.label}
                   </a>
@@ -70,28 +92,24 @@ export default function Footer() {
               ))}
             </ul>
           </div>
+        </div>
+      </div>
 
-          {/* Payment & Legal */}
-          <div>
-            <h4 className="text-sm font-bold text-white mb-3">Оплата</h4>
-            <div className="flex flex-wrap gap-2 mb-4">
-              {paymentMethods.map((method) => (
-                <span
-                  key={method}
-                  className="px-3.5 py-1.5 rounded-lg bg-white/[0.06] text-[13px] font-semibold text-[var(--text-secondary)]"
-                >
-                  {method}
-                </span>
-              ))}
-            </div>
-            <div className="space-y-1">
-              <a href="#" className="block text-xs text-[var(--text-muted)] hover:text-[var(--text-secondary)] transition-colors">
-                Публичная оферта
-              </a>
-              <a href="#" className="block text-xs text-[var(--text-muted)] hover:text-[var(--text-secondary)] transition-colors">
-                Политика конфиденциальности
-              </a>
-            </div>
+      {/* Bottom bar */}
+      <div className="border-t border-white/[0.06]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-[14px] text-[var(--text-secondary)]">
+            &copy; 2020&ndash;2025 ActivePlay. Будь в игре.
+          </p>
+          <div className="flex items-center gap-2">
+            {paymentMethods.map((method) => (
+              <span
+                key={method}
+                className="px-3 py-1 rounded-md bg-white/[0.06] text-[13px] font-semibold text-[var(--text-secondary)]"
+              >
+                {method}
+              </span>
+            ))}
           </div>
         </div>
       </div>

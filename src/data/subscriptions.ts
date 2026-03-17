@@ -16,7 +16,7 @@ export interface PlanTier {
 export const psPlans: PlanTier[] = [
   {
     name: 'Essential',
-    color: '#F5A623',
+    color: '#C6A220',
     features: [
       'Онлайн-мультиплеер',
       '2-3 игры каждый месяц',
@@ -30,7 +30,7 @@ export const psPlans: PlanTier[] = [
   },
   {
     name: 'Extra',
-    color: '#1E6FD9',
+    color: '#2A2A2A',
     popular: true,
     features: [
       'Каталог 400+ игр',
@@ -45,7 +45,7 @@ export const psPlans: PlanTier[] = [
   },
   {
     name: 'Deluxe',
-    color: '#4B2D8E',
+    color: '#E8E8E8',
     features: [
       'Классический каталог',
       'Пробные версии',

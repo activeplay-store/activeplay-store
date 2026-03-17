@@ -22,7 +22,7 @@ const messengers = [
   {
     name: 'Max',
     href: '#',
-    className: 'btn-secondary border border-white/10',
+    className: 'btn-secondary border-0',
     icon: (
       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
         <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/>
@@ -33,9 +33,9 @@ const messengers = [
 
 export default function CTABlock() {
   return (
-    <section className="relative z-10 pt-12 pb-10">
+    <section className="relative z-10 pt-20 pb-20">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold gradient-text mb-4">
+        <h2 className="text-[26px] sm:text-[32px] md:text-[36px] font-bold gradient-text mb-4">
           Готов к покупке?
         </h2>
         <p className="text-base text-[var(--text-secondary)] mb-8">
@@ -49,7 +49,7 @@ export default function CTABlock() {
               href={m.href}
               target="_blank"
               rel="noopener noreferrer"
-              className={`flex items-center justify-center gap-3 px-8 py-4 rounded-xl font-bold text-white transition-all w-full sm:w-auto ${m.className}`}
+              className={`flex items-center justify-center gap-3 px-8 py-4 rounded-xl font-semibold text-white transition-all w-full sm:w-auto ${m.className}`}
             >
               {m.icon}
               {m.name}
