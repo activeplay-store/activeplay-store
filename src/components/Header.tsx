@@ -1,8 +1,15 @@
 'use client';
 
 import { useState } from 'react';
+
+const subscriptionLinks = [
+  { label: 'PS Plus Essential', href: '/ps-plus-essential', color: '#C6A220' },
+  { label: 'PS Plus Extra', href: '/ps-plus-extra', color: '#00D4FF' },
+  { label: 'PS Plus Deluxe', href: '/ps-plus-deluxe', color: '#E8E8E8' },
+];
+
 const navLinks = [
-  { label: 'Подписки', href: '#subscriptions' },
+  { label: 'Подписки', href: '#subscriptions', hasSubmenu: true },
   { label: 'Игры', href: '#games' },
   { label: 'Предзаказы', href: '#preorders' },
   { label: 'Как это работает', href: '#how-it-works' },
@@ -45,6 +52,8 @@ const messengerLinks = [
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [contactOpen, setContactOpen] = useState(false);
+  const [subsOpen, setSubsOpen] = useState(false);
+  const [mobileSubsOpen, setMobileSubsOpen] = useState(false);
   return (
     <header className="fixed top-0 left-0 right-0 z-50 glass border-b border-white/[0.06]" style={{ height: '100px' }}>
       <div className="max-w-7xl mx-auto h-full" style={{ padding: '0 40px' }}>
@@ -61,15 +70,50 @@ export default function Header() {
 
           {/* Desktop Nav — Tertiary style */}
           <nav className="hidden lg:flex items-center gap-6">
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--brand)] transition-colors"
-              >
-                {link.label}
-              </a>
-            ))}
+            {navLinks.map((link) =>
+              link.hasSubmenu ? (
+                <div
+                  key={link.href}
+                  className="relative"
+                  onMouseEnter={() => setSubsOpen(true)}
+                  onMouseLeave={() => setSubsOpen(false)}
+                >
+                  <button
+                    className="text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--brand)] transition-colors flex items-center gap-1"
+                  >
+                    {link.label}
+                    <svg className={`w-3.5 h-3.5 transition-transform ${subsOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+                  {subsOpen && (
+                    <div className="absolute top-full left-0 mt-2 w-52 rounded-xl glass-card p-2 shadow-2xl z-50">
+                      {subscriptionLinks.map((sub) => (
+                        <a
+                          key={sub.href}
+                          href={sub.href}
+                          className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-[var(--text-body)] hover:bg-white/[0.06] hover:text-white transition-colors"
+                        >
+                          <span
+                            className="w-2 h-2 rounded-full flex-shrink-0"
+                            style={{ background: sub.color }}
+                          />
+                          {sub.label}
+                        </a>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--brand)] transition-colors"
+                >
+                  {link.label}
+                </a>
+              )
+            )}
           </nav>
 
           {/* Desktop Contact Button — Secondary */}
@@ -159,16 +203,48 @@ export default function Header() {
       {menuOpen && (
         <div className="lg:hidden glass border-t border-white/[0.06]">
           <div className="px-4 py-4 space-y-1">
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="block px-3 py-2.5 rounded-lg text-[var(--text-body)] hover:bg-white/5 hover:text-[var(--brand)] transition-colors"
-                onClick={() => setMenuOpen(false)}
-              >
-                {link.label}
-              </a>
-            ))}
+            {navLinks.map((link) =>
+              link.hasSubmenu ? (
+                <div key={link.href}>
+                  <button
+                    onClick={() => setMobileSubsOpen(!mobileSubsOpen)}
+                    className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-[var(--text-body)] hover:bg-white/5 hover:text-[var(--brand)] transition-colors"
+                  >
+                    {link.label}
+                    <svg className={`w-4 h-4 transition-transform ${mobileSubsOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+                  {mobileSubsOpen && (
+                    <div className="ml-4 space-y-1 mt-1">
+                      {subscriptionLinks.map((sub) => (
+                        <a
+                          key={sub.href}
+                          href={sub.href}
+                          className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-[var(--text-secondary)] hover:bg-white/5 hover:text-white transition-colors"
+                          onClick={() => setMenuOpen(false)}
+                        >
+                          <span
+                            className="w-2 h-2 rounded-full flex-shrink-0"
+                            style={{ background: sub.color }}
+                          />
+                          {sub.label}
+                        </a>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="block px-3 py-2.5 rounded-lg text-[var(--text-body)] hover:bg-white/5 hover:text-[var(--brand)] transition-colors"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  {link.label}
+                </a>
+              )
+            )}
           </div>
         </div>
       )}

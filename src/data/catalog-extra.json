@@ -1,0 +1,3287 @@
+{
+  "lastUpdated": "2026-03-18",
+  "totalGames": 523,
+  "games": [
+    {
+      "title": "A Hat in Time",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "A Little to the Left",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "A Quiet Place: The Road Ahead",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "A Space for the Unbound",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Abiotic Factor",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "Adventure Time: Pirates of the Enchiridion",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Age of Wonders: Planetfall",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Alex Kidd in Miracle World DX",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Alienation",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Anno 1800 Console Edition",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "ANNO: Mutationem",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Anodyne",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Another Crab's Treasure",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "AO Tennis 2",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Aragami",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Arcade Paradise",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Art of Rally",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "As Dusk Falls",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Assassin's Creed Chronicles: China",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Assassin's Creed Chronicles: India",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Assassin's Creed Chronicles: Russia",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Assassin's Creed III Remastered",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Assassin's Creed IV: Black Flag",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Assassin's Creed Mirage",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Assassin's Creed Odyssey",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Assassin's Creed Origins",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Assassin's Creed Rogue Remastered",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Assassin's Creed Syndicate",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Assassin's Creed Unity",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Assassin's Creed Valhalla",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Assassin's Creed: Freedom Cry",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Assassin's Creed: The Ezio Collection",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Assetto Corsa Competizione",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Astroneer",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Atelier Ryza 3: Alchemist of the End & the Secret Key",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "Atlas Fallen",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "Back 4 Blood",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Bad North",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Bang-On Balls: Chronicles",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Banishers: Ghosts of New Eden",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "Battle Chasers: Nightwar",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Bee Simulator",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Ben 10",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Ben 10: Power Trip",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Biped",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Blasphemous II",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Blood Bowl 3",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Bloodborne",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Blue Prince",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "Bluey: The Videogame",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Bomber Crew",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Bound",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Brawlout",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Bubsy: The Woolies Strike Back",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Bus Simulator 21",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Bus Simulator 21: Next Stop",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "Call of Cthulhu",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Call of the Sea",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Captain Tsubasa: Rise of New Champions",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Car Mechanic Simulator",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Cartoon Network: Battle Crashers",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Cat Quest",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Cat Quest 3",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Cat Quest II",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Celeste",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Chernobylite",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Chess Ultra",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Child of Light",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Children of Morta",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Chivalry 2",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Cities: Skylines - PlayStation 4 Edition",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Citizen Sleeper",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Clash: Artifacts of Chaos",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Coffee Talk",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Coffee Talk Episode 2: Hibiscus & Butterfly",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Conan Exiles",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Concrete Genie",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Conscript",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "Construction Simulator",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Contra: Rogue Corps",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Control: Ultimate Edition",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Coral Island",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "Cricket 24: Official Game of the Ashes",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Crime Boss: Rockay City",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "Crow Country",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Crusader Kings III: Console Edition",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "Cursed to Golf",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Cyberpunk 2077",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Dark Rose Valkyrie",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Darkest Dungeon 2",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Dave the Diver",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Days Gone",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Dead by Daylight",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Dead Cells",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Dead Island 2",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Dead or Alive 5: Last Round",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Deadcraft",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Death End Re;Quest",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Death Squared",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Death Stranding",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Death Stranding Director's Cut",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "Deceive Inc",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "Deliver Us the Moon",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Demon's Souls",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "Desperados III",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Destiny 2",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Destiny 2: The Witch Queen",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Destroy All Humans! 2: Reprobed",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Destruction AllStars",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "Detroit: Become Human",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Deus Ex: Mankind Divided",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Disaster Report 4: Summer Memories",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Disgaea 5: Alliance of Vengeance",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Dishonored 2",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Dishonored: Death of the Outsider",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "DOOM",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "DOOM Eternal",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Dragon Quest Heroes: The World Tree's Woe and the Blight Below",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Dragon Star Varnir",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Dreams",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Dredge",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Dynasty Warriors 8: Empires",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Dynasty Warriors 9",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "EA Sports PGA Tour",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "Eagle Flight",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Earth Defense Force 4.1: The Shadow of New Despair",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Earth Defense Force 5",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Earth Defense Force 6",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "Earth Defense Force: Iron Rain",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Earth Defense Force: World Brothers",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Echoes of the End: Enhanced Edition",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "Eiyuden Chronicle: Hundred Heroes",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Eldest Souls",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Elite Dangerous",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Embr",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Empire of Sin",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Endless Dungeon",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Entwined",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Erica",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Everybody's Golf",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Expeditions: A MudRunner Game",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Fade to Silence",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Fallout 4",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Fallout 76",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Far Cry 3: Blood Dragon Classic",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Far Cry 3: Classic Edition",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Far Cry 4",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Far Cry 5",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Far Cry 6",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Far Cry Primal",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Far Cry: New Dawn",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "FAR: Changing Tides",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Fate/Samurai Remnant",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "FBC: Firebreak",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "FIA European Truck Racing Championship",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Final Fantasy VII Remake",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Final Fantasy VII Remake Intergrade",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "Five Nights at Freddy's VR: Help Wanted",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Five Nights at Freddy's: Help Wanted - Full Time Edition",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "Five Nights at Freddy's: Help Wanted 2",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "For Honor",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "For the King",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Forager",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Foreclosed",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Frostpunk",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Fury Unleashed",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Garou: Mark of the Wolves",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Get Even",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Ghost of Tsushima: Director's Cut",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Ghost Recon: Breakpoint",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Gigantosaurus The Game",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Gloomhaven Mercenaries Edition",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "God of War",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "God of War Ragnarok",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "God of War Ragnarok: Valhalla",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Golf with Your Friends",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Granblue Fantasy Versus: Rising",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Granblue Fantasy: Relink",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Grand Ages: Medieval",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Grand Theft Auto III - The Definitive Edition",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Grand Theft Auto V",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Grand Theft Auto: San Andreas - Definitive Edition",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Grand Theft Auto: San Andreas - The Definitive Edition",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "Gravity Rush 2",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Green Hell",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "GRIS",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Gungrave G.O.R.E.",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Harold Halibut",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "Harvest Moon: Light of Hope",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Harvest Moon: Mad Dash",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Harvest Moon: One World",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Hello Neighbor",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Hogwarts Legacy",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Hohokum",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Hollow Knight: Voidheart Edition",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Hotel Transylvania: Scary-Tale Adventures",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Hotline Miami 2: Wrong Number",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Hotshot Racing",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Hue",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Human: Fall Flat",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Humanity",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "HUMANKIND",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Hundred Days: Winemaking Simulator",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Hungry Shark World",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "I Am Bread",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "I Am Dead",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "I Am Setsuna",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Ice Age: Scrat's Nutty Adventure",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Immortals Fenyx Rising",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Indika",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "inFAMOUS: First Light",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Infinite Minigolf",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Insurgency: Sandstorm",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "It Takes Two",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Jackbox Party Pack 9",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Jett: The Far Shore",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "JUMANJI: The Video Game",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "JumpJet Rex",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Jurassic World Evolution 2",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Killer Frequency",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Killing Floor 2",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Killzone: Shadow Fall",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Kingdom: New Lands",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Knack",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Lake",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Lawn Mowing Simulator",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Legendary Fishing",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "LEGO Batman 3: Beyond Gotham",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "LEGO City Undercover",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "LEGO DC Super-Villains",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "LEGO Horizon Adventures",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "LEGO Jurassic World",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "LEGO Marvel's Avengers",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "LEGO The Hobbit",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "LEGO The Incredibles",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "LEGO Worlds",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Like a Dragon: Infinite Wealth",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Little Big Workshop",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Little Nightmares",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Lonely Mountains: Downhill",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Lost Judgment",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Lost Records: Bloom & Rage",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "Lost Sphear",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Madden NFL 26",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "Magicka 2",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Mahjong",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Malicious Fallen",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Maneater",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Marvel's Guardians of the Galaxy",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Marvel's Spider-Man",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Marvel's Spider-Man 2",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "Marvel's Spider-Man Remastered",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "Marvel's Spider-Man: Miles Morales",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Matterfall",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "MediEvil",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Megadimension Neptunia VII",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Melty Blood: Type Lumina",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Metal Eden",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "Mitsurugi Kamui Hikae",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Monopoly Madness",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Monster Boy and the Cursed Kingdom",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Monster Hunter Stories",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Monster Hunter Stories 2: Wings of Ruin",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Monster Jam Showdown",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Monster Truck Championship",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Moonlighter",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Mordhau",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "Mortal Kombat 1",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "Mortal Shell",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Mortal Shell: Enhanced Edition",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "MotoGP 25",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Moving Out 2",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "MX vs. ATV All Out: Anniversary Collection",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "My Friend Peppa Pig",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Mystic Pillars: Remastered",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "NASCAR Heat 5",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "NBA 2K Playgrounds 2",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "NBA 2K24",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Neva",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Nightmares from the Deep 2: The Siren's Call",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Nights of Azure",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Nights of Azure 2: Bride of the New Moon",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Nioh",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "No More Heroes III",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Nobunaga's Ambition: Taishi",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Observer: System Redux",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "Oddballers",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Oddworld: New 'n' Tasty",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Oddworld: Soulstorm",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Omega Quintet",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Omno",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Onee Chanbara Origin",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Oninaki",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Orcs Must Die 3",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Outlast II",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Overcooked: All You Can Eat",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Overpass",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Overpass 2",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "Pacific Drive",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "Pathfinder: Wrath of the Righteous Enhanced Edition",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "PAW Patrol Mighty Pups Save Adventure Bay",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "PAW Patrol The Movie: Adventure City Calls",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "PAW Patrol World",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "PAW Patrol: Grand Prix",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "PAW Patrol: On a Roll",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Persona 5 Royal",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Persona 5 Tactica",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Phogs",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Pile Up!",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Pillars of Eternity II: Deadfire",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Pillars of Eternity: Complete Edition",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "PJ Masks: Heroes of the Night",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Planet Coaster 2",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "Planet Zoo: Console Edition",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "PlateUp!",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Poker Club",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Police Simulator: Patrol Officers",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Poppy Playtime: Chapter 1",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Power Rangers: Battle for the Grid",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "PREY",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Prince of Persia: The Lost Crown",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Prison Architect",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Pure Pool",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Q*Bert Rebooted",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Rabbids Invasion: The Interactive TV Show",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Rabbids: Party of Legends",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "RAGE 2",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Rain World",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Rainbow Six: Extraction",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Raji: An Ancient Epic",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Rapala Fishing Pro Series",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Ratchet & Clank: Rift Apart",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "Rayman Legends",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "ReadySet Heroes",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Rebel Galaxy",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Red Dead Redemption",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Resident Evil 7: Biohazard",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Resident Evil Village",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Resogun",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Return to Monkey Island",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "Returnal",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "Riders Republic",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Rise of the Tomb Raider",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Risk of Rain 2",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "RISK: Urban Assault",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "River City Melee Mach!!",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Rock of Ages III: Make & Break",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Rogue Lords",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Roguebook",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Röki",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "Romance of the Three Kingdoms XIII",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Rugby 25",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Rune Factory 4 Special",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "S.T.A.L.K.E.R.: Legends of the Zone Trilogy",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Sackboy: A Big Adventure",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Sakuna: Of Rice and Ruin",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Salt and Sacrifice",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Samurai Warriors 5",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Sand Land",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Sayonara Wild Hearts",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "Scott Pilgrim vs. The World: The Game Complete Edition",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Season",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Secret Neighbor",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Session: Skate Sim",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Shadow of the Beast",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Shadow of the Colossus",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Shadow of the Tomb Raider",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Shadow Tactics: Blades of the Shogun",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Shadow Warrior 2",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Shadowrun Returns",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Shadowrun: Dragonfall Director's Cut",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Shadowrun: Hong Kong Extended Edition",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Silent Hill 2",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "Skate Story",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "Skull and Bones",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "Slime Rancher",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Sniper Elite 4",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Sniper Elite 5",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "SnowRunner",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Somerville",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Soul Hackers 2",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Soundfall",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Source of Madness",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "South Park: The Fractured But Whole",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "South Park: The Stick of Truth",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Space Crew: Legendary Edition",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Space Engineers",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Space Hulk: Deathwing",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Space Junkies",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "SpellForce III Reforced",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Spintires: Mudrunner",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Spitlings",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Star Ocean: The Divine Force",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Starlink: Battle for Atlas",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Steep",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Stellaris",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Stick Fight: The Game",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Still Wakes the Deep",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "Story of Seasons: A Wonderful Life",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "Story of Seasons: Friends of Mineral Town",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Stranded Deep",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Street Fighter V: Champion Edition",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Surgeon Simulator: Anniversary Edition",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Surviving the Aftermath",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Sword of the Sea",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "Syberia: The World Before",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Tacoma",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Tails Noir",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "Tearaway Unfolded",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Tekken 7",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Telling Lies",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Tennis World Tour 2",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Tennis World Tour 2: Complete Edition",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "Terraria",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Test Drive Unlimited: Solar Crown",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "Tetris Effect",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Thank Goodness You're Here!",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "The Artful Escape",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "The Crew 2",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "The Dark Pictures Anthology: Little Hope",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "The Dark Pictures Anthology: Man of Medan",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "The Division 2",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "The Elder Scrolls Online: Tamriel Unlimited",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "The Elder Scrolls V: Skyrim - Special Edition",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "The Elder Scrolls V: Skyrim Anniversary Edition",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "The Evil Within 2",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "The Exit 8",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "The Fisherman: Fishing Planet",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "The Forgotten City",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "The Gardens Between",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "The Invincible",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "The Last Guardian",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "The Last of Us Part I",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "The Last of Us Part II",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "The Last of Us Part II Remastered",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "The LEGO Movie Videogame",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "The LEGO NINJAGO Movie Video Game",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "The Long Dark",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "The Lord of the Rings: Return to Moria",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "The Missing: J.J. Macfield and the Island of Memories",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "The Pedestrian",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "The Rogue Prince of Persia",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "The Settlers: New Allies",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "The Surge",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "The Surge 2",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "The Talos Principle II",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "The Technomancer",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "The Witch and the Hundred Knight: Revival Edition",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "theHunter: Call of the Wild",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Thief",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "This War of Mine: Final Cut",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "Thomas Was Alone",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Thymesia",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "Tin Hearts",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Tom Clancy's Ghost Recon: Wildlands",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Tom Clancy's Rainbow Six: Siege",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Tom Clancy's The Division",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Tomb Raider: Definitive Edition",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "TopSpin 2K25",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Totally Reliable Delivery Service",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Touhou Genso Rondo: Bullet Ballet",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Toukiden 2",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "TowerFall Ascension",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Townsmen: A Kingdom Rebuilt",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "TrackMania: Turbo",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Train Sim World 5",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Transference",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Trials Fusion",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Trials of the Blood Dragon",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Trials Rising",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Tricky Towers",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Trine 4: The Nightmare Prince",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "TRON RUN/r",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Tropico 5",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Tropico 6",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Two Point Campus",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Two Point Hospital",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Umbrella Corps",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Uncharted 4: A Thief's End",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Uncharted: Legacy of Thieves Collection",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "Uncharted: The Lost Legacy",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Under the Waves",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Undertale",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Unicorn Overlord",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "UNO",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Until Dawn",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Untitled Goose Game",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "V Rising",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "Valiant Hearts: The Great War",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Vampyr",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Venba",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "Vikings - Wolves of Midgard",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Warhammer 40,000: Inquisitor - Martyr",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Warhammer 40,000: Space Marine 2",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "Warhammer: Chaosbane",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Warhammer: Vermintide 2",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Warriors All-Stars",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Watch Dogs 2",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Watch Dogs Legion",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "We Love Katamari REROLL + Royal Reverie",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Werewolf: The Apocalypse - Earthblood",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Werewolves Within",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "West of Dead",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Wheel of Fortune",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Wild Card Football",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Wizard with a Gun",
+      "platform": [
+        "PS5"
+      ]
+    },
+    {
+      "title": "Wo Long: Fallen Dynasty",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Wolfenstein II: The New Colossus",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Wolfenstein: The New Order",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Wolfenstein: The Old Blood",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Wolfenstein: Youngblood",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "World War Z: Aftermath",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Worms W.M.D",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "WRC Generations",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Wytchwood",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "XCOM 2",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Yakuza: Like a Dragon",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Yet Another Zombie Defense HD",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "You Suck at Parking",
+      "platform": [
+        "PS5",
+        "PS4"
+      ]
+    },
+    {
+      "title": "Ys IX: Monstrum Nox",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Ys VIII: Lacrimosa of Dana",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Zombi",
+      "platform": [
+        "PS4"
+      ]
+    },
+    {
+      "title": "Zombie Army 4: Dead War",
+      "platform": [
+        "PS4"
+      ]
+    }
+  ]
+}

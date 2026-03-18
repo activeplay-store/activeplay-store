@@ -6,9 +6,15 @@
     "dev": "next dev -p 3001",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "fetch-covers": "npx tsx scripts/fetch-covers.ts",
+    "fetch-catalog": "npx tsx scripts/fetch-catalog.ts",
+    "fetch-essential": "npx tsx scripts/fetch-essential.ts",
+    "fetch-classics": "npx tsx scripts/fetch-classics.ts",
+    "fetch-trials": "npx tsx scripts/fetch-trials.ts"
   },
   "dependencies": {
+    "cheerio": "^1.2.0",
     "next": "16.1.6",
     "react": "19.2.3",
     "react-dom": "19.2.3"
