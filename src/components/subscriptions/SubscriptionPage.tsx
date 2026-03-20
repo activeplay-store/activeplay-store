@@ -7,6 +7,8 @@ import classicsData from '@/data/catalog-classics.json';
 import trialsData from '@/data/catalog-trials.json';
 import MessengerPopup from '@/components/MessengerPopup';
 import HowItWorks from '@/components/HowItWorks';
+import TrustBlock from '@/components/TrustBlock';
+import AntiFraudBlock from '@/components/AntiFraudBlock';
 
 const gameCovers = [
   { src: '/images/covers/ghost-of-yotei.png', name: 'Ghost of Yotei' },
@@ -646,7 +648,7 @@ export default function SubscriptionPage({ subscriptionId }: SubscriptionPagePro
                           onClick={(e) => { e.stopPropagation(); openOrder(`PS Plus ${plan.name} (${periodLabel}, ${regionLabel})`, price); }}
                           className="btn-primary w-full py-3.5 rounded-xl"
                         >
-                          Оформить за 5 мин
+                          Оформить подписку
                         </button>
                         <p className="text-sm mt-2" style={{ color: 'rgba(255,255,255,0.6)' }}>
                           Менеджер ответит за 2–3 минуты
@@ -680,7 +682,7 @@ export default function SubscriptionPage({ subscriptionId }: SubscriptionPagePro
                 onClick={() => openOrder(`PS Plus ${plan.name} (12 мес, Украина)`, plan.prices.ukraine[12])}
                 className="btn-primary w-full py-3.5 rounded-xl"
               >
-                Оформить за 5 мин
+                Оформить подписку
               </button>
               <p className="text-sm mt-2" style={{ color: 'rgba(255,255,255,0.6)' }}>
                 Менеджер ответит за 2–3 минуты
@@ -1088,9 +1090,11 @@ export default function SubscriptionPage({ subscriptionId }: SubscriptionPagePro
         <CtaButton />
         <ComparisonSection />
         <HowItWorks />
+        <TrustBlock />
         <WhyActivePlaySection />
         <CtaButton />
         <FaqSection />
+        <AntiFraudBlock />
         <FinalCtaSection />
         <MessengerPopup
           isOpen={popupOpen}
@@ -1118,9 +1122,11 @@ export default function SubscriptionPage({ subscriptionId }: SubscriptionPagePro
       <ComparisonSection />
       <CtaButton />
       <HowItWorks />
+      <TrustBlock />
       <WhyActivePlaySection />
       <CtaButton />
       <FaqSection />
+      <AntiFraudBlock />
       <FinalCtaSection />
       <MessengerPopup
         isOpen={popupOpen}

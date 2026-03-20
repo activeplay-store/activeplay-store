@@ -1,4 +1,4 @@
-export type CardRegion = 'turkey' | 'india' | 'ukraine';
+export type CardRegion = 'turkey' | 'india';
 
 export interface GiftCard {
   nominal: string;
@@ -19,16 +19,10 @@ export const giftcards: Record<CardRegion, GiftCard[]> = {
     { nominal: '5000 TL', price: 13000 },
   ],
   india: [
-    { nominal: '500 INR', price: 550 },
-    { nominal: '1000 INR', price: 1050 },
-    { nominal: '2000 INR', price: 2050 },
-    { nominal: '3000 INR', price: 3050 },
-    { nominal: '5000 INR', price: 5050 },
-  ],
-  ukraine: [
-    { nominal: '500 UAH', price: 1100 },
-    { nominal: '1000 UAH', price: 2100 },
-    { nominal: '1500 UAH', price: 3100 },
-    { nominal: '2000 UAH', price: 4100 },
+    { nominal: '₹1000', price: 1500 },
+    { nominal: '₹2000', price: 3000 },
+    { nominal: '₹3000', price: 4500 },
+    { nominal: '₹4000', price: 5500 },
+    { nominal: '₹5000', price: 7000 },
   ],
 };

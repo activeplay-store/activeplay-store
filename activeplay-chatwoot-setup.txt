@@ -1,0 +1,185 @@
+﻿# ACTIVEPLAY — НАСТРОЙКА CHATWOOT И ИНТЕГРАЦИЯ МЕССЕНДЖЕРОВ
+## Документ для передачи в новый чат (17.03.2026)
+
+---
+
+## ТЕКУЩИЙ СТАТУС
+
+### Что сделано:
+1. **Chatwoot установлен и работает** на `https://chat.activeplay.games`
+2. **Telegram** — подключен и работает двусторонне (входящие + исходящие)
+3. **Чат на сайте** — виджет Chatwoot установлен на activeplay.games (заменил Tawk.to)
+4. **VK** — входящие сообщения приходят в Chatwoot, исходящие доходят до клиента в VK, НО в Chatwoot показывает красную метку "Не удалось отправить" (косметический баг, сообщения реально доходят)
+
+### Что нужно доделать:
+1. **Исправить красную метку "Не удалось отправить"** в VK канале — поменять URL вебхука в настройках источника VK ActivePlay на `https://chat.activeplay.games/chatwoot-webhook` и проверить
+2. **Max** — подключить когда появится API (пока не зарегистрированы)
+3. **Tawk.to** — можно удалить компонент с сайта, Chatwoot его заменил (хотя аккаунт Tawk.to настроен: Property ID `69b905d47b19961c37ddc012`, Widget ID `1jjtbthk3`)
+
+---
+
+## СЕРВЕРНАЯ ИНФРАСТРУКТУРА
+
+### Chatwoot (Docker)
+- **URL:** https://chat.activeplay.games
+- **Сервер:** Timeweb Cloud VPS, IP 31.130.144.44
+- **Порт:** 3500 (маппинг Docker 3500:3000, чтобы не конфликтовать с Маныч на :3000)
+- **Папка:** `/opt/chatwoot/`
+- **Файлы:** `.env`, `docker-compose.yaml`
+- **Docker-контейнеры:** chatwoot_rails_1, chatwoot_sidekiq_1, chatwoot_postgres_1, chatwoot_redis_1, chatwoot_base_1
+- **Nginx конфиг:** `/etc/nginx/sites-available/chatwoot` (проксирует на localhost:3500 + маршруты /vk-callback и /chatwoot-webhook на localhost:3600)
+- **SSL:** Let's Encrypt, автообновление, истекает 2026-06-15
+
+### Chatwoot .env ключевые значения:
+```
+SECRET_KEY_BASE=3ae83d6bb2519ea6cdf6c400bf12531280370a12ab4bb7936d121110f219afa5c5a6d37e139e78ab43952b665fdab313071bbd399df09b5366a5fbad5f187017
+FRONTEND_URL=https://chat.activeplay.games
+POSTGRES_PASSWORD=ActivePlay2026
+```
+
+### Chatwoot аккаунт:
+- **Логин:** lvrkayla@gmail.com
+- **Пароль:** Nikita2020!
+- **Access Token:** 9Kw1x6XXKcXQJkY9D7snD2sY
+- **Account ID:** 1
+- **Роль:** SuperAdmin
+
+### DNS (Cloudflare):
+- `chat.activeplay.games` → A → 31.130.144.44 (DNS only)
+
+---
+
+## ИСТОЧНИКИ (INBOXES) В CHATWOOT
+
+### 1. ActivePlayStoreBot (Telegram)
+- **ID:** 1
+- **Тип:** Channel::Telegram
+- **Bot:** @ActivePlayStoreBot
+- **Bot Token:** 8664693572:AAEJezew63g_jKcD0bl0KLrQeBojSIvKQxI
+- **Статус:** Работает полностью
+
+### 2. ActivePlay (Сайт / Website)
+- **ID:** 2
+- **Тип:** Website
+- **Website Token:** CRRDuUyh65jLcZ9S25C4mA1C
+- **Домен:** activeplay.games
+- **Статус:** Работает полностью
+- **Виджет:** подключен через компонент ChatWidget.tsx в Next.js
+
+### 4. VK ActivePlay (API Channel)
+- **ID:** 4
+- **Тип:** API
+- **Inbox Identifier:** 4g27xH4uLB7tYVRDXZpMmcFe
+- **Webhook URL (в настройках источника):** https://chat.activeplay.games/vk-bridge ← НУЖНО ПОМЕНЯТЬ на https://chat.activeplay.games/chatwoot-webhook
+- **Статус:** Входящие работают, исходящие доходят но показывает ошибку
+
+---
+
+## VK BRIDGE (МОСТ VK ↔ CHATWOOT)
+
+### Скрипт
+- **Папка:** `/opt/vk-bridge/`
+- **Файл:** `index.js`
+- **PM2 процесс:** `vk-bridge` (ID: 2)
+- **Порт:** 3600
+- **Зависимости:** express, body-parser, axios
+
+### Конфигурация в index.js:
+```
+VK_TOKEN = 'vk1.a.IIdJu8mqY04Oak44hNvVho9x9kvSCTC_WeLfQdeY5B6bWJVFYfwtWOe5CNsXMAKKYuTG5wS5gSmrdZlXyrI4njvtCJ8WM4zdvsYoWc7g33F0aI8Ul84OEjk0t3FeQheBrxFI8WmCafAyy63TXlznlGyV8DdcOwYUvagMHjeurNYgQO0HcOysS1Qc8ivwzhiS47TGsk5WpNSOxTCtyXmfjg'
+VK_GROUP_ID = 214354347
+CHATWOOT_URL = 'http://127.0.0.1:3500'
+CHATWOOT_TOKEN = '9Kw1x6XXKcXQJkY9D7snD2sY'
+CHATWOOT_INBOX_ID = 4
+CHATWOOT_ACCOUNT_ID = 1
+```
+
+### Эндпоинты:
+- `POST /vk-callback` — принимает Callback API от VK (входящие сообщения)
+- `POST /chatwoot-webhook` — принимает webhook от Chatwoot (ответы оператора → VK)
+- `GET /set-code/:code` — установить VK confirmation code (нужен после каждого рестарта PM2!)
+
+### VK Callback API:
+- **Адрес сервера:** https://chat.activeplay.games/vk-callback
+- **Confirmation code:** bd10b591
+- **Типы событий:** Входящее сообщение (message_new)
+- **Секретный ключ:** aaQ13axAPQEcczQa (не используется в скрипте)
+
+### VK Сообщество:
+- **Адрес:** https://vk.com/activeplay
+- **ID:** 214354347 (public214354347)
+- **Ключ доступа API:** vk1.a.IIdJu8mqY04Oak44h... (полный в конфиге выше)
+- **Права:** управление сообществом, сообщения сообщества
+
+### Chatwoot Webhook (Интеграции):
+- **URL:** https://chat.activeplay.games/chatwoot-webhook
+- **Событие:** message_created
+
+---
+
+## ВАЖНО: ПОСЛЕ РЕСТАРТА PM2
+
+VK Bridge хранит confirmation code в памяти. После рестарта PM2 нужно заново установить код:
+```bash
+curl -s http://127.0.0.1:3600/set-code/bd10b591
+```
+
+---
+
+## ПРОБЛЕМА КРАСНОЙ МЕТКИ "НЕ УДАЛОСЬ ОТПРАВИТЬ"
+
+### Что происходит:
+- Оператор пишет ответ в Chatwoot → webhook идёт на /chatwoot-webhook → мост отправляет в VK → клиент получает сообщение
+- НО Chatwoot показывает "Не удалось отправить" потому что API inbox не получает подтверждение доставки
+
+### Что попробовать:
+1. Поменять URL вебхука в настройках источника VK ActivePlay (шестерёнка → Настройки → URL вебхука) на `https://chat.activeplay.games/chatwoot-webhook`
+2. Если не помогает — нужно в скрипте после отправки в VK делать обратный вызов Chatwoot API для обновления статуса сообщения
+3. Возможно нужно использовать Chatwoot API endpoint для создания outgoing message вместо стандартного Reply
+
+---
+
+## PM2 ПРОЦЕССЫ НА СЕРВЕРЕ
+
+| ID | Name | Port | Описание |
+|----|------|------|----------|
+| 0 | activeplay | 3001 | Next.js сайт activeplay.games |
+| 1 | webhook | 9000 | Автодеплой webhook |
+| 2 | vk-bridge | 3600 | Мост VK ↔ Chatwoot |
+
+Chatwoot работает через Docker (docker-compose), не через PM2.
+
+---
+
+## NGINX КОНФИГИ
+
+### /etc/nginx/sites-available/chatwoot
+Проксирует `chat.activeplay.games`:
+- `/vk-callback` → localhost:3600
+- `/chatwoot-webhook` → localhost:3600
+- `/` (всё остальное) → localhost:3500 (Chatwoot)
+- SSL через Let's Encrypt
+
+---
+
+## СЛЕДУЮЩИЕ ШАГИ (для нового чата)
+
+1. **Исправить красную метку VK** — поменять webhook URL в источнике + доработать скрипт
+2. **Сохранить confirmation code** в файл/env чтобы не терять при рестарте
+3. **Этап 2 — Посадочные страницы подписок** (SEO-трафик):
+   - /ps-plus-essential, /ps-plus-extra, /ps-plus-deluxe
+   - /xbox-game-pass-core, /xbox-game-pass-standard, /xbox-game-pass-ultimate
+4. **Оставшиеся правки Этапа 1** (из предыдущего саммари — italic, анимации, SEO-текст, schema.org)
+5. **Max** — подключить когда будет API
+
+---
+
+## ВАЖНЫЕ ПРАВИЛА (НАПОМИНАНИЕ)
+
+1. Пользователь — СЕРГЕЙ. Никогда не называть Максимом.
+2. Максим — владелец/менеджер, отдельный человек.
+3. WhatsApp НЕ используем (заблокирован в РФ).
+4. Steam НЕ продаём.
+5. Claude Code — основной инструмент разработки для сайта.
+6. Сервер на порту 3001 (сайт), 3500 (Chatwoot), 3600 (VK bridge).
+

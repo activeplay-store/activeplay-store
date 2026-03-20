@@ -20,9 +20,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'ActivePlay — купить PS Plus и Xbox Game Pass в России | От 690 ₽/мес',
+  title: 'Купить PS Plus и Game Pass в России — ActivePlay | Подписки, карты PSN, игры PS5',
   description:
-    'Подписки PlayStation Plus и Xbox Game Pass для России по лучшим ценам. Активация за 5 минут, без VPN. Оплата по СБП. Работаем с 2020 года. PS Plus Essential, Extra, Deluxe — от 690 ₽/мес.',
+    'Купить PS Plus Essential, Extra, Deluxe, Xbox Game Pass Ultimate и EA Play из России. Карты пополнения PSN Турция. Оплата в рублях через СБП, активация за 5 минут. 50 000+ клиентов с 2020 года.',
   keywords:
     'купить PS Plus Россия, PlayStation Plus подписка, Xbox Game Pass купить, PS Plus Essential цена, PS Plus Extra цена, Game Pass Ultimate Россия, подписка PlayStation дешево',
   openGraph: {

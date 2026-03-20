@@ -15,7 +15,7 @@ export default function GameCard({ game, onBuy }: GameCardProps) {
       <div className="relative aspect-[3/4] overflow-hidden">
         <Image
           src={game.cover}
-          alt={game.title}
+          alt={`Купить ${game.title} ${game.platforms.join(' ')} со скидкой ${game.discount}%`}
           fill
           className="object-cover transition-transform duration-300 group-hover:scale-[1.06]"
           sizes="240px"

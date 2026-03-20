@@ -82,6 +82,24 @@ const GAMES_TO_FETCH = [
   { slug: 'pga-tour-2k23', file: 'pga-tour-2k25.jpg', title: 'PGA Tour 2K25' },
   { slug: 'slime-rancher-2', file: 'slime-rancher-2.jpg', title: 'Slime Rancher 2' },
   { slug: 'the-elder-scrolls-online', file: 'elder-scrolls-online.jpg', title: 'The Elder Scrolls Online: Tamriel Unlimited' },
+  // ========== ПРЕДЗАКАЗЫ (6) ==========
+  { slug: 'directive-8020', file: 'directive-8020.jpg', title: 'Directive 8020' },
+  { slug: 'pragmata', file: 'pragmata.jpg', title: 'Pragmata' },
+  { slug: 'diablo-iv', file: 'diablo-4-loh.jpg', title: 'Diablo IV: Lord of Hatred' },
+  { slug: 'saros', file: 'saros.jpg', title: 'SAROS' },
+  { slug: 'lego-batman', file: 'lego-batman.jpg', title: 'LEGO Batman: Legacy of the Dark Knight' },
+  { slug: 'james-bond-007', file: '007-first-light.jpg', title: '007 First Light' },
+  // ========== ТОП ПРОДАЖ (10) ==========
+  { slug: 'resident-evil-4-2', file: 'resident-evil-requiem.jpg', title: 'Resident Evil 4' },
+  { slug: 'ea-sports-fc-25', file: 'ea-fc-26.jpg', title: 'EA SPORTS FC 26' },
+  { slug: 'ea-sports-ufc-5', file: 'ufc-5.jpg', title: 'EA Sports UFC 5' },
+  { slug: 'grand-theft-auto-v', file: 'gta-v.jpg', title: 'Grand Theft Auto V' },
+  { slug: 'minecraft', file: 'minecraft.jpg', title: 'Minecraft' },
+  { slug: 'it-takes-two', file: 'it-takes-two.jpg', title: 'It Takes Two' },
+  { slug: 'arc-raiders', file: 'arc-raiders.jpg', title: 'ARC Raiders' },
+  { slug: 'reanimal', file: 'reanimal.jpg', title: 'REANIMAL' },
+  { slug: 'forza-horizon-5', file: 'forza-horizon-5.jpg', title: 'Forza Horizon 5' },
+  { slug: 'call-of-duty-black-ops-cold-war', file: 'cod-blops-7.jpg', title: 'Call of Duty: Black Ops 7' },
 ];
 
 // Dynamically add trials from catalog-trials.json

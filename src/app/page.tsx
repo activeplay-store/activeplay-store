@@ -4,10 +4,12 @@ import SubscriptionSection from '@/components/SubscriptionSection';
 import HowItWorks from '@/components/HowItWorks';
 import GamesSection from '@/components/GamesSection';
 import PreordersSection from '@/components/PreordersSection';
+import TopSellersSection from '@/components/TopSellersSection';
 import TrustBlock from '@/components/TrustBlock';
 import FAQ from '@/components/FAQ';
 import SeoTextBlock from '@/components/SeoTextBlock';
 import CTABlock from '@/components/CTABlock';
+import AntiFraudBlock from '@/components/AntiFraudBlock';
 import Footer from '@/components/Footer';
 import StickyMobileCTA from '@/components/StickyMobileCTA';
 import PromoBadge from '@/components/PromoBadge';
@@ -43,18 +45,25 @@ export default function Home() {
 
         <SectionDivider />
 
-        {/* 7. Games — transparent */}
-        <ScrollReveal>
-          <GamesSection />
-        </ScrollReveal>
-
-        <SectionDivider />
-
-        {/* 8. Preorders — slightly lighter */}
+        {/* Preorders */}
         <ScrollReveal>
           <div style={{ background: 'rgba(255,255,255,0.02)' }}>
             <PreordersSection />
           </div>
+        </ScrollReveal>
+
+        <SectionDivider />
+
+        {/* Top Sellers */}
+        <ScrollReveal>
+          <TopSellersSection />
+        </ScrollReveal>
+
+        <SectionDivider />
+
+        {/* Games */}
+        <ScrollReveal>
+          <GamesSection />
         </ScrollReveal>
 
         <SectionDivider />
@@ -78,6 +87,13 @@ export default function Home() {
         {/* 11. SEO text block */}
         <ScrollReveal>
           <SeoTextBlock />
+        </ScrollReveal>
+
+        <SectionDivider />
+
+        {/* Anti-fraud block */}
+        <ScrollReveal>
+          <AntiFraudBlock />
         </ScrollReveal>
 
         <SectionDivider />

@@ -1,0 +1,136 @@
+﻿# ACTIVEPLAY — ИНТЕГРАЦИЯ CHATWOOT + TELEGRAM
+## Саммари для продолжения в новом чате (17.03.2026)
+
+---
+
+## ЧТО СДЕЛАНО СЕГОДНЯ
+
+### 1. Оператор Люда подключена к Chatwoot
+- Email: luda.volga80@gmail.com
+- Пароль: ActivePlay2026
+- Подтверждена через rails console
+- Мобильное приложение: Chatwoot из App Store/Google Play, URL сервера: chat.activeplay.games
+
+### 2. @ActivePlayTelegramBot подключен к Chatwoot
+- Токен: 8720797232:AAFrf75NQfZ3j8IkcJokAKUXxSwOeY2m3wo
+- Создан через BotFather, display name "ActivePlay Telegram"
+- Подключен как источник "Telegram ActivePlay" в Chatwoot
+- ЛС этому боту → падают в Chatwoot ✅
+- Ответ из Chatwoot → доходит до клиента в Telegram ✅ (нативная интеграция)
+
+### 3. Бот-модератор в групповом чате (1,555 участников)
+- Скрипт: /home/activeplay/telegram-group-bot/bot.js
+- PM2 имя: tg-group-bot, порт 3700
+- Работает как прокси: webhook Telegram → наш скрипт → групповые обрабатывает сам, ЛС пересылает в Chatwoot
+- Webhook Telegram переключен на: https://chat.activeplay.games/telegram-webhook
+- Ловит 90+ ключевых слов (подписк, купить, цена, ps plus, и т.д.)
+- Отвечает reply с кнопкой "Написать менеджеру" → ведёт в ЛС @ActivePlayTelegramBot
+- Cooldown 60 сек на пользователя
+- Не реагирует на ботов и аккаунты с "ActivePlay" в имени
+- ПРОТЕСТИРОВАНО — работает ✅
+
+### 4. Userbot @activeplay3 → Chatwoot
+- Скрипт: /home/activeplay/tg-userbot-ap3/userbot.py (Python, Pyrogram)
+- PM2 имя: ap3-userbot
+- Telegram API: api_id=38737397, api_hash=6727b90176e8f6c7f78520deb358a677
+- Телефон: +79104650715
+- Сессия авторизована, файл сессии: /home/activeplay/tg-userbot-ap3/activeplay3.session
+- Chatwoot inbox: "ActivePlay 3 TG" (API type), inbox_id=6
+- Inbox identifier: Eiz3P3UHBbTLWrqu6S4TyBSQ
+- Входящие ЛС → дублируются в Chatwoot ✅
+- Автоответ клиенту: "Здравствуйте! Оператор ответит в течение 5 минут." ✅
+
+---
+
+## ЧТО НЕ ДОДЕЛАНО — ПРИОРИТЕТ
+
+### 1. ГЛАВНАЯ ЗАДАЧА: Ответ оператора из Chatwoot → @activeplay3 → клиенту
+- Сейчас: оператор видит сообщение в Chatwoot, но ответ НЕ доходит до клиента
+- Нужно: webhook в Chatwoot → скрипт получает ответ оператора → pyrogram отправляет от имени @activeplay3
+- Реализация: добавить webhook в Chatwoot (Настройки → Интеграции → Webhook), URL типа https://chat.activeplay.games/ap3-webhook
+- Скрипт userbot.py нужно переписать: добавить express-подобный HTTP сервер (или отдельный скрипт) который слушает webhook и отправляет через pyrogram
+- Нужно маппить conversation_id → telegram_user_id (хранить при создании контакта)
+- Nginx: добавить location /ap3-webhook → порт скрипта
+
+### 2. Текст автоответа бота в группе
+- Сергей хочет подумать над финальным текстом
+- Текущий: "Здравствуйте! Для оформления заказа напишите нашему менеджеру — ответим за 5 минут!"
+- Нужно добавить предупреждение о мошенниках
+- Файл: /home/activeplay/telegram-group-bot/bot.js
+
+### 3. Убрать старый автоответ @activeplay3
+- На аккаунте стоит старый автоответ "обратитесь к @activeplay4"
+- Это через Telegram Business или другого бота
+- Нужно ОТКЛЮЧИТЬ — иначе дублирует с нашим новым ответом
+- Сергей должен зайти в настройки @activeplay3 и убрать
+
+### 4. Подключить @activeplay1, @activeplay2, @activeplay4
+- По аналогии с @activeplay3
+- Для каждого: my.telegram.org → API credentials, создать inbox в Chatwoot, запустить userbot
+- Можно использовать один api_id/api_hash для всех (привязан к аккаунту, не к приложению)
+
+### 5. Два окна в Chatwoot для одного клиента
+- API inbox создаёт отдельные контакты для входящего и автоответа
+- Не критично, но неудобно
+- Можно доработать маппинг контактов позже
+
+---
+
+## АРХИТЕКТУРА СЕРВЕРА
+
+### PM2 процессы
+| ID | Name | Тип | Порт | Описание |
+|----|------|-----|------|----------|
+| 0 | activeplay | Node.js | 3001 | Сайт activeplay.games |
+| 1 | webhook | Node.js | 9000 | Автодеплой GitHub |
+| 2 | vk-bridge | Node.js | 3600 | Мост VK ↔ Chatwoot |
+| 3 | tg-group-bot | Node.js | 3700 | Модератор группы + прокси webhook |
+| 4 | ap3-userbot | Python | - | Userbot @activeplay3 → Chatwoot |
+
+### Docker (Chatwoot)
+- chatwoot_rails_1 (порт 3500)
+- chatwoot_sidekiq_1
+- chatwoot_postgres_1
+- chatwoot_redis_1
+
+### Nginx (chat.activeplay.games)
+```
+/vk-callback → localhost:3600
+/chatwoot-webhook → localhost:3600
+/telegram-webhook → localhost:3700
+/ → localhost:3500 (Chatwoot)
+```
+
+### Chatwoot источники (inboxes)
+1. ActivePlay — виджет на сайте
+2. ActivePlayStoreBot — Telegram бот для сайта (НЕ ТРОГАТЬ)
+3. ActivePlay - VK — VK сообщество
+4. Telegram ActivePlay — @ActivePlayTelegramBot (новый, для Telegram)
+5. ActivePlay 3 TG — API inbox для @activeplay3 (inbox_id=6, identifier=Eiz3P3UHBbTLWrqu6S4TyBSQ)
+
+### Chatwoot доступы
+- Админ: lvrkayla@gmail.com / Nikita2020!
+- API токен: 9Kw1x6XXKcXQJkY9D7snD2sY
+- Оператор: luda.volga80@gmail.com / ActivePlay2026
+- Account ID: 1
+
+---
+
+## КЛЮЧЕВЫЕ ФАЙЛЫ
+
+- /home/activeplay/telegram-group-bot/bot.js — модератор группы
+- /home/activeplay/telegram-group-bot/.env — BOT_TOKEN, CHATWOOT_WEBHOOK
+- /home/activeplay/tg-userbot-ap3/userbot.py — userbot @activeplay3
+- /home/activeplay/tg-userbot-ap3/activeplay3.session — сессия pyrogram
+- /etc/nginx/sites-available/chatwoot — nginx конфиг
+- /etc/nginx/sites-available/activeplay — nginx конфиг сайта (НЕ ТРОГАТЬ)
+
+---
+
+## ВАЖНЫЕ ПРАВИЛА
+1. Пользователь — СЕРГЕЙ. Никогда не называть Максимом.
+2. Сайт НЕ ТРОГАЕМ — это отдельный проект
+3. @ActivePlayStoreBot НЕ ТРОГАЕМ — он для сайта
+4. WhatsApp НЕ используем (заблокирован в РФ)
+5. Все Telegram-интеграции — параллельный проект, не связан с сайтом
+

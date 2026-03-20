@@ -30,8 +30,16 @@ export default function GamesSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
-          <h2 className="text-[26px] sm:text-[32px] md:text-[36px] font-bold gradient-text">
-            Игры со скидкой
+          <h2
+            className="text-[26px] sm:text-[32px] md:text-[36px] font-bold"
+            style={{
+              background: 'linear-gradient(135deg, #ffffff 30%, #00D4FF 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+            }}
+          >
+            Игры со скидкой для PS5, PS4 и Xbox
           </h2>
 
           <div className="flex rounded-xl bg-[var(--bg-elevated)] border border-white/[0.06] overflow-hidden">
@@ -50,6 +58,9 @@ export default function GamesSection() {
             ))}
           </div>
         </div>
+        <p className="text-[var(--text-secondary)] mb-10 -mt-4">
+          Купить игры PS Store и Xbox Store дёшево — скидки до 60% на хиты
+        </p>
 
         {/* Carousel */}
         <div className="relative group/carousel">
@@ -86,7 +97,7 @@ export default function GamesSection() {
         {/* Price update note */}
         <div className="flex items-center gap-2 mt-6 text-xs text-[var(--text-muted)]">
           <span className="pulse-dot" />
-          Каталог обновляется автоматически — цены из PS Store пересчитаны по курсу ЦБ
+          Каталог обновляется автоматически — цены из PS Store и Xbox Store в рублях по курсу ЦБ
         </div>
       </div>
 

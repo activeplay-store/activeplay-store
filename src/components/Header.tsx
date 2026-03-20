@@ -9,14 +9,22 @@ const subscriptionLinks = [
 ];
 
 const navLinks = [
+  { label: 'Главная', href: '/' },
   { label: 'Подписки', href: '#subscriptions', hasSubmenu: true },
-  { label: 'Игры', href: '#games' },
-  { label: 'Предзаказы', href: '#preorders' },
-  { label: 'Как это работает', href: '#how-it-works' },
   { label: 'FAQ', href: '#faq' },
 ];
 
 const messengerLinks = [
+  {
+    name: 'Чат на сайте',
+    href: '#',
+    className: 'bg-[#00E676] text-black hover:brightness-110',
+    icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+      </svg>
+    ),
+  },
   {
     name: 'Telegram',
     href: 'https://t.me/activeplay1',
@@ -37,16 +45,6 @@ const messengerLinks = [
       </svg>
     ),
   },
-  {
-    name: 'Max',
-    href: '#',
-    className: 'btn-secondary',
-    icon: (
-      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/>
-      </svg>
-    ),
-  },
 ];
 
 export default function Header() {
@@ -59,7 +57,7 @@ export default function Header() {
       <div className="max-w-7xl mx-auto h-full" style={{ padding: '0 40px' }}>
         <div className="flex items-center justify-between h-full">
           {/* Logo */}
-          <a href="#" className="flex items-center shrink-0">
+          <a href="/" className="flex items-center shrink-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/images/logo/AP_WHITE.png"
@@ -87,7 +85,8 @@ export default function Header() {
                     </svg>
                   </button>
                   {subsOpen && (
-                    <div className="absolute top-full left-0 mt-2 w-52 rounded-xl glass-card p-2 shadow-2xl z-50">
+                    <div className="absolute top-full left-0 pt-2 w-52 z-50">
+                    <div className="rounded-xl glass-card p-2 shadow-2xl">
                       {subscriptionLinks.map((sub) => (
                         <a
                           key={sub.href}
@@ -101,6 +100,7 @@ export default function Header() {
                           {sub.label}
                         </a>
                       ))}
+                    </div>
                     </div>
                   )}
                 </div>
@@ -132,7 +132,6 @@ export default function Header() {
                   onClick={() => setContactOpen(false)}
                 />
                 <div className="absolute top-full right-0 mt-2 w-56 rounded-xl glass-card p-3 shadow-2xl z-50">
-                  <p className="text-xs text-[var(--text-muted)] mb-2 px-2">Выберите мессенджер</p>
                   <div className="space-y-2">
                     {messengerLinks.map((m) => (
                       <a
@@ -140,7 +139,7 @@ export default function Header() {
                         href={m.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={`flex items-center gap-3 w-full px-4 py-2.5 rounded-lg font-semibold text-sm text-white transition-all ${m.className}`}
+                        className={`flex items-center justify-center gap-3 w-full px-4 py-2.5 rounded-lg font-semibold text-sm text-white transition-all ${m.className}`}
                         onClick={() => setContactOpen(false)}
                       >
                         {m.icon}
@@ -179,7 +178,6 @@ export default function Header() {
         <div className="lg:hidden">
           <div className="fixed inset-0 z-40 bg-black/50" onClick={() => setContactOpen(false)} />
           <div className="fixed top-20 left-4 right-4 z-50 glass-card rounded-2xl p-5 shadow-2xl animate-fade-in-up">
-            <p className="text-sm text-[var(--text-secondary)] mb-3">Выберите мессенджер для связи:</p>
             <div className="space-y-2.5">
               {messengerLinks.map((m) => (
                 <a
