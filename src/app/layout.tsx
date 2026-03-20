@@ -70,6 +70,44 @@ const storeSchema = {
   ],
 };
 
+const orgSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'ActivePlay',
+  url: 'https://activeplay.games',
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: '5.0',
+    bestRating: '5',
+    worstRating: '1',
+    ratingCount: '500',
+    reviewCount: '500',
+  },
+  review: [
+    {
+      '@type': 'Review',
+      author: { '@type': 'Person', name: 'Rtp' },
+      datePublished: '2025-08',
+      reviewBody: 'Взял предзаказ на FC 26 и подписку Plus, все максимально быстро, ответили сразу, за 15 минут все было сделано.',
+      reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
+    },
+    {
+      '@type': 'Review',
+      author: { '@type': 'Person', name: 'Vitaly M.' },
+      datePublished: '2023-08',
+      reviewBody: 'Оформил предзаказ на игру и скажу, что все очень четко, быстро и без разводилова. Реально все сделали минут за 5-7.',
+      reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
+    },
+    {
+      '@type': 'Review',
+      author: { '@type': 'Person', name: 'Кирилл Х.' },
+      datePublished: '2022-12',
+      reviewBody: 'Парни просто красавцы! Все быстро, четко и профессионально. Спасибо вам!',
+      reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
+    },
+  ],
+};
+
 const faqSchema = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
@@ -112,6 +150,10 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(storeSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
         />
         <script
           type="application/ld+json"

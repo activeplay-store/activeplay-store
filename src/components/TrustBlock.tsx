@@ -20,7 +20,7 @@ export default function TrustBlock() {
     <section className="relative z-10 pt-20 pb-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-[26px] sm:text-[32px] md:text-[36px] font-bold gradient-text text-center mb-12">
-          Почему нам доверяют
+          Отзывы клиентов ActivePlay
         </h2>
 
         {/* Reviews carousel — always scrolling, no pause */}
@@ -90,7 +90,7 @@ export default function TrustBlock() {
             Читать все отзывы &rarr;
           </a>
           <p className="text-xs text-[var(--text-muted)] mt-2">
-            Более 500 отзывов в нашем Telegram-канале
+            Более 500 отзывов о покупке PS Plus, Game Pass и игр в нашем Telegram-канале
           </p>
         </div>
       </div>
