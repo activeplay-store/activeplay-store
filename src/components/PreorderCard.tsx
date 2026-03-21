@@ -5,6 +5,7 @@ import type { Preorder } from '@/data/preorders';
 
 interface PreorderCardProps {
   preorder: Preorder;
+  region: 'turkey' | 'ukraine';
   onOrder: () => void;
 }
 
@@ -38,9 +39,11 @@ function getCountdown(dateStr: string): { text: string; color: string } {
   return { text: `через ${days} ${word}`, color };
 }
 
-export default function PreorderCard({ preorder, onOrder }: PreorderCardProps) {
+export default function PreorderCard({ preorder, region, onOrder }: PreorderCardProps) {
   const countdown = getCountdown(preorder.releaseDate);
   const hasMultipleEditions = preorder.editions.length > 1;
+  const getPrice = (ed: Preorder['editions'][0]) =>
+    region === 'turkey' ? ed.priceRUB_TR : ed.priceRUB_UA;
 
   return (
     <div className="flex-shrink-0 w-[260px] sm:w-auto rounded-xl overflow-hidden card-base group transition-transform duration-300 hover:scale-[1.03] hover:shadow-2xl flex flex-col">
@@ -66,7 +69,7 @@ export default function PreorderCard({ preorder, onOrder }: PreorderCardProps) {
       </div>
 
       {/* Info */}
-      <div className="p-4">
+      <div className="p-4 flex flex-col flex-1">
         {/* Countdown */}
         <p className="text-xs font-semibold mb-1" style={{ color: countdown.color }}>
           {countdown.text}
@@ -78,31 +81,26 @@ export default function PreorderCard({ preorder, onOrder }: PreorderCardProps) {
         </h3>
 
         {/* Platform badge */}
-        <span className="inline-block px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-white/10 text-[var(--text-muted)] mb-3">
+        <span className="inline-block px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-white/10 text-[var(--text-muted)] mb-2 w-fit">
           {preorder.platform}
         </span>
 
+        {/* Description */}
+        <p className="text-sm text-gray-400 mb-3 line-clamp-2">{preorder.description}</p>
+
         {/* Editions & prices */}
-        <div className="text-sm text-[var(--text-secondary)] mb-3">
-          {hasMultipleEditions ? (
-            <div className="space-y-0.5">
-              {preorder.editions.map((ed) => (
-                <div key={ed.name} className="flex justify-between items-center" style={{ whiteSpace: 'nowrap', fontSize: '13px' }}>
-                  <span className="text-[var(--text-muted)]">{ed.name}:</span>
-                  <span className="price-display" style={{ fontSize: '13px' }}>
-                    {ed.priceRUB_TR.toLocaleString('ru-RU')}&thinsp;₽
-                  </span>
-                </div>
-              ))}
+        <div className="text-sm text-[var(--text-secondary)] mb-3 space-y-0.5">
+          {preorder.editions.map((ed) => (
+            <div key={ed.name} className="flex justify-between items-center" style={{ whiteSpace: 'nowrap', fontSize: '13px' }}>
+              <span className="text-gray-300 font-medium">{ed.name}:</span>
+              <span className="text-white font-bold" style={{ fontSize: '13px' }}>
+                {getPrice(ed).toLocaleString('ru-RU')}&thinsp;₽
+              </span>
             </div>
-          ) : (
-            <span className="price-display text-lg">
-              {preorder.editions[0].priceRUB_TR.toLocaleString('ru-RU')}&thinsp;₽
-            </span>
-          )}
+          ))}
         </div>
 
-        {/* Single order button */}
+        {/* Order button */}
         <button
           onClick={onOrder}
           className="btn-primary text-sm w-full py-2.5 mt-auto"

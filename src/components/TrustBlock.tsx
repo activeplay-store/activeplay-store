@@ -9,11 +9,35 @@ const TelegramIcon = () => (
   </svg>
 );
 
-// Duplicate for seamless loop
-const doubled = [...reviews, ...reviews];
+function AbelCard() {
+  return (
+    <div className="min-w-[320px] max-w-[360px] flex-shrink-0 rounded-2xl border border-cyan-500/30 bg-cyan-500/[0.04] p-6 flex flex-col gap-4" style={{boxShadow: '0 0 20px rgba(0,212,255,0.08)'}}>
+      <div className="flex items-center gap-4">
+        <div
+          className="w-[56px] h-[56px] rounded-full border-2 border-cyan-400/40 flex-shrink-0"
+          style={{
+            backgroundImage: 'url(/images/abel.png)',
+            backgroundSize: '350%',
+            backgroundPosition: '50% 15%',
+          }}
+        />
+        <div>
+          <div className="text-white font-bold text-[15px]">Даниил Abel Абельдяев</div>
+          <div className="text-cyan-400 text-xs font-semibold">5× чемпион России по EA FC</div>
+        </div>
+      </div>
+      <p className="text-gray-300 text-sm leading-relaxed italic">«Оформляю подписки на игры в ActivePlay уже давно. Рекомендую всем своим знакомым и друзьям. Никогда не было проблем. Приходите и покупайте смело»</p>
+      <div className="flex items-center justify-between mt-auto">
+        <span className="text-gray-500 text-xs">Амбассадор ActivePlay</span>
+        <span className="text-cyan-400 text-xs font-semibold">🎮 Pro Player</span>
+      </div>
+    </div>
+  );
+}
 
-// Duration: 22 cards × 18s = 396s for one full set to scroll past
-const DURATION = `${reviews.length * 18}s`;
+// One set = Abel + all reviews. Duplicate for seamless loop.
+const setLength = 1 + reviews.length;
+const DURATION = `${setLength * 18}s`;
 
 export default function TrustBlock() {
   return (
@@ -23,7 +47,7 @@ export default function TrustBlock() {
           Отзывы клиентов ActivePlay
         </h2>
 
-        {/* Reviews carousel — always scrolling, no pause */}
+        {/* Reviews carousel */}
         <div className="relative overflow-hidden">
           {/* Fade edges */}
           <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-8 z-10 bg-gradient-to-r from-[var(--bg-base)] to-transparent" />
@@ -33,12 +57,13 @@ export default function TrustBlock() {
             className="trust-carousel-track flex gap-4 w-max"
             style={{ animation: `trustScroll ${DURATION} linear infinite` }}
           >
-            {doubled.map((review, idx) => (
+            {/* First set: Abel + reviews */}
+            <AbelCard />
+            {reviews.map((review, idx) => (
               <div
-                key={`${review.id}-${idx}`}
+                key={`${review.id}-0-${idx}`}
                 className="flex-shrink-0 w-[300px] sm:w-[340px] card-base p-5 overflow-hidden"
               >
-                {/* Stars */}
                 <div className="flex gap-0.5 mb-3">
                   {Array.from({ length: review.rating }).map((_, i) => (
                     <svg key={i} className="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
@@ -46,28 +71,52 @@ export default function TrustBlock() {
                     </svg>
                   ))}
                 </div>
-
-                {/* Review text — static, clamped to 5 lines max */}
                 <p className="text-sm text-[var(--text-body)] mb-4 leading-relaxed line-clamp-5">
                   &ldquo;{review.text}&rdquo;
                 </p>
-
-                {/* Author row */}
                 <div className="flex items-center gap-3 mt-auto">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={review.avatarImg}
-                    alt={review.author}
-                    className="w-9 h-9 rounded-full object-cover shrink-0"
-                    loading="lazy"
-                  />
+                  <img src={review.avatarImg} alt={review.author} className="w-9 h-9 rounded-full object-cover shrink-0" loading="lazy" />
                   <div className="flex-1 min-w-0">
                     <span className="text-sm font-medium text-white block">{review.author}</span>
                     <span className="text-xs text-[#00D4FF] block">{review.product}</span>
                   </div>
                 </div>
+                <div className="flex items-center justify-between mt-3 pt-3 border-t border-white/[0.06]">
+                  <span className="text-xs text-[var(--text-muted)]">{review.date}</span>
+                  <span className="flex items-center gap-1 text-xs text-[var(--text-muted)]">
+                    <TelegramIcon />
+                    Отзыв из Telegram
+                  </span>
+                </div>
+              </div>
+            ))}
 
-                {/* Date + source */}
+            {/* Second set (duplicate for seamless loop): Abel + reviews */}
+            <AbelCard />
+            {reviews.map((review, idx) => (
+              <div
+                key={`${review.id}-1-${idx}`}
+                className="flex-shrink-0 w-[300px] sm:w-[340px] card-base p-5 overflow-hidden"
+              >
+                <div className="flex gap-0.5 mb-3">
+                  {Array.from({ length: review.rating }).map((_, i) => (
+                    <svg key={i} className="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                  ))}
+                </div>
+                <p className="text-sm text-[var(--text-body)] mb-4 leading-relaxed line-clamp-5">
+                  &ldquo;{review.text}&rdquo;
+                </p>
+                <div className="flex items-center gap-3 mt-auto">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={review.avatarImg} alt={review.author} className="w-9 h-9 rounded-full object-cover shrink-0" loading="lazy" />
+                  <div className="flex-1 min-w-0">
+                    <span className="text-sm font-medium text-white block">{review.author}</span>
+                    <span className="text-xs text-[#00D4FF] block">{review.product}</span>
+                  </div>
+                </div>
                 <div className="flex items-center justify-between mt-3 pt-3 border-t border-white/[0.06]">
                   <span className="text-xs text-[var(--text-muted)]">{review.date}</span>
                   <span className="flex items-center gap-1 text-xs text-[var(--text-muted)]">

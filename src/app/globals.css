@@ -1,5 +1,45 @@
 @import "tailwindcss";
 
+/* ══════ Abel ambassador SVG border animation ══════ */
+@keyframes dashMove {
+  to { stroke-dashoffset: -100; }
+}
+
+.abel-dot {
+  stroke-dashoffset: 0;
+  animation: dashMove 4s linear infinite;
+  filter: drop-shadow(0 0 4px rgba(0, 212, 255, 0.6));
+}
+
+.abel-ambassador-card svg {
+  overflow: visible;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .abel-dot {
+    animation: none;
+    stroke-dasharray: 100 0;
+    opacity: 0.3;
+  }
+}
+
+/* ══════ Hot Releases animated dash ══════ */
+.ap-dash {
+  stroke-dashoffset: 0;
+  animation: dashMove 5s linear infinite;
+  filter: drop-shadow(0 0 3px rgba(0, 212, 255, 0.5));
+}
+
+.ap-card--hero svg { overflow: visible; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ap-dash {
+    animation: none;
+    stroke-dasharray: 100 0;
+    opacity: 0.2;
+  }
+}
+
 :root {
   /* ══════ Brand ActivePlay ══════ */
   --brand: #00D4FF;

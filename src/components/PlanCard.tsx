@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import type { PlanTier, Period, Region } from '@/data/subscriptions';
 
 interface PlanCardProps {
@@ -8,22 +9,23 @@ interface PlanCardProps {
   region?: Region;
   platform: 'ps' | 'xbox';
   onOrder: (planName: string, price: number) => void;
+  href?: string;
 }
 
 function getPsCheckColor(planName: string) {
   switch (planName) {
-    case 'Essential': return '#C6A220';
-    case 'Extra': return '#FFFFFF';
-    case 'Deluxe': return '#FFFFFF';
+    case 'Essential': return '#FFB800';
+    case 'Extra': return '#0070D1';
+    case 'Deluxe': return '#D4D4D4';
     default: return null;
   }
 }
 
 function getPsTitleColor(planName: string) {
   switch (planName) {
-    case 'Essential': return '#C6A220';
-    case 'Extra': return '#FFFFFF';
-    case 'Deluxe': return '#E8E8E8';
+    case 'Essential': return '#FFB800';
+    case 'Extra': return '#0070D1';
+    case 'Deluxe': return '#D4D4D4';
     default: return null;
   }
 }
@@ -31,13 +33,13 @@ function getPsTitleColor(planName: string) {
 // Dynamic badge per period + plan (PS only)
 function getPsBadge(planName: string, period: Period, region?: Region): { text: string; bg: string; glow: string } | null {
   if (period === 1 && planName === 'Extra') {
-    return { text: 'Популярный выбор', bg: 'linear-gradient(135deg, #00D4FF, #0070D1)', glow: 'rgba(0,212,255,0.35)' };
+    return { text: 'Популярный выбор', bg: '#00D4FF', glow: 'rgba(0,212,255,0.35)' };
   }
   if (period === 3 && planName === 'Deluxe') {
-    return { text: 'Мы рекомендуем', bg: 'linear-gradient(135deg, #8B5CF6, #6D28D9)', glow: 'rgba(139,92,246,0.35)' };
+    return { text: 'Мы рекомендуем', bg: '#00D4FF', glow: 'rgba(0,212,255,0.35)' };
   }
   if (period === 12 && planName === 'Essential' && region !== 'ukraine') {
-    return { text: 'Максимальная выгода', bg: 'linear-gradient(135deg, #00E676, #00C853)', glow: 'rgba(0,230,118,0.35)' };
+    return { text: 'Максимальная выгода', bg: '#00D4FF', glow: 'rgba(0,212,255,0.35)' };
   }
   return null;
 }
@@ -56,7 +58,7 @@ function getXboxBadge(planName: string, period: Period): { text: string; bg: str
   return null;
 }
 
-export default function PlanCard({ plan, period, region, platform, onOrder }: PlanCardProps) {
+export default function PlanCard({ plan, period, region, platform, onOrder, href }: PlanCardProps) {
   const prices = platform === 'ps'
     ? plan.prices[region || 'turkey']
     : plan.prices.global;
@@ -83,23 +85,16 @@ export default function PlanCard({ plan, period, region, platform, onOrder }: Pl
     ? `ps-${plan.name.toLowerCase()}`
     : `xbox-${plan.name.toLowerCase()}`;
 
-  return (
-    <div
-      id={cardId}
-      className={`relative flex flex-col card-base min-w-[280px] w-full snap-start cursor-pointer ${
-        hasBadge ? 'card-popular z-10' : ''
-      }`}
-      onClick={() => {
-        const fullName = platform === 'ps'
-          ? `PS Plus ${plan.name} (${period} мес, ${region === 'ukraine' ? 'Украина' : 'Турция'})`
-          : `Xbox Game Pass ${plan.name} (${period} мес)`;
-        onOrder(fullName, price);
-      }}
-    >
+  const cardClassName = `relative flex flex-col card-base min-w-[280px] w-full snap-start cursor-pointer hover:scale-[1.02] transition-transform duration-200 ${
+    hasBadge ? 'card-popular z-10' : ''
+  }`;
+
+  const card = (
+    <div id={cardId} className={cardClassName}>
       {/* Dynamic PS badge */}
       {psBadge && (
         <div
-          className="absolute -top-4 left-1/2 -translate-x-1/2 px-5 py-1.5 rounded-full text-xs font-bold uppercase text-white whitespace-nowrap tracking-wide animate-fade-in-up"
+          className="absolute -top-4 left-1/2 -translate-x-1/2 px-5 py-1.5 rounded-full text-xs font-bold uppercase text-black whitespace-nowrap tracking-wide animate-fade-in-up"
           style={{
             background: psBadge.bg,
             boxShadow: `0 0 20px ${psBadge.glow}`,
@@ -184,15 +179,17 @@ export default function PlanCard({ plan, period, region, platform, onOrder }: Pl
 
         {/* Order button */}
         <button
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation();
+            e.preventDefault();
             const fullName = platform === 'ps'
               ? `PS Plus ${plan.name} (${period} мес, ${region === 'ukraine' ? 'Украина' : 'Турция'})`
               : `Xbox Game Pass ${plan.name} (${period} мес)`;
             onOrder(fullName, price);
           }}
-          className={`${hasBadge ? 'btn-primary-orange' : 'btn-primary'} w-full py-3.5 rounded-xl`}
+          className="btn-primary w-full py-3.5 rounded-xl"
         >
-          Оформить заказ
+          {platform === 'ps' ? `Купить PS Plus ${plan.name}` : `Купить Game Pass ${plan.name}`}
         </button>
 
         <p className="text-xs text-[var(--text-muted)] text-center mt-2">
@@ -201,4 +198,10 @@ export default function PlanCard({ plan, period, region, platform, onOrder }: Pl
       </div>
     </div>
   );
+
+  if (href) {
+    return <Link href={href} className="contents">{card}</Link>;
+  }
+
+  return card;
 }

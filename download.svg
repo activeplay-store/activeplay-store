@@ -1,0 +1,7 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Таймер -->
+  <circle cx="24" cy="24" r="16" stroke="#16C15F" stroke-width="4" stroke-linecap="round" stroke-dasharray="80 20" transform="rotate(-90 24 24)"></circle>
+  
+  <!-- Play -->
+  <path d="M21 18L31 24L21 30V18Z" fill="#16C15F"></path>
+</svg>

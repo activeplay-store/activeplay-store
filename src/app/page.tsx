@@ -4,6 +4,7 @@ import SubscriptionSection from '@/components/SubscriptionSection';
 import HowItWorks from '@/components/HowItWorks';
 import GamesSection from '@/components/GamesSection';
 import PreordersSection from '@/components/PreordersSection';
+import HotReleases from '@/components/HotReleases';
 import TopSellersSection from '@/components/TopSellersSection';
 import TrustBlock from '@/components/TrustBlock';
 import FAQ from '@/components/FAQ';
@@ -50,6 +51,13 @@ export default function Home() {
           <div style={{ background: 'rgba(255,255,255,0.02)' }}>
             <PreordersSection />
           </div>
+        </ScrollReveal>
+
+        <SectionDivider />
+
+        {/* Hot Releases */}
+        <ScrollReveal>
+          <HotReleases />
         </ScrollReveal>
 
         <SectionDivider />

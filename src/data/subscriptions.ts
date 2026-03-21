@@ -18,7 +18,7 @@ export const psPlans: PlanTier[] = [
   {
     name: 'Essential',
     subtitle: 'Основная',
-    color: '#C6A220',
+    color: '#FFB800',
     features: [
       'Онлайн-мультиплеер',
       '3-4 бесплатные игры каждый месяц',
@@ -34,7 +34,7 @@ export const psPlans: PlanTier[] = [
   {
     name: 'Extra',
     subtitle: 'Расширенная',
-    color: '#2A2A2A',
+    color: '#0070D1',
     popular: true,
     features: [
       'Каталог 400+ игр для PS5 и PS4',
@@ -51,7 +51,7 @@ export const psPlans: PlanTier[] = [
   {
     name: 'Deluxe',
     subtitle: 'Максимальная',
-    color: '#E8E8E8',
+    color: '#D4D4D4',
     features: [
       'Каталог классических игр PS1, PS2, PS3',
       'Пробные версии AAA-игр (до 5ч)',

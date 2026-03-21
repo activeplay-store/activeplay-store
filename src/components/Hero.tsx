@@ -1,8 +1,10 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import MessengerPopup from './MessengerPopup';
 
 export default function Hero() {
+  const [popup, setPopup] = useState(false);
   useEffect(() => {
     const onScroll = () => {
       document.documentElement.style.setProperty('--scroll-y', `${window.scrollY}px`);
@@ -71,12 +73,12 @@ export default function Hero() {
         </p>
 
         {/* CTA — Primary button */}
-        <a
-          href="#subscriptions"
+        <button
+          onClick={() => setPopup(true)}
           className="btn-primary btn-pulse text-base sm:text-lg px-8 py-4 rounded-2xl"
         >
           Оформить заказ
-        </a>
+        </button>
 
         {/* Stats */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-12 max-w-3xl mx-auto">
@@ -99,6 +101,13 @@ export default function Hero() {
           Цены обновляются автоматически
         </div>
       </div>
+
+      <MessengerPopup
+        isOpen={popup}
+        onClose={() => setPopup(false)}
+        planName="Заказ с главной"
+        price={0}
+      />
     </section>
   );
 }

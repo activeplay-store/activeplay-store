@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import PlanCard from './PlanCard';
 import MessengerPopup from './MessengerPopup';
 import { psPlans, xboxPlans } from '@/data/subscriptions';
@@ -87,9 +88,11 @@ export default function SubscriptionSection() {
             style={{ width: '32px', height: '32px', objectFit: 'contain' }}
           />
           <div>
-            <h2 className="text-[26px] sm:text-[32px] md:text-[36px] font-bold gradient-text">
-              Подписка PlayStation Plus (PS Plus)
-            </h2>
+            <Link href="/ps-plus-essential" className="hover:opacity-80 transition-opacity cursor-pointer">
+              <h2 className="text-[26px] sm:text-[32px] md:text-[36px] font-bold gradient-text">
+                Подписка PlayStation Plus (PS Plus)
+              </h2>
+            </Link>
             <p className="text-[15px] text-[var(--text-secondary)]">Купить PS Plus для PS5 / PS4 — мультиплеер, каталог игр, облачное хранилище</p>
           </div>
         </div>
@@ -168,6 +171,7 @@ export default function SubscriptionSection() {
               region={psRegion}
               platform="ps"
               onOrder={handleOrder}
+              href={`/ps-plus-${plan.name.toLowerCase()}`}
             />
           ))}
         </div>
@@ -303,7 +307,7 @@ export default function SubscriptionSection() {
                   className="btn-primary whitespace-nowrap w-full sm:w-auto"
                   style={{ height: '52px' }}
                 >
-                  Оформить заказ
+                  Купить код
                 </button>
               </div>
 
@@ -505,7 +509,7 @@ export default function SubscriptionSection() {
                       onClick={() => handleOrder(`EA Play (${periodLabel}, ${regionLabel})`, price)}
                       className="btn-primary w-full py-3.5 rounded-xl"
                     >
-                      Оформить подписку
+                      Купить EA Play для PlayStation и Xbox
                     </button>
                     <p className="text-xs text-[var(--text-muted)] text-center mt-2">Менеджер ответит за 2–3 минуты</p>
                   </>
@@ -579,7 +583,7 @@ export default function SubscriptionSection() {
                       onClick={() => handleOrder(`EA Play Pro (${periodLabel}, ПК)`, proPrice)}
                       className="btn-primary w-full py-3.5 rounded-xl"
                     >
-                      Оформить подписку
+                      Купить EA Play Pro для ПК
                     </button>
                     <p className="text-xs text-[var(--text-muted)] text-center mt-2">Менеджер ответит за 2–3 минуты</p>
                   </>
@@ -612,105 +616,142 @@ export default function SubscriptionSection() {
           <div style={{ background: 'rgba(255,255,255,0.02)' }}>
             <div className="section-divider" />
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-              {/* Header */}
-              <div className="flex items-center gap-3 mb-10">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/images/platforms/fc26-logo.png" alt="FC 26" style={{ width: '32px', height: '32px', objectFit: 'contain' }} />
-                <div>
-                  <h2 className="text-[26px] sm:text-[32px] md:text-[36px] font-bold gradient-text">FC Points (FIFA Points)</h2>
-                  <p className="text-[15px] text-[var(--text-secondary)]">Купить FC Points для EA Sports FC 26 — донат Ultimate Team на PS5, Xbox и ПК</p>
-                </div>
-              </div>
+              {/* Grid: 2 rows × 2 cols on desktop; Abel spans both rows */}
+              <div className="grid grid-cols-1 lg:grid-cols-[minmax(auto,680px)_300px] gap-x-5 gap-y-0" style={{alignItems: 'stretch'}}>
 
-              <div className="flex flex-col md:flex-row items-center gap-10">
-                {/* Left: FC Points card */}
-                <div className="shrink-0">
+                {/* Row 1, Col 1: Header */}
+                <div className="flex items-center gap-3 mb-6">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/images/platforms/fc26-logo.png" alt="FC 26" style={{ width: '32px', height: '32px', objectFit: 'contain' }} />
+                  <div>
+                    <h2 className="text-[26px] sm:text-[32px] md:text-[36px] font-bold gradient-text">FC Points (FIFA Points)</h2>
+                    <p className="text-[15px] text-[var(--text-secondary)]">Купить FC Points для EA Sports FC 26 — донат Ultimate Team на PS5, Xbox и ПК</p>
+                  </div>
+                </div>
+
+                {/* Row 1–2, Col 2: Abel card spanning both rows */}
+                <div className="abel-ambassador-card relative lg:row-span-2 rounded-[14px] bg-[#0a1628] flex flex-col items-center justify-center text-center px-5 py-6">
+                  {/* SVG border overlay */}
+                  <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{borderRadius: 'inherit'}}>
+                    {/* Static base border */}
+                    <rect x="0.5" y="0.5" width="calc(100% - 1px)" height="calc(100% - 1px)" rx="14" ry="14" fill="none" stroke="rgba(0,212,255,0.15)" strokeWidth="1" pathLength="100" />
+                    {/* Animated moving dot */}
+                    <rect x="0.5" y="0.5" width="calc(100% - 1px)" height="calc(100% - 1px)" rx="14" ry="14" fill="none" stroke="#00D4FF" strokeWidth="2" pathLength="100" strokeDasharray="4 96" strokeLinecap="round" className="abel-dot" />
+                  </svg>
                   <div
-                    className="w-[250px] h-[180px] flex flex-col items-center relative transition-transform duration-300 ease-in-out hover:scale-[1.03] overflow-hidden"
+                    role="img"
+                    aria-label="Даниил Abel Абельдяев — амбассадор ActivePlay, 5-кратный чемпион России по EA FC"
+                    className="w-[120px] h-[120px] rounded-full border-2 border-cyan-400/40 mx-auto mb-4 flex-shrink-0 overflow-hidden"
                     style={{
-                      background: 'linear-gradient(180deg, #1A0D2E 0%, #0D0D1A 100%)',
-                      borderRadius: '12px',
-                      border: '1px solid rgba(0,230,118,0.15)',
-                      boxShadow: '0 4px 16px rgba(0,0,0,0.3)',
+                      backgroundImage: 'url(/images/abel.png)',
+                      backgroundSize: '350%',
+                      backgroundPosition: '50% 6%',
                     }}
-                  >
-                    {/* Glow layers */}
-                    <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(circle at 50% 45%, rgba(0,230,118,0.12), transparent 60%)' }} />
-                    <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(circle at 30% 80%, rgba(139,0,255,0.08), transparent 50%)' }} />
-                    <div className="absolute inset-0 pointer-events-none" style={{ opacity: 0.03, backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 256 256\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'n\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23n)\'/%3E%3C/svg%3E")' }} />
+                  />
+                  <div className="text-white font-bold text-[16px]">Даниил Abel Абельдяев</div>
+                  <div className="text-cyan-400 text-[12px] font-semibold mt-1.5">5-кратный чемпион России по EA FC · Стример</div>
+                  <p className="text-gray-400 text-[12px] italic mt-3 leading-relaxed">«Я пополняю баланс FC&nbsp;Points через ActivePlay и&nbsp;вам рекомендую&nbsp;— быстро, безопасно, дёшево»</p>
+                  <div className="text-[10px] text-gray-300 tracking-wider uppercase mt-3">Амбассадор ActivePlay</div>
+                </div>
 
-                    {/* Hit badge */}
-                    {fcSelected === 4 && (
-                      <span className="absolute z-10 animate-fade-in-up" style={{ top: 34, right: 8, background: 'linear-gradient(135deg, #FF6B00, #FF3D00)', color: '#fff', fontSize: 7, fontWeight: 700, textTransform: 'uppercase', padding: '2px 7px', borderRadius: 5, letterSpacing: 1, boxShadow: '0 2px 6px rgba(255,61,0,0.25)' }}>Хит</span>
-                    )}
+                {/* Row 2, Col 1: Purchase block */}
+                <div className="flex flex-col">
+                  <div className="flex flex-col sm:flex-row gap-3.5 items-start">
+                    {/* FC Points card — ORIGINAL, untouched */}
+                    <div className="shrink-0 self-center sm:self-start">
+                      <div
+                        className="w-[250px] h-[180px] flex flex-col items-center relative transition-transform duration-300 ease-in-out hover:scale-[1.03] overflow-hidden"
+                        style={{
+                          background: 'linear-gradient(180deg, #1A0D2E 0%, #0D0D1A 100%)',
+                          borderRadius: '12px',
+                          border: '1px solid rgba(0,230,118,0.15)',
+                          boxShadow: '0 4px 16px rgba(0,0,0,0.3)',
+                        }}
+                      >
+                        {/* Glow layers */}
+                        <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(circle at 50% 45%, rgba(0,230,118,0.12), transparent 60%)' }} />
+                        <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(circle at 30% 80%, rgba(139,0,255,0.08), transparent 50%)' }} />
+                        <div className="absolute inset-0 pointer-events-none" style={{ opacity: 0.03, backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 256 256\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'n\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23n)\'/%3E%3C/svg%3E")' }} />
 
-                    {/* Green top bar */}
-                    <div className="w-full shrink-0 flex items-center justify-center relative z-10" style={{ height: '28px', background: 'linear-gradient(90deg, #00E676, #76FF03, #00E676)', borderRadius: '12px 12px 0 0', boxShadow: '0 2px 12px rgba(0,230,118,0.3)' }}>
-                      <span className="font-bold uppercase whitespace-nowrap" style={{ fontSize: '11px', letterSpacing: '1px', color: '#000' }}>FC Points</span>
+                        {/* Hit badge */}
+                        {fcSelected === 4 && (
+                          <span className="absolute z-10 animate-fade-in-up" style={{ top: 34, right: 8, background: 'linear-gradient(135deg, #FF6B00, #FF3D00)', color: '#fff', fontSize: 7, fontWeight: 700, textTransform: 'uppercase', padding: '2px 7px', borderRadius: 5, letterSpacing: 1, boxShadow: '0 2px 6px rgba(255,61,0,0.25)' }}>Хит</span>
+                        )}
+
+                        {/* Green top bar */}
+                        <div className="w-full shrink-0 flex items-center justify-center relative z-10" style={{ height: '28px', background: 'linear-gradient(90deg, #00E676, #76FF03, #00E676)', borderRadius: '12px 12px 0 0', boxShadow: '0 2px 12px rgba(0,230,118,0.3)' }}>
+                          <span className="font-bold uppercase whitespace-nowrap" style={{ fontSize: '11px', letterSpacing: '1px', color: '#000' }}>FC Points</span>
+                        </div>
+
+                        {/* Content */}
+                        <div className="flex flex-col items-center flex-1 relative z-10">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img src="/images/covers/fc-points.png" alt="FC Points" style={{ width: '80px', height: 'auto', paddingTop: '6px', objectFit: 'contain' as const, filter: 'drop-shadow(0 4px 12px rgba(0,230,118,0.35))' }} />
+                          <div style={{ width: '40px', height: '1px', background: 'linear-gradient(90deg, transparent, rgba(0,230,118,0.4), transparent)', margin: '6px auto', boxShadow: '0 0 8px rgba(0,230,118,0.15)' }} />
+                          <span className="font-display" style={{ fontSize: '32px', fontWeight: 800, lineHeight: 1.1, background: 'linear-gradient(180deg, #FFFFFF 0%, #90CAF9 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', textShadow: '0 0 20px rgba(144,202,249,0.2)' }}>{nominal.toLocaleString('ru-RU')}</span>
+                        </div>
+
+                        <span className="text-white uppercase shrink-0 relative z-10" style={{ fontSize: '8px', letterSpacing: '3px', opacity: 0.5, marginBottom: '10px' }}>EA Sports FC 26</span>
+                      </div>
                     </div>
 
-                    {/* Content */}
-                    <div className="flex flex-col items-center flex-1 relative z-10">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src="/images/covers/fc-points.png" alt="FC Points" style={{ width: '80px', height: 'auto', paddingTop: '6px', objectFit: 'contain' as const, filter: 'drop-shadow(0 4px 12px rgba(0,230,118,0.35))' }} />
-                      <div style={{ width: '40px', height: '1px', background: 'linear-gradient(90deg, transparent, rgba(0,230,118,0.4), transparent)', margin: '6px auto', boxShadow: '0 0 8px rgba(0,230,118,0.15)' }} />
-                      <span className="font-display" style={{ fontSize: '32px', fontWeight: 800, lineHeight: 1.1, background: 'linear-gradient(180deg, #FFFFFF 0%, #90CAF9 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', textShadow: '0 0 20px rgba(144,202,249,0.2)' }}>{nominal.toLocaleString('ru-RU')}</span>
-                    </div>
+                    {/* Controls */}
+                    <div className="flex-1 w-full">
+                      <div className="flex rounded-xl bg-[var(--bg-elevated)] border border-white/[0.06] overflow-hidden mb-3 w-fit">
+                        <button onClick={() => { setFcRegion('turkey'); setFcSelected(0); }} className={`px-4 py-2.5 text-sm font-medium transition-all cursor-pointer flex items-center gap-1.5 ${fcRegion === 'turkey' ? 'bg-[var(--brand)] text-white' : 'text-[var(--text-secondary)] hover:text-white'}`}>
+                          <svg width="20" height="14" viewBox="0 0 20 14" className="shrink-0"><rect width="20" height="14" fill="#E30A17" rx="2"/><circle cx="8" cy="7" r="4" fill="white"/><circle cx="9.5" cy="7" r="3" fill="#E30A17"/><polygon points="12,4.5 12.5,6.5 14.5,6.5 13,7.8 13.5,9.5 12,8.2 10.5,9.5 11,7.8 9.5,6.5 11.5,6.5" fill="white"/></svg>
+                          Турция
+                        </button>
+                        <button onClick={() => { setFcRegion('ukraine'); setFcSelected(0); }} className={`px-4 py-2.5 text-sm font-medium transition-all cursor-pointer flex items-center gap-1.5 ${fcRegion === 'ukraine' ? 'bg-[var(--brand)] text-white' : 'text-[var(--text-secondary)] hover:text-white'}`}>
+                          <svg width="20" height="14" viewBox="0 0 20 14" className="shrink-0"><rect width="20" height="7" fill="#005BBB" rx="2"/><rect y="7" width="20" height="7" fill="#FFD500" rx="2"/></svg>
+                          Украина
+                        </button>
+                      </div>
 
-                    <span className="text-white uppercase shrink-0 relative z-10" style={{ fontSize: '8px', letterSpacing: '3px', opacity: 0.5, marginBottom: '10px' }}>EA Sports FC 26</span>
+                      <div className="flex rounded-[14px] bg-[var(--bg-elevated)] border border-white/[0.06] overflow-hidden mb-3 w-fit">
+                        <button onClick={() => setFcEaPlay(true)} className={`px-2.5 py-1 text-[10px] font-medium transition-all cursor-pointer flex items-center gap-1.5 ${fcEaPlay ? '' : 'text-[var(--text-secondary)] hover:text-white'}`} style={fcEaPlay ? { background: '#00E676', color: '#000' } : undefined}>
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img src="/images/platforms/ea-play.png" alt="" style={{ width: 14, height: 14, objectFit: 'contain' as const, borderRadius: 3 }} />
+                          С EA Play
+                        </button>
+                        <button onClick={() => setFcEaPlay(false)} className={`px-2.5 py-1 text-[10px] font-medium transition-all cursor-pointer flex items-center gap-1.5 ${!fcEaPlay ? 'bg-[var(--brand)] text-white' : 'text-[var(--text-secondary)] hover:text-white'}`}>
+                          <span className="relative" style={{ width: 14, height: 14 }}>
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img src="/images/platforms/ea-play.png" alt="" style={{ width: 14, height: 14, objectFit: 'contain' as const, borderRadius: 3, opacity: 0.4 }} />
+                          </span>
+                          Без EA Play
+                        </button>
+                      </div>
+
+                      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                        <div className="relative w-full sm:w-auto">
+                          <select value={fcSelected} onChange={(e) => setFcSelected(Number(e.target.value))} className="cursor-pointer outline-none transition-all w-full sm:w-[220px] appearance-none pr-10 hover:border-[rgba(0,212,255,0.5)]" style={{ background: 'var(--bg-card)', border: '1px solid rgba(0,212,255,0.3)', borderRadius: '12px', padding: '14px 16px', color: 'white', fontSize: '16px', height: '52px' }}>
+                            {fcNominals.map((n, i) => (
+                              <option key={n} value={i}>{n.toLocaleString('ru-RU')} Points</option>
+                            ))}
+                          </select>
+                          <svg className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--text-muted)] pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
+                        </div>
+                        <span className="price-display text-[32px] sm:text-[36px] whitespace-nowrap" style={{ fontWeight: 800, color: '#00D4FF' }}>{price.toLocaleString('ru-RU')}&nbsp;₽</span>
+                      </div>
+
+                      <p className="text-[10px] text-gray-600 mt-1 leading-relaxed">
+                        Официальные FC Points.<br/>
+                        Пополнение через турецкий, украинский или индийский аккаунт за 5 минут
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Кнопка */}
+                  <div className="pt-3">
+                    <button onClick={() => handleOrder(`FC Points ${nominal} (${regionLabel}, ${eaLabel})`, price)} className="btn-primary w-full py-3.5 rounded-xl">
+                      Купить FC Points
+                    </button>
                   </div>
                 </div>
 
-                {/* Right: controls */}
-                <div className="flex-1 w-full">
-                  <div className="flex rounded-xl bg-[var(--bg-elevated)] border border-white/[0.06] overflow-hidden mb-4 w-fit">
-                    <button onClick={() => { setFcRegion('turkey'); setFcSelected(0); }} className={`px-4 py-2.5 text-sm font-medium transition-all cursor-pointer flex items-center gap-1.5 ${fcRegion === 'turkey' ? 'bg-[var(--brand)] text-white' : 'text-[var(--text-secondary)] hover:text-white'}`}>
-                      <svg width="20" height="14" viewBox="0 0 20 14" className="shrink-0"><rect width="20" height="14" fill="#E30A17" rx="2"/><circle cx="8" cy="7" r="4" fill="white"/><circle cx="9.5" cy="7" r="3" fill="#E30A17"/><polygon points="12,4.5 12.5,6.5 14.5,6.5 13,7.8 13.5,9.5 12,8.2 10.5,9.5 11,7.8 9.5,6.5 11.5,6.5" fill="white"/></svg>
-                      Турция
-                    </button>
-                    <button onClick={() => { setFcRegion('ukraine'); setFcSelected(0); }} className={`px-4 py-2.5 text-sm font-medium transition-all cursor-pointer flex items-center gap-1.5 ${fcRegion === 'ukraine' ? 'bg-[var(--brand)] text-white' : 'text-[var(--text-secondary)] hover:text-white'}`}>
-                      <svg width="20" height="14" viewBox="0 0 20 14" className="shrink-0"><rect width="20" height="7" fill="#005BBB" rx="2"/><rect y="7" width="20" height="7" fill="#FFD500" rx="2"/></svg>
-                      Украина
-                    </button>
-                  </div>
-
-                  <div className="flex rounded-lg bg-[var(--bg-elevated)] border border-white/[0.06] overflow-hidden mb-4 w-fit">
-                    <button onClick={() => setFcEaPlay(true)} className={`px-3 py-1.5 text-xs font-medium transition-all cursor-pointer flex items-center gap-1.5 ${fcEaPlay ? '' : 'text-[var(--text-secondary)] hover:text-white'}`} style={fcEaPlay ? { background: '#00E676', color: '#000' } : undefined}>
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src="/images/platforms/ea-play.png" alt="" style={{ width: 16, height: 16, objectFit: 'contain' as const, borderRadius: 3 }} />
-                      С EA Play
-                    </button>
-                    <button onClick={() => setFcEaPlay(false)} className={`px-3 py-1.5 text-xs font-medium transition-all cursor-pointer flex items-center gap-1.5 ${!fcEaPlay ? 'bg-[var(--brand)] text-white' : 'text-[var(--text-secondary)] hover:text-white'}`}>
-                      <span className="relative" style={{ width: 16, height: 16 }}>
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src="/images/platforms/ea-play.png" alt="" style={{ width: 16, height: 16, objectFit: 'contain' as const, borderRadius: 3, opacity: 0.4 }} />
-                      </span>
-                      Без EA Play
-                    </button>
-                  </div>
-
-                  <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-5">
-                    <div className="relative w-full sm:w-auto">
-                      <select value={fcSelected} onChange={(e) => setFcSelected(Number(e.target.value))} className="cursor-pointer outline-none transition-all w-full sm:w-[220px] appearance-none pr-10 hover:border-[rgba(0,212,255,0.5)]" style={{ background: 'var(--bg-card)', border: '1px solid rgba(0,212,255,0.3)', borderRadius: '12px', padding: '14px 16px', color: 'white', fontSize: '16px', height: '52px' }}>
-                        {fcNominals.map((n, i) => (
-                          <option key={n} value={i}>{n.toLocaleString('ru-RU')} Points</option>
-                        ))}
-                      </select>
-                      <svg className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--text-muted)] pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
-                    </div>
-                    <span className="price-display text-[32px] sm:text-[36px] whitespace-nowrap" style={{ fontWeight: 800, color: '#00D4FF' }}>{price.toLocaleString('ru-RU')}&nbsp;₽</span>
-                    <button onClick={() => handleOrder(`FC Points ${nominal} (${regionLabel}, ${eaLabel})`, price)} className="btn-primary whitespace-nowrap w-full sm:w-auto" style={{ height: '52px' }}>Оформить заказ</button>
-                  </div>
-
-                  <p className="text-sm text-[var(--text-secondary)] mt-4">Менеджер ответит за 2–3 минуты</p>
-                </div>
               </div>
             </div>
-
-            {/* FC Points trust line */}
-            <p className="text-xs text-[var(--text-muted)] mt-4 text-center">
-              Официальные FC Points. Пополнение через турецкий, украинский или индийский аккаунт за 5 минут
-            </p>
             <div className="section-divider" />
           </div>
         );

@@ -1,9 +1,11 @@
 export interface TopSellerGame {
   rank: number;
   title: string;
+  genre: string;
   image: string;
   platform: string;
-  priceRUB: number;
+  priceTR: number;
+  priceUA: number;
 }
 
 export interface TopSellers {
@@ -18,15 +20,15 @@ export const topSellers: TopSellers = {
   region: 'Европа',
   source: 'PlayStation Blog',
   games: [
-    { rank: 1, title: 'Resident Evil Requiem', image: '/images/covers/resident-evil-requiem.jpg', platform: 'PS5', priceRUB: 9220 },
-    { rank: 2, title: 'EA SPORTS FC 26', image: '/images/covers/ea-fc-26.jpg', platform: 'PS5', priceRUB: 7790 },
-    { rank: 3, title: 'UFC 5', image: '/images/covers/ufc-5.jpg', platform: 'PS5', priceRUB: 7790 },
-    { rank: 4, title: 'Grand Theft Auto V', image: '/images/covers/gta-v.jpg', platform: 'PS5', priceRUB: 3890 },
-    { rank: 5, title: 'Minecraft', image: '/images/covers/minecraft.jpg', platform: 'PS5', priceRUB: 2460 },
-    { rank: 6, title: 'It Takes Two', image: '/images/covers/it-takes-two.jpg', platform: 'PS5', priceRUB: 4150 },
-    { rank: 7, title: 'ARC Raiders', image: '/images/covers/arc-raiders.jpg', platform: 'PS5', priceRUB: 4800 },
-    { rank: 8, title: 'REANIMAL', image: '/images/covers/reanimal.jpg', platform: 'PS5', priceRUB: 4800 },
-    { rank: 9, title: 'Forza Horizon 5', image: '/images/covers/forza-horizon-5.jpg', platform: 'PS5', priceRUB: 4260 },
-    { rank: 10, title: 'Call of Duty: Black Ops 7', image: '/images/covers/cod-blops-7.jpg', platform: 'PS5', priceRUB: 8570 },
+    { rank: 1, title: 'Resident Evil Requiem', genre: 'Survival Horror', image: '/images/covers/resident-evil-requiem.jpg', platform: 'PS5', priceTR: 9220, priceUA: 7800 },
+    { rank: 2, title: 'EA SPORTS FC 26', genre: 'Sports', image: '/images/covers/ea-fc-26.jpg', platform: 'PS5', priceTR: 7790, priceUA: 6500 },
+    { rank: 3, title: 'UFC 5', genre: 'Fighting', image: '/images/covers/ufc-5.jpg', platform: 'PS5', priceTR: 7790, priceUA: 6500 },
+    { rank: 4, title: 'Grand Theft Auto V', genre: 'Action / Open World', image: '/images/covers/gta-v.jpg', platform: 'PS5', priceTR: 3890, priceUA: 3200 },
+    { rank: 5, title: 'Minecraft', genre: 'Sandbox / Survival', image: '/images/covers/minecraft.jpg', platform: 'PS5', priceTR: 2460, priceUA: 2100 },
+    { rank: 6, title: 'It Takes Two', genre: 'Co-op Adventure', image: '/images/covers/it-takes-two.jpg', platform: 'PS5', priceTR: 4150, priceUA: 3500 },
+    { rank: 7, title: 'ARC Raiders', genre: 'Sci-fi Shooter', image: '/images/covers/arc-raiders.jpg', platform: 'PS5', priceTR: 4800, priceUA: 4000 },
+    { rank: 8, title: 'REANIMAL', genre: 'Horror Adventure', image: '/images/covers/reanimal.jpg', platform: 'PS5', priceTR: 4800, priceUA: 4000 },
+    { rank: 9, title: 'Forza Horizon 5', genre: 'Racing / Open World', image: '/images/covers/forza-horizon-5.jpg', platform: 'PS5', priceTR: 4260, priceUA: 3600 },
+    { rank: 10, title: 'Call of Duty: Black Ops 7', genre: 'FPS / Shooter', image: '/images/covers/cod-blops-7.jpg', platform: 'PS5', priceTR: 8570, priceUA: 7200 },
   ],
 };
