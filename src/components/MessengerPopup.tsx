@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { createPortal } from 'react-dom';
 
 // $chatwoot type is declared globally in ChatWidget.tsx
@@ -80,6 +81,60 @@ const chatIcon = (
   </svg>
 );
 
+function QuickOrderForm({ product }: { product: string }) {
+  const [contactValue, setContactValue] = useState('');
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = async () => {
+    if (!contactValue.trim()) return;
+    try {
+      await fetch('https://chat.activeplay.games/api/v1/accounts/1/conversations', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'api_access_token': '9Kw1x6XXKcXQJkY9D7snD2sY' },
+        body: JSON.stringify({
+          contact: { name: contactValue.trim(), identifier: contactValue.trim() },
+          message: { content: `Быстрый заказ с сайта: ${product || 'Общий запрос'} — контакт: ${contactValue.trim()}` },
+        }),
+      });
+      setSubmitted(true);
+    } catch {
+      window.open('https://t.me/activeplay1', '_blank');
+    }
+  };
+
+  if (submitted) {
+    return (
+      <div className="text-center py-4">
+        <div className="text-cyan-400 text-lg font-bold mb-1">Заявка отправлена!</div>
+        <p className="text-gray-400 text-sm">Менеджер напишет вам в течение 5 минут</p>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <div className="flex items-center gap-3 mt-4 mb-3">
+        <div className="flex-1 h-px bg-gray-700" />
+        <span className="text-gray-500 text-xs">или оставьте заявку</span>
+        <div className="flex-1 h-px bg-gray-700" />
+      </div>
+      <div className="flex flex-col gap-2">
+        <p className="text-gray-400 text-xs">Менеджер сам напишет вам — укажите куда</p>
+        <input
+          type="text"
+          placeholder="Telegram, VK или номер телефона"
+          value={contactValue}
+          onChange={(e) => setContactValue(e.target.value)}
+          className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-white text-sm placeholder-gray-500 focus:border-cyan-500 focus:outline-none"
+        />
+        <button onClick={handleSubmit} className="w-full py-3 rounded-lg bg-cyan-500 text-black font-bold text-sm hover:bg-cyan-400 transition-colors cursor-pointer">
+          Отправить заявку
+        </button>
+      </div>
+    </>
+  );
+}
+
 export default function MessengerPopup({ isOpen, onClose, planName, price }: MessengerPopupProps) {
   if (!isOpen) return null;
 
@@ -91,6 +146,8 @@ export default function MessengerPopup({ isOpen, onClose, planName, price }: Mes
 
   const openChat = () => {
     onClose();
+    // Ensure Chatwoot is loaded before trying to open
+    window.loadChatwoot?.();
     setTimeout(() => {
       const cw = window.$chatwoot;
       if (cw) {
@@ -160,6 +217,9 @@ export default function MessengerPopup({ isOpen, onClose, planName, price }: Mes
             VK
           </a>
         </div>
+
+        {/* Quick order form */}
+        <QuickOrderForm product={humanReadable} />
 
         {/* Mini timeline */}
         <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-4 space-y-3">

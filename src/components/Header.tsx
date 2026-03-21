@@ -1,16 +1,41 @@
 'use client';
 
 import { useState } from 'react';
+import { useActiveSection } from '@/hooks/useActiveSection';
 
-const subscriptionLinks = [
-  { label: 'PS Plus Essential', href: '/ps-plus-essential', color: '#C6A220' },
-  { label: 'PS Plus Extra', href: '/ps-plus-extra', color: '#00D4FF' },
-  { label: 'PS Plus Deluxe', href: '/ps-plus-deluxe', color: '#E8E8E8' },
+const megaMenuColumns = [
+  {
+    title: 'PlayStation',
+    items: [
+      { label: 'PS Plus Essential', href: '/ps-plus-essential' },
+      { label: 'PS Plus Extra', href: '/ps-plus-extra' },
+      { label: 'PS Plus Deluxe', href: '/ps-plus-deluxe' },
+      { label: 'Карты PSN', href: '#gift-cards' },
+      { label: 'FC Points', href: '#fc-points' },
+    ],
+  },
+  {
+    title: 'Xbox',
+    items: [
+      { label: 'Game Pass Essential', href: '#xbox' },
+      { label: 'Game Pass Premium', href: '#xbox' },
+      { label: 'Game Pass Ultimate', href: '#xbox' },
+    ],
+  },
+  {
+    title: 'Игры',
+    items: [
+      { label: 'Предзаказы', href: '#preorders' },
+      { label: 'Горящие новинки', href: '#hot-releases' },
+      { label: 'Топ продаж', href: '#top-sales' },
+      { label: 'Игры со скидкой', href: '#discounts' },
+    ],
+  },
 ];
 
 const navLinks = [
   { label: 'Главная', href: '/' },
-  { label: 'Подписки', href: '#subscriptions', hasSubmenu: true },
+  { label: 'Каталог', href: '#subscriptions', hasSubmenu: true },
   { label: 'FAQ', href: '#faq' },
 ];
 
@@ -52,6 +77,10 @@ export default function Header() {
   const [contactOpen, setContactOpen] = useState(false);
   const [subsOpen, setSubsOpen] = useState(false);
   const [mobileSubsOpen, setMobileSubsOpen] = useState(false);
+  const activeSection = useActiveSection();
+
+  const subscriptionSections = ['subscriptions', 'how-it-works'];
+  const isSubsActive = subscriptionSections.includes(activeSection);
   return (
     <header className="fixed top-0 left-0 right-0 z-50 glass border-b border-white/[0.06]" style={{ height: '100px' }}>
       <div className="max-w-7xl mx-auto h-full" style={{ padding: '0 40px' }}>
@@ -77,7 +106,7 @@ export default function Header() {
                   onMouseLeave={() => setSubsOpen(false)}
                 >
                   <button
-                    className="text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--brand)] transition-colors flex items-center gap-1"
+                    className={`text-sm font-medium transition-colors flex items-center gap-1 ${isSubsActive ? 'text-[var(--brand)]' : 'text-[var(--text-secondary)] hover:text-[var(--brand)]'}`}
                   >
                     {link.label}
                     <svg className={`w-3.5 h-3.5 transition-transform ${subsOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
@@ -85,22 +114,21 @@ export default function Header() {
                     </svg>
                   </button>
                   {subsOpen && (
-                    <div className="absolute top-full left-0 pt-2 w-52 z-50">
-                    <div className="rounded-xl glass-card p-2 shadow-2xl">
-                      {subscriptionLinks.map((sub) => (
-                        <a
-                          key={sub.href}
-                          href={sub.href}
-                          className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-[var(--text-body)] hover:bg-white/[0.06] hover:text-white transition-colors"
-                        >
-                          <span
-                            className="w-2 h-2 rounded-full flex-shrink-0"
-                            style={{ background: sub.color }}
-                          />
-                          {sub.label}
-                        </a>
-                      ))}
-                    </div>
+                    <div className="absolute top-full -left-4 pt-2 z-50">
+                      <div className="rounded-xl border border-cyan-500/10 p-6 shadow-2xl grid grid-cols-3 gap-8" style={{ background: '#0a1628', minWidth: '480px' }}>
+                        {megaMenuColumns.map((col) => (
+                          <div key={col.title}>
+                            <h4 className="text-cyan-400 text-xs uppercase tracking-wider font-bold mb-3">{col.title}</h4>
+                            <div className="flex flex-col gap-2">
+                              {col.items.map((item) => (
+                                <a key={item.label} href={item.href} className="text-sm text-gray-300 hover:text-white transition-colors">
+                                  {item.label}
+                                </a>
+                              ))}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   )}
                 </div>
@@ -108,7 +136,11 @@ export default function Header() {
                 <a
                   key={link.href}
                   href={link.href}
-                  className="text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--brand)] transition-colors"
+                  className={`text-sm font-medium transition-colors ${
+                    (link.href === '#faq' && activeSection === 'faq') || (link.href === '/' && !activeSection)
+                      ? 'text-[var(--brand)]'
+                      : 'text-[var(--text-secondary)] hover:text-[var(--brand)]'
+                  }`}
                 >
                   {link.label}
                 </a>
@@ -214,20 +246,16 @@ export default function Header() {
                     </svg>
                   </button>
                   {mobileSubsOpen && (
-                    <div className="ml-4 space-y-1 mt-1">
-                      {subscriptionLinks.map((sub) => (
-                        <a
-                          key={sub.href}
-                          href={sub.href}
-                          className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-[var(--text-secondary)] hover:bg-white/5 hover:text-white transition-colors"
-                          onClick={() => setMenuOpen(false)}
-                        >
-                          <span
-                            className="w-2 h-2 rounded-full flex-shrink-0"
-                            style={{ background: sub.color }}
-                          />
-                          {sub.label}
-                        </a>
+                    <div className="ml-4 space-y-3 mt-2">
+                      {megaMenuColumns.map((col) => (
+                        <div key={col.title}>
+                          <h4 className="text-cyan-400 text-xs uppercase tracking-wider font-bold mb-1">{col.title}</h4>
+                          {col.items.map((item) => (
+                            <a key={item.label} href={item.href} onClick={() => setMenuOpen(false)} className="block px-3 py-1.5 text-sm text-gray-300 hover:text-white transition-colors">
+                              {item.label}
+                            </a>
+                          ))}
+                        </div>
                       ))}
                     </div>
                   )}

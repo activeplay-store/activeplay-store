@@ -5,19 +5,22 @@
   "scripts": {
     "dev": "next dev -p 3001",
     "build": "next build",
+    "postbuild": "next-sitemap",
     "start": "next start",
     "lint": "eslint",
     "fetch-covers": "npx tsx scripts/fetch-covers.ts",
     "fetch-catalog": "npx tsx scripts/fetch-catalog.ts",
     "fetch-essential": "npx tsx scripts/fetch-essential.ts",
     "fetch-classics": "npx tsx scripts/fetch-classics.ts",
-    "fetch-trials": "npx tsx scripts/fetch-trials.ts"
+    "fetch-trials": "npx tsx scripts/fetch-trials.ts",
+    "optimize-images": "node scripts/optimize-images.mjs"
   },
   "dependencies": {
     "cheerio": "^1.2.0",
     "next": "16.1.6",
     "react": "19.2.3",
-    "react-dom": "19.2.3"
+    "react-dom": "19.2.3",
+    "sharp": "^0.34.5"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
@@ -26,6 +29,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
+    "next-sitemap": "^4.2.3",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

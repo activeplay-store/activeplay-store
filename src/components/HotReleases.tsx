@@ -177,13 +177,13 @@ export default function HotReleases() {
   const rest = hotReleases.slice(1);
 
   return (
-    <section className="relative z-10 pt-16 pb-16">
+    <section id="hot-releases" className="relative z-10 pt-16 pb-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-6">
           <div className="flex items-center gap-3 mb-1">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/icons/fire.png" alt="" width={72} height={72} className="object-contain" style={{width: '72px', height: '72px'}} />
+            <img src="/icons/fire.webp" alt="" width={72} height={72} className="object-contain" style={{width: '72px', height: '72px'}} />
             <div>
               <h2 className="text-[26px] sm:text-[32px] md:text-[36px] font-bold gradient-text">Новинки игр для PS5 и Xbox — март 2026</h2>
               <p className="text-[var(--text-secondary)] text-[15px]">Купить хиты 2026 для PS5, Xbox и PC — активация на турецком, украинском аккаунте</p>

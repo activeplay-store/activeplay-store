@@ -98,12 +98,12 @@ export default function TopSellersSection() {
   const row2 = topSellers.games.slice(4);
 
   return (
-    <section className="relative z-10" style={{ background: '#0C1A2E', paddingTop: '48px', paddingBottom: '48px' }}>
+    <section id="top-sales" className="relative z-10" style={{ background: '#0C1A2E', paddingTop: '48px', paddingBottom: '48px' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="flex items-start gap-3 mb-4">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/icons/top.png" alt="" width={64} height={64} className="w-16 h-16 object-contain flex-shrink-0 mt-1" />
+          <img src="/icons/top.webp" alt="" width={64} height={64} className="w-16 h-16 object-contain flex-shrink-0 mt-1" />
           <div>
             <h2
               className="text-[26px] sm:text-[32px] md:text-[36px] font-bold"

@@ -20,7 +20,7 @@ function DiscountCard({ game, region, onBuy }: { game: DiscountGame; region: 'tr
       {/* Cover — fixed height for uniform cards */}
       <div className="relative overflow-hidden" style={{ height: '280px' }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={game.cover} alt={`Купить ${game.title} PS5 со скидкой ${game.discount}%`} className="w-full h-full object-cover" style={{ objectPosition: 'center top', borderRadius: '12px 12px 0 0' }} loading="lazy" />
+        <img src={game.cover} alt={`Купить ${game.title} PS5 со скидкой ${game.discount}%`} className="w-full h-full object-cover" style={{ objectPosition: 'center top', borderRadius: '12px 12px 0 0' }} loading="lazy" decoding="async" />
         {/* Discount badge — top right */}
         <span className="absolute top-2 right-2 px-2 py-1 rounded-lg text-xs font-bold text-white" style={{ background: badgeColor(game.discount) }}>
           -{game.discount}%

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 declare global {
   interface Window {
@@ -8,33 +8,57 @@ declare global {
     chatwootSDK?: { run: (config: Record<string, string>) => void };
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     $chatwoot?: Record<string, any>;
+    loadChatwoot?: () => void;
   }
 }
 
 export default function ChatWidget() {
+  const loaded = useRef(false);
+
   useEffect(() => {
-    window.chatwootSettings = {
-      hideMessageBubble: false,
-      position: 'right',
-      locale: 'ru',
-      type: 'standard',
+    const loadChatwoot = () => {
+      if (loaded.current) return;
+      loaded.current = true;
+
+      window.chatwootSettings = {
+        hideMessageBubble: false,
+        position: 'right',
+        locale: 'ru',
+        type: 'standard',
+      };
+
+      const BASE_URL = 'https://chat.activeplay.games';
+      const script = document.createElement('script');
+      script.src = `${BASE_URL}/packs/js/sdk.js`;
+      script.async = true;
+      script.defer = true;
+      script.onload = () => {
+        window.chatwootSDK?.run({
+          websiteToken: 'CRRDuUyh65jLcZ9S25C4mA1C',
+          baseUrl: BASE_URL,
+        });
+      };
+      document.head.appendChild(script);
     };
 
-    const BASE_URL = 'https://chat.activeplay.games';
-    const script = document.createElement('script');
-    script.src = `${BASE_URL}/packs/js/sdk.js`;
-    script.async = true;
-    script.defer = true;
-    script.onload = () => {
-      window.chatwootSDK?.run({
-        websiteToken: 'CRRDuUyh65jLcZ9S25C4mA1C',
-        baseUrl: BASE_URL,
-      });
+    // Expose globally so MessengerPopup can trigger it
+    window.loadChatwoot = loadChatwoot;
+
+    // Fallback: load after 15 seconds
+    const timer = setTimeout(loadChatwoot, 15000);
+
+    // Load on scroll past 50%
+    const handleScroll = () => {
+      if (window.scrollY > document.body.scrollHeight * 0.5) {
+        loadChatwoot();
+      }
     };
-    document.head.appendChild(script);
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
 
     return () => {
-      document.head.removeChild(script);
+      clearTimeout(timer);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 

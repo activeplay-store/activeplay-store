@@ -34,7 +34,7 @@ export default function Footer() {
             style={{ height: '32px', width: 'auto' }}
           />
           <p className="text-sm text-[var(--text-secondary)] mt-2 leading-relaxed">
-            Игровые подписки для России с 2020 года
+            Игровые подписки для России с 2022 года
           </p>
         </div>
 
@@ -99,7 +99,7 @@ export default function Footer() {
       <div className="border-t border-white/[0.06]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-[14px] text-[var(--text-secondary)]">
-            &copy; 2020&ndash;2025 ActivePlay. Будь в игре.
+            &copy; 2022&ndash;2026 ActivePlay. Будь в игре.
           </p>
           <div className="flex items-center gap-2">
             {paymentMethods.map((method) => (

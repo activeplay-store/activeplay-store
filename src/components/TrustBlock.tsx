@@ -1,8 +1,25 @@
 'use client';
 
+import { useRef, useState, useEffect, useCallback } from 'react';
 import { reviews } from '@/data/reviews';
 
-// Telegram icon
+const avatarColors = [
+  'linear-gradient(135deg, #667eea, #764ba2)',
+  'linear-gradient(135deg, #f093fb, #f5576c)',
+  'linear-gradient(135deg, #4facfe, #00f2fe)',
+  'linear-gradient(135deg, #43e97b, #38f9d7)',
+  'linear-gradient(135deg, #fa709a, #fee140)',
+  'linear-gradient(135deg, #a18cd1, #fbc2eb)',
+  'linear-gradient(135deg, #fccb90, #d57eeb)',
+  'linear-gradient(135deg, #e0c3fc, #8ec5fc)',
+];
+
+function getInitials(name: string): string {
+  const parts = name.replace(/\./g, '').trim().split(/\s+/);
+  if (parts.length >= 2) return (parts[0][0] + parts[1][0]).toUpperCase();
+  return parts[0].slice(0, 2).toUpperCase();
+}
+
 const TelegramIcon = () => (
   <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
     <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
@@ -13,14 +30,7 @@ function AbelCard() {
   return (
     <div className="min-w-[320px] max-w-[360px] flex-shrink-0 rounded-2xl border border-cyan-500/30 bg-cyan-500/[0.04] p-6 flex flex-col gap-4" style={{boxShadow: '0 0 20px rgba(0,212,255,0.08)'}}>
       <div className="flex items-center gap-4">
-        <div
-          className="w-[56px] h-[56px] rounded-full border-2 border-cyan-400/40 flex-shrink-0"
-          style={{
-            backgroundImage: 'url(/images/abel.png)',
-            backgroundSize: '350%',
-            backgroundPosition: '50% 15%',
-          }}
-        />
+        <div className="w-[56px] h-[56px] rounded-full border-2 border-cyan-400/40 flex-shrink-0" style={{ backgroundImage: 'url(/images/abel.webp)', backgroundSize: '350%', backgroundPosition: '50% 15%' }} />
         <div>
           <div className="text-white font-bold text-[15px]">Даниил Abel Абельдяев</div>
           <div className="text-cyan-400 text-xs font-semibold">5× чемпион России по EA FC</div>
@@ -35,107 +45,85 @@ function AbelCard() {
   );
 }
 
-// One set = Abel + all reviews. Duplicate for seamless loop.
-const setLength = 1 + reviews.length;
-const DURATION = `${setLength * 18}s`;
+function ReviewCard({ review, index }: { review: typeof reviews[0]; index: number }) {
+  return (
+    <div className="flex-shrink-0 w-[300px] sm:w-[340px] card-base p-5 overflow-hidden">
+      <div className="flex gap-0.5 mb-3">
+        {Array.from({ length: review.rating }).map((_, i) => (
+          <svg key={i} className="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+          </svg>
+        ))}
+      </div>
+      <p className="text-sm text-[var(--text-body)] mb-4 leading-relaxed line-clamp-5">&ldquo;{review.text}&rdquo;</p>
+      <div className="flex items-center gap-3 mt-auto">
+        <div className="w-9 h-9 rounded-full flex items-center justify-center text-white font-bold text-xs shrink-0" style={{ background: avatarColors[index % avatarColors.length] }}>
+          {getInitials(review.author)}
+        </div>
+        <div className="flex-1 min-w-0">
+          <span className="text-sm font-medium text-white block">{review.author}</span>
+          <span className="text-xs text-[#00D4FF] block">{review.product}</span>
+        </div>
+      </div>
+      <div className="flex items-center justify-between mt-3 pt-3 border-t border-white/[0.06]">
+        <span className="text-xs text-[var(--text-muted)]">{review.date}</span>
+        <span className="flex items-center gap-1 text-xs text-[var(--text-muted)]">
+          <TelegramIcon />
+          Отзыв из Telegram
+        </span>
+      </div>
+    </div>
+  );
+}
 
 export default function TrustBlock() {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [manualScroll, setManualScroll] = useState(false);
+
+  const scroll = (dir: 'left' | 'right') => {
+    setManualScroll(true);
+    scrollRef.current?.scrollBy({ left: dir === 'left' ? -356 : 356, behavior: 'smooth' });
+  };
+
+  // Auto-scroll, stops at end or on manual interaction
+  const autoScroll = useCallback(() => {
+    const el = scrollRef.current;
+    if (!el || manualScroll) return;
+    if (el.scrollLeft >= el.scrollWidth - el.clientWidth - 10) return; // stop at end
+    el.scrollLeft += 1;
+  }, [manualScroll]);
+
+  useEffect(() => {
+    const id = setInterval(autoScroll, 30);
+    return () => clearInterval(id);
+  }, [autoScroll]);
+
   return (
-    <section className="relative z-10 pt-20 pb-20">
+    <section id="reviews" className="relative z-10 pt-20 pb-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-[26px] sm:text-[32px] md:text-[36px] font-bold gradient-text text-center mb-12">
           Отзывы клиентов ActivePlay
         </h2>
 
-        {/* Reviews carousel */}
-        <div className="relative overflow-hidden">
+        <div className="relative group/carousel">
+          {/* Arrows */}
+          <button onClick={() => scroll('left')} className="hidden sm:flex absolute -left-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full items-center justify-center bg-[var(--bg-card)] border border-white/10 text-white opacity-0 group-hover/carousel:opacity-100 transition-opacity hover:bg-[var(--bg-card-hover)] cursor-pointer" aria-label="Назад">◀</button>
+          <button onClick={() => scroll('right')} className="hidden sm:flex absolute -right-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full items-center justify-center bg-[var(--bg-card)] border border-white/10 text-white opacity-0 group-hover/carousel:opacity-100 transition-opacity hover:bg-[var(--bg-card-hover)] cursor-pointer" aria-label="Вперёд">▶</button>
+
           {/* Fade edges */}
           <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-8 z-10 bg-gradient-to-r from-[var(--bg-base)] to-transparent" />
           <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-8 z-10 bg-gradient-to-l from-[var(--bg-base)] to-transparent" />
 
-          <div
-            className="trust-carousel-track flex gap-4 w-max"
-            style={{ animation: `trustScroll ${DURATION} linear infinite` }}
-          >
-            {/* First set: Abel + reviews */}
+          <div ref={scrollRef} className="flex gap-4 overflow-x-auto scrollbar-hide pb-4">
             <AbelCard />
             {reviews.map((review, idx) => (
-              <div
-                key={`${review.id}-0-${idx}`}
-                className="flex-shrink-0 w-[300px] sm:w-[340px] card-base p-5 overflow-hidden"
-              >
-                <div className="flex gap-0.5 mb-3">
-                  {Array.from({ length: review.rating }).map((_, i) => (
-                    <svg key={i} className="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-                  ))}
-                </div>
-                <p className="text-sm text-[var(--text-body)] mb-4 leading-relaxed line-clamp-5">
-                  &ldquo;{review.text}&rdquo;
-                </p>
-                <div className="flex items-center gap-3 mt-auto">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={review.avatarImg} alt={review.author} className="w-9 h-9 rounded-full object-cover shrink-0" loading="lazy" />
-                  <div className="flex-1 min-w-0">
-                    <span className="text-sm font-medium text-white block">{review.author}</span>
-                    <span className="text-xs text-[#00D4FF] block">{review.product}</span>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between mt-3 pt-3 border-t border-white/[0.06]">
-                  <span className="text-xs text-[var(--text-muted)]">{review.date}</span>
-                  <span className="flex items-center gap-1 text-xs text-[var(--text-muted)]">
-                    <TelegramIcon />
-                    Отзыв из Telegram
-                  </span>
-                </div>
-              </div>
-            ))}
-
-            {/* Second set (duplicate for seamless loop): Abel + reviews */}
-            <AbelCard />
-            {reviews.map((review, idx) => (
-              <div
-                key={`${review.id}-1-${idx}`}
-                className="flex-shrink-0 w-[300px] sm:w-[340px] card-base p-5 overflow-hidden"
-              >
-                <div className="flex gap-0.5 mb-3">
-                  {Array.from({ length: review.rating }).map((_, i) => (
-                    <svg key={i} className="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-                  ))}
-                </div>
-                <p className="text-sm text-[var(--text-body)] mb-4 leading-relaxed line-clamp-5">
-                  &ldquo;{review.text}&rdquo;
-                </p>
-                <div className="flex items-center gap-3 mt-auto">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={review.avatarImg} alt={review.author} className="w-9 h-9 rounded-full object-cover shrink-0" loading="lazy" />
-                  <div className="flex-1 min-w-0">
-                    <span className="text-sm font-medium text-white block">{review.author}</span>
-                    <span className="text-xs text-[#00D4FF] block">{review.product}</span>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between mt-3 pt-3 border-t border-white/[0.06]">
-                  <span className="text-xs text-[var(--text-muted)]">{review.date}</span>
-                  <span className="flex items-center gap-1 text-xs text-[var(--text-muted)]">
-                    <TelegramIcon />
-                    Отзыв из Telegram
-                  </span>
-                </div>
-              </div>
+              <ReviewCard key={review.id} review={review} index={idx} />
             ))}
           </div>
         </div>
 
         <div className="text-center mt-6">
-          <a
-            href="https://t.me/PS_PLUS_RUS"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-tertiary text-sm"
-          >
+          <a href="https://t.me/PS_PLUS_RUS" target="_blank" rel="noopener noreferrer" className="btn-tertiary text-sm">
             Читать все отзывы &rarr;
           </a>
           <p className="text-xs text-[var(--text-muted)] mt-2">

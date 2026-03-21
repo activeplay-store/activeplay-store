@@ -22,7 +22,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: 'Купить PS Plus и Game Pass в России — ActivePlay | Подписки, карты PSN, игры PS5',
   description:
-    'Купить PS Plus Essential, Extra, Deluxe, Xbox Game Pass Ultimate и EA Play из России. Карты пополнения PSN Турция. Оплата в рублях через СБП, активация за 5 минут. 50 000+ клиентов с 2020 года.',
+    'Купить PS Plus Essential, Extra, Deluxe, Xbox Game Pass Ultimate и EA Play из России. Карты пополнения PSN Турция. Оплата в рублях через СБП, активация за 5 минут. 50 000+ клиентов с 2022 года.',
   keywords:
     'купить PS Plus Россия, PlayStation Plus подписка, Xbox Game Pass купить, PS Plus Essential цена, PS Plus Extra цена, Game Pass Ultimate Россия, подписка PlayStation дешево',
   openGraph: {
@@ -39,7 +39,7 @@ const storeSchema = {
   name: 'ActivePlay',
   description: 'Подписки PlayStation Plus и Xbox Game Pass для России',
   url: 'https://activeplay-store.ru',
-  foundingDate: '2020',
+  foundingDate: '2022',
   aggregateRating: {
     '@type': 'AggregateRating',
     ratingValue: '4.9',
@@ -70,11 +70,37 @@ const storeSchema = {
   ],
 };
 
+const webSiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'ActivePlay',
+  url: 'https://activeplay.games',
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: 'https://activeplay.games/?q={search_term_string}',
+    'query-input': 'required name=search_term_string',
+  },
+};
+
 const orgSchema = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
   name: 'ActivePlay',
   url: 'https://activeplay.games',
+  logo: 'https://activeplay.games/images/logo/AP_WHITE.png',
+  description: 'Игровой магазин подписок и цифровых товаров. PS Plus, Xbox Game Pass, EA Play, FC Points, подарочные карты PSN.',
+  foundingDate: '2022',
+  contactPoint: {
+    '@type': 'ContactPoint',
+    contactType: 'customer service',
+    availableLanguage: 'Russian',
+    url: 'https://t.me/activeplay1',
+  },
+  sameAs: [
+    'https://t.me/PS_PLUS_RUS',
+    'https://vk.com/activeplay',
+    'https://youtube.com/@activeplay2023',
+  ],
   aggregateRating: {
     '@type': 'AggregateRating',
     ratingValue: '5.0',
@@ -147,6 +173,9 @@ export default function RootLayout({
   return (
     <html lang="ru">
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://chat.activeplay.games" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(storeSchema) }}
@@ -158,6 +187,10 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteSchema) }}
         />
         {/* TODO: Яндекс.Метрика — вставить счётчик */}
         {/* TODO: VK Pixel — вставить код */}

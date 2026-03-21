@@ -622,7 +622,7 @@ export default function SubscriptionSection() {
                 {/* Row 1, Col 1: Header */}
                 <div className="flex items-center gap-3 mb-6">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/images/platforms/fc26-logo.png" alt="FC 26" style={{ width: '32px', height: '32px', objectFit: 'contain' }} />
+                  <img src="/images/platforms/fc26-logo.webp" alt="FC 26" style={{ width: '32px', height: '32px', objectFit: 'contain' }} />
                   <div>
                     <h2 className="text-[26px] sm:text-[32px] md:text-[36px] font-bold gradient-text">FC Points (FIFA Points)</h2>
                     <p className="text-[15px] text-[var(--text-secondary)]">Купить FC Points для EA Sports FC 26 — донат Ultimate Team на PS5, Xbox и ПК</p>
@@ -643,7 +643,7 @@ export default function SubscriptionSection() {
                     aria-label="Даниил Abel Абельдяев — амбассадор ActivePlay, 5-кратный чемпион России по EA FC"
                     className="w-[120px] h-[120px] rounded-full border-2 border-cyan-400/40 mx-auto mb-4 flex-shrink-0 overflow-hidden"
                     style={{
-                      backgroundImage: 'url(/images/abel.png)',
+                      backgroundImage: 'url(/images/abel.webp)',
                       backgroundSize: '350%',
                       backgroundPosition: '50% 6%',
                     }}
@@ -686,7 +686,7 @@ export default function SubscriptionSection() {
                         {/* Content */}
                         <div className="flex flex-col items-center flex-1 relative z-10">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src="/images/covers/fc-points.png" alt="FC Points" style={{ width: '80px', height: 'auto', paddingTop: '6px', objectFit: 'contain' as const, filter: 'drop-shadow(0 4px 12px rgba(0,230,118,0.35))' }} />
+                          <img src="/images/covers/fc-points.webp" alt="FC Points" style={{ width: '80px', height: 'auto', paddingTop: '6px', objectFit: 'contain' as const, filter: 'drop-shadow(0 4px 12px rgba(0,230,118,0.35))' }} />
                           <div style={{ width: '40px', height: '1px', background: 'linear-gradient(90deg, transparent, rgba(0,230,118,0.4), transparent)', margin: '6px auto', boxShadow: '0 0 8px rgba(0,230,118,0.15)' }} />
                           <span className="font-display" style={{ fontSize: '32px', fontWeight: 800, lineHeight: 1.1, background: 'linear-gradient(180deg, #FFFFFF 0%, #90CAF9 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', textShadow: '0 0 20px rgba(144,202,249,0.2)' }}>{nominal.toLocaleString('ru-RU')}</span>
                         </div>
