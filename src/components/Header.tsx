@@ -17,9 +17,9 @@ const megaMenuColumns = [
   {
     title: 'Xbox',
     items: [
-      { label: 'Game Pass Essential', href: '/#xbox' },
-      { label: 'Game Pass Premium', href: '/#xbox' },
-      { label: 'Game Pass Ultimate', href: '/#xbox' },
+      { label: 'Game Pass Essential', href: '/xbox-game-pass-essential' },
+      { label: 'Game Pass Premium', href: '/xbox-game-pass-premium' },
+      { label: 'Game Pass Ultimate', href: '/xbox-game-pass-ultimate' },
     ],
   },
   {

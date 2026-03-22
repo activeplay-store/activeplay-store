@@ -60,7 +60,7 @@ function GameCarousel({ games, planName }: { games: ShowcaseGame[]; planName?: s
         <div key={i} className="flex-shrink-0 w-[180px] sm:w-[200px] group cursor-pointer">
           <div className="relative rounded-xl overflow-hidden aspect-[3/4] transition-transform duration-300 group-hover:scale-105 group-hover:shadow-lg group-hover:shadow-black/40">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={game.image} alt={"Обложка " + game.title + (planName ? " — PS Plus " + planName : "")} loading="lazy" className="w-full h-full object-cover" />
+            <img src={game.image} alt={game.title + (planName ? " — доступна в PS Plus " + planName : "")} loading="lazy" className="w-full h-full object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
             <p className="absolute bottom-2 left-2 right-2 text-sm font-medium text-white">
               {game.title}
@@ -199,17 +199,21 @@ function ClassicsCatalog() {
     <section className="relative z-10 py-12 sm:py-16 px-4 sm:px-6" style={{ background: 'rgba(10,21,37,0.5)' }}>
       <div className="max-w-6xl mx-auto">
         <h2 className="text-3xl sm:text-4xl font-bold font-display text-center mb-4">Полный каталог классики — {classicsData.totalGames}+ игр</h2>
-        <p className="text-sm text-center mb-8" style={{ color: 'rgba(255,255,255,0.6)' }}>Последнее обновление: {formattedDate}</p>
+        <p className="text-sm text-center mb-1" style={{ color: 'rgba(255,255,255,0.6)' }}>Последнее обновление: {formattedDate}</p>
+        <p className="text-sm text-center mb-8" style={{ color: 'rgba(255,255,255,0.6)' }}>Классические игры PS1, PS2, PSP и PS3 из каталога PS Plus Premium / Deluxe</p>
         <div className="rounded-2xl p-6 sm:p-8 mb-6" style={{ background: 'rgba(15,23,42,0.5)' }}>
           <div className="flex flex-col sm:flex-row gap-4 mb-4">
             <input type="text" placeholder="Найти классическую игру..." value={search} onChange={(e) => setSearch(e.target.value)}
               className="flex-1 min-h-[44px] px-4 py-2 rounded-xl text-sm text-white placeholder-white/30 bg-white/[0.06] border border-white/[0.1] focus:outline-none focus:ring-2 focus:ring-cyan-400/50" />
             <div className="flex gap-2 flex-wrap">
               {['all', 'PS1', 'PS2', 'PSP', 'PS3'].map((p) => (
-                <button key={p} onClick={() => setPlatformFilter(p)}
-                  className={`min-h-[44px] px-4 py-2 rounded-xl text-sm font-medium transition-all ${platformFilter === p ? 'bg-[var(--brand)] text-white' : 'bg-white/[0.06] text-white/60 hover:bg-white/[0.1]'}`}>
-                  {p === 'all' ? 'Все' : p}
-                </button>
+                <div key={p} className="relative">
+                  <button onClick={() => setPlatformFilter(p)}
+                    className={`min-h-[44px] px-4 py-2 rounded-xl text-sm font-medium transition-all ${platformFilter === p ? 'bg-[var(--brand)] text-white' : 'bg-white/[0.06] text-white/60 hover:bg-white/[0.1]'}`}>
+                    {p === 'all' ? 'Все' : p}
+                  </button>
+                  {p === 'PS3' && <span className="block text-[9px] text-center mt-0.5" style={{ color: 'rgba(255,255,255,0.35)' }}>только стриминг*</span>}
+                </div>
               ))}
             </div>
           </div>
@@ -255,7 +259,7 @@ function TrialsCatalog() {
   return (
     <section className="relative z-10 py-12 sm:py-16 px-4 sm:px-6" style={{ background: 'rgba(10,21,37,0.5)' }}>
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-3xl sm:text-4xl font-bold font-display text-center mb-4">Все пробные версии — {trialsData.totalGames} игр</h2>
+        <h2 className="text-3xl sm:text-4xl font-bold font-display text-center mb-4">Полный список Game Trials — {trialsData.totalGames} пробные версии для PS5 и PS4</h2>
         <p className="text-sm text-center mb-8" style={{ color: 'rgba(255,255,255,0.6)' }}>Последнее обновление: {formattedDate}</p>
         <div className="rounded-2xl p-6 sm:p-8 mb-6" style={{ background: 'rgba(15,23,42,0.5)' }}>
           <input type="text" placeholder="Найти пробную версию..." value={search} onChange={(e) => setSearch(e.target.value)}
@@ -377,24 +381,24 @@ export default function SubscriptionPage({ subscriptionId }: SubscriptionPagePro
 
   // Feature icon colors per tier (change #6)
   const featureIconColors: Record<PsPlusTier, { bg: string; text: string }> = {
-    essential: { bg: 'rgba(245,158,11,0.1)', text: '#f59e0b' },
-    extra: { bg: 'rgba(6,182,212,0.1)', text: '#06b6d4' },
-    deluxe: { bg: 'rgba(168,85,247,0.1)', text: '#a855f7' },
+    essential: { bg: 'rgba(245,158,11,0.15)', text: '#fbbf24' },
+    extra: { bg: 'rgba(6,182,212,0.15)', text: '#22d3ee' },
+    deluxe: { bg: 'rgba(168,85,247,0.15)', text: '#c084fc' },
   };
   const iconColor = featureIconColors[subscriptionId];
 
   // CTA button text per tier (change #1)
   const ctaButtonText: Record<PsPlusTier, string> = {
-    essential: 'Подключить Essential',
-    extra: 'Получить доступ к 527 играм',
-    deluxe: 'Активировать максимум',
+    essential: 'Купить PS Plus Essential',
+    extra: 'Купить PS Plus Extra',
+    deluxe: 'Купить PS Plus Deluxe',
   };
 
   // SEO H1 subtitle per tier (change #4)
   const seoH1Subtitle: Record<PsPlusTier, string> = {
-    essential: ' — купить подписку Турция/Украина',
-    extra: ' — каталог 527 игр для России',
-    deluxe: ' — классика + пробные версии',
+    essential: ' — купить подписку в России Турция / Украина',
+    extra: ' — купить подписку с каталогом 523 игры (Турция / Украина)',
+    deluxe: ' — классические игры PS1, PS2, PSP + пробные версии AAA-хитов',
   };
 
   // Reusable CTA button component (change #1)
@@ -494,7 +498,7 @@ export default function SubscriptionPage({ subscriptionId }: SubscriptionPagePro
     <section className="relative z-10 py-12 sm:py-16 px-4 sm:px-6" style={{ background: 'rgba(10,21,37,0.5)' }}>
       <div className="max-w-6xl mx-auto">
         <h2 className="text-3xl sm:text-4xl font-bold font-display text-center mb-8">
-          Почему ActivePlay
+          Почему покупают PS Plus {plan.name} в ActivePlay
         </h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
           {whyActivePlayItems.map((item, i) => (
@@ -519,7 +523,7 @@ export default function SubscriptionPage({ subscriptionId }: SubscriptionPagePro
           background: `radial-gradient(ellipse 90% 70% at 50% 0%, ${plan.color}33 0%, transparent 65%), linear-gradient(180deg, #0A1628 0%, #060D18 100%)`,
         }}
       />
-      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 text-center pb-16 pt-8 sm:pt-12">
+      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 text-center pb-8 pt-8 sm:pt-12">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/images/platforms/ps-plus.png" alt={`Логотип PS Plus ${plan.name}`} className="h-16 w-auto mx-auto mb-5" />
         <h1 className="text-5xl lg:text-7xl font-bold font-display mb-3" style={{ color: tierAccent }}>
@@ -541,7 +545,7 @@ export default function SubscriptionPage({ subscriptionId }: SubscriptionPagePro
           onClick={() => openOrder(`PS Plus ${plan.name} (1 мес, Турция)`, monthlyPrice)}
           className="btn-primary text-lg px-10 py-4 mb-4"
         >
-          Оформить подписку
+          Купить PS Plus {plan.name}
         </button>
         <p className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>
           Активация за 5 минут &bull; Безопасная оплата &bull; Поддержка 24/7
@@ -567,9 +571,10 @@ export default function SubscriptionPage({ subscriptionId }: SubscriptionPagePro
   const PricingSection = () => (
     <section className="relative z-10 py-12 sm:py-16 px-4 sm:px-6">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-3xl sm:text-4xl font-bold font-display text-center mb-8">
-          Выберите план
+        <h2 className="text-3xl sm:text-4xl font-bold font-display text-center mb-2">
+          Цены PS Plus {plan.name}{subscriptionId === 'deluxe' ? ' для PS5 и PS4' : ''} — выберите план
         </h2>
+        <p className="text-sm text-center mb-8" style={{ color: 'rgba(255,255,255,0.6)' }}>PlayStation • Турция, Украина — цены в рублях</p>
 
         {/* Region tabs */}
         <div className="flex justify-center mb-8">
@@ -615,14 +620,9 @@ export default function SubscriptionPage({ subscriptionId }: SubscriptionPagePro
                     onClick={() => openOrder(`PS Plus ${plan.name} (${periodLabel}, ${regionLabel})`, price)}
                   >
                     {/* Badges */}
-                    {isMonthly && (
-                      <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full text-sm font-bold uppercase whitespace-nowrap tracking-wide text-black" style={{ background: '#f97316' }}>
-                        Хит продаж
-                      </div>
-                    )}
                     {isYearly && (
-                      <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full text-sm font-bold uppercase whitespace-nowrap tracking-wide text-black" style={{ background: '#06b6d4' }}>
-                        Выгоднее всего
+                      <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full text-sm font-bold uppercase whitespace-nowrap tracking-wide text-white" style={{ background: '#06b6d4' }}>
+                        Максимальная выгода
                       </div>
                     )}
 
@@ -648,7 +648,7 @@ export default function SubscriptionPage({ subscriptionId }: SubscriptionPagePro
                           onClick={(e) => { e.stopPropagation(); openOrder(`PS Plus ${plan.name} (${periodLabel}, ${regionLabel})`, price); }}
                           className="btn-primary w-full py-3.5 rounded-xl"
                         >
-                          Оформить подписку
+                          Купить PS Plus {plan.name}
                         </button>
                         <p className="text-sm mt-2" style={{ color: 'rgba(255,255,255,0.6)' }}>
                           Менеджер ответит за 2–3 минуты
@@ -682,7 +682,7 @@ export default function SubscriptionPage({ subscriptionId }: SubscriptionPagePro
                 onClick={() => openOrder(`PS Plus ${plan.name} (12 мес, Украина)`, plan.prices.ukraine[12])}
                 className="btn-primary w-full py-3.5 rounded-xl"
               >
-                Оформить подписку
+                Купить PS Plus {plan.name}
               </button>
               <p className="text-sm mt-2" style={{ color: 'rgba(255,255,255,0.6)' }}>
                 Менеджер ответит за 2–3 минуты
@@ -698,7 +698,7 @@ export default function SubscriptionPage({ subscriptionId }: SubscriptionPagePro
     <section className="relative z-10 py-12 sm:py-16 px-4 sm:px-6" style={{ background: 'rgba(10,21,37,0.5)' }}>
       <div className="max-w-6xl mx-auto">
         <h2 className="text-3xl sm:text-4xl font-bold font-display text-center mb-8">
-          Что входит в {plan.name}
+          Что входит в PS Plus {plan.name}{subscriptionId === 'deluxe' ? ' — полный список преимуществ' : ''}
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {plan.mainFeatures.map((feat, i) => (
@@ -740,7 +740,7 @@ export default function SubscriptionPage({ subscriptionId }: SubscriptionPagePro
         <section className="relative z-10 py-12 sm:py-16 px-4 sm:px-6">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-3xl sm:text-4xl font-bold font-display text-center mb-2">
-              Игры месяца PS Plus Essential | {plan.showcaseGames.monthlyGames.month}
+              Бесплатные игры PS Plus Essential — {plan.showcaseGames.monthlyGames.month.toLowerCase()}
             </h2>
             <p className="text-sm text-center mb-8" style={{ color: 'rgba(255,255,255,0.6)' }}>
               Доступны до {plan.showcaseGames.monthlyGames.availableUntil}. Добавьте в библиотеку, пока активна подписка
@@ -807,7 +807,7 @@ export default function SubscriptionPage({ subscriptionId }: SubscriptionPagePro
         <section className="relative z-10 py-12 sm:py-16 px-4 sm:px-6">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-3xl sm:text-4xl font-bold font-display text-center mb-8">
-              Игры в каталоге {plan.name}
+              Игры в каталоге PS Plus {plan.name} — полный список
             </h2>
 
             {/* Хиты каталога */}
@@ -816,7 +816,7 @@ export default function SubscriptionPage({ subscriptionId }: SubscriptionPagePro
 
             {/* Новинки */}
             <h3 className="text-lg sm:text-xl font-semibold text-white mb-4 mt-8">
-              Новинки {plan.showcaseGames.newReleases.month.toLowerCase()}
+              Новые игры PS Plus {plan.name} — {plan.showcaseGames.newReleases.month.toLowerCase()}
             </h3>
             <GameCarousel games={plan.showcaseGames.newReleases.games} planName={plan.name} />
           </div>
@@ -859,8 +859,9 @@ export default function SubscriptionPage({ subscriptionId }: SubscriptionPagePro
         <section className="relative z-10 py-12 sm:py-16 px-4 sm:px-6">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-3xl sm:text-4xl font-bold font-display text-center mb-8">
-              Классические игры PS1 / PS2 / PSP
+              Классические игры PS1 / PS2 / PSP — каталог ретро-игр PlayStation
             </h2>
+            <p className="text-sm text-center mb-8" style={{ color: 'rgba(255,255,255,0.6)' }}>Скачивание на PS4 и PS5 — с трофеями, улучшенным разрешением и быстрыми сохранениями</p>
             <GameCarousel games={plan.showcaseGames.classicsHits.map((g) => ({ title: `${g.title}`, image: g.image }))} planName={plan.name} />
           </div>
         </section>
@@ -900,10 +901,10 @@ export default function SubscriptionPage({ subscriptionId }: SubscriptionPagePro
         <section className="relative z-10 py-12 sm:py-16 px-4 sm:px-6">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-3xl sm:text-4xl font-bold font-display text-center mb-2">
-              Пробные версии игр
+              Пробные версии игр (Game Trials) — эксклюзив PS Plus Deluxe
             </h2>
             <p className="text-sm text-center mb-8" style={{ color: 'rgba(255,255,255,0.6)' }}>
-              Попробуйте новые игры бесплатно 2–5 часов. Прогресс сохраняется при покупке
+              Попробуйте AAA-хиты бесплатно от 30 минут до 10 часов перед покупкой. Прогресс и трофеи сохраняются
             </p>
             <GameCarousel games={trialsData.games.map((g) => ({
               title: g.title,
@@ -919,31 +920,28 @@ export default function SubscriptionPage({ subscriptionId }: SubscriptionPagePro
     <section className="relative z-10 py-12 sm:py-16 px-4 sm:px-6" style={{ background: 'rgba(10,21,37,0.5)' }}>
       <div className="max-w-6xl mx-auto">
         <h2 className="text-3xl sm:text-4xl font-bold font-display text-center mb-8">
-          Сравнение планов
+          Сравнение PS Plus Essential, Extra и Deluxe — какой тариф выбрать
         </h2>
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[500px]">
+          <table className="w-full min-w-[500px]" style={{ tableLayout: 'fixed' }}>
+            <colgroup>
+              <col style={{ width: '40%' }} />
+              <col style={{ width: '20%' }} />
+              <col style={{ width: '20%' }} />
+              <col style={{ width: '20%' }} />
+            </colgroup>
             <thead>
               <tr className="border-b border-white/[0.08]">
                 <th className="text-left py-3 px-3 text-sm font-medium text-[var(--text-muted)]">Функция</th>
                 {allTiers.map((tier) => {
                   const isCurrent = tier === subscriptionId;
                   const tierPlan = psPlus[tier];
-                  const accent = tierPlan.color === '#1E1E1E' ? '#00D4FF' : tierPlan.color;
                   return (
-                    <th key={tier} className="py-3 px-3 text-center">
+                    <th key={tier} className="py-3 px-3 text-center" style={isCurrent ? { borderLeft: '1px solid rgba(0,212,255,0.3)', borderRight: '1px solid rgba(0,212,255,0.3)', borderTop: '1px solid rgba(0,212,255,0.3)' } : undefined}>
                       {isCurrent ? (
-                        <div>
-                          <span
-                            className="inline-block px-2 py-0.5 rounded-full text-sm font-bold mb-1"
-                            style={{ background: `${accent}20`, color: accent, border: `1px solid ${accent}40` }}
-                          >
-                            Ваш план
-                          </span>
-                          <p className="text-sm font-bold text-white">{tierPlan.name}</p>
-                        </div>
+                        <span className="text-sm font-semibold text-white">{tierPlan.name}</span>
                       ) : (
-                        <a href={`/${tierPlan.slug}`} className="text-sm font-medium text-[var(--brand)] hover:text-cyan-400 transition-colors">
+                        <a href={`/${tierPlan.slug}`} className="text-sm font-semibold text-white hover:text-cyan-400 hover:underline transition-colors">
                           {tierPlan.name}
                         </a>
                       )}
@@ -953,31 +951,35 @@ export default function SubscriptionPage({ subscriptionId }: SubscriptionPagePro
               </tr>
             </thead>
             <tbody>
-              {comparisonFeatures.map((feat, i) => (
-                <tr key={i} className="border-b border-white/[0.04] hover:bg-white/[0.02] transition-colors">
-                  <td className="py-3 px-3 text-sm text-[var(--text-secondary)]">{feat.label}</td>
-                  {allTiers.map((tier) => {
-                    const has = feat[tier];
-                    const isCurrent = tier === subscriptionId;
-                    return (
-                      <td
-                        key={tier}
-                        className="py-3 px-3 text-center"
-                        style={isCurrent ? { background: `${tierAccent}08` } : undefined}
-                      >
-                        {has ? (
-                          <span className="text-[var(--success)] text-base">&#10003;</span>
-                        ) : (
-                          <span style={{ color: 'rgba(255,255,255,0.15)' }}>&mdash;</span>
-                        )}
-                      </td>
-                    );
-                  })}
-                </tr>
-              ))}
+              {comparisonFeatures.map((feat, i) => {
+                const isLast = i === comparisonFeatures.length - 1;
+                return (
+                  <tr key={i} className="border-b border-white/[0.04]">
+                    <td className="py-3 px-3 text-sm text-[var(--text-secondary)]">{feat.label}</td>
+                    {allTiers.map((tier) => {
+                      const has = feat[tier];
+                      const isCurrent = tier === subscriptionId;
+                      return (
+                        <td
+                          key={tier}
+                          className="py-3 px-3 text-center"
+                          style={isCurrent ? { borderLeft: '1px solid rgba(0,212,255,0.3)', borderRight: '1px solid rgba(0,212,255,0.3)', ...(isLast ? { borderBottom: '1px solid rgba(0,212,255,0.3)' } : {}) } : undefined}
+                        >
+                          {has ? (
+                            <span className="text-[var(--success)] text-base">&#10003;{feat.label === 'Стриминг PS5 из облака' && tier === 'deluxe' ? '*' : ''}</span>
+                          ) : (
+                            <span style={{ color: 'rgba(255,255,255,0.15)' }}>&mdash;</span>
+                          )}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
+        <p className="text-xs text-[var(--text-muted)] mt-4">* Облачный стриминг недоступен в регионах Турция, Украина и Индия</p>
       </div>
     </section>
   );
@@ -986,7 +988,7 @@ export default function SubscriptionPage({ subscriptionId }: SubscriptionPagePro
     <section className="relative z-10 py-12 sm:py-16 px-4 sm:px-6" style={{ background: 'rgba(10,21,37,0.5)' }}>
       <div className="max-w-3xl mx-auto">
         <h2 className="text-3xl sm:text-4xl font-bold font-display text-center mb-8">
-          Частые вопросы
+          Частые вопросы о PS Plus {plan.name}
         </h2>
         <div className="space-y-2">
           {plan.faq.map((item, i) => {
@@ -1030,7 +1032,7 @@ export default function SubscriptionPage({ subscriptionId }: SubscriptionPagePro
     <section className="relative z-10 py-12 sm:py-16 px-4 sm:px-6">
       <div className="max-w-3xl mx-auto text-center">
         <h2 className="text-3xl sm:text-4xl font-bold font-display mb-3">
-          Готовы подключить <span style={{ color: tierAccent }}>{plan.name}</span>?
+          Готовы купить <span style={{ color: tierAccent }}>PS Plus {plan.name}</span>?
         </h2>
         <p className="text-sm text-[var(--text-secondary)] mb-6">
           Оформление за 5 минут &bull; Поддержка 24/7
@@ -1073,60 +1075,37 @@ export default function SubscriptionPage({ subscriptionId }: SubscriptionPagePro
     </section>
   );
 
-  // Render based on subscriptionId (change #12 — deluxe has different order)
-  if (subscriptionId === 'deluxe') {
-    return (
-      <>
-        <HeroSection />
-        <TrustBadgesRow />
-        <PricingSection />
-        <FeaturesSection />
-        <CtaButton />
-        <ClassicsCarouselSection />
-        {subscriptionId === 'deluxe' && <ClassicsCatalog />}
-        <DeluxeExtraBanner />
-        <TrialsCarouselSection />
-        {subscriptionId === 'deluxe' && <TrialsCatalog />}
-        <CtaButton />
-        <ComparisonSection />
-        <HowItWorks />
-        <TrustBlock />
-        <WhyActivePlaySection />
-        <CtaButton />
-        <FaqSection />
-        <AntiFraudBlock />
-        <FinalCtaSection />
-        <MessengerPopup
-          isOpen={popupOpen}
-          onClose={() => setPopupOpen(false)}
-          planName={popupPlan}
-          price={popupPrice}
-        />
-      </>
-    );
-  }
-
-  // Essential and Extra order
   return (
     <>
+      {/* 1. Hero */}
       <HeroSection />
       <TrustBadgesRow />
+      {/* 2. Как купить */}
+      <HowItWorks />
+      {/* 3. Выберите план */}
       <PricingSection />
+      {/* 4. Что входит */}
       <FeaturesSection />
-      <CtaButton />
+      {/* 5. Сравнение */}
+      <ComparisonSection />
+      {/* 6. Game Showcase (Essential: monthly games, Extra/Deluxe: catalogs) */}
       <EssentialMonthlyGames />
       <ExtraGameShowcase />
       <FallbackGameCovers />
       {subscriptionId === 'extra' && <CatalogList />}
-      <CtaButton />
-      <ComparisonSection />
-      <CtaButton />
-      <HowItWorks />
+      <ClassicsCarouselSection />
+      {subscriptionId === 'deluxe' && <ClassicsCatalog />}
+      <DeluxeExtraBanner />
+      <TrialsCarouselSection />
+      {subscriptionId === 'deluxe' && <TrialsCatalog />}
+      {/* 7. Почему ActivePlay */}
       <TrustBlock />
       <WhyActivePlaySection />
       <CtaButton />
+      {/* 8. FAQ */}
       <FaqSection />
       <AntiFraudBlock />
+      {/* 9. Финальный CTA */}
       <FinalCtaSection />
       <MessengerPopup
         isOpen={popupOpen}

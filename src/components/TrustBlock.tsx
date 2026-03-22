@@ -130,7 +130,7 @@ export default function TrustBlock() {
             Читать все отзывы &rarr;
           </a>
           <p className="text-xs text-[var(--text-muted)] mt-2">
-            Более 500 отзывов о покупке PS Plus, Game Pass и игр в нашем Telegram-канале
+            Более 500 отзывов о покупке Game Pass, PS Plus и игр в нашем Telegram-канале
           </p>
         </div>
       </div>

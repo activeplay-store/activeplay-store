@@ -392,6 +392,7 @@ export default function SubscriptionSection() {
               period={xboxPeriod}
               platform="xbox"
               onOrder={handleOrder}
+              href={`/xbox-game-pass-${plan.name.toLowerCase()}`}
             />
           ))}
         </div>
