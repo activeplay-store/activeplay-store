@@ -85,12 +85,15 @@ export default function TrustBlock() {
     scrollRef.current?.scrollBy({ left: dir === 'left' ? -356 : 356, behavior: 'smooth' });
   };
 
-  // Auto-scroll, stops at end or on manual interaction
+  // Auto-scroll, loops back to start
   const autoScroll = useCallback(() => {
     const el = scrollRef.current;
     if (!el || manualScroll) return;
-    if (el.scrollLeft >= el.scrollWidth - el.clientWidth - 10) return; // stop at end
-    el.scrollLeft += 1;
+    if (el.scrollLeft >= el.scrollWidth - el.clientWidth - 10) {
+      el.scrollLeft = 0;
+    } else {
+      el.scrollLeft += 1;
+    }
   }, [manualScroll]);
 
   useEffect(() => {

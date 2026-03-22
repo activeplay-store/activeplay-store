@@ -14,7 +14,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative flex items-center justify-center pt-28 pb-4 px-4 overflow-hidden" style={{ background: 'radial-gradient(ellipse 70% 50% at 75% 20%, rgba(0,212,255,0.08) 0%, transparent 60%), radial-gradient(ellipse 60% 50% at 20% 80%, rgba(0,112,209,0.06) 0%, transparent 60%), #0A1628' }}>
+    <section className="relative flex items-center justify-center pt-14 pb-4 px-4 overflow-hidden" style={{ background: 'radial-gradient(ellipse 70% 50% at 75% 20%, rgba(0,212,255,0.08) 0%, transparent 60%), radial-gradient(ellipse 60% 50% at 20% 80%, rgba(0,112,209,0.06) 0%, transparent 60%), #0A1628' }}>
       {/* Animated gradient mesh — floating color spots */}
       <div className="absolute inset-0 z-0 overflow-hidden" aria-hidden="true">
         <div
@@ -75,7 +75,10 @@ export default function Hero() {
         {/* CTA — Primary button */}
         <button
           onClick={() => setPopup(true)}
-          className="btn-primary btn-pulse text-base sm:text-lg px-8 py-4 rounded-2xl"
+          className="btn-primary btn-pulse font-bold rounded-2xl"
+          style={{ fontSize: '18px', padding: '16px 40px', minWidth: '300px', boxShadow: '0 0 20px rgba(0,212,255,0.3)', transition: 'all 0.2s ease' }}
+          onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 0 30px rgba(0,212,255,0.5)'; }}
+          onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 0 20px rgba(0,212,255,0.3)'; }}
         >
           Оформить заказ
         </button>
@@ -84,7 +87,7 @@ export default function Hero() {
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-12 max-w-3xl mx-auto">
           {[
             { value: 'С 2022', label: 'года' },
-            { value: '50 000+', label: 'клиентов' },
+            { value: '52 000+', label: 'клиентов' },
             { value: '5 мин', label: 'оформление' },
             { value: 'Гарантия', label: 'активации' },
           ].map((stat) => (

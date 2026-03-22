@@ -10,5 +10,7 @@ module.exports = {
     { loc: '/ps-plus-essential', changefreq: 'weekly', priority: 0.9 },
     { loc: '/ps-plus-extra', changefreq: 'weekly', priority: 0.9 },
     { loc: '/ps-plus-deluxe', changefreq: 'weekly', priority: 0.9 },
+    { loc: '/ea-play', changefreq: 'weekly', priority: 0.9 },
+    { loc: '/igrovaya-valyuta', changefreq: 'weekly', priority: 0.8 },
   ],
 }

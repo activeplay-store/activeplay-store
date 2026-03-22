@@ -47,13 +47,13 @@ function useScrollIndex(ref: React.RefObject<HTMLDivElement | null>) {
 
 export default function SubscriptionSection() {
   const [psRegion, setPsRegion] = useState<Region>('turkey');
-  const [psPeriod, setPsPeriod] = useState<Period>(1);
+  const [psPeriod, setPsPeriod] = useState<Period>(12);
   const [cardRegion, setCardRegion] = useState<'turkey' | 'india'>('turkey');
   const [selectedCard, setSelectedCard] = useState(5);
-  const [xboxPeriod, setXboxPeriod] = useState<Period>(1);
+  const [xboxPeriod, setXboxPeriod] = useState<Period>(12);
   const [eaRegion, setEaRegion] = useState<'turkey' | 'ukraine' | 'india'>('turkey');
-  const [eaPeriod, setEaPeriod] = useState<1 | 12>(1);
-  const [eaProPeriod, setEaProPeriod] = useState<1 | 12>(1);
+  const [eaPeriod, setEaPeriod] = useState<1 | 12>(12);
+  const [eaProPeriod, setEaProPeriod] = useState<1 | 12>(12);
   const [fcRegion, setFcRegion] = useState<'turkey' | 'ukraine'>('turkey');
   const [fcEaPlay, setFcEaPlay] = useState(true);
   const [fcSelected, setFcSelected] = useState(4);
@@ -156,6 +156,17 @@ export default function SubscriptionSection() {
               −35% от месячной цены
             </span>
           )}
+
+          {/* Create PS account CTA */}
+          <button
+            onClick={() => handleOrder('Создание аккаунта PlayStation', 500)}
+            className="px-4 py-2.5 text-sm font-medium transition-all cursor-pointer rounded-xl"
+            style={{ border: '1px solid #00D4FF', color: '#00D4FF', background: 'transparent' }}
+            onMouseEnter={e => { e.currentTarget.style.background = '#00D4FF'; e.currentTarget.style.color = '#fff'; }}
+            onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#00D4FF'; }}
+          >
+            Создать аккаунт PlayStation
+          </button>
         </div>
 
         {/* Cards — mobile: horizontal swipe carousel; desktop: grid */}
@@ -184,7 +195,7 @@ export default function SubscriptionSection() {
       </div>
 
       {/* ═══ Карты пополнения PS Store ═══ */}
-      <div style={{ background: 'rgba(255,255,255,0.02)' }}>
+      <div id="psn-cards" style={{ background: 'rgba(255,255,255,0.02)' }}>
         <div className="section-divider" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           {/* Header */}
@@ -321,7 +332,7 @@ export default function SubscriptionSection() {
       </div>
 
       {/* ═══ Xbox Game Pass ═══ */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-14">
+      <div id="xbox" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-14">
         {/* Header */}
         <div className="flex items-center gap-3 mb-8">
           <Image
@@ -398,7 +409,7 @@ export default function SubscriptionSection() {
         <div className="flex items-center gap-3 mb-8">
           <img src="/images/platforms/ea-play.png" alt="EA Play" className="rounded-lg" style={{ width: '32px', height: '32px', objectFit: 'contain' }} />
           <div>
-            <h2 className="text-[26px] sm:text-[32px] md:text-[36px] font-bold gradient-text">Подписка EA Play (ЕА Плей)</h2>
+            <Link href="/ea-play" className="hover:opacity-80 transition-opacity"><h2 className="text-[26px] sm:text-[32px] md:text-[36px] font-bold gradient-text">Подписка EA Play (ЕА Плей)</h2></Link>
             <p className="text-[15px] text-[var(--text-secondary)]">Купить EA Play для PlayStation, Xbox и ПК — каталог игр EA Sports, Battlefield, The Sims</p>
           </div>
         </div>

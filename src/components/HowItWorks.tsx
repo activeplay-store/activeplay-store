@@ -15,7 +15,7 @@ const steps = [
   {
     number: 2,
     label: '02',
-    title: 'Нажми «Оформить»',
+    title: 'Нажми «Оформить» / «Купить»',
     description: 'Выбери мессенджер и напиши менеджеру',
     icon: (
       <svg className="w-8 h-8" fill="none" stroke="#00D4FF" viewBox="0 0 24 24" strokeWidth={2}>

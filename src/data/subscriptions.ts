@@ -39,7 +39,7 @@ export const psPlans: PlanTier[] = [
     features: [
       'Каталог 400+ игр для PS5 и PS4',
       'Ubisoft+ Classics',
-      'Хиты в день релиза (Day One)',
+      'Новые игры каждый месяц в каталоге',
       'Эксклюзивные скидки в PS Store',
       '+ всё из Essential',
     ],

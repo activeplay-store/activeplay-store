@@ -47,13 +47,13 @@ function getPsBadge(planName: string, period: Period, region?: Region): { text: 
 // Xbox dynamic badge — mirrors PS badge logic
 function getXboxBadge(planName: string, period: Period): { text: string; bg: string; glow: string } | null {
   if (period === 1 && planName === 'Ultimate') {
-    return { text: 'Популярный выбор', bg: 'linear-gradient(135deg, #00D4FF, #0070D1)', glow: 'rgba(0,212,255,0.35)' };
+    return { text: 'Популярный выбор', bg: '#00D4FF', glow: 'rgba(0,212,255,0.35)' };
   }
   if (period === 3 && planName === 'Ultimate') {
-    return { text: 'Мы рекомендуем', bg: 'linear-gradient(135deg, #8B5CF6, #6D28D9)', glow: 'rgba(139,92,246,0.35)' };
+    return { text: 'Мы рекомендуем', bg: '#00D4FF', glow: 'rgba(0,212,255,0.35)' };
   }
   if (period === 12 && planName === 'Essential') {
-    return { text: 'Максимальная выгода', bg: 'linear-gradient(135deg, #00E676, #00C853)', glow: 'rgba(0,230,118,0.35)' };
+    return { text: 'Максимальная выгода', bg: '#00D4FF', glow: 'rgba(0,212,255,0.35)' };
   }
   return null;
 }
@@ -94,7 +94,7 @@ export default function PlanCard({ plan, period, region, platform, onOrder, href
       {/* Dynamic PS badge */}
       {psBadge && (
         <div
-          className="absolute -top-4 left-1/2 -translate-x-1/2 px-5 py-1.5 rounded-full text-xs font-bold uppercase text-black whitespace-nowrap tracking-wide animate-fade-in-up"
+          className="absolute -top-4 left-1/2 -translate-x-1/2 px-5 py-1.5 rounded-full text-xs font-bold uppercase text-white whitespace-nowrap tracking-wide animate-fade-in-up"
           style={{
             background: psBadge.bg,
             boxShadow: `0 0 20px ${psBadge.glow}`,

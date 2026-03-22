@@ -182,7 +182,11 @@ export default function MessengerPopup({ isOpen, onClose, planName, price }: Mes
 
         {/* Content */}
         <h3 className="text-xl font-bold text-white mb-1 font-display" style={{ fontStyle: 'normal' }}>{planName}</h3>
-        <p className="price-display text-[28px] !text-[var(--brand)] mb-6">{price.toLocaleString('ru-RU')} ₽</p>
+        <p className="price-display text-[28px] !text-[var(--brand)] mb-1">{price.toLocaleString('ru-RU')} ₽</p>
+        {planName === 'Создание аккаунта PlayStation' && (
+          <p className="text-[13px] mb-4" style={{ color: '#00D4FF' }}>При покупке подписки PS Plus — бесплатно</p>
+        )}
+        {planName !== 'Создание аккаунта PlayStation' && <div className="mb-5" />}
 
         <div className="space-y-3 mb-6">
           {/* Chat on site */}
@@ -240,7 +244,7 @@ export default function MessengerPopup({ isOpen, onClose, planName, price }: Mes
           <div className="flex items-start gap-3">
             <span className="text-base mt-0.5">🎮</span>
             <div>
-              <p className="text-sm font-medium text-white">Шаг 3: Получите подписку</p>
+              <p className="text-sm font-medium text-white">Шаг 3: {planName === 'Создание аккаунта PlayStation' ? 'Получите аккаунт' : 'Получите подписку'}</p>
               <p className="text-xs text-[var(--text-muted)]">~3 мин</p>
             </div>
           </div>

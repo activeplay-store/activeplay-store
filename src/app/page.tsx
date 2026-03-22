@@ -30,18 +30,18 @@ export default function Home() {
 
         <SectionDivider />
 
-        {/* 2. PlayStation Plus + Xbox + EA — transparent */}
-        <ScrollReveal>
-          <SubscriptionSection />
-        </ScrollReveal>
-
-        <SectionDivider />
-
-        {/* 6. How it works — light blue tint */}
+        {/* How it works — light blue tint */}
         <ScrollReveal>
           <div style={{ background: 'rgba(0,212,255,0.02)' }}>
             <HowItWorks />
           </div>
+        </ScrollReveal>
+
+        <SectionDivider />
+
+        {/* 2. PlayStation Plus + Xbox + EA — transparent */}
+        <ScrollReveal>
+          <SubscriptionSection />
         </ScrollReveal>
 
         <SectionDivider />
