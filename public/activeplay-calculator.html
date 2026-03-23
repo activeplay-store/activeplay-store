@@ -17,6 +17,89 @@
     padding: 20px;
   }
   .app { width: 100%; max-width: 420px; }
+  .app.hidden { display: none; }
+
+  .pin-screen {
+    width: 100%;
+    max-width: 420px;
+    text-align: center;
+    padding-top: 80px;
+  }
+  .pin-screen.hidden { display: none; }
+  .pin-logo {
+    font-size: 28px;
+    font-weight: 800;
+    color: #00d4ff;
+    margin-bottom: 8px;
+  }
+  .pin-sub {
+    font-size: 13px;
+    color: #4a6080;
+    margin-bottom: 40px;
+  }
+  .pin-label {
+    font-size: 14px;
+    color: #7090b0;
+    margin-bottom: 16px;
+  }
+  .pin-dots {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+  .pin-dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #1e2740;
+    border: 2px solid #2a3a50;
+    transition: all 0.15s;
+  }
+  .pin-dot.filled {
+    background: #00d4ff;
+    border-color: #00d4ff;
+    box-shadow: 0 0 8px rgba(0,212,255,0.4);
+  }
+  .pin-dot.error {
+    background: #ff4040;
+    border-color: #ff4040;
+    box-shadow: 0 0 8px rgba(255,64,64,0.4);
+  }
+  .pin-pad {
+    display: grid;
+    grid-template-columns: repeat(3, 72px);
+    gap: 12px;
+    justify-content: center;
+  }
+  .pin-btn {
+    width: 72px;
+    height: 56px;
+    border: 1px solid #1a2035;
+    background: #111827;
+    color: #c8d0e0;
+    font-family: inherit;
+    font-size: 22px;
+    font-weight: 600;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.1s;
+  }
+  .pin-btn:active {
+    background: #00d4ff;
+    color: #000;
+    transform: scale(0.95);
+  }
+  .pin-btn.fn {
+    font-size: 14px;
+    color: #4a6080;
+  }
+  .pin-error-msg {
+    color: #ff4040;
+    font-size: 13px;
+    margin-top: 16px;
+    min-height: 20px;
+  }
 
   .logo {
     text-align: center;
@@ -184,7 +267,36 @@
 </head>
 <body>
 
-<div class="app">
+<div class="pin-screen" id="pin-screen">
+  <div class="pin-logo">ActivePlay</div>
+  <div class="pin-sub">Калькулятор цен</div>
+  <div class="pin-label">Введите PIN-код</div>
+  <div class="pin-dots" id="pin-dots">
+    <div class="pin-dot"></div>
+    <div class="pin-dot"></div>
+    <div class="pin-dot"></div>
+    <div class="pin-dot"></div>
+    <div class="pin-dot"></div>
+    <div class="pin-dot"></div>
+  </div>
+  <div class="pin-pad">
+    <button class="pin-btn" onclick="pinPress('1')">1</button>
+    <button class="pin-btn" onclick="pinPress('2')">2</button>
+    <button class="pin-btn" onclick="pinPress('3')">3</button>
+    <button class="pin-btn" onclick="pinPress('4')">4</button>
+    <button class="pin-btn" onclick="pinPress('5')">5</button>
+    <button class="pin-btn" onclick="pinPress('6')">6</button>
+    <button class="pin-btn" onclick="pinPress('7')">7</button>
+    <button class="pin-btn" onclick="pinPress('8')">8</button>
+    <button class="pin-btn" onclick="pinPress('9')">9</button>
+    <button class="pin-btn fn" onclick="pinClear()">✕</button>
+    <button class="pin-btn" onclick="pinPress('0')">0</button>
+    <button class="pin-btn fn" onclick="pinBack()">←</button>
+  </div>
+  <div class="pin-error-msg" id="pin-error"></div>
+</div>
+
+<div class="app hidden" id="app">
   <div class="logo">
     <h1>ActivePlay</h1>
     <span>Калькулятор цен</span>
@@ -219,6 +331,69 @@
 </div>
 
 <script>
+// ═══ PIN-КОД ═══
+const PIN_CODE = '240320';
+const PIN_STORAGE_KEY = 'ap_calc_auth';
+let pinInput = '';
+
+function checkSavedPin() {
+  try {
+    if (localStorage.getItem(PIN_STORAGE_KEY) === PIN_CODE) {
+      showApp();
+      return;
+    }
+  } catch(e) {}
+  document.getElementById('pin-screen').classList.remove('hidden');
+}
+
+function pinPress(d) {
+  if (pinInput.length >= 6) return;
+  pinInput += d;
+  updateDots();
+  if (pinInput.length === 6) {
+    setTimeout(() => {
+      if (pinInput === PIN_CODE) {
+        try { localStorage.setItem(PIN_STORAGE_KEY, PIN_CODE); } catch(e) {}
+        showApp();
+      } else {
+        const dots = document.querySelectorAll('.pin-dot');
+        dots.forEach(d => { d.classList.remove('filled'); d.classList.add('error'); });
+        document.getElementById('pin-error').textContent = 'Неверный PIN-код';
+        setTimeout(() => {
+          pinInput = '';
+          updateDots();
+          dots.forEach(d => d.classList.remove('error'));
+          document.getElementById('pin-error').textContent = '';
+        }, 800);
+      }
+    }, 150);
+  }
+}
+
+function pinBack() {
+  pinInput = pinInput.slice(0, -1);
+  updateDots();
+}
+
+function pinClear() {
+  pinInput = '';
+  updateDots();
+}
+
+function updateDots() {
+  const dots = document.querySelectorAll('.pin-dot');
+  dots.forEach((d, i) => {
+    d.classList.toggle('filled', i < pinInput.length);
+    d.classList.remove('error');
+  });
+}
+
+function showApp() {
+  document.getElementById('pin-screen').classList.add('hidden');
+  document.getElementById('app').classList.remove('hidden');
+}
+
+window.addEventListener('DOMContentLoaded', checkSavedPin);
 const ANCHORS_TR = [
   [100,6.15],[150,5.64],[200,4.62],[250,4.31],[300,3.90],
   [350,3.69],[400,3.59],[450,3.38],[500,3.28],
