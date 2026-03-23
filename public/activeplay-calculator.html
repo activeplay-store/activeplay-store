@@ -214,6 +214,35 @@
     font-size: 18px;
   }
 
+  .wallet-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid #1a2035;
+  }
+  .wallet-label {
+    color: #6a8aaa;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+  .wallet-input {
+    flex: 1;
+    background: #0a0e17;
+    border: 1px solid #1a2035;
+    color: #fff;
+    padding: 10px 12px;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 8px;
+    outline: none;
+    text-align: center;
+  }
+  .wallet-input:focus { border-color: #00d4ff40; }
+  .wallet-input::placeholder { color: #2a3a50; font-size: 13px; font-weight: 400; }
+
   .result-block {
     background: linear-gradient(135deg, #0d2030, #111827);
     border: 2px solid #00d4ff20;
@@ -256,6 +285,20 @@
     font-size: 12px;
     color: #4a6080;
   }
+  .result-wallet {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #1a203520;
+    font-size: 13px;
+    color: #30e060;
+  }
+  .result-wallet .line {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4px;
+  }
+  .result-wallet .label { color: #4a6080; }
+  .result-wallet .val { color: #30e060; font-weight: 600; }
 
   .footer {
     text-align: center;
@@ -321,6 +364,10 @@
   <div class="input-block">
     <div class="input-label" id="input-label">Цена товара в TRY</div>
     <input type="number" class="price-input" id="price-input" placeholder="Введите цену" inputmode="numeric" oninput="calculate()">
+    <div class="wallet-row">
+      <span class="wallet-label" id="wallet-label">На кошельке (TRY):</span>
+      <input type="number" class="wallet-input" id="wallet-input" placeholder="0" inputmode="numeric" oninput="calculate()">
+    </div>
   </div>
 
   <div class="result-block" id="result-block">
@@ -476,6 +523,7 @@ function setRegion(r) {
   const cur = region === 'TR' ? 'TRY' : 'UAH';
   document.getElementById('rate-label').textContent = 'Курс ЦБ ' + cur;
   document.getElementById('input-label').textContent = 'Цена товара в ' + cur;
+  document.getElementById('wallet-label').textContent = 'На кошельке (' + cur + '):';
   document.getElementById('rate-slider').value = rates[region];
   document.getElementById('rate-display').textContent = rates[region].toFixed(2);
   calculate();
@@ -489,6 +537,7 @@ function onRateChange(v) {
 
 function calculate() {
   const val = parseFloat(document.getElementById('price-input').value);
+  const wallet = parseFloat(document.getElementById('wallet-input').value) || 0;
   const block = document.getElementById('result-block');
 
   if (!val || val <= 0) {
@@ -504,15 +553,29 @@ function calculate() {
   const adjCoeff = +(tier.base * ratio).toFixed(2);
 
   const rawPrice = val * adjCoeff;
-  // Округление до 50 вверх
-  const clientPrice = Math.ceil(rawPrice / 50) * 50;
+  const basePrice = Math.ceil(rawPrice / 50) * 50;
+
+  // Кошелёк: сумма × курс ЦБ × 0.9 (минус 10%)
+  const walletDiscount = wallet > 0 ? Math.round(wallet * cbRate * 0.9) : 0;
+  const finalPrice = Math.max(0, basePrice - walletDiscount);
 
   const cur = region === 'TR' ? 'TRY' : 'UAH';
 
+  let walletHtml = '';
+  if (walletDiscount > 0) {
+    walletHtml = `
+      <div class="result-wallet">
+        <div class="line"><span class="label">Базовая цена</span><span style="color:#fff">${basePrice.toLocaleString('ru')} ₽</span></div>
+        <div class="line"><span class="label">Кошелёк ${wallet} ${cur} × ${cbRate} × 0.9</span><span class="val">−${walletDiscount.toLocaleString('ru')} ₽</span></div>
+      </div>
+    `;
+  }
+
   block.innerHTML = `
-    <div class="result-label">Цена для клиента</div>
-    <div class="result-price">${clientPrice.toLocaleString('ru')}<span class="currency">₽</span></div>
+    <div class="result-label">${walletDiscount > 0 ? 'Итого с учётом кошелька' : 'Цена для клиента'}</div>
+    <div class="result-price">${finalPrice.toLocaleString('ru')}<span class="currency">₽</span></div>
     <div class="result-tier">${val.toLocaleString('ru')} ${cur} · коэфф. ${adjCoeff}</div>
+    ${walletHtml}
   `;
 }
 </script>
