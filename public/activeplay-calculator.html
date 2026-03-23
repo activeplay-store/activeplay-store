@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>ActivePlay Калькулятор</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: #0a0e17;
+    color: #c8d0e0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+  }
+  .app { width: 100%; max-width: 420px; }
+
+  .logo {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  .logo h1 {
+    font-size: 22px;
+    font-weight: 800;
+    color: #00d4ff;
+    letter-spacing: -0.5px;
+  }
+  .logo span {
+    font-size: 12px;
+    color: #4a6080;
+  }
+
+  .region-toggle {
+    display: flex;
+    background: #111827;
+    border-radius: 12px;
+    border: 1px solid #1a2035;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  .region-btn {
+    flex: 1;
+    padding: 14px;
+    border: none;
+    background: transparent;
+    color: #6a8aaa;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .region-btn.active {
+    background: #00d4ff;
+    color: #000;
+  }
+
+  .rate-block {
+    background: #111827;
+    border: 1px solid #1a2035;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 20px;
+  }
+  .rate-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .rate-label span { color: #7090b0; font-size: 13px; }
+  .rate-value { color: #00d4ff; font-weight: 700; font-size: 18px; }
+  .rate-suffix { color: #4a6080; font-size: 13px; font-weight: 400; }
+
+  input[type=range] {
+    -webkit-appearance: none;
+    width: 100%;
+    background: transparent;
+  }
+  input[type=range]::-webkit-slider-track {
+    height: 6px;
+    background: #1e2740;
+    border-radius: 3px;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 22px;
+    height: 22px;
+    background: #00d4ff;
+    border-radius: 50%;
+    margin-top: -8px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0,212,255,0.3);
+  }
+
+  .input-block {
+    background: #111827;
+    border: 1px solid #1a2035;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  .input-label {
+    color: #7090b0;
+    font-size: 13px;
+    margin-bottom: 10px;
+  }
+  .price-input {
+    width: 100%;
+    background: #0a0e17;
+    border: 2px solid #1a2035;
+    color: #fff;
+    padding: 16px;
+    font-family: inherit;
+    font-size: 28px;
+    font-weight: 700;
+    border-radius: 10px;
+    outline: none;
+    text-align: center;
+    transition: border-color 0.2s;
+  }
+  .price-input:focus {
+    border-color: #00d4ff;
+  }
+  .price-input::placeholder {
+    color: #2a3a50;
+    font-weight: 400;
+    font-size: 18px;
+  }
+
+  .result-block {
+    background: linear-gradient(135deg, #0d2030, #111827);
+    border: 2px solid #00d4ff20;
+    border-radius: 16px;
+    padding: 24px;
+    text-align: center;
+    margin-bottom: 16px;
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .result-label {
+    color: #4a6080;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .result-price {
+    font-size: 48px;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1;
+  }
+  .result-price .currency {
+    font-size: 24px;
+    color: #00d4ff;
+    font-weight: 600;
+    margin-left: 6px;
+  }
+  .result-empty {
+    color: #2a3a50;
+    font-size: 15px;
+  }
+  .result-tier {
+    margin-top: 8px;
+    font-size: 12px;
+    color: #4a6080;
+  }
+
+  .footer {
+    text-align: center;
+    font-size: 11px;
+    color: #2a3a50;
+    padding: 8px;
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <div class="logo">
+    <h1>ActivePlay</h1>
+    <span>Калькулятор цен</span>
+  </div>
+
+  <div class="region-toggle">
+    <button class="region-btn active" id="btn-tr" onclick="setRegion('TR')">🇹🇷 Турция</button>
+    <button class="region-btn" id="btn-ua" onclick="setRegion('UA')">🇺🇦 Украина</button>
+  </div>
+
+  <div class="rate-block">
+    <div class="rate-label">
+      <span id="rate-label">Курс ЦБ TRY</span>
+      <div>
+        <span class="rate-value" id="rate-display">2.00</span>
+        <span class="rate-suffix"> ₽</span>
+      </div>
+    </div>
+    <input type="range" id="rate-slider" min="1.50" max="3.50" step="0.01" value="2.00" oninput="onRateChange(this.value)">
+  </div>
+
+  <div class="input-block">
+    <div class="input-label" id="input-label">Цена товара в TRY</div>
+    <input type="number" class="price-input" id="price-input" placeholder="Введите цену" inputmode="numeric" oninput="calculate()">
+  </div>
+
+  <div class="result-block" id="result-block">
+    <div class="result-empty">Введите цену товара</div>
+  </div>
+
+  <div class="footer">ActivePlay · Внутренний инструмент</div>
+</div>
+
+<script>
+const ANCHORS_TR = [
+  [100,6.15],[150,5.64],[200,4.62],[250,4.31],[300,3.90],
+  [350,3.69],[400,3.59],[450,3.38],[500,3.28],
+  [750,3.18],[1000,2.87],[1200,2.77],[1400,2.67],
+  [1600,2.56],[1800,2.46],[2000,2.41],[3000,2.36],
+  [4000,2.31],[5000,2.26],[10000,2.21],[15000,2.15]
+];
+const ANCHORS_UA = [
+  [100,8.00],[150,6.45],[200,5.55],[250,5.05],[300,4.65],
+  [350,4.40],[400,4.20],[450,4.05],[500,3.90],
+  [750,3.60],[1000,3.28],[1200,3.06],[1400,2.94],
+  [1600,2.83],[1800,2.73],[2000,2.68],[3000,2.55],
+  [4000,2.42],[5000,2.35],[6000,2.28],[7000,2.25],
+  [8000,2.23],[9000,2.22],[10000,2.20],[15000,2.18]
+];
+const RANGES = [
+  [0,100],[101,150],[151,200],[201,250],[251,300],
+  [301,350],[351,400],[401,450],[451,500],
+  [501,550],[551,600],[601,650],[651,700],[701,750],
+  [751,800],[801,850],[851,900],[901,950],[951,1000],
+  [1001,1100],[1101,1200],[1201,1300],[1301,1400],
+  [1401,1500],[1501,1600],[1601,1700],[1701,1800],
+  [1801,1900],[1901,2000],[2001,2500],[2501,3000],
+  [3001,3500],[3501,4000],[4001,4500],[4501,5000],
+  [5001,6000],[6001,7000],[7001,8000],[8001,9000],[9001,10000],
+  [10001,11000],[11001,12000],[12001,13000],[13001,15000]
+];
+
+const REF = { TR: 2.00, UA: 2.01 };
+const COMMISSION = 250;
+let region = 'TR';
+let rates = { TR: 2.00, UA: 2.01 };
+
+function interp(mid, anchors) {
+  if (mid <= anchors[0][0]) return anchors[0][1];
+  if (mid >= anchors[anchors.length-1][0]) return anchors[anchors.length-1][1];
+  for (let i = 0; i < anchors.length-1; i++) {
+    const [x0,y0] = anchors[i], [x1,y1] = anchors[i+1];
+    if (mid <= x1) return +(y0 + (y1-y0)*(mid-x0)/(x1-x0)).toFixed(2);
+  }
+  return anchors[anchors.length-1][1];
+}
+
+function buildTiers(anchors, refRate) {
+  const tiers = RANGES.map(([lo,hi]) => {
+    const mid = Math.round((lo+hi)/2);
+    return { lo, hi, base: interp(mid, anchors) };
+  });
+  // Автосглаживание
+  let prevM = -Infinity;
+  for (let i = 0; i < tiers.length; i++) {
+    const mid = Math.round((tiers[i].lo+tiers[i].hi)/2);
+    const cost = Math.round(mid * refRate + COMMISSION);
+    const cp = Math.round(mid * tiers[i].base);
+    let m = cp - cost;
+    if (i > 0 && m <= prevM) {
+      const step = Math.max(5, Math.round(prevM * 0.005));
+      const target = prevM + step;
+      tiers[i].base = +((cost + target) / mid).toFixed(2);
+      m = target;
+    }
+    prevM = m;
+  }
+  return tiers;
+}
+
+let tiersCache = { TR: null, UA: null };
+
+function getTiers() {
+  const a = region === 'TR' ? ANCHORS_TR : ANCHORS_UA;
+  const r = REF[region];
+  if (!tiersCache[region]) tiersCache[region] = buildTiers(a, r);
+  return tiersCache[region];
+}
+
+function setRegion(r) {
+  region = r;
+  document.getElementById('btn-tr').className = 'region-btn' + (r==='TR' ? ' active' : '');
+  document.getElementById('btn-ua').className = 'region-btn' + (r==='UA' ? ' active' : '');
+  const cur = region === 'TR' ? 'TRY' : 'UAH';
+  document.getElementById('rate-label').textContent = 'Курс ЦБ ' + cur;
+  document.getElementById('input-label').textContent = 'Цена товара в ' + cur;
+  document.getElementById('rate-slider').value = rates[region];
+  document.getElementById('rate-display').textContent = rates[region].toFixed(2);
+  calculate();
+}
+
+function onRateChange(v) {
+  rates[region] = parseFloat(v);
+  document.getElementById('rate-display').textContent = parseFloat(v).toFixed(2);
+  calculate();
+}
+
+function calculate() {
+  const val = parseFloat(document.getElementById('price-input').value);
+  const block = document.getElementById('result-block');
+
+  if (!val || val <= 0) {
+    block.innerHTML = '<div class="result-empty">Введите цену товара</div>';
+    return;
+  }
+
+  const tiers = getTiers();
+  const tier = tiers.find(t => val >= t.lo && val <= t.hi) || tiers[tiers.length-1];
+  const cbRate = rates[region];
+  const refRate = REF[region];
+  const ratio = cbRate / refRate;
+  const adjCoeff = +(tier.base * ratio).toFixed(2);
+
+  const rawPrice = val * adjCoeff;
+  // Округление до 50 вверх
+  const clientPrice = Math.ceil(rawPrice / 50) * 50;
+
+  const cur = region === 'TR' ? 'TRY' : 'UAH';
+
+  block.innerHTML = `
+    <div class="result-label">Цена для клиента</div>
+    <div class="result-price">${clientPrice.toLocaleString('ru')}<span class="currency">₽</span></div>
+    <div class="result-tier">${val.toLocaleString('ru')} ${cur} · коэфф. ${adjCoeff}</div>
+  `;
+}
+</script>
+</body>
+</html>
