@@ -8,7 +8,7 @@ const catalogLinks = [
   { label: 'Xbox Game Pass', href: '/#xbox' },
   { label: 'EA Play', href: '/ea-play' },
   { label: 'Игровая валюта', href: '/igrovaya-valyuta' },
-  { label: 'Игры со скидкой', href: '/#games' },
+  { label: 'Игры со скидкой', href: '/sale' },
   { label: 'Предзаказы', href: '/#preorders' },
 ];
 

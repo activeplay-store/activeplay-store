@@ -28,7 +28,7 @@ const megaMenuColumns = [
       { label: 'Предзаказы', href: '/#preorders' },
       { label: 'Горящие новинки', href: '/#hot-releases' },
       { label: 'Топ продаж', href: '/#top-sales' },
-      { label: 'Игры со скидкой', href: '/#games' },
+      { label: 'Скидки PS Store', href: '/sale' },
       { label: 'Игровая валюта', href: '/igrovaya-valyuta' },
     ],
   },

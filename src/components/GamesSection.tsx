@@ -95,17 +95,19 @@ export default function GamesSection() {
             <circle cx="12" cy="20" r="3" fill="#22C55E" style={{ filter: 'drop-shadow(0 0 4px rgba(34,197,94,0.6))' }} />
           </svg>
           <div>
-            <h2
-              className="text-[26px] sm:text-[32px] md:text-[36px] font-bold"
-              style={{
-                background: 'linear-gradient(135deg, #ffffff 30%, #00D4FF 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-              }}
-            >
-              Игры со скидкой для PS5, PS4 и Xbox
-            </h2>
+            <a href="/sale" className="block hover:opacity-80 transition-opacity">
+              <h2
+                className="text-[26px] sm:text-[32px] md:text-[36px] font-bold"
+                style={{
+                  background: 'linear-gradient(135deg, #ffffff 30%, #00D4FF 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                }}
+              >
+                Игры со скидкой для PS5, PS4 и Xbox
+              </h2>
+            </a>
             <p className="text-[15px] text-[var(--text-secondary)]">
               Mega March Sale 2026 — скидки до 85% на хиты PS Store
             </p>
@@ -151,6 +153,13 @@ export default function GamesSection() {
         <div className="flex items-center gap-2 mt-6 text-xs text-[var(--text-muted)]">
           <span className="pulse-dot" />
           Цены пересчитаны по курсу ЦБ. Акция Mega March Sale действует до 26 марта 2026
+        </div>
+
+        <div className="text-center mt-8">
+          <a href="/sale" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-white/10 text-white/80 hover:text-white hover:border-[#00D4FF]/50 hover:shadow-[0_0_20px_rgba(0,212,255,0.15)] transition-all text-sm font-medium">
+            Показать все игры со скидкой
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
+          </a>
         </div>
       </div>
 

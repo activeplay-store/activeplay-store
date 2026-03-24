@@ -39,3 +39,31 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# agent data (generated on server)
+agent/data/rates.json
+agent/data/anchors.json
+agent/data/games.json
+agent/data/rates-log.json
+agent/data/prices-log.json
+agent/data/publish-log.json
+agent/data/modes.json
+agent/data/anchors.backup.json
+agent/node_modules
+
+# agent-bot (отдельный от основного проекта)
+agent-bot/
+agent-bot-prompt.md 
+mega-unified-prompt.md 
+agent-bot-phase2-prompt.md 
+agent-bot-phase3-prompt.md 
+agent-bot-final-prompt.md 
+module1-currency-prompt.md 
+module2-pricing-prompt.md 
+module3-parser-prompt.md 
+sale-page-prompt.md 
+"sale-page-prompt (1).md" 
+ActivePlay_AI_Agent_Specification_v1.md 
+activeplay-all-sources.md 
+seo-archive-part2.md 
+.claude/ 
