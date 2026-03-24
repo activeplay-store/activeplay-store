@@ -288,6 +288,19 @@ async function runFullParse() {
   }
   console.log(`[Парсер] RAWG: обогащено ${rawgEnriched} игр`);
 
+  // Brand fallback для игр без metacritic
+  let brandFallbacks = 0;
+  for (const game of allGames) {
+    if (!game.metacritic && (!game.hypeScore || game.hypeScore <= 3)) {
+      const fb = rawg.brandFallback(game.name);
+      if (fb.hypeScore > 3) {
+        game.hypeScore = fb.hypeScore;
+        brandFallbacks++;
+      }
+    }
+  }
+  if (brandFallbacks > 0) console.log(`[Парсер] Brand fallback: ${brandFallbacks} игр`);
+
   // Сохранить результат
   const result = {
     updatedAt: new Date().toISOString(),

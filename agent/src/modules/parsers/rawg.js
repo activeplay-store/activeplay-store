@@ -6,6 +6,14 @@ const BASE_URL = config.parsers.rawg?.endpoint || 'https://api.rawg.io/api';
 async function searchGame(gameName) {
   try {
     const cleanName = gameName
+      .replace(/\s*\+\s*.*/g, '')
+      .replace(/\s*Sürüm\S*/gi, '')
+      .replace(/\s*Lüks\s*/gi, '')
+      .replace(/\s*Paketleri\s*/gi, '')
+      .replace(/\s*Dijital\S*/gi, '')
+      .replace(/\s*Nihai\s*/gi, '')
+      .replace(/\s*Koleksiyon\S*/gi, '')
+      .replace(/\s*Sezon\s*Kart\S*/gi, '')
       .replace(/PS[45] & PS[45]/gi, '')
       .replace(/PS[45]/gi, '')
       .replace(/\s*(Digital\s+)?Deluxe/gi, '')
@@ -85,4 +93,22 @@ function calculateFreshness(releasedDate) {
   return 3;
 }
 
-module.exports = { searchGame, calculateHypeScore, calculateFreshness };
+const BRAND_HYPE = [
+  { score: 10, patterns: ['god of war', 'spider-man', 'spider man', 'last of us', 'gta', 'grand theft auto', 'silent hill', 'final fantasy', 'death stranding', "baldur's gate", 'baldurs gate', 'ea sports fc', 'fifa', 'red dead', 'cyberpunk', 'witcher', 'elden ring'] },
+  { score: 7, patterns: ['resident evil', "assassin's creed", 'assassins creed', 'tekken', 'need for speed', 'far cry', 'kingdom come', 'hogwarts', 'star wars', 'uncharted', 'horizon', 'sekiro', 'like a dragon', 'yakuza', 'persona', 'ufc', 'mortal kombat'] },
+  { score: 5, patterns: ['devil may cry', 'gran turismo', 'sonic', "demon's souls", 'demons souls', 'dragon age', 'destiny', 'batman', 'astro bot', 'hitman', 'the crew', 'mount blade', 'mount & blade'] },
+];
+
+function brandFallback(name) {
+  const lower = (name || '').toLowerCase();
+  for (const tier of BRAND_HYPE) {
+    for (const pattern of tier.patterns) {
+      if (lower.includes(pattern)) {
+        return { hypeScore: tier.score };
+      }
+    }
+  }
+  return { hypeScore: 3 };
+}
+
+module.exports = { searchGame, calculateHypeScore, calculateFreshness, brandFallback };
