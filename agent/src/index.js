@@ -46,12 +46,6 @@ let lastUpdate = null;
 const server = http.createServer((req, res) => {
   res.setHeader('Content-Type', 'application/json; charset=utf-8');
 
-  if (req.url === '/rates') {
-    const saved = currency.loadSavedRates();
-    res.end(JSON.stringify(saved || { error: 'no data' }));
-    return;
-  }
-
   if (req.url && req.url.startsWith('/price')) {
     const parsed = url.parse(req.url, true);
     const amount = parseFloat(parsed.query.amount);
@@ -79,7 +73,13 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  // GET / — health check
+  if (req.url === '/rates') {
+    const saved = currency.loadSavedRates();
+    res.end(JSON.stringify(saved || { error: 'no data' }));
+    return;
+  }
+
+  // GET / — health check (fallback)
   res.end(JSON.stringify({
     status: 'ok',
     version: VERSION,
