@@ -1,6 +1,5 @@
 const http = require('http');
 const cron = require('node-cron');
-const url = require('url');
 const config = require('./config');
 const currency = require('./modules/currency');
 const pricing = require('./modules/pricing');
@@ -47,9 +46,9 @@ const server = http.createServer((req, res) => {
   res.setHeader('Content-Type', 'application/json; charset=utf-8');
 
   if (req.url && req.url.startsWith('/price')) {
-    const parsed = url.parse(req.url, true);
-    const amount = parseFloat(parsed.query.amount);
-    const region = (parsed.query.region || 'TR').toUpperCase();
+    const params = new URL(req.url, 'http://localhost').searchParams;
+    const amount = parseFloat(params.get('amount'));
+    const region = (params.get('region') || 'TR').toUpperCase();
 
     if (!amount || isNaN(amount)) {
       res.statusCode = 400;
