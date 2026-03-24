@@ -5,12 +5,13 @@ const currency = require('./modules/currency');
 const pricing = require('./modules/pricing');
 const parsers = require('./modules/parsers');
 const sony = require('./modules/parsers/sony');
-const psprices = require('./modules/parsers/psprices');
 const notifier = require('./modules/notifier');
 const logger = require('./modules/logger');
 
 const VERSION = '1.0.0';
 const PORT = 3900;
+
+// ── Helpers ──────────────────────────────────────────────────────────────
 
 function formatRatesLog(rates) {
   return config.currencies
@@ -19,41 +20,105 @@ function formatRatesLog(rates) {
     .join(' | ');
 }
 
-function formatChangesLog(changes) {
-  return changes
-    .map(c => `${c.code} ${c.from} → ${c.to} (${c.diff >= 0 ? '+' : ''}${c.diff})`)
-    .join(', ');
-}
+// ── Rates update ─────────────────────────────────────────────────────────
 
-function getNextCronTime(cronExpr) {
-  // Простой расчёт следующего запуска для лога
-  const parts = cronExpr.split(' ');
-  const minute = parts[0];
-  const hour = parts[1];
-  if (hour === '*/3') return `каждые 3ч в :${minute} мин`;
-  return `${hour}:${minute} МСК`;
-}
-
-async function runUpdate() {
+async function updateRates() {
   try {
     const result = await currency.fetchAndSave();
-
     if (result.rates) {
       console.log(`[Курсы] ${formatRatesLog(result.rates)} | Источник: ${result.source || 'cache'}`);
     }
-
     if (result.changed && result.changes.length > 0) {
-      console.log(`[Курсы] ⚠️ Изменение: ${formatChangesLog(result.changes)}`);
+      console.log(`[Курсы] Изменение: ${result.changes.map(c => `${c.code} ${c.from} -> ${c.to}`).join(', ')}`);
     }
-
+    lastUpdate = new Date().toISOString();
     return result;
   } catch (err) {
-    console.log(`[Курсы] ❌ Ошибка: ${err.message}`);
+    console.log(`[Курсы] Ошибка: ${err.message}`);
     return null;
   }
 }
 
-// --- HTTP health-check сервер ---
+// ── Nightly parse ────────────────────────────────────────────────────────
+
+async function runNightlyParse() {
+  const startTime = Date.now();
+  console.log('[Парсер] Ночной парсинг запущен...');
+
+  const previousData = parsers.loadGames();
+  const { result } = await parsers.runFullParse();
+
+  const duration = Math.round((Date.now() - startTime) / 1000);
+
+  // Detect changes
+  const changes = detectChanges(previousData, result.games);
+
+  // Log
+  logger.logPrice({
+    gamesCount: result.games.length,
+    newDeals: changes.newDeals.length,
+    expiredDeals: changes.expiredDeals.length,
+    newPreorders: changes.newPreorders.length,
+    priceChanges: changes.priceChanges.length,
+    source: 'sony',
+    regions: ['TR', 'UA'],
+    duration
+  });
+
+  // Alert
+  let alertMsg = `Парсинг: ${result.games.length} игр за ${duration}с`;
+  if (changes.newDeals.length > 0) alertMsg += `\nНовые скидки: ${changes.newDeals.length}`;
+  if (changes.expiredDeals.length > 0) alertMsg += `\nЗакончились: ${changes.expiredDeals.length}`;
+  if (changes.newPreorders.length > 0) alertMsg += `\nНовые предзаказы: ${changes.newPreorders.length}`;
+  if (changes.priceChanges.length > 0) alertMsg += `\nИзменения цен: ${changes.priceChanges.length}`;
+  notifier.sendAlert('parse_complete', alertMsg);
+
+  // Detail alerts
+  if (changes.newDeals.length > 0) {
+    const top5 = changes.newDeals.slice(0, 5);
+    notifier.sendAlert('new_deals', `Новые скидки: ${top5.map(g => g.name).join(', ')}${changes.newDeals.length > 5 ? ` и ещё ${changes.newDeals.length - 5}` : ''}`);
+  }
+  if (changes.newPreorders.length > 0) {
+    notifier.sendAlert('new_preorders', `Новые предзаказы: ${changes.newPreorders.map(g => g.name).join(', ')}`);
+  }
+
+  console.log(`[Парсер] Ночной парсинг завершён за ${duration}с: ${result.games.length} игр`);
+}
+
+function detectChanges(oldData, newGames) {
+  const oldGames = oldData?.games || [];
+  const oldIds = new Set(oldGames.map(g => g.id));
+  const newIds = new Set((newGames || []).map(g => g.id));
+
+  const newDeals = (newGames || []).filter(g => !oldIds.has(g.id) && g.bestPrice?.discountPct > 0);
+  const expiredDeals = oldGames.filter(g => !newIds.has(g.id) && g.bestPrice?.discountPct > 0);
+  const newPreorders = (newGames || []).filter(g => !oldIds.has(g.id) && g.status === 'preorder');
+
+  const priceChanges = [];
+  for (const ng of (newGames || [])) {
+    const og = oldGames.find(g => g.id === ng.id);
+    if (og && og.bestPrice && ng.bestPrice && og.bestPrice.clientPrice !== ng.bestPrice.clientPrice) {
+      priceChanges.push({ name: ng.name, oldPrice: og.bestPrice.clientPrice, newPrice: ng.bestPrice.clientPrice });
+    }
+  }
+
+  return { newDeals, expiredDeals, newPreorders, priceChanges };
+}
+
+// ── Catalog stubs ────────────────────────────────────────────────────────
+
+async function checkCatalogEssential() {
+  console.log('[Каталог] Проверка Essential...');
+  notifier.sendAlert('parse_complete', 'Проверка Essential — модуль в разработке');
+}
+
+async function checkCatalogsMonthly() {
+  console.log('[Каталог] Проверка Extra/Deluxe/Trials/EA Play...');
+  notifier.sendAlert('parse_complete', 'Проверка Extra/Deluxe/Trials/EA Play — модуль в разработке');
+}
+
+// ── HTTP server ──────────────────────────────────────────────────────────
+
 let lastUpdate = null;
 
 const server = http.createServer((req, res) => {
@@ -63,72 +128,59 @@ const server = http.createServer((req, res) => {
     const params = new URL(req.url, 'http://localhost').searchParams;
     const amount = parseFloat(params.get('amount'));
     const region = (params.get('region') || 'TR').toUpperCase();
-
-    if (!amount || isNaN(amount)) {
-      res.statusCode = 400;
-      res.end(JSON.stringify({ error: 'amount is required' }));
-      return;
-    }
-
-    try {
-      const result = pricing.calculatePrice(amount, region);
-      res.end(JSON.stringify(result));
-    } catch (err) {
-      res.statusCode = 400;
-      res.end(JSON.stringify({ error: err.message }));
-    }
+    if (!amount || isNaN(amount)) { res.statusCode = 400; res.end(JSON.stringify({ error: 'amount is required' })); return; }
+    try { res.end(JSON.stringify(pricing.calculatePrice(amount, region))); }
+    catch (err) { res.statusCode = 400; res.end(JSON.stringify({ error: err.message })); }
     return;
   }
 
   if (req.url === '/anchors') {
-    const anchors = { TR: pricing.getAnchors('TR'), UA: pricing.getAnchors('UA') };
-    res.end(JSON.stringify(anchors));
+    res.end(JSON.stringify({ TR: pricing.getAnchors('TR'), UA: pricing.getAnchors('UA') }));
     return;
   }
 
   if (req.url === '/rates') {
-    const saved = currency.loadSavedRates();
-    res.end(JSON.stringify(saved || { error: 'no data' }));
+    res.end(JSON.stringify(currency.loadSavedRates() || { error: 'no data' }));
     return;
   }
 
   if (req.url === '/games' || req.url === '/games/') {
-    const data = parsers.loadGames();
-    res.end(JSON.stringify(data));
+    res.end(JSON.stringify(parsers.loadGames()));
     return;
   }
 
   if (req.url && req.url.startsWith('/games/')) {
     const gameId = req.url.replace('/games/', '');
     const data = parsers.loadGames();
-    const game = (data.games || []).find(g => g.id === gameId);
-    res.end(JSON.stringify(game || { error: 'not found' }));
+    res.end(JSON.stringify((data.games || []).find(g => g.id === gameId) || { error: 'not found' }));
     return;
   }
 
   if (req.url === '/parse') {
     res.end(JSON.stringify({ status: 'started' }));
-    parsers.runFullParse().catch(err => console.log(`[Парсер] ❌ ${err.message}`));
+    runNightlyParse().catch(err => console.error('[Ручной парсинг]', err.message));
     return;
   }
 
-  if (req.url === '/parse/preorders') {
+  if (req.url === '/check-essential') {
     res.end(JSON.stringify({ status: 'started' }));
-    (async () => {
-      try {
-        let trPre = sony.isConfigured() ? await sony.fetchPreorders('TR') : [];
-        let uaPre = sony.isConfigured() ? await sony.fetchPreorders('UA') : [];
-        if (trPre.length === 0) trPre = await psprices.fetchPreorders('TR').catch(() => []);
-        if (uaPre.length === 0) uaPre = await psprices.fetchPreorders('UA').catch(() => []);
-        console.log(`[Парсер] Предзаказы: TR ${trPre.length}, UA ${uaPre.length}`);
-      } catch (err) {
-        console.log(`[Парсер] ❌ Предзаказы: ${err.message}`);
-      }
-    })();
+    checkCatalogEssential().catch(console.error);
     return;
   }
 
-  // GET / — health check (fallback)
+  if (req.url === '/check-catalogs') {
+    res.end(JSON.stringify({ status: 'started' }));
+    checkCatalogsMonthly().catch(console.error);
+    return;
+  }
+
+  if (req.url === '/update-rates') {
+    res.end(JSON.stringify({ status: 'started' }));
+    updateRates().catch(console.error);
+    return;
+  }
+
+  // GET / — health check
   res.end(JSON.stringify({
     status: 'ok',
     version: VERSION,
@@ -137,119 +189,76 @@ const server = http.createServer((req, res) => {
   }));
 });
 
-// --- Запуск ---
+// ── Main ─────────────────────────────────────────────────────────────────
+
 async function main() {
   console.log(`[AP-Agent] Запуск v${VERSION}`);
   console.log(`[AP-Agent] Timezone: ${process.env.TZ || Intl.DateTimeFormat().resolvedOptions().timeZone}`);
 
-  // Сразу получить курсы при старте
-  const result = await runUpdate();
-  if (result) {
-    lastUpdate = new Date().toISOString();
-  }
+  // Курсы при старте
+  await updateRates();
 
   // Инициализация модуля цен
   const anchorsInfo = pricing.loadAnchors();
   const trCount = anchorsInfo.TR ? anchorsInfo.TR.anchors.length : 0;
   const uaCount = anchorsInfo.UA ? anchorsInfo.UA.anchors.length : 0;
-  console.log(`[Цены] Якорные точки загружены: TR (${trCount} точек), UA (${uaCount} точек)`);
+  console.log(`[Цены] Якорные точки: TR (${trCount}), UA (${uaCount})`);
 
-  // Тестовый расчёт
   try {
     const test = pricing.calculatePrice(2999, 'TR');
-    console.log(`[Цены] ✅ Тест: 2999 TRY → ${test.clientPrice}₽ (маржа ${test.marginPct}%)`);
+    console.log(`[Цены] Тест: 2999 TRY -> ${test.clientPrice} руб. (маржа ${test.marginPct}%)`);
   } catch (err) {
-    console.log(`[Цены] ❌ Ошибка тестового расчёта: ${err.message}`);
+    console.log(`[Цены] Ошибка теста: ${err.message}`);
   }
 
-  // Модуль 3: парсер цен
-  console.log('[AP-Agent] Модуль 3: парсер цен');
-  const nextParse = getNextCronTime(config.parsers.cronSchedule);
-  console.log(`[Парсер] Готов. Следующий запуск: ${nextParse}`);
+  // ── Cron расписание ──────────────────────────────────────────────────
 
-  // Cron: каждый день в 09:00 МСК — курсы
-  cron.schedule(config.cronSchedule, async () => {
-    console.log('[AP-Agent] Cron: обновление курсов...');
-    const result = await runUpdate();
-    if (result) {
-      lastUpdate = new Date().toISOString();
+  // Ночной парсинг: 3:00 МСК ежедневно
+  cron.schedule('0 3 * * *', async () => {
+    console.log('[Cron] Ночной парсинг...');
+    try { await runNightlyParse(); }
+    catch (err) {
+      console.error('[Cron] Ночной парсинг:', err.message);
+      notifier.sendAlert('source_down', 'Ночной парсинг упал: ' + err.message);
     }
-  }, {
-    timezone: 'Europe/Moscow'
-  });
+  }, { timezone: 'Europe/Moscow' });
 
-  // Cron: каждые 3 часа — парсинг цен
-  cron.schedule(config.parsers.cronSchedule, async () => {
-    console.log('[AP-Agent] Cron: парсинг цен...');
-    try {
-      const oldData = parsers.loadGames();
-      const { summary, result } = await parsers.runFullParse();
+  // Курс ЦБ: 10:00 и 17:00 МСК
+  cron.schedule('0 10 * * *', async () => {
+    console.log('[Cron] Курс ЦБ (10:00)...');
+    await updateRates();
+  }, { timezone: 'Europe/Moscow' });
 
-      // Логирование
-      logger.logPrice({
-        gamesCount: result.games.length,
-        dealsCount: result.games.filter(g => Object.values(g.prices).some(r => r.editions?.some(e => e.salePrice))).length,
-        source: 'sony'
-      });
+  cron.schedule('0 17 * * *', async () => {
+    console.log('[Cron] Курс ЦБ (17:00)...');
+    await updateRates();
+  }, { timezone: 'Europe/Moscow' });
 
-      // Алерт: парсинг завершён
-      notifier.sendAlert('parse_complete',
-        `Парсинг завершён: ${result.games.length} игр`,
-        { gamesCount: result.games.length }
-      );
-
-      if (oldData.games && oldData.games.length > 0) {
-        const changes = parsers.detectChanges(result.games, oldData.games);
-        if (changes.newDeals.length > 0) {
-          console.log(`[Парсер] 🆕 Новые скидки: ${changes.newDeals.map(d => `${d.game} -${d.discountPct}%`).join(', ')}`);
-          notifier.sendAlert('new_deals',
-            `Новые скидки: ${changes.newDeals.map(d => `${d.game} -${d.discountPct}%`).join(', ')}`,
-            { deals: changes.newDeals }
-          );
-        }
-        if (changes.newPreorders.length > 0) {
-          console.log(`[Парсер] 🆕 Новые предзаказы: ${changes.newPreorders.map(g => g.name).join(', ')}`);
-          notifier.sendAlert('new_preorders',
-            `Новые предзаказы: ${changes.newPreorders.map(g => g.name).join(', ')}`,
-            { preorders: changes.newPreorders.map(g => g.name) }
-          );
-        }
-        if (changes.priceChanges.length > 0) {
-          console.log(`[Парсер] 💰 Изменения цен: ${changes.priceChanges.map(c => `${c.game} ${c.oldPrice}→${c.newPrice}`).join(', ')}`);
-        }
-      }
-    } catch (err) {
-      console.log(`[Парсер] ❌ Ошибка полного цикла: ${err.message}`);
+  // Каталог Essential: 8-го числа 4:00 МСК
+  cron.schedule('0 4 8 * *', async () => {
+    console.log('[Cron] Каталог Essential...');
+    try { await checkCatalogEssential(); }
+    catch (err) {
+      console.error('[Cron] Essential:', err.message);
+      notifier.sendAlert('source_down', 'Essential проверка упала: ' + err.message);
     }
-  }, {
-    timezone: 'Europe/Moscow'
-  });
+  }, { timezone: 'Europe/Moscow' });
 
-  // Cron: предзаказы (1, 8, 15, 22, 29 числа, 10:00 МСК)
-  cron.schedule(config.parsers.preordersCronSchedule, async () => {
-    console.log('[AP-Agent] Cron: проверка предзаказов...');
-    try {
-      const oldData = parsers.loadGames();
-      // Sony — основной, PSPrices — фоллбэк
-      let trPre = sony.isConfigured() ? await sony.fetchPreorders('TR') : [];
-      let uaPre = sony.isConfigured() ? await sony.fetchPreorders('UA') : [];
-      if (trPre.length === 0) trPre = await psprices.fetchPreorders('TR').catch(() => []);
-      if (uaPre.length === 0) uaPre = await psprices.fetchPreorders('UA').catch(() => []);
-      const allPre = [...trPre, ...uaPre];
-      console.log(`[Парсер] Предзаказы: TR ${trPre.length}, UA ${uaPre.length}`);
-
-      if (oldData.games && oldData.games.length > 0) {
-        const changes = parsers.detectChanges(allPre, oldData.games);
-        if (changes.newPreorders.length > 0) {
-          console.log(`[Парсер] 🆕 Новые предзаказы: ${changes.newPreorders.map(g => g.name).join(', ')}`);
-        }
-      }
-    } catch (err) {
-      console.log(`[Парсер] ❌ Предзаказы: ${err.message}`);
+  // Каталоги Extra/Deluxe/Trials/EA Play: 20-го числа 4:00 МСК
+  cron.schedule('0 4 20 * *', async () => {
+    console.log('[Cron] Каталоги Extra + Deluxe + Trials + EA Play...');
+    try { await checkCatalogsMonthly(); }
+    catch (err) {
+      console.error('[Cron] Каталоги:', err.message);
+      notifier.sendAlert('source_down', 'Каталоги проверка упала: ' + err.message);
     }
-  }, {
-    timezone: 'Europe/Moscow'
-  });
+  }, { timezone: 'Europe/Moscow' });
+
+  console.log('[AP-Agent] Расписание:');
+  console.log('  Парсинг скидок: 3:00 МСК ежедневно');
+  console.log('  Курс ЦБ: 10:00 и 17:00 МСК');
+  console.log('  Essential: 8-го числа 4:00 МСК');
+  console.log('  Extra/Deluxe: 20-го числа 4:00 МСК');
 
   server.listen(PORT, () => {
     console.log(`[AP-Agent] Health-check: http://localhost:${PORT}`);
