@@ -110,6 +110,24 @@ function calculateClientPrices(game, regionCode) {
         // Пропустить
       }
     }
+    if (edition.plusPrice) {
+      try {
+        const result = pricing.calculatePrice(edition.plusPrice, regionCode);
+        edition.clientPlusPrice = result.clientPrice;
+      } catch (err) {
+        // Пропустить
+      }
+    }
+  }
+
+  // Рассчитать bestPrice клиенту
+  if (game.bestPrice && game.bestPrice.amount) {
+    try {
+      const result = pricing.calculatePrice(game.bestPrice.amount, regionCode);
+      game.bestPrice.clientPrice = result.clientPrice;
+    } catch (err) {
+      // Пропустить
+    }
   }
 }
 
