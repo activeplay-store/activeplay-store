@@ -8,7 +8,8 @@ const LOCALE_MAP = {
 
 function isConfigured() {
   return !!(config.parsers.sony.hashes.categoryGridRetrieve &&
-            config.parsers.sony.hashes.productRetrieveForCtasWithPrice);
+            config.parsers.sony.hashes.productRetrieveForCtasWithPrice &&
+            config.parsers.sony.hashes.wcaProductEditionsRetrive);
 }
 
 /**
@@ -103,6 +104,52 @@ async function fetchCategory(regionCode, categoryId, maxPages = 10) {
   return allProducts;
 }
 
+/**
+ * Получить ВСЕ издания игры по productId любого издания
+ */
+async function fetchAllEditions(regionCode, productId) {
+  const data = await sonyGraphQL('wcaProductEditionsRetrive', {
+    productId
+  }, regionCode);
+
+  if (!data?.data?.editionSelectionsRetrieve) return null;
+
+  return data.data.editionSelectionsRetrieve.map(item => ({
+    productId: item.id,
+    editionName: item.edition?.invariantName || 'Standard',
+    localName: item.name
+  }));
+}
+
+// =====================
+// ФИЛЬТРАЦИЯ ИЗДАНИЙ
+// =====================
+
+/**
+ * Фильтровать мусорные издания (showcase, free) и дедуплицировать PS4/PS5
+ */
+function filterEditions(editions) {
+  return editions.filter(ed => {
+    const name = (ed.editionName || ed.name || '').toLowerCase();
+    if (name.includes('showcase') || name.includes('free')) return false;
+    return true;
+  }).reduce((acc, ed) => {
+    const edName = detectEditionName(ed.editionName) || ed.editionName;
+    const existing = acc.find(e =>
+      (detectEditionName(e.editionName) || e.editionName) === edName
+    );
+    if (existing) {
+      // Предпочитать PS5 (PPSA) над PS4 (CUSA)
+      if (ed.productId.includes('PPSA') && !existing.productId.includes('PPSA')) {
+        return acc.map(e => e === existing ? ed : e);
+      }
+      return acc;
+    }
+    acc.push(ed);
+    return acc;
+  }, []);
+}
+
 // =====================
 // ГРУППИРОВКА ПО ИГРЕ
 // =====================
@@ -178,7 +225,7 @@ function groupByGame(rawProducts, regionCode) {
 }
 
 // =====================
-// ОБОГАЩЕНИЕ ДАННЫМИ (ПРОХОД 2)
+// ОБОГАЩЕНИЕ ДАННЫМИ
 // =====================
 
 /**
@@ -189,19 +236,27 @@ function enrichEditionWithDetails(edition, webctas) {
     if (!cta.price) continue;
 
     const price = cta.price;
-    const isPsPlus = (price.serviceBranding || []).includes('PS_PLUS');
+    const branding = price.serviceBranding || [];
+    const isPsPlus = branding.some(b => b.includes('PLUS'));
 
     if (isPsPlus) {
       const plusValue = price.discountedValue
         ? Math.round(price.discountedValue / 100)
         : parsePrice(price.discountedPrice);
-      edition.plusPrice = plusValue;
+      if (plusValue) edition.plusPrice = plusValue;
+
+      if (price.endTime && !edition.saleEndDate) {
+        edition.saleEndDate = new Date(parseInt(price.endTime)).toISOString();
+      }
     } else {
       if (price.basePriceValue) {
         edition.basePrice = Math.round(price.basePriceValue / 100);
       }
       if (price.discountedValue) {
         edition.salePrice = Math.round(price.discountedValue / 100);
+      } else if (price.discountedPrice) {
+        const parsed = parsePrice(price.discountedPrice);
+        if (parsed) edition.salePrice = parsed;
       }
       if (price.discountText) {
         edition.discountPct = parseInt(price.discountText.replace(/[^0-9]/g, '')) || 0;
@@ -252,7 +307,7 @@ function calculateBestPrice(game, regionCode) {
 // =====================
 
 /**
- * Парсить скидки (deals) для региона — двухпроходный
+ * Парсить скидки (deals) для региона — трёхпроходный
  */
 async function fetchDeals(regionCode) {
   const categoryId = config.parsers.sony.categories?.deals?.[regionCode];
@@ -261,24 +316,66 @@ async function fetchDeals(regionCode) {
     return [];
   }
 
-  // ПРОХОД 1: массовый сбор из categoryGrid
+  // ============ ПРОХОД 1: массовый сбор из categoryGrid ============
   console.log(`[Sony] Проход 1: массовый сбор ${regionCode}...`);
   const rawProducts = await fetchCategory(regionCode, categoryId);
   console.log(`[Sony] Проход 1: ${rawProducts.length} листингов`);
 
-  // Группировка по игре
   const grouped = groupByGame(rawProducts, regionCode);
   console.log(`[Sony] Уникальных игр: ${grouped.length}`);
 
-  // ПРОХОД 2: дозапрос деталей для PS Plus цен
-  console.log(`[Sony] Проход 2: дозапрос PS Plus цен...`);
-  let enriched = 0;
+  // ============ ПРОХОД 2: получить ВСЕ издания ============
+  console.log(`[Sony] Проход 2: загрузка всех изданий...`);
+  let editionsFound = 0;
+
   for (const game of grouped) {
-    for (const edition of game.prices[regionCode].editions) {
+    const firstEdition = game.prices[regionCode]?.editions?.[0];
+    if (!firstEdition?.productId) continue;
+
+    try {
+      await sleep(1000);
+      const rawEditions = await fetchAllEditions(regionCode, firstEdition.productId);
+      const allEditions = filterEditions(rawEditions || []);
+
+      for (const ed of allEditions) {
+        const exists = game.prices[regionCode].editions.find(
+          e => e.productId === ed.productId
+        );
+        if (!exists) {
+          game.prices[regionCode].editions.push({
+            name: detectEditionName(ed.editionName) || ed.editionName,
+            productId: ed.productId,
+            basePrice: null,
+            salePrice: null,
+            plusPrice: null,
+            discountPct: 0,
+            saleEndDate: null,
+            clientPrice: null,
+            clientSalePrice: null,
+            clientPlusPrice: null
+          });
+          editionsFound++;
+        }
+      }
+    } catch (err) {
+      console.log(`[Sony] ⚠️ Издания ${firstEdition.productId}: ${err.message}`);
+    }
+  }
+
+  console.log(`[Sony] Проход 2: найдено ${editionsFound} дополнительных изданий`);
+
+  // ============ ПРОХОД 3: точные цены + PS Plus для каждого издания ============
+  console.log(`[Sony] Проход 3: дозапрос цен...`);
+  let enriched = 0;
+
+  for (const game of grouped) {
+    const editions = game.prices[regionCode]?.editions || [];
+
+    for (const edition of editions) {
       if (!edition.productId) continue;
 
       try {
-        await sleep(1000);
+        await sleep(500);
         const details = await sonyGraphQL('productRetrieveForCtasWithPrice', {
           productId: edition.productId
         }, regionCode);
@@ -288,19 +385,25 @@ async function fetchDeals(regionCode) {
           enriched++;
         }
       } catch (err) {
-        console.log(`[Sony] ⚠️ Дозапрос ${edition.productId}: ${err.message}`);
+        console.log(`[Sony] ⚠️ Цена ${edition.productId}: ${err.message}`);
       }
     }
 
     game.bestPrice = calculateBestPrice(game, regionCode);
   }
 
-  console.log(`[Sony] Проход 2: обогащено ${enriched} изданий`);
+  console.log(`[Sony] Проход 3: обогащено ${enriched} изданий`);
+
+  const withPlusPrice = grouped.filter(g =>
+    g.prices[regionCode]?.editions?.some(e => e.plusPrice)
+  ).length;
+  console.log(`[Sony] Итого: ${grouped.length} игр, ${withPlusPrice} с PS Plus ценой`);
+
   return grouped;
 }
 
 /**
- * Парсить предзаказы для региона — двухпроходный
+ * Парсить предзаказы для региона — трёхпроходный
  */
 async function fetchPreorders(regionCode) {
   const categoryId = config.parsers.sony.categories?.preorders?.[regionCode];
@@ -316,16 +419,59 @@ async function fetchPreorders(regionCode) {
   const grouped = groupByGame(rawProducts, regionCode);
   console.log(`[Sony] Уникальных предзаказов: ${grouped.length}`);
 
-  // Проход 2 для предзаказов тоже — могут быть PS Plus скидки
-  console.log(`[Sony] Проход 2: дозапрос деталей предзаказов...`);
-  let enriched = 0;
+  // Проход 2: все издания
+  console.log(`[Sony] Проход 2: загрузка изданий предзаказов...`);
+  let editionsFound = 0;
+
   for (const game of grouped) {
     game.status = 'preorder';
-    for (const edition of game.prices[regionCode].editions) {
+    const firstEdition = game.prices[regionCode]?.editions?.[0];
+    if (!firstEdition?.productId) continue;
+
+    try {
+      await sleep(1000);
+      const rawEditions = await fetchAllEditions(regionCode, firstEdition.productId);
+      const allEditions = filterEditions(rawEditions || []);
+
+      for (const ed of allEditions) {
+        const exists = game.prices[regionCode].editions.find(
+          e => e.productId === ed.productId
+        );
+        if (!exists) {
+          game.prices[regionCode].editions.push({
+            name: detectEditionName(ed.editionName) || ed.editionName,
+            productId: ed.productId,
+            basePrice: null,
+            salePrice: null,
+            plusPrice: null,
+            discountPct: 0,
+            saleEndDate: null,
+            clientPrice: null,
+            clientSalePrice: null,
+            clientPlusPrice: null
+          });
+          editionsFound++;
+        }
+      }
+    } catch (err) {
+      console.log(`[Sony] ⚠️ Издания ${firstEdition.productId}: ${err.message}`);
+    }
+  }
+
+  console.log(`[Sony] Проход 2: найдено ${editionsFound} дополнительных изданий`);
+
+  // Проход 3: цены
+  console.log(`[Sony] Проход 3: дозапрос цен предзаказов...`);
+  let enriched = 0;
+
+  for (const game of grouped) {
+    const editions = game.prices[regionCode]?.editions || [];
+
+    for (const edition of editions) {
       if (!edition.productId) continue;
 
       try {
-        await sleep(1000);
+        await sleep(500);
         const details = await sonyGraphQL('productRetrieveForCtasWithPrice', {
           productId: edition.productId
         }, regionCode);
@@ -335,58 +481,68 @@ async function fetchPreorders(regionCode) {
           enriched++;
         }
       } catch (err) {
-        console.log(`[Sony] ⚠️ Дозапрос ${edition.productId}: ${err.message}`);
+        console.log(`[Sony] ⚠️ Цена ${edition.productId}: ${err.message}`);
       }
     }
 
     game.bestPrice = calculateBestPrice(game, regionCode);
   }
 
-  console.log(`[Sony] Проход 2: обогащено ${enriched} изданий`);
+  console.log(`[Sony] Проход 3: обогащено ${enriched} изданий`);
   return grouped;
 }
 
 /**
- * Получить цену конкретной игры по productId
+ * Получить цену конкретной игры по productId (с дозапросом всех изданий)
  */
 async function fetchGamePrice(regionCode, productId) {
-  const data = await sonyGraphQL('productRetrieveForCtasWithPrice', {
-    productId
-  }, regionCode);
+  // Сначала получить все издания
+  const rawEditions = await fetchAllEditions(regionCode, productId);
+  const allEditions = filterEditions(rawEditions || [{ productId, editionName: 'Standard' }]);
 
-  if (!data?.data?.productRetrieve) return null;
+  const editions = [];
+  for (const ed of allEditions) {
+    const data = await sonyGraphQL('productRetrieveForCtasWithPrice', {
+      productId: ed.productId
+    }, regionCode);
 
-  const product = data.data.productRetrieve;
-  const webctas = product.webctas || [];
-  if (webctas.length === 0) return null;
+    if (!data?.data?.productRetrieve?.webctas) continue;
 
-  const editionName = detectEditionName(product.name || product.invariantName);
-  const coverUrl = findCover(product.media || []);
-  const slug = slugify(product.invariantName || product.name);
+    const product = data.data.productRetrieve;
+    const edition = {
+      name: detectEditionName(ed.editionName) || ed.editionName,
+      productId: ed.productId,
+      basePrice: null,
+      salePrice: null,
+      plusPrice: null,
+      discountPct: 0,
+      saleEndDate: null,
+      clientPrice: null,
+      clientSalePrice: null,
+      clientPlusPrice: null
+    };
 
-  const edition = {
-    name: editionName,
-    productId: product.id,
-    basePrice: null,
-    salePrice: null,
-    plusPrice: null,
-    discountPct: 0,
-    saleEndDate: null,
-    clientPrice: null,
-    clientSalePrice: null,
-    clientPlusPrice: null
-  };
+    enrichEditionWithDetails(edition, product.webctas);
+    editions.push(edition);
 
-  enrichEditionWithDetails(edition, webctas);
+    // Собрать мета-данные из первого ответа
+    if (editions.length === 1) {
+      var gameName = cleanName(product.invariantName || product.name);
+      var coverUrl = findCover(product.media || []);
+      var slug = slugify(product.invariantName || product.name);
+    }
+
+    await sleep(500);
+  }
+
+  if (editions.length === 0) return null;
 
   const game = {
     id: slug,
-    name: cleanName(product.invariantName || product.name),
-    conceptId: product.id,
+    name: gameName,
+    conceptId: productId,
     prices: {
-      [regionCode]: {
-        editions: [edition]
-      }
+      [regionCode]: { editions }
     },
     coverUrl,
     platform: 'PS5',
@@ -395,7 +551,7 @@ async function fetchGamePrice(regionCode, productId) {
     metacritic: null,
     sources: {
       sony: {
-        price: edition.salePrice || edition.basePrice,
+        price: editions[0].salePrice || editions[0].basePrice,
         fetchedAt: new Date().toISOString()
       }
     },
@@ -483,6 +639,7 @@ module.exports = {
   fetchPreorders,
   fetchGamePrice,
   fetchCategory,
+  fetchAllEditions,
   isConfigured,
   name: 'sony'
 };

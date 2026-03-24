@@ -68,7 +68,8 @@ module.exports = {
       // ⚠️ Могут устареть при обновлении Sony — проверять если начнутся ошибки
       hashes: {
         categoryGridRetrieve: '257713466fc3264850aa473409a29088e3a4115e6e69e9fb3e061c8dd5b9f5c6',
-        productRetrieveForCtasWithPrice: '737838e0e3fe50986b4087b51327970a71c80497576bea07904e9ecf4a2dab02'
+        productRetrieveForCtasWithPrice: '737838e0e3fe50986b4087b51327970a71c80497576bea07904e9ecf4a2dab02',
+        wcaProductEditionsRetrive: '426787dded75268971b135d28a717c10934e37a5e88fb014eb982471ff7dc50d'
       },
 
       // ID категорий PS Store
