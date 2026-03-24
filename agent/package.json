@@ -5,10 +5,13 @@
   "scripts": {
     "start": "node src/index.js",
     "test-rates": "node -e \"const c = require('./src/modules/currency'); c.fetchAndSave().then(r => console.log(r))\"",
+    "test-parser": "node -e \"const p = require('./src/modules/parsers'); p.testSingle('psprices', 'TR').then(r => console.log(JSON.stringify(r, null, 2)))\"",
+    "test-parser-all": "node -e \"const p = require('./src/modules/parsers'); p.runFullParse().then(r => console.log('Готово:', r.summary))\"",
     "test-pricing": "node -e \"const p = require('./src/modules/pricing'); const tests = [[2999, 'TR'], [5490, 'TR'], [259, 'TR'], [1499, 'UA'], [699, 'UA']]; tests.forEach(([price, region]) => { const r = p.calculatePrice(price, region); console.log(region + ' ' + price + ' → ' + r.clientPrice + '₽ (маржа ' + r.marginPct.toFixed(1) + '%%, коэфф ' + r.coefficient.toFixed(2) + ')'); });\""
   },
   "dependencies": {
     "node-cron": "^3.0.3",
-    "iconv-lite": "^0.6.3"
+    "iconv-lite": "^0.6.3",
+    "cheerio": "^1.0.0"
   }
 }

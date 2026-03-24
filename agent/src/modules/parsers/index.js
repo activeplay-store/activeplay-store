@@ -1,0 +1,329 @@
+const path = require('path');
+const fs = require('fs');
+const sony = require('./sony');
+const psprices = require('./psprices');
+const psdeals = require('./psdeals');
+const platprices = require('./platprices');
+const xbox = require('./xbox');
+const pricing = require('../pricing');
+const config = require('../../config');
+
+// =====================
+// 1. КАСКАДНЫЙ ЗАПРОС ЦЕН PLAYSTATION
+// =====================
+
+async function fetchPlayStationPrices(regionCode) {
+  let games = [];
+
+  // Массовый сбор через PSPrices (скидки + предзаказы)
+  const [deals, preorders] = await Promise.all([
+    psprices.fetchDeals(regionCode).catch(err => {
+      console.log(`[Парсер] ⚠️ PSPrices deals ${regionCode}: ${err.message}`);
+      return [];
+    }),
+    psprices.fetchPreorders(regionCode).catch(err => {
+      console.log(`[Парсер] ⚠️ PSPrices preorders ${regionCode}: ${err.message}`);
+      return [];
+    })
+  ]);
+
+  games = mergeGameLists(deals, preorders);
+
+  // Перекрёстная проверка через PSDeals (топ-20 по цене)
+  const toVerify = games
+    .filter(g => g.prices[regionCode]?.editions?.[0]?.basePrice)
+    .sort((a, b) => {
+      const priceA = a.prices[regionCode].editions[0].basePrice;
+      const priceB = b.prices[regionCode].editions[0].basePrice;
+      return priceB - priceA;
+    })
+    .slice(0, 20);
+
+  for (const game of toVerify) {
+    await sleep(config.parsers.politenessDelay);
+    const verification = await psdeals.fetchGamePrice(regionCode, game.id).catch(() => null);
+    if (verification) {
+      game.sources.psdeals = {
+        price: verification.prices[regionCode]?.editions?.[0]?.basePrice,
+        fetchedAt: new Date().toISOString()
+      };
+      checkDiscrepancy(game, regionCode);
+    }
+  }
+
+  // Рассчитать цены клиенту через модуль 2
+  for (const game of games) {
+    calculateClientPrices(game, regionCode);
+  }
+
+  return games;
+}
+
+// =====================
+// 2. ПЕРЕКРЁСТНАЯ ПРОВЕРКА
+// =====================
+
+function checkDiscrepancy(game, regionCode) {
+  const sources = game.sources;
+  const prices = [];
+
+  if (sources.psprices?.price) prices.push({ source: 'PSPrices', price: sources.psprices.price });
+  if (sources.psdeals?.price) prices.push({ source: 'PSDeals', price: sources.psdeals.price });
+  if (sources.sony?.price) prices.push({ source: 'Sony', price: sources.sony.price });
+
+  if (prices.length < 2) return;
+
+  const max = Math.max(...prices.map(p => p.price));
+  const min = Math.min(...prices.map(p => p.price));
+  if (min === 0) return;
+  const diffPct = ((max - min) / min) * 100;
+
+  if (diffPct > config.parsers.discrepancyThreshold) {
+    game.discrepancy = true;
+    game.discrepancyDetails = prices
+      .map(p => `${p.source}: ${p.price}`)
+      .join(', ') + ` (расхождение ${diffPct.toFixed(1)}%)`;
+
+    console.log(`[Парсер] ⚠️ РАСХОЖДЕНИЕ: ${game.name} — ${game.discrepancyDetails}`);
+  }
+}
+
+// =====================
+// 3. РАСЧЁТ ЦЕН КЛИЕНТУ
+// =====================
+
+function calculateClientPrices(game, regionCode) {
+  const regionPrices = game.prices[regionCode];
+  if (!regionPrices?.editions) return;
+
+  for (const edition of regionPrices.editions) {
+    if (edition.basePrice) {
+      try {
+        const result = pricing.calculatePrice(edition.basePrice, regionCode);
+        edition.clientPrice = result.clientPrice;
+      } catch (err) {
+        // Регион не поддерживается в pricing — пропустить
+      }
+    }
+    if (edition.salePrice) {
+      try {
+        const result = pricing.calculatePrice(edition.salePrice, regionCode);
+        edition.clientSalePrice = result.clientPrice;
+      } catch (err) {
+        // Пропустить
+      }
+    }
+  }
+}
+
+// =====================
+// 4. ОБЪЕДИНЕНИЕ И ДЕДУПЛИКАЦИЯ
+// =====================
+
+function mergeGameLists(...lists) {
+  const merged = new Map();
+
+  for (const list of lists) {
+    for (const game of list) {
+      if (merged.has(game.id)) {
+        const existing = merged.get(game.id);
+        for (const [region, prices] of Object.entries(game.prices)) {
+          if (!existing.prices[region]) {
+            existing.prices[region] = prices;
+          }
+        }
+        if (game.status === 'preorder') existing.status = 'preorder';
+        Object.assign(existing.sources, game.sources);
+      } else {
+        merged.set(game.id, { ...game });
+      }
+    }
+  }
+
+  return Array.from(merged.values());
+}
+
+// =====================
+// 5. ПОЛНЫЙ ЦИКЛ ПАРСИНГА
+// =====================
+
+async function runFullParse() {
+  console.log('[Парсер] Начинаю полный цикл парсинга...');
+  const startTime = Date.now();
+
+  const allGames = [];
+  const errors = [];
+
+  // PlayStation — по регионам
+  for (const regionCode of ['TR', 'UA']) {
+    try {
+      console.log(`[Парсер] PlayStation ${regionCode}...`);
+      const games = await fetchPlayStationPrices(regionCode);
+      for (const game of games) {
+        const existing = allGames.find(g => g.id === game.id);
+        if (existing) {
+          Object.assign(existing.prices, game.prices);
+          Object.assign(existing.sources, game.sources);
+        } else {
+          allGames.push(game);
+        }
+      }
+      console.log(`[Парсер] ✅ ${regionCode}: ${games.length} игр`);
+    } catch (err) {
+      console.log(`[Парсер] ❌ PlayStation ${regionCode}: ${err.message}`);
+      errors.push({ region: regionCode, error: err.message });
+    }
+
+    await sleep(config.parsers.politenessDelay * 2);
+  }
+
+  // Xbox — закомментирован, раскомментировать когда понадобится
+  // try {
+  //   console.log('[Парсер] Xbox...');
+  //   const xboxGames = await xbox.fetchDeals('TR');
+  //   console.log(`[Парсер] ✅ Xbox: ${xboxGames.length} игр`);
+  // } catch (err) {
+  //   console.log(`[Парсер] ❌ Xbox: ${err.message}`);
+  //   errors.push({ region: 'Xbox', error: err.message });
+  // }
+
+  // Сохранить результат
+  const result = {
+    updatedAt: new Date().toISOString(),
+    parseTimeMs: Date.now() - startTime,
+    totalGames: allGames.length,
+    errors: errors,
+    games: allGames
+  };
+
+  saveGames(result);
+
+  const summary = {
+    games: allGames.length,
+    errors: errors.length,
+    discrepancies: allGames.filter(g => g.discrepancy).length,
+    preorders: allGames.filter(g => g.status === 'preorder').length,
+    deals: allGames.filter(g =>
+      Object.values(g.prices).some(r =>
+        r.editions?.some(e => e.salePrice)
+      )
+    ).length,
+    timeSeconds: ((Date.now() - startTime) / 1000).toFixed(1)
+  };
+
+  console.log(`[Парсер] Готово за ${summary.timeSeconds}с: ${summary.games} игр, ${summary.preorders} предзаказов, ${summary.deals} со скидкой, ${summary.discrepancies} расхождений, ${summary.errors} ошибок`);
+
+  return { summary, result };
+}
+
+// =====================
+// 6. СОХРАНЕНИЕ И ЗАГРУЗКА
+// =====================
+
+function saveGames(data) {
+  const dir = path.dirname(config.parsers.gamesFile);
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(config.parsers.gamesFile, JSON.stringify(data, null, 2), 'utf8');
+  console.log(`[Парсер] Сохранено в games.json: ${data.totalGames} игр`);
+}
+
+function loadGames() {
+  try {
+    const raw = fs.readFileSync(config.parsers.gamesFile, 'utf8');
+    return JSON.parse(raw);
+  } catch {
+    return { updatedAt: null, games: [] };
+  }
+}
+
+// =====================
+// 7. ДЕТЕКТ ИЗМЕНЕНИЙ
+// =====================
+
+function detectChanges(newGames, oldGames) {
+  const changes = {
+    newGames: [],
+    priceChanges: [],
+    newDeals: [],
+    endedDeals: [],
+    newPreorders: []
+  };
+
+  const oldMap = new Map(oldGames.map(g => [g.id, g]));
+
+  for (const game of newGames) {
+    const old = oldMap.get(game.id);
+
+    if (!old) {
+      changes.newGames.push(game);
+      if (game.status === 'preorder') changes.newPreorders.push(game);
+      continue;
+    }
+
+    for (const [region, prices] of Object.entries(game.prices)) {
+      const oldRegion = old.prices[region];
+      if (!oldRegion || !prices.editions || !oldRegion.editions) continue;
+
+      for (let i = 0; i < prices.editions.length; i++) {
+        const newEd = prices.editions[i];
+        const oldEd = oldRegion.editions[i];
+        if (!oldEd) continue;
+
+        if (newEd.basePrice !== oldEd.basePrice) {
+          changes.priceChanges.push({
+            game: game.name, region, edition: newEd.name,
+            oldPrice: oldEd.basePrice, newPrice: newEd.basePrice
+          });
+        }
+
+        if (newEd.salePrice && !oldEd.salePrice) {
+          changes.newDeals.push({
+            game: game.name, region, edition: newEd.name,
+            salePrice: newEd.salePrice, discountPct: newEd.discountPct
+          });
+        }
+
+        if (!newEd.salePrice && oldEd.salePrice) {
+          changes.endedDeals.push({
+            game: game.name, region, edition: newEd.name
+          });
+        }
+      }
+    }
+  }
+
+  return changes;
+}
+
+// =====================
+// УТИЛИТЫ
+// =====================
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+// =====================
+// ЭКСПОРТ
+// =====================
+
+module.exports = {
+  runFullParse,
+  fetchPlayStationPrices,
+  loadGames,
+  detectChanges,
+
+  testSingle: async (parserName, regionCode) => {
+    const parsers = { psprices, psdeals, sony, platprices };
+    const parser = parsers[parserName];
+    if (!parser) return { error: 'Unknown parser' };
+
+    if (parserName === 'psprices') {
+      return await psprices.fetchDeals(regionCode);
+    }
+    if (parserName === 'psdeals') {
+      return await psdeals.fetchDeals(regionCode);
+    }
+    return { error: 'No test for this parser' };
+  }
+};

@@ -3,6 +3,8 @@ const cron = require('node-cron');
 const config = require('./config');
 const currency = require('./modules/currency');
 const pricing = require('./modules/pricing');
+const parsers = require('./modules/parsers');
+const psprices = require('./modules/parsers/psprices');
 
 const VERSION = '1.0.0';
 const PORT = 3900;
@@ -18,6 +20,15 @@ function formatChangesLog(changes) {
   return changes
     .map(c => `${c.code} ${c.from} → ${c.to} (${c.diff >= 0 ? '+' : ''}${c.diff})`)
     .join(', ');
+}
+
+function getNextCronTime(cronExpr) {
+  // Простой расчёт следующего запуска для лога
+  const parts = cronExpr.split(' ');
+  const minute = parts[0];
+  const hour = parts[1];
+  if (hour === '*/3') return `каждые 3ч в :${minute} мин`;
+  return `${hour}:${minute} МСК`;
 }
 
 async function runUpdate() {
@@ -78,6 +89,40 @@ const server = http.createServer((req, res) => {
     return;
   }
 
+  if (req.url === '/games' || req.url === '/games/') {
+    const data = parsers.loadGames();
+    res.end(JSON.stringify(data));
+    return;
+  }
+
+  if (req.url && req.url.startsWith('/games/')) {
+    const gameId = req.url.replace('/games/', '');
+    const data = parsers.loadGames();
+    const game = (data.games || []).find(g => g.id === gameId);
+    res.end(JSON.stringify(game || { error: 'not found' }));
+    return;
+  }
+
+  if (req.url === '/parse') {
+    res.end(JSON.stringify({ status: 'started' }));
+    parsers.runFullParse().catch(err => console.log(`[Парсер] ❌ ${err.message}`));
+    return;
+  }
+
+  if (req.url === '/parse/preorders') {
+    res.end(JSON.stringify({ status: 'started' }));
+    (async () => {
+      try {
+        const trPre = await psprices.fetchPreorders('TR');
+        const uaPre = await psprices.fetchPreorders('UA');
+        console.log(`[Парсер] Предзаказы: TR ${trPre.length}, UA ${uaPre.length}`);
+      } catch (err) {
+        console.log(`[Парсер] ❌ Предзаказы: ${err.message}`);
+      }
+    })();
+    return;
+  }
+
   // GET / — health check (fallback)
   res.end(JSON.stringify({
     status: 'ok',
@@ -112,12 +157,66 @@ async function main() {
     console.log(`[Цены] ❌ Ошибка тестового расчёта: ${err.message}`);
   }
 
-  // Cron: каждый день в 09:00 МСК
+  // Модуль 3: парсер цен
+  console.log('[AP-Agent] Модуль 3: парсер цен');
+  const nextParse = getNextCronTime(config.parsers.cronSchedule);
+  console.log(`[Парсер] Готов. Следующий запуск: ${nextParse}`);
+
+  // Cron: каждый день в 09:00 МСК — курсы
   cron.schedule(config.cronSchedule, async () => {
     console.log('[AP-Agent] Cron: обновление курсов...');
     const result = await runUpdate();
     if (result) {
       lastUpdate = new Date().toISOString();
+    }
+  }, {
+    timezone: 'Europe/Moscow'
+  });
+
+  // Cron: каждые 3 часа — парсинг цен
+  cron.schedule(config.parsers.cronSchedule, async () => {
+    console.log('[AP-Agent] Cron: парсинг цен...');
+    try {
+      const oldData = parsers.loadGames();
+      const { summary, result } = await parsers.runFullParse();
+
+      if (oldData.games && oldData.games.length > 0) {
+        const changes = parsers.detectChanges(result.games, oldData.games);
+        if (changes.newDeals.length > 0) {
+          console.log(`[Парсер] 🆕 Новые скидки: ${changes.newDeals.map(d => `${d.game} -${d.discountPct}%`).join(', ')}`);
+        }
+        if (changes.newPreorders.length > 0) {
+          console.log(`[Парсер] 🆕 Новые предзаказы: ${changes.newPreorders.map(g => g.name).join(', ')}`);
+        }
+        if (changes.priceChanges.length > 0) {
+          console.log(`[Парсер] 💰 Изменения цен: ${changes.priceChanges.map(c => `${c.game} ${c.oldPrice}→${c.newPrice}`).join(', ')}`);
+        }
+      }
+    } catch (err) {
+      console.log(`[Парсер] ❌ Ошибка полного цикла: ${err.message}`);
+    }
+  }, {
+    timezone: 'Europe/Moscow'
+  });
+
+  // Cron: предзаказы (1, 8, 15, 22, 29 числа, 10:00 МСК)
+  cron.schedule(config.parsers.preordersCronSchedule, async () => {
+    console.log('[AP-Agent] Cron: проверка предзаказов...');
+    try {
+      const oldData = parsers.loadGames();
+      const trPre = await psprices.fetchPreorders('TR');
+      const uaPre = await psprices.fetchPreorders('UA');
+      const allPre = [...trPre, ...uaPre];
+      console.log(`[Парсер] Предзаказы: TR ${trPre.length}, UA ${uaPre.length}`);
+
+      if (oldData.games && oldData.games.length > 0) {
+        const changes = parsers.detectChanges(allPre, oldData.games);
+        if (changes.newPreorders.length > 0) {
+          console.log(`[Парсер] 🆕 Новые предзаказы: ${changes.newPreorders.map(g => g.name).join(', ')}`);
+        }
+      }
+    } catch (err) {
+      console.log(`[Парсер] ❌ Предзаказы: ${err.message}`);
     }
   }, {
     timezone: 'Europe/Moscow'
