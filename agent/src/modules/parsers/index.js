@@ -5,6 +5,7 @@ const psprices = require('./psprices');
 const psdeals = require('./psdeals');
 const platprices = require('./platprices');
 const xbox = require('./xbox');
+const rawg = require('./rawg');
 const pricing = require('../pricing');
 const config = require('../../config');
 
@@ -201,6 +202,51 @@ async function runFullParse() {
   //   console.log(`[Парсер] ❌ Xbox: ${err.message}`);
   //   errors.push({ region: 'Xbox', error: err.message });
   // }
+
+  // RAWG — Metacritic, hype, дата релиза (кешируем)
+  console.log('[Парсер] RAWG: Metacritic + hype...');
+  const oldData = loadGames();
+  const oldGameMap = new Map();
+  if (oldData && oldData.games) {
+    for (const g of oldData.games) {
+      if (g.metacritic || g.ratingsCount) {
+        oldGameMap.set(g.id, {
+          metacritic: g.metacritic, ratingsCount: g.ratingsCount,
+          hypeScore: g.hypeScore, freshness: g.freshness, releaseDate: g.releaseDate
+        });
+      }
+    }
+  }
+
+  let rawgEnriched = 0;
+  for (const game of allGames) {
+    const cached = oldGameMap.get(game.id);
+    if (cached && cached.metacritic) {
+      game.metacritic = cached.metacritic;
+      game.ratingsCount = cached.ratingsCount;
+      game.hypeScore = cached.hypeScore;
+      game.freshness = cached.freshness;
+      if (!game.releaseDate) game.releaseDate = cached.releaseDate;
+      continue;
+    }
+
+    await sleep(config.parsers.rawg?.rateLimit || 1000);
+    const rawgData = await rawg.searchGame(game.name);
+    if (rawgData) {
+      game.metacritic = rawgData.metacritic;
+      game.ratingsCount = rawgData.ratingsCount;
+      game.hypeScore = rawg.calculateHypeScore(rawgData.ratingsCount, rawgData.metacritic);
+      game.freshness = rawg.calculateFreshness(rawgData.released || game.releaseDate);
+      if (!game.releaseDate && rawgData.released) {
+        game.releaseDate = rawgData.released;
+      }
+      rawgEnriched++;
+    } else {
+      game.hypeScore = game.hypeScore || 3;
+      game.freshness = game.freshness || 5;
+    }
+  }
+  console.log(`[Парсер] RAWG: обогащено ${rawgEnriched} игр`);
 
   // Сохранить результат
   const result = {

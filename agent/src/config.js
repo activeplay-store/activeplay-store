@@ -117,6 +117,12 @@ module.exports = {
       displayCatalog: 'https://displaycatalog.mp.microsoft.com/v7.0/products',
       gamePassCatalog: 'https://catalog.gamepass.com/sigls/v2',
       recommendations: 'https://reco-public.rec.mp.microsoft.com/channels/Reco/V8.0/Lists/api/list/'
+    },
+
+    rawg: {
+      apiKey: 'd9ca3380009e448e8fb356b3837cafa2',
+      endpoint: 'https://api.rawg.io/api',
+      rateLimit: 1000
     }
   }
 };

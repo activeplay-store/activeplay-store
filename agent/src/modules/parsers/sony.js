@@ -205,7 +205,7 @@ function groupByGame(rawProducts, regionCode) {
         },
         coverUrl,
         platform: (product.platforms || []).join(' & ') || 'PS5',
-        releaseDate: null,
+        releaseDate: product.releaseDate || product.localizedStoreDisplayClassification?.releaseDate || null,
         status: 'released',
         metacritic: null,
         sources: {
