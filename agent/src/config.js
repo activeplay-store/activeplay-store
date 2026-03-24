@@ -75,11 +75,28 @@ module.exports = {
       // ID категорий PS Store
       categories: {
         deals: {
-          TR: '3f772501-f6f8-49b7-abac-874a88ca4897'
-          // UA и IN — добавить позже
+          TR: '3f772501-f6f8-49b7-abac-874a88ca4897',
+          UA: '3f772501-f6f8-49b7-abac-874a88ca4897'
         },
         preorders: {
-          // TR, UA — добавить позже
+          TR: '3bf499d7-7acf-4931-97dd-2667494ee2c9',
+          UA: '3bf499d7-7acf-4931-97dd-2667494ee2c9'
+        },
+        newGames: {
+          TR: 'e1699f77-77e1-43ca-a296-26d08abacb0f',
+          UA: 'e1699f77-77e1-43ca-a296-26d08abacb0f'
+        },
+        gameCatalog: {
+          TR: '3a7006fe-e26f-49fe-87e5-4473d7ed0fb2',
+          UA: '3a7006fe-e26f-49fe-87e5-4473d7ed0fb2'
+        },
+        classics: {
+          TR: '8056ad23-7f30-485c-a628-b99f9d5aec5d',
+          UA: '8056ad23-7f30-485c-a628-b99f9d5aec5d'
+        },
+        psExclusiveDiscounts: {
+          TR: '94eaecdc-c144-4d12-b8ef-77ce58b6eae1',
+          UA: '94eaecdc-c144-4d12-b8ef-77ce58b6eae1'
         }
       },
 
