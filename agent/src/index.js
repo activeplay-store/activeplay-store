@@ -1,7 +1,9 @@
 const http = require('http');
 const cron = require('node-cron');
+const url = require('url');
 const config = require('./config');
 const currency = require('./modules/currency');
+const pricing = require('./modules/pricing');
 
 const VERSION = '1.0.0';
 const PORT = 3900;
@@ -50,6 +52,33 @@ const server = http.createServer((req, res) => {
     return;
   }
 
+  if (req.url && req.url.startsWith('/price')) {
+    const parsed = url.parse(req.url, true);
+    const amount = parseFloat(parsed.query.amount);
+    const region = (parsed.query.region || 'TR').toUpperCase();
+
+    if (!amount || isNaN(amount)) {
+      res.statusCode = 400;
+      res.end(JSON.stringify({ error: 'amount is required' }));
+      return;
+    }
+
+    try {
+      const result = pricing.calculatePrice(amount, region);
+      res.end(JSON.stringify(result));
+    } catch (err) {
+      res.statusCode = 400;
+      res.end(JSON.stringify({ error: err.message }));
+    }
+    return;
+  }
+
+  if (req.url === '/anchors') {
+    const anchors = { TR: pricing.getAnchors('TR'), UA: pricing.getAnchors('UA') };
+    res.end(JSON.stringify(anchors));
+    return;
+  }
+
   // GET / — health check
   res.end(JSON.stringify({
     status: 'ok',
@@ -68,6 +97,20 @@ async function main() {
   const result = await runUpdate();
   if (result) {
     lastUpdate = new Date().toISOString();
+  }
+
+  // Инициализация модуля цен
+  const anchorsInfo = pricing.loadAnchors();
+  const trCount = anchorsInfo.TR ? anchorsInfo.TR.anchors.length : 0;
+  const uaCount = anchorsInfo.UA ? anchorsInfo.UA.anchors.length : 0;
+  console.log(`[Цены] Якорные точки загружены: TR (${trCount} точек), UA (${uaCount} точек)`);
+
+  // Тестовый расчёт
+  try {
+    const test = pricing.calculatePrice(2999, 'TR');
+    console.log(`[Цены] ✅ Тест: 2999 TRY → ${test.clientPrice}₽ (маржа ${test.marginPct}%)`);
+  } catch (err) {
+    console.log(`[Цены] ❌ Ошибка тестового расчёта: ${err.message}`);
   }
 
   // Cron: каждый день в 09:00 МСК
