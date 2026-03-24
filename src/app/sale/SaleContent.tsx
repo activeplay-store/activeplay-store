@@ -175,11 +175,11 @@ export default function SaleContent({ faqItems }: SaleContentProps) {
     const bestDisc = getBestDiscount(game);
 
     return (
-      <div className="bg-white/5 border border-white/10 rounded-xl overflow-hidden backdrop-blur-sm hover:border-white/20 transition-all group">
+      <div className="bg-[var(--bg-card)] border border-white/[0.06] rounded-2xl overflow-hidden cursor-pointer group transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_16px_48px_rgba(0,0,0,0.4)]">
         <div className="relative aspect-[4/5]">
           {!imgError ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={game.coverUrl} alt={`Купить ${game.name} ${game.platforms.join(' ')} со скидкой ${game.discountPct}%`} className="w-full h-full object-cover" loading="lazy" onError={() => setImgError(true)} />
+            <img src={game.coverUrl} alt={`Купить ${game.name} ${game.platforms.join(' ')} со скидкой ${game.discountPct}%`} className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.06]" loading="lazy" onError={() => setImgError(true)} />
           ) : (
             <FallbackCover name={game.name} />
           )}
@@ -209,7 +209,7 @@ export default function SaleContent({ faqItems }: SaleContentProps) {
             </p>
           )}
           {game.saleEndDate && <p className="text-white/40 text-xs mb-3">До {formatDate(game.saleEndDate)}</p>}
-          <button onClick={() => openPopup(game.name, prices.best)} className="w-full py-2.5 rounded-lg bg-[#00D4FF] text-black font-semibold hover:brightness-110 transition-all">
+          <button onClick={() => openPopup(game.name, prices.best)} className="btn-primary py-2.5 text-sm w-full">
             Купить
           </button>
         </div>
@@ -239,7 +239,7 @@ export default function SaleContent({ faqItems }: SaleContentProps) {
           <span className="line-through text-gray-500 text-sm hidden sm:inline">{fmt(prices.base)} руб.</span>
           <span className="text-white font-bold">{fmt(prices.best)} руб.</span>
           <span className="text-green-400 text-sm hidden md:inline">-{fmt(saving)} руб.</span>
-          <button onClick={() => openPopup(game.name, prices.best)} className="bg-[#00D4FF] hover:bg-cyan-400 text-black text-sm font-bold px-4 py-2 rounded-lg transition-all">
+          <button onClick={() => openPopup(game.name, prices.best)} className="btn-primary py-2 text-sm px-4">
             Купить
           </button>
         </div>
