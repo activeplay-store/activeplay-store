@@ -15,43 +15,40 @@ const config = require('../../config');
 async function fetchPlayStationPrices(regionCode) {
   let games = [];
 
-  // Массовый сбор через PSPrices (скидки + предзаказы)
-  const [deals, preorders] = await Promise.all([
-    psprices.fetchDeals(regionCode).catch(err => {
-      console.log(`[Парсер] ⚠️ PSPrices deals ${regionCode}: ${err.message}`);
-      return [];
-    }),
-    psprices.fetchPreorders(regionCode).catch(err => {
-      console.log(`[Парсер] ⚠️ PSPrices preorders ${regionCode}: ${err.message}`);
-      return [];
-    })
-  ]);
-
-  games = mergeGameLists(deals, preorders);
-
-  // Перекрёстная проверка через PSDeals (топ-20 по цене)
-  const toVerify = games
-    .filter(g => g.prices[regionCode]?.editions?.[0]?.basePrice)
-    .sort((a, b) => {
-      const priceA = a.prices[regionCode].editions[0].basePrice;
-      const priceB = b.prices[regionCode].editions[0].basePrice;
-      return priceB - priceA;
-    })
-    .slice(0, 20);
-
-  for (const game of toVerify) {
-    await sleep(config.parsers.politenessDelay);
-    const verification = await psdeals.fetchGamePrice(regionCode, game.id).catch(() => null);
-    if (verification) {
-      game.sources.psdeals = {
-        price: verification.prices[regionCode]?.editions?.[0]?.basePrice,
-        fetchedAt: new Date().toISOString()
-      };
-      checkDiscrepancy(game, regionCode);
+  // Шаг 1: Sony GraphQL — основной источник
+  if (sony.isConfigured()) {
+    try {
+      console.log(`[Парсер] Sony GraphQL ${regionCode}...`);
+      const deals = await sony.fetchDeals(regionCode);
+      console.log(`[Парсер] ✅ Sony deals ${regionCode}: ${deals.length} игр`);
+      games = deals;
+    } catch (err) {
+      console.log(`[Парсер] ⚠️ Sony ${regionCode}: ${err.message}`);
     }
   }
 
-  // Рассчитать цены клиенту через модуль 2
+  // Шаг 2: Если Sony не сработал — фоллбэк на PSPrices
+  if (games.length === 0) {
+    try {
+      console.log(`[Парсер] Фоллбэк: PSPrices ${regionCode}...`);
+      const [deals, preorders] = await Promise.all([
+        psprices.fetchDeals(regionCode).catch(err => {
+          console.log(`[Парсер] ⚠️ PSPrices deals ${regionCode}: ${err.message}`);
+          return [];
+        }),
+        psprices.fetchPreorders(regionCode).catch(err => {
+          console.log(`[Парсер] ⚠️ PSPrices preorders ${regionCode}: ${err.message}`);
+          return [];
+        })
+      ]);
+      games = mergeGameLists(deals, preorders);
+      console.log(`[Парсер] ✅ PSPrices ${regionCode}: ${games.length} игр`);
+    } catch (err) {
+      console.log(`[Парсер] ⚠️ PSPrices ${regionCode}: ${err.message}`);
+    }
+  }
+
+  // Шаг 3: Рассчитать цены клиенту через модуль 2
   for (const game of games) {
     calculateClientPrices(game, regionCode);
   }
@@ -318,6 +315,9 @@ module.exports = {
     const parser = parsers[parserName];
     if (!parser) return { error: 'Unknown parser' };
 
+    if (parserName === 'sony') {
+      return await sony.fetchDeals(regionCode);
+    }
     if (parserName === 'psprices') {
       return await psprices.fetchDeals(regionCode);
     }

@@ -4,6 +4,7 @@ const config = require('./config');
 const currency = require('./modules/currency');
 const pricing = require('./modules/pricing');
 const parsers = require('./modules/parsers');
+const sony = require('./modules/parsers/sony');
 const psprices = require('./modules/parsers/psprices');
 
 const VERSION = '1.0.0';
@@ -113,8 +114,10 @@ const server = http.createServer((req, res) => {
     res.end(JSON.stringify({ status: 'started' }));
     (async () => {
       try {
-        const trPre = await psprices.fetchPreorders('TR');
-        const uaPre = await psprices.fetchPreorders('UA');
+        let trPre = sony.isConfigured() ? await sony.fetchPreorders('TR') : [];
+        let uaPre = sony.isConfigured() ? await sony.fetchPreorders('UA') : [];
+        if (trPre.length === 0) trPre = await psprices.fetchPreorders('TR').catch(() => []);
+        if (uaPre.length === 0) uaPre = await psprices.fetchPreorders('UA').catch(() => []);
         console.log(`[Парсер] Предзаказы: TR ${trPre.length}, UA ${uaPre.length}`);
       } catch (err) {
         console.log(`[Парсер] ❌ Предзаказы: ${err.message}`);
@@ -204,8 +207,11 @@ async function main() {
     console.log('[AP-Agent] Cron: проверка предзаказов...');
     try {
       const oldData = parsers.loadGames();
-      const trPre = await psprices.fetchPreorders('TR');
-      const uaPre = await psprices.fetchPreorders('UA');
+      // Sony — основной, PSPrices — фоллбэк
+      let trPre = sony.isConfigured() ? await sony.fetchPreorders('TR') : [];
+      let uaPre = sony.isConfigured() ? await sony.fetchPreorders('UA') : [];
+      if (trPre.length === 0) trPre = await psprices.fetchPreorders('TR').catch(() => []);
+      if (uaPre.length === 0) uaPre = await psprices.fetchPreorders('UA').catch(() => []);
       const allPre = [...trPre, ...uaPre];
       console.log(`[Парсер] Предзаказы: TR ${trPre.length}, UA ${uaPre.length}`);
 

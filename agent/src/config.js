@@ -63,10 +63,31 @@ module.exports = {
 
     sony: {
       endpoint: 'https://web.np.playstation.com/api/graphql/v1/op',
+
+      // Актуальные sha256-хеши (получены 24.03.2026)
+      // ⚠️ Могут устареть при обновлении Sony — проверять если начнутся ошибки
       hashes: {
-        getProduct: '',
-        searchProducts: ''
-      }
+        categoryGridRetrieve: '257713466fc3264850aa473409a29088e3a4115e6e69e9fb3e061c8dd5b9f5c6',
+        productRetrieveForCtasWithPrice: '737838e0e3fe50986b4087b51327970a71c80497576bea07904e9ecf4a2dab02'
+      },
+
+      // ID категорий PS Store
+      categories: {
+        deals: {
+          TR: '3f772501-f6f8-49b7-abac-874a88ca4897'
+          // UA и IN — добавить позже
+        },
+        preorders: {
+          // TR, UA — добавить позже
+        }
+      },
+
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept-Language': 'en-US,en;q=0.9'
+      },
+
+      pageSize: 24
     },
 
     platprices: {
