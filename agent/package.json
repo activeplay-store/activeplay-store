@@ -1,0 +1,13 @@
+{
+  "name": "ap-agent",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node src/index.js",
+    "test-rates": "node -e \"const c = require('./src/modules/currency'); c.fetchAndSave().then(r => console.log(r))\""
+  },
+  "dependencies": {
+    "node-cron": "^3.0.3",
+    "iconv-lite": "^0.6.3"
+  }
+}

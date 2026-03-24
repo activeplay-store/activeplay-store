@@ -1,0 +1,230 @@
+const iconv = require('iconv-lite');
+const fs = require('fs');
+const path = require('path');
+const config = require('../config');
+
+/**
+ * Запрос курсов с основного источника ЦБ (XML, Windows-1251)
+ */
+async function fetchFromPrimary() {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), config.requestTimeout);
+
+  try {
+    const response = await fetch(config.cbr.primary, { signal: controller.signal });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+    const buffer = Buffer.from(await response.arrayBuffer());
+    const xml = iconv.decode(buffer, 'windows-1251');
+
+    const rates = {};
+    const valuteRegex = /<Valute[^>]*>([\s\S]*?)<\/Valute>/g;
+    let match;
+
+    while ((match = valuteRegex.exec(xml)) !== null) {
+      const block = match[1];
+      const charCode = (block.match(/<CharCode>(.*?)<\/CharCode>/) || [])[1];
+
+      if (charCode && config.currencies.includes(charCode)) {
+        const nominal = parseFloat((block.match(/<Nominal>(.*?)<\/Nominal>/) || [])[1]);
+        const valueStr = (block.match(/<Value>(.*?)<\/Value>/) || [])[1];
+        const value = parseFloat(valueStr.replace(',', '.'));
+
+        rates[charCode] = {
+          cbr: Math.round((value / nominal) * 10000) / 10000,
+          nominal,
+          cbrRaw: value
+        };
+      }
+    }
+
+    return { rates, source: 'cbr-primary' };
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+/**
+ * Запрос курсов с fallback источника (JSON, UTF-8)
+ */
+async function fetchFromFallback() {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), config.requestTimeout);
+
+  try {
+    const response = await fetch(config.cbr.fallback, { signal: controller.signal });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+    const data = await response.json();
+    const rates = {};
+
+    for (const code of config.currencies) {
+      const valute = data.Valute[code];
+      if (valute) {
+        rates[code] = {
+          cbr: Math.round((valute.Value / valute.Nominal) * 10000) / 10000,
+          nominal: valute.Nominal,
+          cbrRaw: valute.Value
+        };
+      } else {
+        console.log(`[Курсы] ⚠️ Валюта ${code} отсутствует в ответе (fallback)`);
+      }
+    }
+
+    return { rates, source: 'cbr-fallback' };
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+/**
+ * Получить курсы: сначала основной, потом fallback
+ */
+async function fetchRates() {
+  try {
+    console.log('[Курсы] Запрос к ЦБ (основной)...');
+    return await fetchFromPrimary();
+  } catch (err) {
+    console.log(`[Курсы] ⚠️ Основной источник недоступен: ${err.message}`);
+    console.log('[Курсы] Запрос к ЦБ (fallback)...');
+    try {
+      return await fetchFromFallback();
+    } catch (err2) {
+      console.log(`[Курсы] ❌ Fallback тоже недоступен: ${err2.message}`);
+      return null;
+    }
+  }
+}
+
+/**
+ * Загрузить сохранённые курсы из rates.json
+ */
+function loadSavedRates() {
+  try {
+    if (fs.existsSync(config.ratesFile)) {
+      const data = JSON.parse(fs.readFileSync(config.ratesFile, 'utf8'));
+      return data;
+    }
+  } catch (err) {
+    console.log(`[Курсы] ⚠️ Ошибка чтения rates.json: ${err.message}`);
+  }
+  return null;
+}
+
+/**
+ * Получить внутренний курс для валюты
+ */
+function getInternalRate(currencyCode) {
+  const saved = loadSavedRates();
+  if (saved && saved.rates && saved.rates[currencyCode]) {
+    return saved.rates[currencyCode].internal;
+  }
+  return null;
+}
+
+/**
+ * Получить курсы, рассчитать, сохранить
+ */
+async function fetchAndSave() {
+  const result = await fetchRates();
+  const saved = loadSavedRates();
+
+  // Оба источника недоступны
+  if (!result) {
+    if (saved) {
+      console.log(`[Курсы] [WARN] ЦБ недоступен, используем кэш от ${saved.updatedAt}`);
+      return { changed: false, changes: [], rates: saved.rates };
+    }
+
+    // Нет данных вообще
+    console.log('[Курсы] [ERROR] Нет данных о курсах!');
+    const emptyRates = {};
+    for (const code of config.currencies) {
+      emptyRates[code] = { cbr: 0, internal: 0, nominal: 0, cbrRaw: 0 };
+    }
+    const emptyData = {
+      updatedAt: new Date().toISOString(),
+      source: 'fallback-empty',
+      rates: emptyRates,
+      previous: null
+    };
+
+    const dir = path.dirname(config.ratesFile);
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+    fs.writeFileSync(config.ratesFile, JSON.stringify(emptyData, null, 2), 'utf8');
+
+    return { changed: false, changes: [], rates: emptyRates };
+  }
+
+  // Рассчитать внутренние курсы
+  const newRates = {};
+  for (const code of config.currencies) {
+    if (result.rates[code]) {
+      const r = result.rates[code];
+      newRates[code] = {
+        cbr: r.cbr,
+        internal: Math.round((r.cbr + config.markup) * 100) / 100,
+        nominal: r.nominal,
+        cbrRaw: r.cbrRaw
+      };
+      console.log(`[Курсы] ✅ ${code}: ЦБ ${r.cbr} → внутренний ${newRates[code].internal}`);
+    } else {
+      console.log(`[Курсы] ⚠️ Валюта ${code} отсутствует в ответе ЦБ`);
+      // Сохранить предыдущее значение, если есть
+      if (saved && saved.rates && saved.rates[code]) {
+        newRates[code] = saved.rates[code];
+      }
+    }
+  }
+
+  // Сравнить с предыдущими
+  const changes = [];
+  if (saved && saved.rates) {
+    for (const code of config.currencies) {
+      if (newRates[code] && saved.rates[code]) {
+        const diff = Math.abs(newRates[code].internal - saved.rates[code].internal);
+        if (diff >= config.threshold) {
+          changes.push({
+            code,
+            from: saved.rates[code].internal,
+            to: newRates[code].internal,
+            diff: Math.round(diff * 100) / 100
+          });
+        }
+      } else if (newRates[code] && !saved.rates[code]) {
+        changes.push({ code, from: 0, to: newRates[code].internal, diff: newRates[code].internal });
+      }
+    }
+  } else {
+    // Первый запуск — все валюты считаются изменёнными
+    for (const code of config.currencies) {
+      if (newRates[code]) {
+        changes.push({ code, from: 0, to: newRates[code].internal, diff: newRates[code].internal });
+      }
+    }
+  }
+
+  const changed = changes.length > 0;
+
+  // Сформировать данные для записи
+  const dataToSave = {
+    updatedAt: new Date().toISOString(),
+    source: result.source,
+    rates: newRates,
+    previous: saved ? { updatedAt: saved.updatedAt, rates: saved.rates } : null
+  };
+
+  const dir = path.dirname(config.ratesFile);
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(config.ratesFile, JSON.stringify(dataToSave, null, 2), 'utf8');
+  console.log('[Курсы] Сохранено в rates.json');
+
+  return { changed, changes, rates: newRates };
+}
+
+module.exports = {
+  fetchRates,
+  loadSavedRates,
+  fetchAndSave,
+  getInternalRate
+};
