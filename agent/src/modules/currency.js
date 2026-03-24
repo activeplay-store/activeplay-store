@@ -2,6 +2,8 @@ const iconv = require('iconv-lite');
 const fs = require('fs');
 const path = require('path');
 const config = require('../config');
+const notifier = require('./notifier');
+const logger = require('./logger');
 
 /**
  * Запрос курсов с основного источника ЦБ (XML, Windows-1251)
@@ -91,6 +93,7 @@ async function fetchRates() {
       return await fetchFromFallback();
     } catch (err2) {
       console.log(`[Курсы] ❌ Fallback тоже недоступен: ${err2.message}`);
+      notifier.sendAlert('cbr_error', `Не удалось получить курс с ЦБ РФ: ${err.message}, fallback: ${err2.message}`);
       return null;
     }
   }
@@ -218,6 +221,33 @@ async function fetchAndSave() {
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
   fs.writeFileSync(config.ratesFile, JSON.stringify(dataToSave, null, 2), 'utf8');
   console.log('[Курсы] Сохранено в rates.json');
+
+  // Логирование
+  logger.logRate({
+    source: result.source,
+    TRY: newRates.TRY ? { cbr: newRates.TRY.cbr, internal: newRates.TRY.internal } : null,
+    UAH: newRates.UAH ? { cbr: newRates.UAH.cbr, internal: newRates.UAH.internal } : null,
+    INR: newRates.INR ? { cbr: newRates.INR.cbr, internal: newRates.INR.internal } : null
+  });
+
+  // Алерты при скачке курса
+  if (saved && saved.rates) {
+    const SPIKE_THRESHOLD = 0.03;
+    for (const code of config.currencies) {
+      const oldRate = saved.rates[code]?.internal;
+      const newRate = newRates[code]?.internal;
+      if (oldRate && newRate) {
+        const diff = Math.abs(newRate - oldRate);
+        if (diff >= SPIKE_THRESHOLD) {
+          const direction = newRate > oldRate ? '📈' : '📉';
+          notifier.sendAlert('rate_spike',
+            `${direction} ${code}: ${oldRate.toFixed(4)} → ${newRate.toFixed(4)} (${newRate > oldRate ? '+' : ''}${(newRate - oldRate).toFixed(4)}₽)`,
+            { currency: code, old: oldRate, new: newRate, diff: newRate - oldRate }
+          );
+        }
+      }
+    }
+  }
 
   return { changed, changes, rates: newRates };
 }

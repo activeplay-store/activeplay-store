@@ -6,6 +6,8 @@ const pricing = require('./modules/pricing');
 const parsers = require('./modules/parsers');
 const sony = require('./modules/parsers/sony');
 const psprices = require('./modules/parsers/psprices');
+const notifier = require('./modules/notifier');
+const logger = require('./modules/logger');
 
 const VERSION = '1.0.0';
 const PORT = 3900;
@@ -183,13 +185,34 @@ async function main() {
       const oldData = parsers.loadGames();
       const { summary, result } = await parsers.runFullParse();
 
+      // Логирование
+      logger.logPrice({
+        gamesCount: result.games.length,
+        dealsCount: result.games.filter(g => Object.values(g.prices).some(r => r.editions?.some(e => e.salePrice))).length,
+        source: 'sony'
+      });
+
+      // Алерт: парсинг завершён
+      notifier.sendAlert('parse_complete',
+        `Парсинг завершён: ${result.games.length} игр`,
+        { gamesCount: result.games.length }
+      );
+
       if (oldData.games && oldData.games.length > 0) {
         const changes = parsers.detectChanges(result.games, oldData.games);
         if (changes.newDeals.length > 0) {
           console.log(`[Парсер] 🆕 Новые скидки: ${changes.newDeals.map(d => `${d.game} -${d.discountPct}%`).join(', ')}`);
+          notifier.sendAlert('new_deals',
+            `Новые скидки: ${changes.newDeals.map(d => `${d.game} -${d.discountPct}%`).join(', ')}`,
+            { deals: changes.newDeals }
+          );
         }
         if (changes.newPreorders.length > 0) {
           console.log(`[Парсер] 🆕 Новые предзаказы: ${changes.newPreorders.map(g => g.name).join(', ')}`);
+          notifier.sendAlert('new_preorders',
+            `Новые предзаказы: ${changes.newPreorders.map(g => g.name).join(', ')}`,
+            { preorders: changes.newPreorders.map(g => g.name) }
+          );
         }
         if (changes.priceChanges.length > 0) {
           console.log(`[Парсер] 💰 Изменения цен: ${changes.priceChanges.map(c => `${c.game} ${c.oldPrice}→${c.newPrice}`).join(', ')}`);
