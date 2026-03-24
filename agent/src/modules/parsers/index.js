@@ -13,14 +13,54 @@ const config = require('../../config');
 // 1. КАСКАДНЫЙ ЗАПРОС ЦЕН PLAYSTATION
 // =====================
 
+async function fetchAllDeals(regionCode) {
+  const categories = config.parsers.sony.dealCategories?.[regionCode] || [];
+  if (categories.length === 0) {
+    // Фоллбэк на старый формат
+    return sony.fetchDeals(regionCode);
+  }
+
+  const allGames = [];
+  const seenIds = new Set();
+
+  for (const categoryId of categories) {
+    console.log(`[Парсер] ${regionCode} категория ${categoryId.substring(0, 8)}...`);
+    try {
+      const games = await sony.fetchDeals(regionCode, categoryId);
+      for (const game of games) {
+        if (!seenIds.has(game.id)) {
+          seenIds.add(game.id);
+          allGames.push(game);
+        } else {
+          const existing = allGames.find(g => g.id === game.id);
+          if (existing && game.prices?.[regionCode]) {
+            const existingEditions = existing.prices[regionCode]?.editions || [];
+            const newEditions = game.prices[regionCode]?.editions || [];
+            for (const ed of newEditions) {
+              if (!existingEditions.find(e => e.productId === ed.productId)) {
+                existingEditions.push(ed);
+              }
+            }
+          }
+        }
+      }
+      console.log(`[Парсер] ${regionCode} +${games.length} игр (уникальных: ${allGames.length})`);
+    } catch (err) {
+      console.error(`[Парсер] ⚠️ ${regionCode} категория ${categoryId.substring(0, 8)}: ${err.message}`);
+    }
+  }
+
+  return allGames;
+}
+
 async function fetchPlayStationPrices(regionCode) {
   let games = [];
 
-  // Шаг 1: Sony GraphQL — основной источник
+  // Шаг 1: Sony GraphQL — все категории скидок
   if (sony.isConfigured()) {
     try {
       console.log(`[Парсер] Sony GraphQL ${regionCode}...`);
-      const deals = await sony.fetchDeals(regionCode);
+      const deals = await fetchAllDeals(regionCode);
       console.log(`[Парсер] ✅ Sony deals ${regionCode}: ${deals.length} игр`);
       games = deals;
     } catch (err) {

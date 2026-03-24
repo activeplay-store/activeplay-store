@@ -309,8 +309,8 @@ function calculateBestPrice(game, regionCode) {
 /**
  * Парсить скидки (deals) для региона — трёхпроходный
  */
-async function fetchDeals(regionCode) {
-  const categoryId = config.parsers.sony.categories?.deals?.[regionCode];
+async function fetchDeals(regionCode, overrideCategoryId) {
+  const categoryId = overrideCategoryId || config.parsers.sony.categories?.deals?.[regionCode] || config.parsers.sony.dealCategories?.[regionCode]?.[0];
   if (!categoryId) {
     console.log(`[Sony] ⚠️ Нет ID категории deals для ${regionCode}`);
     return [];
