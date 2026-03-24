@@ -78,11 +78,13 @@ module.exports = {
           '3f772501-f6f8-49b7-abac-874a88ca4897',  // All Deals
           '94eaecdc-c144-4d12-b8ef-77ce58b6eae1',  // PS Plus Exclusive Discounts
           'c3b841f7-8daf-455d-a7f3-912837b3b217',  // Mega March Sale 2026
+          '3bf499d7-7acf-4931-97dd-2667494ee2c9',  // Pre-orders
         ],
         UA: [
           '3f772501-f6f8-49b7-abac-874a88ca4897',
           '94eaecdc-c144-4d12-b8ef-77ce58b6eae1',
           'c3b841f7-8daf-455d-a7f3-912837b3b217',
+          '3bf499d7-7acf-4931-97dd-2667494ee2c9',  // Pre-orders
         ],
       },
 
