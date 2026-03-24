@@ -21,7 +21,10 @@
       "Bash(npx next:*)",
       "Bash(cd D:/activeplay-store && npm ls lucide-react 2>&1 | head -5)",
       "Bash(scp D:/activeplay-store/server/index.js root@31.130.144.44:/opt/vk-bridge/index.js)",
-      "Bash(npx tsx:*)"
+      "Bash(npx tsx:*)",
+      "Bash(npm install:*)",
+      "Bash(curl:*)",
+      "WebFetch(domain:psprices.com)"
     ]
   }
 }
