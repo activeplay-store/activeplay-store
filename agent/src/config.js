@@ -55,7 +55,7 @@ module.exports = {
         currency: 'TRY',
         psprices: 'region-tr',
         psdeals: 'store/turkey',
-        sonyLocale: 'tr-TR',
+        sonyLocale: 'en-TR',
         psStore: 'en-tr'
       },
       UA: {

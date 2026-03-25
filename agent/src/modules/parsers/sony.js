@@ -1,7 +1,7 @@
 const config = require('../../config');
 
 const LOCALE_MAP = {
-  TR: 'tr-TR',
+  TR: 'en-TR',
   UA: 'uk-UA',
   IN: 'en-IN'
 };
