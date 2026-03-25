@@ -7,6 +7,7 @@ const parsers = require('./modules/parsers');
 const sony = require('./modules/parsers/sony');
 const notifier = require('./modules/notifier');
 const logger = require('./modules/logger');
+const siteWriter = require('./modules/siteWriter');
 
 const VERSION = '1.0.0';
 const PORT = 3900;
@@ -30,6 +31,15 @@ async function updateRates() {
     }
     if (result.changed && result.changes.length > 0) {
       console.log(`[Курсы] Изменение: ${result.changes.map(c => `${c.code} ${c.from} -> ${c.to}`).join(', ')}`);
+      // Курс изменился — пересчитать deals.ts
+      try {
+        const writeResult = await siteWriter.generateAndWrite();
+        if (writeResult.written) {
+          console.log(`[Agent] deals.ts пересчитан после изменения курса: ${writeResult.gamesCount} игр`);
+        }
+      } catch (err) {
+        console.log(`[Agent] SiteWriter после курса: ${err.message}`);
+      }
     }
     lastUpdate = new Date().toISOString();
     return result;
@@ -83,6 +93,19 @@ async function runNightlyParse() {
   }
 
   console.log(`[Парсер] Ночной парсинг завершён за ${duration}с: ${result.games.length} игр`);
+
+  // Обновить deals.ts на сайте
+  try {
+    const writeResult = await siteWriter.generateAndWrite();
+    if (writeResult.written) {
+      console.log(`[Agent] deals.ts обновлён: ${writeResult.gamesCount} игр`);
+      if (writeResult.pushed) {
+        notifier.sendAlert('site_updated', `🌐 Сайт обновлён: ${writeResult.gamesCount} игр со скидкой`);
+      }
+    }
+  } catch (err) {
+    console.log(`[Agent] SiteWriter ошибка: ${err.message}`);
+  }
 }
 
 function detectChanges(oldData, newGames) {

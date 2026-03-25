@@ -14,6 +14,14 @@ module.exports = {
   ratesFile: path.join(__dirname, '..', 'data', 'rates.json'),
   requestTimeout: 15000,
 
+  // Генератор deals.ts для сайта
+  siteWriter: {
+    repoRoot: process.env.SITE_ROOT || '/var/www/activeplay-store',
+    dealsFile: 'src/data/deals.ts',
+    minDiscountPct: 10,
+    enabled: true,
+  },
+
   // Калькулятор цен
   pricing: {
     managerFee: 250,
