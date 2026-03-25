@@ -8,8 +8,26 @@ const sony = require('./modules/parsers/sony');
 const notifier = require('./modules/notifier');
 const logger = require('./modules/logger');
 const siteWriter = require('./modules/siteWriter');
+const catalogMonitor = require('./modules/catalogMonitor');
 
 const VERSION = '1.0.0';
+
+// ── PS Plus Calendar ────────────────────────────────────────────────────
+
+const PS_PLUS_CALENDAR = {
+  essential: {
+    announce: ['2026-04-01','2026-04-29','2026-05-27','2026-07-01','2026-07-29','2026-08-26','2026-09-30','2026-10-28','2026-11-25','2026-12-30','2027-01-28','2027-02-24'],
+    release:  ['2026-04-07','2026-05-05','2026-06-02','2026-07-07','2026-08-04','2026-09-01','2026-10-06','2026-11-03','2026-12-01','2027-01-05','2027-02-02','2027-03-02'],
+  },
+  extra: {
+    announce: ['2026-04-15','2026-05-13','2026-06-10','2026-07-15','2026-08-12','2026-09-09','2026-10-14','2026-11-11','2026-12-09','2027-01-13','2027-02-10','2027-03-10'],
+    release:  ['2026-04-21','2026-05-19','2026-06-16','2026-07-21','2026-08-18','2026-09-15','2026-10-20','2026-11-17','2026-12-15','2027-01-19','2027-02-16','2027-03-16'],
+  },
+};
+
+function getTodayMoscow() {
+  return new Date().toLocaleDateString('sv-SE', { timeZone: 'Europe/Moscow' });
+}
 const PORT = 3900;
 
 // ── Helpers ──────────────────────────────────────────────────────────────
@@ -128,16 +146,68 @@ function detectChanges(oldData, newGames) {
   return { newDeals, expiredDeals, newPreorders, priceChanges };
 }
 
-// ── Catalog stubs ────────────────────────────────────────────────────────
+// ── Catalog checks ───────────────────────────────────────────────────────
 
-async function checkCatalogEssential() {
-  console.log('[Каталог] Проверка Essential...');
-  notifier.sendAlert('parse_complete', 'Проверка Essential — модуль в разработке');
+async function checkAnnouncements() {
+  const today = getTodayMoscow();
+
+  if (PS_PLUS_CALENDAR.essential.announce.includes(today)) {
+    console.log('[Каталог] Сегодня анонс Essential — мониторим...');
+    notifier.sendAlert('catalog_announce', '📢 Сегодня день анонса PS Plus Essential!\nМониторим PlayStation Blog и pushsquare...');
+  }
+
+  if (PS_PLUS_CALENDAR.extra.announce.includes(today)) {
+    console.log('[Каталог] Сегодня анонс Extra/Deluxe — мониторим...');
+    notifier.sendAlert('catalog_announce', '📢 Сегодня день анонса PS Plus Extra/Deluxe!\nМониторим PlayStation Blog и pushsquare...');
+  }
 }
 
-async function checkCatalogsMonthly() {
-  console.log('[Каталог] Проверка Extra/Deluxe/Trials/EA Play...');
-  notifier.sendAlert('parse_complete', 'Проверка Extra/Deluxe/Trials/EA Play — модуль в разработке');
+async function checkCatalogRelease() {
+  const today = getTodayMoscow();
+
+  if (PS_PLUS_CALENDAR.essential.release.includes(today)) {
+    console.log('[Каталог] Сегодня релиз Essential — парсим...');
+    try {
+      const result = await catalogMonitor.checkEssential();
+      if (!result.changed) console.log('[Каталог] Essential — пока без изменений, повтор в 22:00');
+    } catch (err) {
+      console.error('[Каталог] Essential ошибка:', err.message);
+    }
+  }
+
+  if (PS_PLUS_CALENDAR.extra.release.includes(today)) {
+    console.log('[Каталог] Сегодня релиз Extra/Deluxe — парсим...');
+    try {
+      const result = await catalogMonitor.checkAllExtra();
+      if (!result.extra?.changed && !result.classics?.changed) {
+        console.log('[Каталог] Extra/Deluxe — пока без изменений, повтор в 22:00');
+      }
+    } catch (err) {
+      console.error('[Каталог] Extra/Deluxe ошибка:', err.message);
+    }
+  }
+}
+
+async function checkCatalogRetry() {
+  const today = getTodayMoscow();
+
+  if (PS_PLUS_CALENDAR.essential.release.includes(today)) {
+    const current = catalogMonitor.loadCatalog('essential');
+    if (!current.updatedAt || !current.updatedAt.startsWith(today)) {
+      console.log('[Каталог] Essential — повторная проверка 22:00...');
+      try { await catalogMonitor.checkEssential(); }
+      catch (err) { console.error('[Каталог] Essential retry:', err.message); }
+    }
+  }
+
+  if (PS_PLUS_CALENDAR.extra.release.includes(today)) {
+    const current = catalogMonitor.loadCatalog('extra');
+    if (!current.updatedAt || !current.updatedAt.startsWith(today)) {
+      console.log('[Каталог] Extra — повторная проверка 22:00...');
+      try { await catalogMonitor.checkAllExtra(); }
+      catch (err) { console.error('[Каталог] Extra retry:', err.message); }
+    }
+  }
 }
 
 // ── HTTP server ──────────────────────────────────────────────────────────
@@ -186,14 +256,20 @@ const server = http.createServer((req, res) => {
   }
 
   if (req.url === '/check-essential') {
-    res.end(JSON.stringify({ status: 'started' }));
-    checkCatalogEssential().catch(console.error);
+    catalogMonitor.checkEssential()
+      .then(r => { res.end(JSON.stringify(r)); })
+      .catch(err => { res.statusCode = 500; res.end(JSON.stringify({ error: err.message })); });
     return;
   }
 
   if (req.url === '/check-catalogs') {
-    res.end(JSON.stringify({ status: 'started' }));
-    checkCatalogsMonthly().catch(console.error);
+    (async () => {
+      const essential = await catalogMonitor.checkEssential();
+      const allExtra = await catalogMonitor.checkAllExtra();
+      return { essential, ...allExtra };
+    })()
+      .then(r => { res.end(JSON.stringify(r)); })
+      .catch(err => { res.statusCode = 500; res.end(JSON.stringify({ error: err.message })); });
     return;
   }
 
@@ -257,31 +333,35 @@ async function main() {
     await updateRates();
   }, { timezone: 'Europe/Moscow' });
 
-  // Каталог Essential: 8-го числа 4:00 МСК
-  cron.schedule('0 4 8 * *', async () => {
-    console.log('[Cron] Каталог Essential...');
-    try { await checkCatalogEssential(); }
-    catch (err) {
-      console.error('[Cron] Essential:', err.message);
-      notifier.sendAlert('source_down', 'Essential проверка упала: ' + err.message);
+  // Анонсы каталогов: 18:00 МСК (по календарю)
+  cron.schedule('0 18 * * *', async () => {
+    try { await checkAnnouncements(); }
+    catch (err) { console.error('[Cron] Анонсы:', err.message); }
+  }, { timezone: 'Europe/Moscow' });
+
+  // Релиз каталогов: 20:00 МСК (по календарю)
+  cron.schedule('0 20 * * *', async () => {
+    try {
+      await checkAnnouncements();
+      await checkCatalogRelease();
+    } catch (err) {
+      console.error('[Cron] Каталоги 20:00:', err.message);
+      notifier.sendAlert('source_down', 'Каталоги 20:00 упали: ' + err.message);
     }
   }, { timezone: 'Europe/Moscow' });
 
-  // Каталоги Extra/Deluxe/Trials/EA Play: 20-го числа 4:00 МСК
-  cron.schedule('0 4 20 * *', async () => {
-    console.log('[Cron] Каталоги Extra + Deluxe + Trials + EA Play...');
-    try { await checkCatalogsMonthly(); }
-    catch (err) {
-      console.error('[Cron] Каталоги:', err.message);
-      notifier.sendAlert('source_down', 'Каталоги проверка упала: ' + err.message);
-    }
+  // Повторная проверка каталогов: 22:00 МСК
+  cron.schedule('0 22 * * *', async () => {
+    try { await checkCatalogRetry(); }
+    catch (err) { console.error('[Cron] Каталоги 22:00:', err.message); }
   }, { timezone: 'Europe/Moscow' });
 
   console.log('[AP-Agent] Расписание:');
   console.log('  Парсинг скидок: 3:00 МСК ежедневно');
   console.log('  Курс ЦБ: 10:00 и 17:00 МСК');
-  console.log('  Essential: 8-го числа 4:00 МСК');
-  console.log('  Extra/Deluxe: 20-го числа 4:00 МСК');
+  console.log('  Анонсы каталогов: 18:00 МСК (по календарю)');
+  console.log('  Релиз каталогов: 20:00 МСК (по календарю)');
+  console.log('  Повтор каталогов: 22:00 МСК');
 
   server.listen(PORT, () => {
     console.log(`[AP-Agent] Health-check: http://localhost:${PORT}`);

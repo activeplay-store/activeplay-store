@@ -632,6 +632,37 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+/**
+ * Fetch category and return simplified game list (for catalog monitoring)
+ * @returns {Array<{id: string, name: string, platforms: string[]}>}
+ */
+async function fetchCategoryGames(categoryId, regionCode, maxPages = 25) {
+  const raw = await fetchCategory(regionCode, categoryId, maxPages);
+  const seen = new Map();
+
+  for (const product of raw) {
+    const name = cleanName(product.name);
+    const slug = slugify(name);
+    if (seen.has(slug)) continue;
+
+    const platforms = [];
+    if (product.platforms) {
+      for (const p of product.platforms) {
+        if (/PS5|PlayStation 5/i.test(p)) platforms.push('PS5');
+        if (/PS4|PlayStation 4/i.test(p)) platforms.push('PS4');
+      }
+    }
+
+    seen.set(slug, {
+      id: slug,
+      name,
+      platforms: platforms.length > 0 ? platforms : ['PS5'],
+    });
+  }
+
+  return Array.from(seen.values());
+}
+
 // === ЭКСПОРТ ===
 
 module.exports = {
@@ -639,6 +670,7 @@ module.exports = {
   fetchPreorders,
   fetchGamePrice,
   fetchCategory,
+  fetchCategoryGames,
   fetchAllEditions,
   isConfigured,
   name: 'sony'
