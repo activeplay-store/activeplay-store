@@ -22,6 +22,15 @@ module.exports = {
     enabled: true,
   },
 
+  // PlatPrices обложки
+  platprices: {
+    apiKey: 'TWIhJB5GCGDCbBGnUPqUZ04VnKinXVFC',
+    baseUrl: 'https://platprices.com/api.php',
+    maxPerHour: 480,
+    delayMs: 800,
+    enabled: true,
+  },
+
   // Калькулятор цен
   pricing: {
     managerFee: 250,
@@ -130,7 +139,7 @@ module.exports = {
 
     platprices: {
       endpoint: 'https://platprices.com/api.php',
-      apiKey: '',
+      apiKey: 'TWIhJB5GCGDCbBGnUPqUZ04VnKinXVFC',
     },
 
     xbox: {
