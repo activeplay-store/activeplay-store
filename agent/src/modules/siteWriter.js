@@ -591,7 +591,11 @@ function filterPreorders(games) {
     if (/add-on|dlc|season pass|expansion pass|upgrade|currency pack|coin|pre-order bundle|free to play/i.test(nameLower)) continue;
     if (/^[^a-zA-Z0-9]*$/.test(game.name.replace(/[\s\-\u2013\u2014:.,!?'\u00AB\u00BB()]/g, ''))) continue;
 
-    const normKey = game.conceptId ? ('c:' + game.conceptId) : ('n:' + normalizeForDedup(game.name));
+    // Extra normalization for preorder dedup — strip edition suffixes
+    let normName = normalizeForDedup(game.name);
+    // Remove trailing edition-like suffixes: "Essence Edition", "R'lyeh Edition", "Collector's Edition"
+    normName = normName.replace(/\s*[-–—:]?\s*(?:essence|r'lyeh|collector'?s?|launch|founder'?s?)\s*(edition)?\s*$/i, '').trim();
+    const normKey = game.conceptId ? ('c:' + game.conceptId) : ('n:' + normName);
 
     if (seen.has(normKey)) {
       const existingIdx = seen.get(normKey);
@@ -669,9 +673,14 @@ async function fetchReleaseDates(games) {
       await sleepMs(300);
       const date = await fetchReleaseDateFromConcept(game.conceptId);
       if (date) {
-        game.releaseDate = date;
-        fromConcept++;
-        continue;
+        const cDate = new Date(date);
+        const today2 = new Date();
+        today2.setHours(0, 0, 0, 0);
+        if (cDate >= today2) {
+          game.releaseDate = date;
+          fromConcept++;
+          continue;
+        }
       }
     }
 
@@ -679,8 +688,14 @@ async function fetchReleaseDates(games) {
     try {
       const rawgData = await rawg.searchGame(cleanGameName(cleanName(game.name)));
       if (rawgData?.released) {
-        game.releaseDate = rawgData.released;
-        fromRawg++;
+        // Only accept future dates for preorders
+        const rawgDate = new Date(rawgData.released);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        if (rawgDate >= today) {
+          game.releaseDate = rawgData.released;
+          fromRawg++;
+        }
       }
     } catch {}
   }
