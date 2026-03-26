@@ -1,6 +1,6 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-03-26T16:14:48.772Z
-// Игр со скидкой: 229 (TR), 238 (UA)
+// Обновлено: 2026-03-26T16:44:00.505Z
+// Игр со скидкой: 226 (TR), 216 (UA)
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
 export interface DealGame {
@@ -38,9 +38,9 @@ export const saleMeta = {
   saleNameEn: "Spring Sale",
   maxDiscount: 92,
   endDate: "2026-04-08T22:59:00.000Z",
-  gamesCount: { TR: 229, UA: 238 },
-  updatedAt: "2026-03-26T16:14:48.772Z",
-  totalGames: 294,
+  gamesCount: { TR: 226, UA: 216 },
+  updatedAt: "2026-03-26T16:44:00.505Z",
+  totalGames: 270,
 };
 
 export const dealsData: DealGame[] = [
@@ -297,16 +297,15 @@ export const dealsData: DealGame[] = [
     saleEndDate: "2026-04-08T22:59:00.000Z",
   },
   {
-    id: "the-crew-motorfest",
-    name: "The Crew Motorfest",
-    platforms: ["PS4"],
+    id: "the-crew-motorfest-3",
+    name: "The Crew Motorfest | Перепустка на 3-й рік",
+    platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202411/2217/5fb8cf06e2f894195efe2ab7d8cbdb13b8129eeae1c2a653.jpg",
     releaseDate: "2023-09-14",
     prices: {
-      TR: { basePriceTRY: 4199, salePriceTRY: 1680, clientBasePrice: 10100, clientSalePrice: 4450 },
-      UA: { basePriceUAH: 3399, salePriceUAH: 1360, clientBasePrice: 8850, clientSalePrice: 4200 },
+      UA: { basePriceUAH: 859, salePriceUAH: 601, clientBasePrice: 3100, clientSalePrice: 2400 },
     },
-    discountPct: 60,
+    discountPct: 30,
     saleEndDate: "2026-04-08T22:59:00.000Z",
   },
   {
@@ -1362,14 +1361,13 @@ export const dealsData: DealGame[] = [
     saleEndDate: "2026-04-08T22:59:00.000Z",
   },
   {
-    id: "lego-star-wars-the-skywalker-saga-ps4-ps5",
-    name: "LEGO Star Wars: The Skywalker Saga",
+    id: "lego-ps4-ps5",
+    name: "LEGO Зоряні Війни: Скайуокер. Сага",
     platforms: ["PS5","PS4"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202112/2121/pI7iBFsu0A7Oucr0EZmxN1H2.png",
-    releaseDate: "2022-04-05",
-    metacritic: 80,
+    releaseDate: "2023-12-07",
     prices: {
-      TR: { basePriceTRY: 2499, salePriceTRY: 500, clientBasePrice: 6250, clientSalePrice: 1750 },
+      UA: { basePriceUAH: 1799, salePriceUAH: 360, clientBasePrice: 5100, clientSalePrice: 1650 },
     },
     discountPct: 80,
     saleEndDate: "2026-04-08T22:59:00.000Z",
@@ -2258,16 +2256,16 @@ export const dealsData: DealGame[] = [
     saleEndDate: "2026-04-08T22:59:00.000Z",
   },
   {
-    id: "the-sims-4-everyday-sims-bundle",
-    name: "The Sims 4 Everyday Sims Bundle",
+    id: "the-sims-4-get-famous",
+    name: "The Sims 4 Get Famous",
     platforms: ["PS4"],
     coverUrl: "https://image.api.playstation.com/vulcan/img/rnd/202111/3019/UFWpBFaIBpTJCAUhq3Cu0Z2O.png",
     releaseDate: "2014-09-02",
     metacritic: 67,
     prices: {
-      TR: { basePriceTRY: 1800, salePriceTRY: 1440, clientBasePrice: 4650, clientSalePrice: 4000 },
+      UA: { basePriceUAH: 1399, salePriceUAH: 560, clientBasePrice: 4300, clientSalePrice: 2250 },
     },
-    discountPct: 20,
+    discountPct: 60,
     saleEndDate: "2026-04-08T22:59:00.000Z",
   },
   {
@@ -2524,7 +2522,7 @@ export const dealsData: DealGame[] = [
     id: "lego-party",
     name: "LEGO Party!",
     platforms: ["PS5","PS4"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202505/2217/9fc3bf3631e98ff7b5cc9c443f07d9a6c5ea6014e2dd3dc5.jpg",
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202508/0821/ade7404425c20a8c9dfddb1f6fec66f3fa1596046a450efa.png",
     releaseDate: "",
     prices: {
       TR: { basePriceTRY: 1749, salePriceTRY: 1312, clientBasePrice: 4550, clientSalePrice: 3700 },
@@ -3081,81 +3079,6 @@ export const dealsData: DealGame[] = [
     discountPct: 10,
   },
   {
-    id: "call-of-duty-black-ops-7",
-    name: "Call of Duty: Black Ops 7",
-    platforms: ["PS5","PS4"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202508/0901/698d0728b726c5d4ec89d40dea8728ea0e097e3ff403a47c.png",
-    releaseDate: "2025-11-13",
-    prices: {
-      UA: { basePriceUAH: 3399, salePriceUAH: 1869, clientBasePrice: 8850, clientSalePrice: 5300 },
-    },
-    discountPct: 45,
-    saleEndDate: "2026-04-08T22:59:00.000Z",
-  },
-  {
-    id: "3",
-    name: "«Відьмак 3: Дикий Гін»",
-    platforms: ["PS5","PS4"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202211/0711/IW5r8hLVZzf0ApOyiOuRnKUe.png",
-    releaseDate: "2004-08-03",
-    metacritic: 87,
-    prices: {
-      UA: { basePriceUAH: 949, salePriceUAH: 190, clientBasePrice: 3300, clientSalePrice: 1150 },
-    },
-    discountPct: 80,
-    saleEndDate: "2026-04-08T22:59:00.000Z",
-  },
-  {
-    id: "nba-2k26-ps5",
-    name: "NBA 2K 26",
-    platforms: ["PS5","PS4"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202506/2509/ed1c4096b6adfd4814e5ae5db686cdb7d27cd07993753ed7.png",
-    releaseDate: "2025-09-04",
-    prices: {
-      UA: { basePriceUAH: 3499, salePriceUAH: 700, clientBasePrice: 9050, clientSalePrice: 2700 },
-    },
-    discountPct: 80,
-    saleEndDate: "2026-04-08T22:59:00.000Z",
-  },
-  {
-    id: "call-of-duty-black-ops-6",
-    name: "Call of Duty: Black Ops 6",
-    platforms: ["PS5","PS4"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202405/2921/05a08ddb076656e71324f6d578bdbaa16c8925ab01dc3046.png",
-    releaseDate: "2024-10-24",
-    prices: {
-      UA: { basePriceUAH: 3299, salePriceUAH: 1320, clientBasePrice: 8600, clientSalePrice: 4100 },
-    },
-    discountPct: 60,
-    saleEndDate: "2026-04-08T22:59:00.000Z",
-  },
-  {
-    id: "complete-edition",
-    name: "«Аватар: Кордони Пандори» — Complete Edition",
-    platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202509/3009/a8992d850e939d3e9b065adb0e44c763937b73e8789d13df.jpg",
-    releaseDate: "2017-11-07",
-    metacritic: 84,
-    prices: {
-      UA: { basePriceUAH: 1719, salePriceUAH: 1289, clientBasePrice: 4950, clientSalePrice: 4050 },
-    },
-    discountPct: 25,
-    saleEndDate: "2026-04-08T22:59:00.000Z",
-  },
-  {
-    id: "gta-online-ps4",
-    name: "GTA Online:",
-    platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202211/2113/UPyQ1TcUEqvcCWpp3Sib3h0Z.png",
-    releaseDate: "2013-10-01",
-    metacritic: 82,
-    prices: {
-      UA: { basePriceUAH: 3199, salePriceUAH: 2719, clientBasePrice: 8350, clientSalePrice: 7300 },
-    },
-    discountPct: 15,
-    saleEndDate: "2026-04-08T22:59:00.000Z",
-  },
-  {
     id: "resident-evil-4-2005",
     name: "resident evil 4 (2005)",
     platforms: ["PS4"],
@@ -3166,44 +3089,6 @@ export const dealsData: DealGame[] = [
       UA: { basePriceUAH: 649, salePriceUAH: 162, clientBasePrice: 2500, clientSalePrice: 1050 },
     },
     discountPct: 75,
-    saleEndDate: "2026-04-08T22:59:00.000Z",
-  },
-  {
-    id: "from-the-ashes-edition",
-    name: "«Аватар: Кордони Пандори» — From The Ashes Edition",
-    platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202509/3008/4de59705063af808eaf01c01f6578c9fd44e3d9ca50e6e35.jpg",
-    releaseDate: "2019-08-20",
-    metacritic: 76,
-    prices: {
-      UA: { basePriceUAH: 859, salePriceUAH: 558, clientBasePrice: 3100, clientSalePrice: 2250 },
-    },
-    discountPct: 35,
-    saleEndDate: "2026-04-08T22:59:00.000Z",
-  },
-  {
-    id: "atomfall-complete-edition",
-    name: "Atomfall Complete Edition",
-    platforms: ["PS5","PS4"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202501/0709/8a0be895d1941040a5ba7ee93c9c55ba14b2a1e3d899ba93.png",
-    releaseDate: "2017-11-07",
-    metacritic: 84,
-    prices: {
-      UA: { basePriceUAH: 2999, salePriceUAH: 1500, clientBasePrice: 7950, clientSalePrice: 4500 },
-    },
-    discountPct: 50,
-    saleEndDate: "2026-04-08T22:59:00.000Z",
-  },
-  {
-    id: "sid-meier-s-civilization-vii-settler-s",
-    name: "Sid Meier's Civilization VIISettler's",
-    platforms: ["PS5","PS4"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202509/0311/b8d8f948d6acdeca9c01b16985a6fd17d1c573a417c19761.png",
-    releaseDate: "2025-02-10",
-    prices: {
-      UA: { basePriceUAH: 5149, salePriceUAH: 3089, clientBasePrice: 12500, clientSalePrice: 8150 },
-    },
-    discountPct: 40,
     saleEndDate: "2026-04-08T22:59:00.000Z",
   },
   {
@@ -3223,7 +3108,7 @@ export const dealsData: DealGame[] = [
     id: "one-piece-pirate-warriors-4-legendary-edition",
     name: "ONE PIECE: PIRATE WARRIORS 4 Legendary Edition",
     platforms: ["PS5","PS4"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202511/0516/19041a8b39331f56de9b7a3f22140f207ad0f327d593047b.jpg",
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202511/0515/ab741fda8bf8b82497343940b309bc1097922b05dcabe19e.jpg",
     releaseDate: "2020-03-26",
     prices: {
       UA: { basePriceUAH: 3599, salePriceUAH: 1800, clientBasePrice: 9250, clientSalePrice: 5100 },
@@ -3235,7 +3120,7 @@ export const dealsData: DealGame[] = [
     id: "metro-awakening",
     name: "Делюкс-Metro Awakening",
     platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202409/0909/213f1a1d062b875c3e917135b8d8b30f0e401ccf252178c3.png",
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202509/1611/f508c507ed9ba6c537569c75c1d056b339b363432e7e7ec8.png",
     releaseDate: "2024-11-07",
     prices: {
       UA: { basePriceUAH: 1699, salePriceUAH: 680, clientBasePrice: 4900, clientSalePrice: 2600 },
@@ -3244,34 +3129,10 @@ export const dealsData: DealGame[] = [
     saleEndDate: "2026-04-08T22:59:00.000Z",
   },
   {
-    id: "the-crew-motorfest-3",
-    name: "The Crew Motorfest | Перепустка на 3-й рік",
-    platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202510/1313/6e03c4e512060b34e135b8a65f66f8dee0570afb31c38cee.jpg",
-    releaseDate: "2023-09-14",
-    prices: {
-      UA: { basePriceUAH: 859, salePriceUAH: 601, clientBasePrice: 3100, clientSalePrice: 2400 },
-    },
-    discountPct: 30,
-    saleEndDate: "2026-04-08T22:59:00.000Z",
-  },
-  {
-    id: "call-of-duty-vanguard",
-    name: "Call of Duty: Vanguard",
-    platforms: ["PS5","PS4"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202108/1102/pO4SHCrXt52UPEMTSZMraIY8.png",
-    releaseDate: "2021-11-05",
-    prices: {
-      UA: { basePriceUAH: 2399, salePriceUAH: 960, clientBasePrice: 6550, clientSalePrice: 3350 },
-    },
-    discountPct: 60,
-    saleEndDate: "2026-04-08T22:59:00.000Z",
-  },
-  {
     id: "drums-rock-ultimate-music-edition",
     name: "Drums Rock - Ultimate Music Edition",
     platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202212/1315/NWcuwZGuevoeZgy9AJbjPgmQ.png",
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202212/1917/aP0Q8Lu2vhbxvmhHPbi5a4xt.png",
     releaseDate: "2014-08-19",
     metacritic: 88,
     prices: {
@@ -3281,22 +3142,10 @@ export const dealsData: DealGame[] = [
     saleEndDate: "2026-04-08T22:59:00.000Z",
   },
   {
-    id: "tekken-8-ultimate-2",
-    name: "TEKKEN 8:Ultimate 2 сезону",
-    platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202503/2114/8ba19017c0d5dc5e48b2eb15552689d023e3f9a73f59dd9d.jpg",
-    releaseDate: "2024-01-25",
-    prices: {
-      UA: { basePriceUAH: 2799, salePriceUAH: 1679, clientBasePrice: 7500, clientSalePrice: 4900 },
-    },
-    discountPct: 40,
-    saleEndDate: "2026-04-08T22:59:00.000Z",
-  },
-  {
     id: "the-settlers-new-allies",
     name: "The Settlers: New Allies",
     platforms: ["PS4"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202210/2618/mS0WV2h3oKayiuUYmwoMM4T6.jpg",
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202210/2617/B88KCTqZMGNmJZfp3HHAukEz.jpg",
     releaseDate: "2023-02-17",
     metacritic: 57,
     prices: {
@@ -3309,7 +3158,7 @@ export const dealsData: DealGame[] = [
     id: "thehunter-call-of-the-wild-ultimate-hunting-bundle",
     name: "theHunter: Call of the Wild - Ultimate Hunting Bundle",
     platforms: ["PS4"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202602/1010/f9335f5bfa77daa02ae1b254509e97d75e541e847442b408.png",
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202506/1610/2e7cb921085adb5b985ed8c13f684392ffa93401ff6f2e39.png",
     releaseDate: "2017-02-16",
     metacritic: 74,
     prices: {
@@ -3319,38 +3168,14 @@ export const dealsData: DealGame[] = [
     saleEndDate: "2026-04-08T22:59:00.000Z",
   },
   {
-    id: "warhammer-40-000-rogue-trader-voidfarer-edition",
-    name: "Warhammer 40,000: Rogue Trader - Voidfarer Edition",
-    platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202311/2114/f82c93c6dc7aacbdc3c0ae737fcb71401e40f0da7132c643.jpg",
-    releaseDate: "2023-05-22",
-    prices: {
-      UA: { basePriceUAH: 3299, salePriceUAH: 1320, clientBasePrice: 8600, clientSalePrice: 4100 },
-    },
-    discountPct: 60,
-    saleEndDate: "2026-04-08T22:59:00.000Z",
-  },
-  {
     id: "call-of-duty-wwii",
     name: "Call of Duty: WWII",
     platforms: ["PS4"],
-    coverUrl: "https://image.api.playstation.com/vulcan/img/rnd/202010/1520/2ayZQhljrVwBCDctw74y0ncL.jpg",
+    coverUrl: "https://image.api.playstation.com/cdn/EP0002/CUSA08630_00/v8NgJ1zB7820Ufth4qZLCTX5ulvzaZtE.png",
     releaseDate: "2017-11-03",
     metacritic: 77,
     prices: {
       UA: { basePriceUAH: 2899, salePriceUAH: 1160, clientBasePrice: 7700, clientSalePrice: 3750 },
-    },
-    discountPct: 60,
-    saleEndDate: "2026-04-08T22:59:00.000Z",
-  },
-  {
-    id: "assassin-s-creed-mirage-master-assassin-edition",
-    name: "Assassin’s Creed Mirage – Master Assassin Edition",
-    platforms: ["PS5","PS4"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202310/1616/d403d95681fb6a0104887d064ab7fc13c8fbb86293a72544.jpg",
-    releaseDate: "2023-10-05",
-    prices: {
-      UA: { basePriceUAH: 2599, salePriceUAH: 1040, clientBasePrice: 7000, clientSalePrice: 3500 },
     },
     discountPct: 60,
     saleEndDate: "2026-04-08T22:59:00.000Z",
@@ -3369,23 +3194,10 @@ export const dealsData: DealGame[] = [
     saleEndDate: "2026-04-08T22:59:00.000Z",
   },
   {
-    id: "fallout-4-anniversary-edition",
-    name: "Fallout 4: Anniversary Edition",
-    platforms: ["PS5","PS4"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202510/2920/8c4d07dd4c20f73e4b23ffa28942958d810f0e73f393dc16.jpg",
-    releaseDate: "2016-03-22",
-    metacritic: 70,
-    prices: {
-      UA: { basePriceUAH: 1799, salePriceUAH: 1079, clientBasePrice: 5100, clientSalePrice: 3600 },
-    },
-    discountPct: 40,
-    saleEndDate: "2026-04-08T22:59:00.000Z",
-  },
-  {
     id: "metro-2033-redux",
     name: "Metro 2033 Redux",
     platforms: ["PS4"],
-    coverUrl: "https://image.api.playstation.com/vulcan/img/rnd/202010/1520/3hKli7WYjbiJEj5wQDxQXq4v.png",
+    coverUrl: "https://image.api.playstation.com/vulcan/img/rnd/202103/0313/5XMB9eJtaKKoVzmvyWGfoCD7.png",
     releaseDate: "2014-08-25",
     metacritic: 88,
     prices: {
@@ -3398,7 +3210,7 @@ export const dealsData: DealGame[] = [
     id: "metro-last-light-redux",
     name: "Metro: Last Light Redux",
     platforms: ["PS4"],
-    coverUrl: "https://image.api.playstation.com/vulcan/img/rnd/202010/1520/D7sZ8f8dfSlJtODirLNTvuBB.png",
+    coverUrl: "https://image.api.playstation.com/vulcan/img/rnd/202103/0313/goM6tBhplTh0ZNDj8sKhVDri.png",
     releaseDate: "2014-08-25",
     metacritic: 76,
     prices: {
@@ -3408,23 +3220,10 @@ export const dealsData: DealGame[] = [
     saleEndDate: "2026-04-08T22:59:00.000Z",
   },
   {
-    id: "ark-bob-s-tall-tales",
-    name: "ARK: Bob's Tall Tales",
-    platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202412/2018/d016326304ab3c5dd8877851de8d0ef6d1d6546bd4d818a9.jpg",
-    releaseDate: "2015-06-02",
-    metacritic: 70,
-    prices: {
-      UA: { basePriceUAH: 999, salePriceUAH: 330, clientBasePrice: 3400, clientSalePrice: 1550 },
-    },
-    discountPct: 67,
-    saleEndDate: "2026-04-08T22:59:00.000Z",
-  },
-  {
     id: "project-motor-racing",
     name: "Project Motor Racing",
     platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202507/0311/0dd689d6da946feec9b79dd15d31771bff8c8667b9c39d4e.png",
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202507/0311/9fa921770714334fc89e58dca7abafaf2ba7b8f69987d4d1.jpg",
     releaseDate: "2025-11-25",
     prices: {
       UA: { basePriceUAH: 1999, salePriceUAH: 1139, clientBasePrice: 5600, clientSalePrice: 3700 },
@@ -3433,36 +3232,10 @@ export const dealsData: DealGame[] = [
     saleEndDate: "2026-04-08T22:59:00.000Z",
   },
   {
-    id: "undisputed-the-championship-upgrade-pack",
-    name: "Undisputed - The Championship Upgrade Pack",
-    platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202510/1415/0cface097370c3998d4201d305bfb30bfd5e98ea74c79f54.jpg",
-    releaseDate: "2019-07-18",
-    metacritic: 67,
-    prices: {
-      UA: { basePriceUAH: 1699, salePriceUAH: 1138, clientBasePrice: 4900, clientSalePrice: 3700 },
-    },
-    discountPct: 33,
-    saleEndDate: "2026-04-08T22:59:00.000Z",
-  },
-  {
-    id: "the-sims-4-get-famous",
-    name: "The Sims 4 Get Famous",
-    platforms: ["PS4"],
-    coverUrl: "https://image.api.playstation.com/vulcan/img/cfn/11307n71sUSUaRd6_6HYcMMv6Zd2K_zsLOHJ07TgXZbfJmL0J01KxKo4pqXAM53tsLRZnbJDw02VMbEY7Dax6DJIM7I97y30.png",
-    releaseDate: "2014-09-02",
-    metacritic: 67,
-    prices: {
-      UA: { basePriceUAH: 1399, salePriceUAH: 560, clientBasePrice: 4300, clientSalePrice: 2250 },
-    },
-    discountPct: 60,
-    saleEndDate: "2026-04-08T22:59:00.000Z",
-  },
-  {
     id: "arken-age",
     name: "Arken Age",
     platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202310/2619/a2dfe1ef9e7926e8436aebbd586dad98e88c0f87a69e4279.png",
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202310/2619/6da048cb066ece0d436006ef548a4981391e26012e475888.jpg",
     releaseDate: "2014-01-28",
     metacritic: 81,
     prices: {
@@ -3475,7 +3248,7 @@ export const dealsData: DealGame[] = [
     id: "lego-voyagers",
     name: "LEGO Voyagers",
     platforms: ["PS5","PS4"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202506/0315/8fe07a5fabdae439a920bb7fd7928bac77f26447f445b9a0.jpg",
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202508/1417/88a8cd97da0bb5d188f807f0df50d2e1ed7b4b5c0f3412c7.png",
     releaseDate: "2025-09-15",
     prices: {
       UA: { basePriceUAH: 819, salePriceUAH: 573, clientBasePrice: 3000, clientSalePrice: 2300 },
@@ -3487,7 +3260,7 @@ export const dealsData: DealGame[] = [
     id: "crossfire-sierra-squad",
     name: "Crossfire: Sierra Squad",
     platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202211/0219/SjkHIwnTAS0XQoNL9yn9kzll.png",
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202308/1703/676a9cfec5beced5ea62823d2d82c64b2641bf108a9fb2b7.png",
     releaseDate: "2018-09-09",
     prices: {
       UA: { basePriceUAH: 1009, salePriceUAH: 605, clientBasePrice: 3450, clientSalePrice: 2400 },
@@ -3496,22 +3269,10 @@ export const dealsData: DealGame[] = [
     saleEndDate: "2026-04-08T22:59:00.000Z",
   },
   {
-    id: "lego-ps4-ps5",
-    name: "LEGO Зоряні Війни: Скайуокер. Сага",
-    platforms: ["PS5","PS4"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202112/2121/huLsTFyulvj2fC0nbRaVUChw.png",
-    releaseDate: "2023-12-07",
-    prices: {
-      UA: { basePriceUAH: 1799, salePriceUAH: 360, clientBasePrice: 5100, clientSalePrice: 1650 },
-    },
-    discountPct: 80,
-    saleEndDate: "2026-04-08T22:59:00.000Z",
-  },
-  {
     id: "digimon-story-time-stranger",
     name: "Digimon Story Time Stranger",
     platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202505/1512/cd5d6febd61d6a170d48db10e32bf9828e0c830e8172f10e.jpg",
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202506/0223/f4f49185f8885de59ffa32687c067cf772091388d089915f.png",
     releaseDate: "2025-10-02",
     prices: {
       UA: { basePriceUAH: 3899, salePriceUAH: 2924, clientBasePrice: 9850, clientSalePrice: 7750 },
@@ -3523,7 +3284,7 @@ export const dealsData: DealGame[] = [
     id: "dragon-quest-i-ii-hd-2d-remake",
     name: "DRAGON QUEST I & II HD-2D Remake",
     platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202505/0810/0ba33e8224b3a268f9db59d7f981d807f5d16da57c8a3bb9.png",
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202505/0901/bf78cdebe7546f7c43d7537bb47eac35da0f28bcd72426a8.png",
     releaseDate: "2025-10-30",
     prices: {
       UA: { basePriceUAH: 1999, salePriceUAH: 1499, clientBasePrice: 5600, clientSalePrice: 4500 },
@@ -3535,7 +3296,7 @@ export const dealsData: DealGame[] = [
     id: "fairy-tail",
     name: "FAIRY TAIL",
     platforms: ["PS4"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202009/3006/J6TFkRa8LWLj5NA2EyYZYT0B.png",
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202007/1308/StbziMS5VEhNntVpqjIRyOl1.png",
     releaseDate: "2020-07-29",
     metacritic: 69,
     prices: {
@@ -3545,23 +3306,10 @@ export const dealsData: DealGame[] = [
     saleEndDate: "2026-04-08T22:59:00.000Z",
   },
   {
-    id: "yakuza-kiwami-yakuza-kiwami-2-ps4-ps5",
-    name: "Комплект Yakuza Kiwami і Yakuza Kiwami 2 дляи",
-    platforms: ["PS5","PS4"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202601/0805/c69852ad0b643e567d681509f07200464c34a79eafa6c473.png",
-    releaseDate: "2016-01-21",
-    metacritic: 83,
-    prices: {
-      UA: { basePriceUAH: 949, salePriceUAH: 664, clientBasePrice: 3300, clientSalePrice: 2550 },
-    },
-    discountPct: 30,
-    saleEndDate: "2026-04-08T22:59:00.000Z",
-  },
-  {
     id: "insurgency-sandstorm-4-year-anniversary-edition",
     name: "Insurgency: Sandstorm - 4-Year Anniversary Edition",
     platforms: ["PS5","PS4"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202510/1309/08201a4df049248a0839aa08f610eb95a37f22d14e0a8ff2.jpg",
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202510/1309/b9108a012d248f2bd0942eda8c73108eba9e2d322f894475.jpg",
     releaseDate: "2018-12-12",
     metacritic: 80,
     prices: {
@@ -3574,7 +3322,7 @@ export const dealsData: DealGame[] = [
     id: "divinity-original-sin-2-definitive-edition-ps4-ps5",
     name: "Divinity: Original Sin 2 - Definitive Edition",
     platforms: ["PS5","PS4"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202512/0115/1bf47aff181e0bacd58e43a1b2004332dd6aa17dd71252d5.png",
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202512/0115/6bb21b108d422dca41a04c6cb00fa8bb5c983290889a4ebf.png",
     releaseDate: "2018-08-31",
     metacritic: 94,
     prices: {
@@ -3584,22 +3332,10 @@ export const dealsData: DealGame[] = [
     saleEndDate: "2026-04-08T22:59:00.000Z",
   },
   {
-    id: "styx-blades-of-greed-quartz-edition",
-    name: "Styx: Blades of Greed - Quartz Edition",
-    platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202511/1311/04cfbf185ec21a6dc1b44ee9a72fc1d76be10fff56a51daa.jpg",
-    releaseDate: "2026-02-19",
-    prices: {
-      UA: { basePriceUAH: 1999, salePriceUAH: 1399, clientBasePrice: 5600, clientSalePrice: 4300 },
-    },
-    discountPct: 30,
-    saleEndDate: "2026-04-08T22:59:00.000Z",
-  },
-  {
     id: "high-on-life",
     name: "High On Life",
     platforms: ["PS5","PS4"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202307/1223/ec2eb1c6fc39a68b8287e889ec5a058a0a4ad7e952444338.jpg",
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202307/0323/873c148b3abd9f6bfa447399bb3025c4cac36200737a01f5.png",
     releaseDate: "2022-12-13",
     prices: {
       UA: { basePriceUAH: 1399, salePriceUAH: 490, clientBasePrice: 4300, clientSalePrice: 2000 },
@@ -3611,7 +3347,7 @@ export const dealsData: DealGame[] = [
     id: "fairy-tail-2-ps4-ps5",
     name: "FAIRY TAIL 2",
     platforms: ["PS5","PS4"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202411/2500/3bdeebdb11fab7e2205167b55eec1d69d1d7054429a6564c.png",
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202410/0806/bf757f441e7d36d4ab2f2b580d600af620c2c1651c981b77.png",
     releaseDate: "2020-07-29",
     metacritic: 69,
     prices: {
@@ -3624,7 +3360,7 @@ export const dealsData: DealGame[] = [
     id: "madison-vr",
     name: "MADiSON VR",
     platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202403/2612/580f0a7246d966b3c9b9c954d7cb1609cb054036741e4e47.jpg",
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202306/0613/9d05c9f464ddf10982fa8c64d4bc0d0e2718f034c198e7c5.jpg",
     releaseDate: "2022-07-08",
     prices: {
       UA: { basePriceUAH: 1049, salePriceUAH: 629, clientBasePrice: 3550, clientSalePrice: 2450 },
@@ -3636,7 +3372,7 @@ export const dealsData: DealGame[] = [
     id: "wolfenstein-alt-history-collection",
     name: "Wolfenstein: Alt History Collection",
     platforms: ["PS4"],
-    coverUrl: "https://image.api.playstation.com/vulcan/img/rnd/202010/1517/b6kUi1VxwmVYP1aLFrQEjzLe.png",
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202010/0605/KoI8vjmiwmWFMMeEpRJVv0JT.png",
     releaseDate: "2020-06-30",
     prices: {
       UA: { basePriceUAH: 1999, salePriceUAH: 400, clientBasePrice: 5600, clientSalePrice: 1750 },
@@ -3661,7 +3397,7 @@ export const dealsData: DealGame[] = [
     id: "liftoff-drone-racing",
     name: "Liftoff: Drone Racing",
     platforms: ["PS4"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202007/0109/39LTkv5II041iQu9S0MN2ksS.png",
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202007/0109/JLooijHIEhlx7k7n01kG4Nid.jpg",
     releaseDate: "2020-11-10",
     metacritic: 56,
     prices: {
@@ -3674,7 +3410,7 @@ export const dealsData: DealGame[] = [
     id: "robocop-rogue-city-unfinished-business",
     name: "RoboCop: Rogue City - Unfinished Business",
     platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202502/2615/e55118a991f48a2aa63d3c77ea3f37aad8045eb9b9c63649.jpg",
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202502/2615/16fb3087386be4669d0f96cf705aea840d6647f7e863b425.jpg",
     releaseDate: "2023-11-02",
     prices: {
       UA: { basePriceUAH: 949, salePriceUAH: 569, clientBasePrice: 3300, clientSalePrice: 2300 },
@@ -3686,7 +3422,7 @@ export const dealsData: DealGame[] = [
     id: "nobody-wants-to-die",
     name: "Nobody Wants to Die",
     platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202403/0116/ce49cd6773295439f889f479d4300b11454ba7f7d3f0062b.jpg",
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202403/0116/d4c9af4c743c54b82df51de20cab3afa81c69301a64980e0.jpg",
     releaseDate: "2024-07-16",
     prices: {
       UA: { basePriceUAH: 819, salePriceUAH: 205, clientBasePrice: 3000, clientSalePrice: 1200 },
@@ -3698,7 +3434,7 @@ export const dealsData: DealGame[] = [
     id: "metro-exodus-expansion-pass",
     name: "Metro Exodus - Expansion Pass",
     platforms: ["PS5","PS4"],
-    coverUrl: "https://image.api.playstation.com/vulcan/img/rnd/202011/0914/tKcX6txadUwRf8YpMc3OIpCb.png",
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202010/0916/Tp7yY8e2dekBr4ETY8ZmSSJb.png",
     releaseDate: "2020-02-11",
     prices: {
       UA: { basePriceUAH: 489, salePriceUAH: 122, clientBasePrice: 2000, clientSalePrice: 950 },
@@ -3710,7 +3446,7 @@ export const dealsData: DealGame[] = [
     id: "alien-rogue-incursion-evolved-edition",
     name: "Alien: Rogue Incursion Evolved Edition",
     platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202505/0600/ab6bc017c61df3789829b0e7049b05adb943106cd1e89d0d.jpg",
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202505/0600/bbfa7883bab4670175da783f706ecc34e61f945863ab1f52.jpg",
     releaseDate: "2017-11-07",
     metacritic: 67,
     prices: {
@@ -3723,7 +3459,7 @@ export const dealsData: DealGame[] = [
     id: "commandos-origins",
     name: "Commandos: Origins",
     platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202310/0515/301101aa2cd90488551035a2fee5aa8c5c6182eb563ed6bd.png",
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202310/0515/3cd78793bf442dc5396e9bddc0a147e63659dda6a88122a5.png",
     releaseDate: "2025-04-09",
     prices: {
       UA: { basePriceUAH: 1799, salePriceUAH: 1439, clientBasePrice: 5100, clientSalePrice: 4400 },
@@ -3735,7 +3471,7 @@ export const dealsData: DealGame[] = [
     id: "warhammer-40-000-chaos-gate-daemonhunters-purifier-edition-ps4-ps5",
     name: "Warhammer 40,000: Chaos Gate - Daemonhunters - Purifier Edition",
     platforms: ["PS5","PS4"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202402/1512/17215269a68f8da2accd6ba3f43c9aab6557da8a9b0944b1.png",
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202308/0808/c0710961d6c695d780b190133f8e5dd2ab2dd8c33979ef91.jpg",
     releaseDate: "2023-05-22",
     prices: {
       UA: { basePriceUAH: 1699, salePriceUAH: 425, clientBasePrice: 4900, clientSalePrice: 1850 },
@@ -3747,22 +3483,9 @@ export const dealsData: DealGame[] = [
     id: "doom-anthology",
     name: "DOOM Anthology",
     platforms: ["PS5","PS4"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202501/1505/5d9e25341d19c0fa3ffd2e3d90d4b946621c9a53edb74cd5.jpg",
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202010/0114/b4Q1XWYaTdJLUvRuALuqr0wP.png",
     releaseDate: "2016-05-12",
     metacritic: 85,
-    prices: {
-      UA: { basePriceUAH: 1999, salePriceUAH: 500, clientBasePrice: 5600, clientSalePrice: 2050 },
-    },
-    discountPct: 75,
-    saleEndDate: "2026-04-08T22:59:00.000Z",
-  },
-  {
-    id: "doom-eternal-ps4-ps5",
-    name: "DOOM Eternal",
-    platforms: ["PS5","PS4"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202010/2806/IhUTQzhUhCvaTQF1P6iyFyXl.png",
-    releaseDate: "2020-03-20",
-    metacritic: 86,
     prices: {
       UA: { basePriceUAH: 1999, salePriceUAH: 500, clientBasePrice: 5600, clientSalePrice: 2050 },
     },
@@ -3773,7 +3496,7 @@ export const dealsData: DealGame[] = [
     id: "trailmakers",
     name: "Trailmakers",
     platforms: ["PS5","PS4"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202307/0711/0ec734d986582052e2460b7780dfb04a2b7c43c0257bd053.png",
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202307/0711/06a6e4d3759aef4865c93945d1d619fee80d108728910d9d.png",
     releaseDate: "2020-05-21",
     prices: {
       UA: { basePriceUAH: 999, salePriceUAH: 250, clientBasePrice: 3400, clientSalePrice: 1350 },
@@ -3785,7 +3508,7 @@ export const dealsData: DealGame[] = [
     id: "arizona-sunshine-2",
     name: "Arizona Sunshine 2",
     platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202305/2420/a20452cdb7dc20c068ade8ae1c7f2a3692de3a14d6db8ea3.png",
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202305/2420/b145b037582c2bc1157e03724d1aae28bb640cb5ebeb966a.png",
     releaseDate: "2016-12-06",
     metacritic: 81,
     prices: {
@@ -3798,7 +3521,7 @@ export const dealsData: DealGame[] = [
     id: "jusant",
     name: "Jusant",
     platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202306/0109/c780d45fe308020ea741873f73ff8ed882cf92254447dd6c.jpg",
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202306/0107/5f350aea522fa06b1c8e4517715ee5944a220fcd5ca68f84.jpg",
     releaseDate: "2023-10-30",
     prices: {
       UA: { basePriceUAH: 819, salePriceUAH: 328, clientBasePrice: 3000, clientSalePrice: 1550 },
@@ -3823,7 +3546,7 @@ export const dealsData: DealGame[] = [
     id: "nier-replicant-ver-1-22474487139",
     name: "NieR Replicant ver.1.22474487139…",
     platforms: ["PS4"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202009/0404/gfdpPvrjebxxZ9a1dzJKsexR.png",
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202009/0404/Qrk97bxT6eQZXODNzDhKeFeE.png",
     releaseDate: "2021-04-23",
     metacritic: 82,
     prices: {
@@ -3836,7 +3559,7 @@ export const dealsData: DealGame[] = [
     id: "metaphor-refantazio-35-atlus-ps4-ps5",
     name: "Metaphor: ReFantazio — цифрове ювілейнена честь 35-річчя Atlus (й)",
     platforms: ["PS5","PS4"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202404/2608/95ff49123518e4349063340818ec29011fa4b13a166f04d5.png",
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202405/2406/e148dc7fa4658360199188e1ed14f9d79d3adeec84c82162.png",
     releaseDate: "2024-10-11",
     prices: {
       UA: { basePriceUAH: 3199, salePriceUAH: 1600, clientBasePrice: 8350, clientSalePrice: 4700 },
@@ -3848,7 +3571,7 @@ export const dealsData: DealGame[] = [
     id: "the-midnight-walk",
     name: "The Midnight Walk",
     platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202409/1110/2c3d585db6df70dda3c1b852ece659783aea274d1837259b.jpg",
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202409/1110/5bdf8506e4446c202b8ebf1f4b7b648149a6a07c5d8aae77.jpg",
     releaseDate: "2025-05-08",
     prices: {
       UA: { basePriceUAH: 949, salePriceUAH: 626, clientBasePrice: 3300, clientSalePrice: 2450 },
@@ -3867,30 +3590,6 @@ export const dealsData: DealGame[] = [
       UA: { basePriceUAH: 1049, salePriceUAH: 262, clientBasePrice: 3550, clientSalePrice: 1350 },
     },
     discountPct: 75,
-    saleEndDate: "2026-04-08T22:59:00.000Z",
-  },
-  {
-    id: "ultimate-ea-sports-fc-26-ps4-ps5",
-    name: "Ultimate EA SPORTS FC 26 длята",
-    platforms: ["PS4"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202507/1617/f1d9142a99a1c7c895ad134805f60da604eece2618a190d5.png",
-    releaseDate: "2025-09-25",
-    prices: {
-      UA: { basePriceUAH: 2399, salePriceUAH: 720, clientBasePrice: 6550, clientSalePrice: 2750 },
-    },
-    discountPct: 70,
-    saleEndDate: "2026-04-08T22:59:00.000Z",
-  },
-  {
-    id: "diablo-iv-age-of-hatred",
-    name: "Колекція Diablo IV: Age of Hatred",
-    platforms: ["PS5","PS4"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202511/1222/044ad97808fbbd6b0607ac1515d373bae2001787bd1f923d.jpg",
-    releaseDate: "2024-10-07",
-    prices: {
-      UA: { basePriceUAH: 1696, salePriceUAH: 1018, clientBasePrice: 4900, clientSalePrice: 3450 },
-    },
-    discountPct: 40,
     saleEndDate: "2026-04-08T22:59:00.000Z",
   },
 ];
