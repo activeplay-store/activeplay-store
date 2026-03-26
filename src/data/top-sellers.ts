@@ -1,5 +1,5 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-03-26T23:52:23.705Z
+// Обновлено: 2026-03-26T23:58:50.721Z
 // Топ-продаж: 10 игр
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
@@ -25,11 +25,11 @@ export const topSellers: TopSellers = {
   region: "Европа",
   source: "PlayStation Blog",
   games: [
-    { rank: 1, title: "Resident Evil Requiem", genre: "Survival Horror", image: "/images/covers/Resident-Evil-Requiem.jpg", platform: "PS5", priceTR: 950, priceUA: 1050 },
+    { rank: 1, title: "Resident Evil Requiem", genre: "Survival Horror", image: "/images/covers/Resident-Evil-Requiem.jpg", platform: "PS5", priceTR: 0, priceUA: 0 },
     { rank: 2, title: "EA SPORTS FC 26", genre: "Спорт", image: "https://image.api.playstation.com/vulcan/ap/rnd/202507/1617/f0fe830f8f01600d13cce060680e0287374c58613a63c716.png", platform: "PS5", priceTR: 2750, priceUA: 2750 },
     { rank: 3, title: "UFC 5", genre: "Файтинг", image: "https://image.api.playstation.com/vulcan/ap/rnd/202309/0421/0b3fe53ab2d54998602b41682ef1bd83e63e82d3f9ab8fff.png", platform: "PS5", priceTR: 1600, priceUA: 1650 },
     { rank: 4, title: "Grand Theft Auto V", genre: "Экшен / Open World", image: "https://image.api.playstation.com/vulcan/ap/rnd/202202/2816/YHqWG89UegirLGRyNIn8tmnv.jpg", platform: "PS5", priceTR: 1750, priceUA: 2450 },
-    { rank: 5, title: "Minecraft", genre: "Песочница", image: "/images/covers/minecraft.jpg", platform: "PS5", priceTR: 1550, priceUA: 1550 },
+    { rank: 5, title: "Minecraft", genre: "Песочница", image: "/images/covers/minecraft.jpg", platform: "PS5", priceTR: 0, priceUA: 0 },
     { rank: 6, title: "It Takes Two", genre: "Кооп-адвенчура", image: "https://image.api.playstation.com/vulcan/ap/rnd/202012/0815/IjqyQi0J2PL7GdEo3K8jKWMh.png", platform: "PS5", priceTR: 1250, priceUA: 1400 },
     { rank: 7, title: "ARC Raiders", genre: "Шутер / Кооп", image: "https://image.api.playstation.com/vulcan/ap/rnd/202504/1515/99f254edff001a6a52d1d9f09af28959abfbaf1fe1a034b4.jpg", platform: "PS5", priceTR: 3900, priceUA: 3650 },
     { rank: 8, title: "REANIMAL", genre: "Хоррор-адвенчура", image: "/images/covers/reanimal.jpg", platform: "PS5", priceTR: 4800, priceUA: 4000 },
