@@ -73,7 +73,7 @@ function HeroCard({ game, region }: { game: HotRelease; region: 'tr' | 'ua' }) {
   const [sel, setSel] = useState(0);
 
   return (
-    <div className="ap-card ap-card--hero group relative rounded-xl overflow-hidden flex flex-col transition-all duration-300 hover:border-[rgba(0,212,255,0.3)]" style={{ background: '#111827', border: '1px solid #1e293b' }}>
+    <div className="ap-card ap-card--hero group relative rounded-xl overflow-hidden flex flex-col h-full transition-all duration-300 hover:border-[rgba(0,212,255,0.3)]" style={{ background: '#111827', border: '1px solid #1e293b' }}>
       {/* SVG animated border */}
       <svg className="absolute inset-0 w-full h-full pointer-events-none z-20" style={{ borderRadius: 'inherit' }}>
         <rect x="0.5" y="0.5" width="calc(100% - 1px)" height="calc(100% - 1px)" rx="12" ry="12" fill="none" stroke="rgba(0,212,255,0.1)" strokeWidth="1" />
@@ -225,14 +225,14 @@ export default function HotReleases() {
           </div>
         </div>
 
-        {/* Grid */}
-        <div className="ap-cards grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-4">
-          <HeroCard game={hero} region={region} />
-          <div className="flex flex-col gap-4">
-            {rest.map((game) => (
-              <CompactCard key={game.id} game={game} region={region} onClick={() => setPopup({ name: game.title, price: game.editions[region][0].priceRUB })} />
-            ))}
+        {/* Grid: hero слева row-span-3, три компактных справа */}
+        <div className="ap-cards grid grid-cols-1 lg:grid-cols-[1fr_1fr] lg:grid-rows-3 gap-4">
+          <div className="lg:row-span-3">
+            <HeroCard game={hero} region={region} />
           </div>
+          {rest.map((game) => (
+            <CompactCard key={game.id} game={game} region={region} onClick={() => setPopup({ name: game.title, price: game.editions[region][0].priceRUB })} />
+          ))}
         </div>
 
         <p className="text-xs text-[var(--text-muted)] mt-6 text-center">
