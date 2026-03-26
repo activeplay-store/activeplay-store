@@ -39,8 +39,8 @@ function GameCard({ game, onClick, isHero, region }: { game: TopSellerGame; onCl
           loading="lazy"
           unoptimized
         />
-        {/* Clean gradient overlay */}
-        <div className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(to top, rgba(7,16,30,0.88) 0%, rgba(7,16,30,0.58) 38%, rgba(7,16,30,0) 72%)' }} />
+        {/* Minimal bottom gradient for text readability */}
+        <div className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(to top, rgba(7,16,30,0.6) 0%, rgba(7,16,30,0) 30%)' }} />
 
         {/* Rank badge — compact */}
         <span
