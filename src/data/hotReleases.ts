@@ -1,6 +1,6 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-03-26T21:19:03.004Z
-// Горящих новинок: 4
+// Обновлено: 2026-03-26T21:40:03.855Z
+// Горящих новинок: 1
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
 export interface HotReleaseEdition {
@@ -45,75 +45,6 @@ export const hotReleases: HotRelease[] = [
       ],
       ua: [
         { name: "Standard", priceRUB: 4200 },
-      ],
-    },
-  },
-  {
-    id: "nioh-3",
-    title: "Nioh 3",
-    slug: "nioh-3",
-    description: "",
-    releaseDate: "6 февраля 2026",
-    metacritic: 0,
-    genre: "Action",
-    platforms: ["PS5"],
-    cover: "https://image.api.playstation.com/vulcan/ap/rnd/202509/0401/835b207c01d1b02c29229e73fba0da13b914148c8b8bd4ed.png",
-    hypeScore: 2,
-    totalScore: 4.6,
-    editions: {
-      tr: [
-        { name: "Standard", priceRUB: 8450 },
-        { name: "Digital Deluxe", priceRUB: 12150 },
-      ],
-      ua: [
-        { name: "Standard", priceRUB: 6050 },
-        { name: "Digital Deluxe", priceRUB: 7950 },
-      ],
-    },
-  },
-  {
-    id: "code-vein-ii",
-    title: "CODE VEIN II",
-    slug: "code-vein-ii",
-    description: "",
-    releaseDate: "30 января 2026",
-    metacritic: 0,
-    genre: "Action",
-    platforms: ["PS5"],
-    cover: "https://image.api.playstation.com/vulcan/ap/rnd/202508/2218/6e65eb4269ce9cf10aa643c08437863f7f38bc2619b3fec0.jpg",
-    hypeScore: 1,
-    totalScore: 4.2,
-    editions: {
-      tr: [
-        { name: "Standard", priceRUB: 7400 },
-        { name: "Deluxe", priceRUB: 9350 },
-        { name: "Ultimate", priceRUB: 10350 },
-      ],
-      ua: [
-        { name: "Standard", priceRUB: 5600 },
-        { name: "Deluxe", priceRUB: 6550 },
-        { name: "Ultimate", priceRUB: 7000 },
-      ],
-    },
-  },
-  {
-    id: "styx-blades-of-greed-quartz-edition",
-    title: "Styx: Blades of Greed - Quartz Edition",
-    slug: "styx-blades-of-greed-quartz-edition",
-    description: "",
-    releaseDate: "19 февраля 2026",
-    metacritic: 0,
-    genre: "Adventure",
-    platforms: ["PS5"],
-    cover: "https://image.api.playstation.com/vulcan/ap/rnd/202509/0808/ed252cada24d0c52d87c1f41f75b7b02fdde36460254387e.jpg",
-    hypeScore: 1,
-    totalScore: 4.2,
-    editions: {
-      tr: [
-        { name: "Standard", priceRUB: 5100 },
-      ],
-      ua: [
-        { name: "Standard", priceRUB: 5100 },
       ],
     },
   },
