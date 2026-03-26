@@ -1794,16 +1794,17 @@ async function generateTopSellers(gameList) {
     let priceTR = 0;
     let priceUA = 0;
 
-    // Проверить, есть ли игра в текущих скидках
-    const deal = dealsData.find(d =>
-      d.name.toLowerCase() === name.toLowerCase() ||
-      d.name.toLowerCase().includes(name.toLowerCase()) ||
-      name.toLowerCase().includes(d.name.toLowerCase())
-    );
+    // Проверить, есть ли игра в текущих скидках (строгий матчинг по slug)
+    const gameSlug = slugify(name);
+    const deal = dealsData.find(d => {
+      const dealSlug = slugify(d.name);
+      // Точное совпадение slug или точное совпадение имени
+      return dealSlug === gameSlug || d.name.toLowerCase() === name.toLowerCase();
+    });
     if (deal) {
       if (deal.trSalePrice > 0) priceTR = deal.trSalePrice;
       if (deal.uaSalePrice > 0) priceUA = deal.uaSalePrice;
-      console.log(PREFIX + '   Скидка найдена: ' + name + ' → TR=' + priceTR + ', UA=' + priceUA);
+      console.log(PREFIX + '   Скидка найдена: ' + name + ' → ' + deal.name + ' | TR=' + priceTR + ', UA=' + priceUA);
     }
 
     // Если скидки нет — обычная цена из games.json
