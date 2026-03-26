@@ -104,7 +104,7 @@ function HeroCard({ game, region }: { game: HotRelease; region: 'tr' | 'ua' }) {
       </div>
 
       {/* Content */}
-      <div className="flex flex-col px-4 pt-2 pb-2">
+      <div className="flex flex-col flex-1 px-4 pt-2 pb-2">
         {/* Title + status */}
         <div className="flex items-center gap-2 flex-wrap mb-1">
           <h3 className="text-[20px] font-bold text-white leading-tight font-display" style={{ fontStyle: 'normal' }}>{game.title}</h3>
@@ -117,8 +117,8 @@ function HeroCard({ game, region }: { game: HotRelease; region: 'tr' | 'ua' }) {
         </div>
         <p className="text-[12px] text-[#94a3b8] opacity-70 leading-snug mb-3 line-clamp-1">{game.description}</p>
 
-        {/* BOTTOM: price + CTA */}
-        <div>
+        {/* BOTTOM: price + CTA — pushed to bottom */}
+        <div className="mt-auto">
           {/* Edition selectors */}
           <div className="flex gap-2 mb-2">
             {editions.map((ed, i) => (
@@ -149,9 +149,9 @@ function CompactCard({ game, region, onClick }: { game: HotRelease; region: 'tr'
   return (
     <div onClick={onClick} className="ap-card ap-card--compact group relative flex flex-1 rounded-xl overflow-hidden cursor-pointer transition-all duration-300 hover:-translate-y-0.5 hover:border-[rgba(0,212,255,0.3)] hover:shadow-[0_4px_16px_rgba(0,212,255,0.1)]" style={{ background: '#111827', border: '1px solid #1e293b' }}>
       {/* Cover with right-to-left overlay */}
-      <div className="relative flex-shrink-0 overflow-hidden" style={{ width: '150px' }}>
+      <div className="relative flex-shrink-0 overflow-hidden" style={{ width: '150px', minHeight: '100%' }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={game.cover} alt={altTexts[game.id] || game.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" style={{ objectPosition: '50% 30%' }} />
+        <img src={game.cover} alt={altTexts[game.id] || game.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" style={{ objectPosition: 'center top' }} />
         <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, transparent 30%, rgba(17,24,39,0.5) 70%, rgba(17,24,39,0.9) 100%)' }} />
         <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(17,24,39,0.7) 0%, transparent 50%)' }} />
         {/* Metacritic — bottom right */}

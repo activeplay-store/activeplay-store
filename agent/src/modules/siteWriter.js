@@ -925,7 +925,7 @@ function generatePreordersTs(games) {
 
     if (!editions.TR && !editions.UA) continue;
 
-    const genre = gameDescriptions.translateGenre(game.rawgGenre) || game.rawgGenre || '';
+    const genre = gameDescriptions.getPreorderGenreOverride(name) || gameDescriptions.getPreorderGenreOverride(game.name) || gameDescriptions.translateGenre(game.rawgGenre) || game.rawgGenre || '';
     const description = gameDescriptions.getDescription(name) || gameDescriptions.getDescription(game.name) || game.rawgDescription || '';
 
     preorders.push({ id: slug, name, platforms, coverUrl, releaseDate, genre, description, editions });
@@ -1672,6 +1672,48 @@ async function generateTopSellers(gameList) {
   const preordersData = loadPreordersJson();
   const allPreorders = preordersData.preorders || [];
 
+  // Загрузить текущие скидки из deals.ts для актуальных цен
+  let dealsData = [];
+  try {
+    const dealsPath = path.join(REPO_ROOT, DEALS_FILE);
+    const dealsContent = fs.readFileSync(dealsPath, 'utf8');
+    // Парсим массив dealsData из TS файла
+    const dealsMatch = dealsContent.match(/export const dealsData[^=]*=\s*(\[[\s\S]*?\n\];)/);
+    if (dealsMatch) {
+      // Извлекаем объекты скидок через regex
+      const objRegex = /\{\s*id:\s*"([^"]+)"[\s\S]*?name:\s*"([^"]+)"[\s\S]*?(?:clientSalePrice:\s*(\d+)[\s\S]*?){1,2}\}/g;
+      let m;
+      while ((m = objRegex.exec(dealsMatch[1])) !== null) {
+        dealsData.push({ id: m[1], name: m[2] });
+      }
+    }
+    // Более надёжный парсинг: просто найти все name + clientSalePrice пары для TR
+    dealsData = [];
+    const blocks = dealsContent.split(/\n  \{/);
+    for (const block of blocks) {
+      const nameM = block.match(/name:\s*"([^"]+)"/);
+      if (!nameM) continue;
+      // Ищем первый clientSalePrice (TR-регион идёт первым)
+      const trBlock = block.match(/TR\??\s*:\s*\{([\s\S]*?)\}/);
+      const uaBlock = block.match(/UA\??\s*:\s*\{([\s\S]*?)\}/);
+      let trSalePrice = 0, uaSalePrice = 0;
+      if (trBlock) {
+        const sp = trBlock[1].match(/clientSalePrice:\s*(\d+)/);
+        if (sp) trSalePrice = parseInt(sp[1]);
+      }
+      if (uaBlock) {
+        const sp = uaBlock[1].match(/clientSalePrice:\s*(\d+)/);
+        if (sp) uaSalePrice = parseInt(sp[1]);
+      }
+      if (trSalePrice > 0 || uaSalePrice > 0) {
+        dealsData.push({ name: nameM[1], trSalePrice, uaSalePrice });
+      }
+    }
+    console.log(PREFIX + ' Загружено скидок: ' + dealsData.length);
+  } catch (err) {
+    console.log(PREFIX + ' Не удалось загрузить deals.ts: ' + err.message);
+  }
+
   let topList;
   let meta;
 
@@ -1743,17 +1785,30 @@ async function generateTopSellers(gameList) {
       }
     }
 
-    // Calculate prices
+    // Calculate prices — сначала проверяем скидки (deals), потом обычные цены
     let priceTR = 0;
     let priceUA = 0;
 
-    if (found?.prices?.TR?.editions) {
+    // Проверить, есть ли игра в текущих скидках
+    const deal = dealsData.find(d =>
+      d.name.toLowerCase() === name.toLowerCase() ||
+      d.name.toLowerCase().includes(name.toLowerCase()) ||
+      name.toLowerCase().includes(d.name.toLowerCase())
+    );
+    if (deal) {
+      if (deal.trSalePrice > 0) priceTR = deal.trSalePrice;
+      if (deal.uaSalePrice > 0) priceUA = deal.uaSalePrice;
+      console.log(PREFIX + '   Скидка найдена: ' + name + ' → TR=' + priceTR + ', UA=' + priceUA);
+    }
+
+    // Если скидки нет — обычная цена из games.json
+    if (priceTR === 0 && found?.prices?.TR?.editions) {
       const trEds = found.prices.TR.editions.filter(e => e.clientPrice > 0);
       if (trEds.length > 0) {
         priceTR = Math.min(...trEds.map(e => e.clientPrice));
       }
     }
-    if (found?.prices?.UA?.editions) {
+    if (priceUA === 0 && found?.prices?.UA?.editions) {
       const uaEds = found.prices.UA.editions.filter(e => e.clientPrice > 0);
       if (uaEds.length > 0) {
         priceUA = Math.min(...uaEds.map(e => e.clientPrice));
@@ -1776,11 +1831,11 @@ async function generateTopSellers(gameList) {
       image = '/images/covers/' + slug + '.jpg';
     }
 
-    // Genre
-    let genre = '';
-    if (found?.rawgGenre) {
+    // Genre — приоритет: topSellerGenres → RAWG → fallback
+    let genre = gameDescriptions.getTopSellerGenre(name) || '';
+    if (!genre && found?.rawgGenre) {
       genre = gameDescriptions.translateGenre(found.rawgGenre) || found.rawgGenre;
-    } else if (found?.genres?.length) {
+    } else if (!genre && found?.genres?.length) {
       genre = gameDescriptions.translateGenre(found.genres[0]) || found.genres[0];
     }
 
