@@ -1747,9 +1747,11 @@ async function generateTopSellers(gameList) {
     console.log(PREFIX + ' Blog: ' + blogData.month + ' ' + blogData.year + ' — ' + topList.length + ' игр');
   }
 
-  // Hardcoded price fallback for games not yet in PS Store TR/UA
+  // Hardcoded price fallback for games not yet in PS Store TR/UA or not in games.json
   const PRICE_FALLBACKS = {
     'reanimal': { priceTR: 4800, priceUA: 4000 },
+    'resident-evil-requiem': { priceTR: 9220, priceUA: 7800 },
+    'minecraft': { priceTR: 2460, priceUA: 2100 },
   };
 
   // Known cover overrides for games with non-standard filenames
