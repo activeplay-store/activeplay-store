@@ -385,6 +385,21 @@ async function fetchDeals(regionCode, overrideCategoryId) {
           enrichEditionWithDetails(edition, details.data.productRetrieve.webctas);
           enriched++;
         }
+
+        // Capture portrait from product-level or concept-level media
+        if (!game.portraitUrl && details?.data?.productRetrieve) {
+          const pr = details.data.productRetrieve;
+          if (pr.media) {
+            const pc = findCovers(pr.media);
+            if (pc.portraitUrl) game.portraitUrl = pc.portraitUrl;
+            if (!game.coverUrl && pc.coverUrl) game.coverUrl = pc.coverUrl;
+          }
+          if (!game.portraitUrl && pr.concept?.media) {
+            const cc = findCovers(pr.concept.media);
+            if (cc.portraitUrl) game.portraitUrl = cc.portraitUrl;
+            if (!game.coverUrl && cc.coverUrl) game.coverUrl = cc.coverUrl;
+          }
+        }
       } catch (err) {
         console.log(`[Sony] ⚠️ Цена ${edition.productId}: ${err.message}`);
       }
@@ -480,6 +495,21 @@ async function fetchPreorders(regionCode) {
         if (details?.data?.productRetrieve?.webctas) {
           enrichEditionWithDetails(edition, details.data.productRetrieve.webctas);
           enriched++;
+        }
+
+        // Capture portrait from product-level or concept-level media
+        if (!game.portraitUrl && details?.data?.productRetrieve) {
+          const pr = details.data.productRetrieve;
+          if (pr.media) {
+            const pc = findCovers(pr.media);
+            if (pc.portraitUrl) game.portraitUrl = pc.portraitUrl;
+            if (!game.coverUrl && pc.coverUrl) game.coverUrl = pc.coverUrl;
+          }
+          if (!game.portraitUrl && pr.concept?.media) {
+            const cc = findCovers(pr.concept.media);
+            if (cc.portraitUrl) game.portraitUrl = cc.portraitUrl;
+            if (!game.coverUrl && cc.coverUrl) game.coverUrl = cc.coverUrl;
+          }
         }
       } catch (err) {
         console.log(`[Sony] ⚠️ Цена ${edition.productId}: ${err.message}`);
@@ -627,11 +657,14 @@ function findCovers(media) {
     if (m.type === 'IMAGE' && m.url) byRole[m.role] = m.url;
   }
 
-  const portraitUrl = byRole['GAMEHUB_COVER_ART'] || byRole['PORTRAIT_BANNER'] || null;
+  // Portrait (vertical poster) — PORTRAIT_BANNER is the true vertical
+  const portraitUrl = byRole['PORTRAIT_BANNER'] || null;
 
-  const coverUrl = portraitUrl
+  // Cover (any usable image) — GAMEHUB_COVER_ART is horizontal but high quality
+  const coverUrl = byRole['GAMEHUB_COVER_ART']
     || byRole['MASTER']
     || byRole['EDITION_KEY_ART']
+    || portraitUrl
     || Object.values(byRole)[0]
     || null;
 
@@ -673,6 +706,51 @@ async function fetchCategoryGames(categoryId, regionCode, maxPages = 25) {
   return Array.from(seen.values());
 }
 
+/**
+ * Enrich games with portrait covers by re-fetching product details.
+ * For games that already have portraitUrl — skip.
+ * @param {Array} games - array of game objects with prices[regionCode].editions[].productId
+ * @param {string} regionCode - 'TR' or 'UA'
+ * @returns {number} count of newly found portraits
+ */
+async function fetchPortraitCovers(games, regionCode = 'TR') {
+  let found = 0;
+  const needPortrait = games.filter(g => !g.portraitUrl);
+  console.log(`[Sony] Portrait: ${needPortrait.length} игр без вертикальной обложки`);
+
+  for (const game of needPortrait) {
+    const productId = game.prices?.[regionCode]?.editions?.[0]?.productId;
+    if (!productId) continue;
+
+    try {
+      await sleep(400);
+      const details = await sonyGraphQL('productRetrieveForCtasWithPrice', {
+        productId
+      }, regionCode);
+
+      const pr = details?.data?.productRetrieve;
+      if (!pr) continue;
+
+      // Try product media
+      if (pr.media) {
+        const pc = findCovers(pr.media);
+        if (pc.portraitUrl) { game.portraitUrl = pc.portraitUrl; found++; continue; }
+      }
+
+      // Try concept media
+      if (pr.concept?.media) {
+        const cc = findCovers(pr.concept.media);
+        if (cc.portraitUrl) { game.portraitUrl = cc.portraitUrl; found++; continue; }
+      }
+    } catch (err) {
+      // skip silently
+    }
+  }
+
+  console.log(`[Sony] Portrait: найдено ${found} вертикальных обложек`);
+  return found;
+}
+
 // === ЭКСПОРТ ===
 
 module.exports = {
@@ -682,6 +760,8 @@ module.exports = {
   fetchCategory,
   fetchCategoryGames,
   fetchAllEditions,
+  fetchPortraitCovers,
+  findCovers,
   isConfigured,
   name: 'sony'
 };
