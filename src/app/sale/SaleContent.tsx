@@ -89,6 +89,13 @@ function formatReleaseDate(dateStr: string): string {
   return new Date(dateStr).toLocaleDateString('ru-RU', { month: 'long', year: 'numeric' });
 }
 
+function getDiscountBadgeColor(discountPct: number): string {
+  if (discountPct >= 65) return '#EF4444';
+  if (discountPct >= 40) return '#EAB308';
+  if (discountPct >= 20) return '#22C55E';
+  return '#00D4FF';
+}
+
 /* ── Component ─────────────────────────────────────────────────────────── */
 
 export default function SaleContent({ faqItems }: SaleContentProps) {
@@ -121,7 +128,7 @@ export default function SaleContent({ faqItems }: SaleContentProps) {
     map.red.sort(bySaving);
     map.yellow.sort(bySaving);
     map.green.sort(bySaving);
-    map.fresh.sort((a, b) => (b.metacritic ?? 0) - (a.metacritic ?? 0));
+    map.fresh.sort(bySaving);
     return map;
   }, [filtered, region]);
 
@@ -159,7 +166,7 @@ export default function SaleContent({ faqItems }: SaleContentProps) {
     );
   }
 
-  function GameCard({ game, zoneColor, isFresh }: { game: DealGame; zoneColor: string; isFresh?: boolean }) {
+  function GameCard({ game }: { game: DealGame }) {
     const [imgError, setImgError] = useState(false);
     const prices = getClientPrices(game, region);
     if (!prices) return null;
@@ -175,7 +182,7 @@ export default function SaleContent({ faqItems }: SaleContentProps) {
           ) : (
             <FallbackCover name={game.name} />
           )}
-          <span className="absolute top-3 left-3 px-3 py-1 rounded-lg text-white text-sm font-bold" style={{ background: zoneColor }}>
+          <span className="absolute top-3 left-3 px-3 py-1 rounded-lg text-white text-sm font-bold" style={{ background: getDiscountBadgeColor(bestDisc) }}>
             -{bestDisc}%
           </span>
           {prices.hasPsPlus && (
@@ -185,7 +192,6 @@ export default function SaleContent({ faqItems }: SaleContentProps) {
         <div className="p-4">
           <h3 className="font-semibold text-white text-lg mb-1 font-rajdhani">{game.name}</h3>
           <p className="text-white/50 text-sm mb-1">{game.platforms.join(' / ')}</p>
-          {isFresh && <p className="text-white/40 text-xs mb-2">Релиз: {formatReleaseDate(game.releaseDate)}</p>}
           <div className="flex items-baseline gap-2 mb-1">
             <span className="text-white/40 line-through text-sm">{fmt(prices.base)} руб.</span>
             {prices.hasPsPlus && prices.sale < prices.base && (
@@ -211,7 +217,7 @@ export default function SaleContent({ faqItems }: SaleContentProps) {
 
   /* ── CompactRow ──────────────────────────────────────────────────────── */
 
-  function CompactRow({ game, zoneColor }: { game: DealGame; zoneColor: string }) {
+  function CompactRow({ game }: { game: DealGame }) {
     const prices = getClientPrices(game, region);
     if (!prices) return null;
     const saving = prices.base - prices.best;
@@ -220,7 +226,7 @@ export default function SaleContent({ faqItems }: SaleContentProps) {
     return (
       <div className="flex items-center justify-between py-3 px-4 odd:bg-white/[0.03] rounded-lg">
         <div className="flex items-center gap-3 min-w-0">
-          <span className="text-white text-xs font-bold px-2 py-1 rounded shrink-0" style={{ background: zoneColor }}>-{bestDisc}%</span>
+          <span className="text-white text-xs font-bold px-2 py-1 rounded shrink-0" style={{ background: getDiscountBadgeColor(bestDisc) }}>-{bestDisc}%</span>
           {prices.hasPsPlus && <span className="bg-[#F5A623]/20 text-[#F5A623] text-xs px-1.5 py-0.5 rounded shrink-0">PS+</span>}
           <div className="min-w-0">
             <span className="text-white font-medium text-sm truncate block">{game.name}</span>
@@ -244,10 +250,9 @@ export default function SaleContent({ faqItems }: SaleContentProps) {
   function ZoneSection({ zone, games }: { zone: typeof zoneConfig[number]; games: DealGame[] }) {
     const [expanded, setExpanded] = useState(false);
     if (games.length === 0) return null;
-    const isFresh = zone.key === 'fresh';
-    const showcaseCount = isFresh ? games.length : Math.min(6, games.length);
+    const showcaseCount = Math.min(6, games.length);
     const showcase = games.slice(0, showcaseCount);
-    const catalog = isFresh ? [] : games.slice(showcaseCount);
+    const catalog = games.slice(showcaseCount);
 
     return (
       <ScrollReveal>
@@ -263,9 +268,9 @@ export default function SaleContent({ faqItems }: SaleContentProps) {
               )}
               <span className="text-white/40 text-sm ml-auto">{games.length} игр</span>
             </div>
-            <div className={`grid gap-6 mb-8 ${isFresh ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4' : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'}`}>
+            <div className="grid gap-6 mb-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
               {showcase.map((game) => (
-                <GameCard key={game.id} game={game} zoneColor={zone.color} isFresh={isFresh} />
+                <GameCard key={game.id} game={game} />
               ))}
             </div>
             {catalog.length > 0 && (
@@ -274,7 +279,7 @@ export default function SaleContent({ faqItems }: SaleContentProps) {
                 {/* All rows in DOM for SEO, hidden via CSS */}
                 <div className={`space-y-1 transition-all ${!expanded ? 'max-h-[360px] overflow-hidden' : ''}`}>
                   {catalog.map((game) => (
-                    <CompactRow key={game.id} game={game} zoneColor={zone.color} />
+                    <CompactRow key={game.id} game={game} />
                   ))}
                 </div>
               </div>
