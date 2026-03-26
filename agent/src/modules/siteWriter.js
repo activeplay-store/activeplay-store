@@ -1747,6 +1747,11 @@ async function generateTopSellers(gameList) {
     console.log(PREFIX + ' Blog: ' + blogData.month + ' ' + blogData.year + ' — ' + topList.length + ' игр');
   }
 
+  // Hardcoded price fallback for games not yet in PS Store TR/UA
+  const PRICE_FALLBACKS = {
+    'reanimal': { priceTR: 4800, priceUA: 4000 },
+  };
+
   // Known cover overrides for games with non-standard filenames
   const COVER_OVERRIDES = {
     'resident-evil-requiem': '/images/covers/Resident-Evil-Requiem.jpg',
@@ -1879,6 +1884,13 @@ async function generateTopSellers(gameList) {
     // Cross-region fallback: если в одном регионе цена 0, взять из другого
     if (priceTR === 0 && priceUA > 0) priceTR = priceUA;
     if (priceUA === 0 && priceTR > 0) priceUA = priceTR;
+
+    // Hardcoded fallback for games not in any data source
+    const priceFb = PRICE_FALLBACKS[slug];
+    if (priceFb) {
+      if (priceTR === 0) priceTR = priceFb.priceTR;
+      if (priceUA === 0) priceUA = priceFb.priceUA;
+    }
 
     resolved.push({
       rank,
