@@ -68,10 +68,9 @@ function getDiscountZone(game: DealGame): 'red' | 'yellow' | 'green' | null {
 
 function isFresh(game: DealGame): boolean {
   if (!game.releaseDate) return false;
-  const today = new Date();
-  const release = new Date(game.releaseDate);
-  const yearsSince = (today.getTime() - release.getTime()) / (1000 * 60 * 60 * 24 * 365);
-  return yearsSince <= 1.1 && getBestDiscount(game) >= 10;
+  const ONE_YEAR_MS = 365 * 24 * 60 * 60 * 1000;
+  const ageMs = Date.now() - new Date(game.releaseDate).getTime();
+  return ageMs <= ONE_YEAR_MS && getBestDiscount(game) >= 10;
 }
 
 function getClientPrices(game: DealGame, region: Region) {
