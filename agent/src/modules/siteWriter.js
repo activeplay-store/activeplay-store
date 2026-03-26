@@ -586,10 +586,22 @@ function filterPreorders(games) {
   const result = [];
   const seen = new Map();
 
+  // FIX 4: Exclude collection bundles with already-released games
+  const COLLECTION_EXCLUDE = [
+    /age of hatred collection/i,
+  ];
+
   for (const game of games) {
     const nameLower = (game.name || '').toLowerCase();
     if (/add-on|dlc|season pass|expansion pass|upgrade|currency pack|coin|pre-order bundle|free to play/i.test(nameLower)) continue;
     if (/^[^a-zA-Z0-9]*$/.test(game.name.replace(/[\s\-\u2013\u2014:.,!?'\u00AB\u00BB()]/g, ''))) continue;
+
+    // FIX 4: Skip collection bundles
+    const cleanedName = cleanGameName(cleanName(game.name));
+    if (COLLECTION_EXCLUDE.some(pat => pat.test(cleanedName))) {
+      console.log(PREFIX + ' Исключён (collection): ' + cleanedName);
+      continue;
+    }
 
     // Extra normalization for preorder dedup — strip edition suffixes
     let normName = normalizeForDedup(game.name);
@@ -663,44 +675,97 @@ async function fetchReleaseDateFromConcept(conceptId) {
   return null;
 }
 
+/**
+ * Scrape release date from PS Store product page HTML (Apollo state).
+ * Product pages often have releaseDate even when concept pages don't.
+ */
+async function fetchReleaseDateFromProduct(productId) {
+  if (!productId) return null;
+  try {
+    const url = 'https://store.playstation.com/en-tr/product/' + productId;
+    const response = await fetch(url, {
+      headers: { 'User-Agent': config.parsers.userAgent },
+      signal: AbortSignal.timeout(15000),
+      redirect: 'follow',
+    });
+    if (!response.ok) return null;
+    const html = await response.text();
+
+    // "releaseDate":"2026-04-07T15:00:00Z" in Apollo state
+    const isoMatch = html.match(/"releaseDate"\s*:\s*"(\d{4}-\d{2}-\d{2})T/);
+    if (isoMatch) return isoMatch[1];
+
+    // Broader releaseDate pattern (without T)
+    const dateMatch = html.match(/"releaseDate"\s*:\s*"(\d{4}-\d{2}-\d{2})/);
+    if (dateMatch) return dateMatch[1];
+
+    // "Available DD/MM/YYYY" text
+    const textMatch = html.match(/(?:Available|Expected|Releases?)\s*(?:on\s*)?(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{4})/i);
+    if (textMatch) {
+      const d = textMatch[3] + '-' + textMatch[2].padStart(2, '0') + '-' + textMatch[1].padStart(2, '0');
+      if (!isNaN(new Date(d).getTime())) return d;
+    }
+
+    return null;
+  } catch {
+    return null;
+  }
+}
+
+function isFutureDate(dateStr) {
+  const d = new Date(dateStr);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return d >= today;
+}
+
 async function fetchReleaseDates(games) {
-  let fromConcept = 0, fromRawg = 0;
+  let fromProduct = 0, fromConcept = 0, fromRawg = 0;
 
   for (const game of games) {
     if (game.releaseDate) continue;
 
+    // 1. Try product pages (most reliable — Apollo state has releaseDate)
+    const productIds = [];
+    for (const region of ['TR', 'UA']) {
+      for (const ed of (game.prices?.[region]?.editions || [])) {
+        if (ed.productId && !productIds.includes(ed.productId)) productIds.push(ed.productId);
+      }
+    }
+    for (const pid of productIds) {
+      await sleepMs(500);
+      const date = await fetchReleaseDateFromProduct(pid);
+      if (date && isFutureDate(date)) {
+        game.releaseDate = date;
+        fromProduct++;
+        break;
+      }
+    }
+    if (game.releaseDate) continue;
+
+    // 2. Try concept page
     if (game.conceptId) {
       await sleepMs(300);
       const date = await fetchReleaseDateFromConcept(game.conceptId);
-      if (date) {
-        const cDate = new Date(date);
-        const today2 = new Date();
-        today2.setHours(0, 0, 0, 0);
-        if (cDate >= today2) {
-          game.releaseDate = date;
-          fromConcept++;
-          continue;
-        }
+      if (date && isFutureDate(date)) {
+        game.releaseDate = date;
+        fromConcept++;
+        continue;
       }
     }
 
+    // 3. Try RAWG
     await sleepMs(1000);
     try {
       const rawgData = await rawg.searchGame(cleanGameName(cleanName(game.name)));
-      if (rawgData?.released) {
-        // Only accept future dates for preorders
-        const rawgDate = new Date(rawgData.released);
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-        if (rawgDate >= today) {
-          game.releaseDate = rawgData.released;
-          fromRawg++;
-        }
+      if (rawgData?.released && isFutureDate(rawgData.released)) {
+        game.releaseDate = rawgData.released;
+        fromRawg++;
       }
     } catch {}
   }
 
-  console.log(PREFIX + ' Даты: concept=' + fromConcept + ', RAWG=' + fromRawg + ', без даты=' + games.filter(g => !g.releaseDate).length);
+  console.log(PREFIX + ' Даты: product=' + fromProduct + ', concept=' + fromConcept + ', RAWG=' + fromRawg + ', без даты=' + games.filter(g => !g.releaseDate).length);
 }
 
 function loadPreordersJson() {
@@ -768,14 +833,32 @@ function generatePreordersTs(games) {
       const trEds = (game.prices.TR.editions || [])
         .filter(e => e.basePrice && e.clientPrice)
         .map(e => ({ name: e.name, clientPrice: e.clientPrice }));
-      if (trEds.length > 0) editions.TR = trEds;
+      // FIX 2: Dedup editions by name — keep cheapest
+      const trDeduped = new Map();
+      for (const ed of trEds) {
+        if (!trDeduped.has(ed.name) || ed.clientPrice < trDeduped.get(ed.name).clientPrice) {
+          trDeduped.set(ed.name, ed);
+        }
+      }
+      // FIX 3: Sort editions by clientPrice ascending
+      const trSorted = Array.from(trDeduped.values()).sort((a, b) => a.clientPrice - b.clientPrice);
+      if (trSorted.length > 0) editions.TR = trSorted;
     }
 
     if (game.prices.UA) {
       const uaEds = (game.prices.UA.editions || [])
         .filter(e => e.basePrice && e.clientPrice)
         .map(e => ({ name: e.name, clientPrice: e.clientPrice }));
-      if (uaEds.length > 0) editions.UA = uaEds;
+      // FIX 2: Dedup editions by name — keep cheapest
+      const uaDeduped = new Map();
+      for (const ed of uaEds) {
+        if (!uaDeduped.has(ed.name) || ed.clientPrice < uaDeduped.get(ed.name).clientPrice) {
+          uaDeduped.set(ed.name, ed);
+        }
+      }
+      // FIX 3: Sort editions by clientPrice ascending
+      const uaSorted = Array.from(uaDeduped.values()).sort((a, b) => a.clientPrice - b.clientPrice);
+      if (uaSorted.length > 0) editions.UA = uaSorted;
     }
 
     if (!editions.TR && !editions.UA) continue;
