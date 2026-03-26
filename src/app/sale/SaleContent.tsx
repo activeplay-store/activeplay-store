@@ -171,7 +171,7 @@ export default function SaleContent({ faqItems }: SaleContentProps) {
         <div className="relative aspect-[4/5]">
           {!imgError ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={game.coverUrl} alt={`Купить ${game.name} ${game.platforms.join(' ')} со скидкой ${game.discountPct}%`} className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.06]" loading="lazy" onError={() => setImgError(true)} />
+            <img src={game.coverUrl} alt={`Купить ${game.name} ${game.platforms.join(' ')} со скидкой ${game.discountPct}%`} className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.06]" style={{ objectPosition: 'center top' }} loading="lazy" onError={() => setImgError(true)} />
           ) : (
             <FallbackCover name={game.name} />
           )}

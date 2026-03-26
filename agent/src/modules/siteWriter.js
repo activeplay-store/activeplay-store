@@ -89,7 +89,7 @@ function mapGameToDeal(game) {
   const id = game.id || slugify(game.name);
   const name = cleanName(game.name);
   const platforms = parsePlatforms(game.platform);
-  const coverUrl = game.platprices?.coverArt || game.platprices?.img || game.coverUrl || '';
+  const coverUrl = game.portraitUrl || game.platprices?.coverArt || game.coverUrl || game.platprices?.img || '';
   const releaseDate = game.releaseDate || '';
   const metacritic = game.metacritic || undefined;
 

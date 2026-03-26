@@ -179,8 +179,9 @@ async function fetchGamePrice(regionCode, gameName) {
     if (!response.ok) return null;
 
     const data = await response.json();
-    if (!data || !data.Name) return null;
+    if (!data || (!data.Name && !data.GameName)) return null;
 
+    const gameName = data.GameName || data.Name;
     const basePrice = parseFloat(data.BasePrice) || null;
     const salePrice = parseFloat(data.SalePrice) || null;
     const plusPrice = parseFloat(data.PlusPrice) || null;
@@ -188,8 +189,10 @@ async function fetchGamePrice(regionCode, gameName) {
     if (!basePrice) return null;
 
     return {
-      id: data.Name.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
-      name: data.Name,
+      id: gameName.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+      name: gameName,
+      coverArt: data.CoverArt || null,
+      img: data.Img || null,
       conceptId: null,
       prices: {
         [regionCode]: {

@@ -191,7 +191,7 @@ function groupByGame(rawProducts, regionCode) {
         existing.prices[regionCode].editions.push(editionData);
       }
     } else {
-      const coverUrl = findCover(product.media || product.personalizedMeta?.media || []);
+      const covers = findCovers(product.media || product.personalizedMeta?.media || []);
       const slug = slugify(gameName);
 
       gameMap.set(gameName, {
@@ -203,7 +203,8 @@ function groupByGame(rawProducts, regionCode) {
             editions: [editionData]
           }
         },
-        coverUrl,
+        coverUrl: covers.coverUrl,
+        portraitUrl: covers.portraitUrl,
         platform: (product.platforms || []).join(' & ') || 'PS5',
         releaseDate: product.releaseDate || product.localizedStoreDisplayClassification?.releaseDate || null,
         status: 'released',
@@ -528,7 +529,7 @@ async function fetchGamePrice(regionCode, productId) {
     // Собрать мета-данные из первого ответа
     if (editions.length === 1) {
       var gameName = cleanName(product.invariantName || product.name);
-      var coverUrl = findCover(product.media || []);
+      var covers = findCovers(product.media || []);
       var slug = slugify(product.invariantName || product.name);
     }
 
@@ -544,7 +545,8 @@ async function fetchGamePrice(regionCode, productId) {
     prices: {
       [regionCode]: { editions }
     },
-    coverUrl,
+    coverUrl: covers.coverUrl,
+    portraitUrl: covers.portraitUrl,
     platform: 'PS5',
     releaseDate: null,
     status: 'released',
@@ -617,15 +619,23 @@ function slugify(name) {
     .substring(0, 80);
 }
 
-function findCover(media) {
-  if (!media || !media.length) return null;
-  const priority = ['GAMEHUB_COVER_ART', 'PORTRAIT_BANNER', 'MASTER', 'EDITION_KEY_ART'];
-  for (const role of priority) {
-    const found = media.find(m => m.role === role && m.type === 'IMAGE');
-    if (found) return found.url;
+function findCovers(media) {
+  if (!media || !media.length) return { coverUrl: null, portraitUrl: null };
+
+  const byRole = {};
+  for (const m of media) {
+    if (m.type === 'IMAGE' && m.url) byRole[m.role] = m.url;
   }
-  const any = media.find(m => m.type === 'IMAGE');
-  return any?.url || null;
+
+  const portraitUrl = byRole['GAMEHUB_COVER_ART'] || byRole['PORTRAIT_BANNER'] || null;
+
+  const coverUrl = portraitUrl
+    || byRole['MASTER']
+    || byRole['EDITION_KEY_ART']
+    || Object.values(byRole)[0]
+    || null;
+
+  return { coverUrl, portraitUrl };
 }
 
 function sleep(ms) {
