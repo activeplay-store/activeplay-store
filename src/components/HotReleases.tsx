@@ -63,7 +63,7 @@ function HeroCard({ game, region }: { game: HotRelease; region: 'tr' | 'ua' }) {
       <div className="relative overflow-hidden" style={{ paddingTop: '48%' }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={game.cover} alt={altTexts[game.id] || game.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" style={{ objectPosition: 'center top' }} />
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, #111827 0%, rgba(17,24,39,0.7) 40%, transparent 100%)' }} />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, #111827 0%, rgba(17,24,39,0.3) 50%, transparent 100%)' }} />
 
         {/* Hit badge */}
         <div className="absolute top-3 left-3 flex items-center gap-1 px-2.5 py-1 rounded-md text-[10px] font-bold" style={{ background: '#ff6b35', color: '#fff' }}>
@@ -72,7 +72,7 @@ function HeroCard({ game, region }: { game: HotRelease; region: 'tr' | 'ua' }) {
         </div>
 
         {/* Metacritic — bottom right of cover */}
-        <div className="absolute bottom-3 right-3"><MetacriticBadge score={game.metacritic} /></div>
+        {game.metacritic > 0 && <div className="absolute bottom-3 right-3"><MetacriticBadge score={game.metacritic} /></div>}
 
         {/* Cover bottom info */}
         <div className="absolute bottom-3 left-3 flex items-center gap-1.5 text-[10px]">
@@ -134,7 +134,7 @@ function CompactCard({ game, region, onClick }: { game: HotRelease; region: 'tr'
         <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, transparent 30%, rgba(17,24,39,0.5) 70%, rgba(17,24,39,0.9) 100%)' }} />
         <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(17,24,39,0.7) 0%, transparent 50%)' }} />
         {/* Metacritic — bottom right */}
-        <div className="absolute bottom-2 right-2"><MetacriticBadge score={game.metacritic} /></div>
+        {game.metacritic > 0 && <div className="absolute bottom-2 right-2"><MetacriticBadge score={game.metacritic} /></div>}
         {/* Status — bottom left */}
         <div className="absolute bottom-2 left-2"><StatusBadge /></div>
       </div>
