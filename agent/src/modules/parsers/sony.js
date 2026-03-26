@@ -713,35 +713,54 @@ async function fetchCategoryGames(categoryId, regionCode, maxPages = 25) {
  * @param {string} regionCode - 'TR' or 'UA'
  * @returns {number} count of newly found portraits
  */
-async function fetchPortraitCovers(games, regionCode = 'TR') {
+async function fetchPortraitCovers(games, regionCode = 'TR', opts = {}) {
   let found = 0;
   const needPortrait = games.filter(g => !g.portraitUrl);
   console.log(`[Sony] Portrait: ${needPortrait.length} игр без вертикальной обложки`);
 
-  for (const game of needPortrait) {
+  for (let i = 0; i < needPortrait.length; i++) {
+    const game = needPortrait[i];
     const productId = game.prices?.[regionCode]?.editions?.[0]?.productId;
     if (!productId) continue;
 
+    if (opts.logProgress && i > 0 && i % 50 === 0) {
+      console.log(`[Sony] Portrait: ${i}/${needPortrait.length} обработано, найдено ${found}`);
+    }
+
     try {
+      // Step 1: productRetrieve → product/concept media
       await sleep(400);
       const details = await sonyGraphQL('productRetrieveForCtasWithPrice', {
         productId
       }, regionCode);
 
       const pr = details?.data?.productRetrieve;
-      if (!pr) continue;
-
-      // Try product media
-      if (pr.media) {
-        const pc = findCovers(pr.media);
-        if (pc.portraitUrl) { game.portraitUrl = pc.portraitUrl; found++; continue; }
+      if (pr) {
+        if (!game.conceptId && pr.concept?.id) {
+          game.conceptId = pr.concept.id;
+        }
+        if (pr.media) {
+          const pc = findCovers(pr.media);
+          if (pc.portraitUrl) { game.portraitUrl = pc.portraitUrl; found++; continue; }
+        }
+        if (pr.concept?.media) {
+          const cc = findCovers(pr.concept.media);
+          if (cc.portraitUrl) { game.portraitUrl = cc.portraitUrl; found++; continue; }
+        }
       }
 
-      // Try concept media
-      if (pr.concept?.media) {
-        const cc = findCovers(pr.concept.media);
-        if (cc.portraitUrl) { game.portraitUrl = cc.portraitUrl; found++; continue; }
+      // Step 2: PS Store concept page → embedded PORTRAIT_BANNER
+      if (game.conceptId) {
+        await sleep(300);
+        const portraitUrl = await fetchPortraitFromConceptPage(game.conceptId);
+        if (portraitUrl) { game.portraitUrl = portraitUrl; found++; continue; }
       }
+
+      // Step 3: playstation.com og:image fallback
+      await sleep(300);
+      const ogImage = await fetchOgImage(game.id);
+      if (ogImage) { game.portraitUrl = ogImage; found++; continue; }
+
     } catch (err) {
       // skip silently
     }
@@ -749,6 +768,49 @@ async function fetchPortraitCovers(games, regionCode = 'TR') {
 
   console.log(`[Sony] Portrait: найдено ${found} вертикальных обложек`);
   return found;
+}
+
+/**
+ * Extract PORTRAIT_BANNER URL from PS Store concept page HTML.
+ */
+async function fetchPortraitFromConceptPage(conceptId) {
+  try {
+    const url = `https://store.playstation.com/en-tr/concept/${conceptId}`;
+    const response = await fetch(url, {
+      headers: { 'User-Agent': config.parsers.userAgent },
+      signal: AbortSignal.timeout(12000),
+      redirect: 'follow'
+    });
+    if (!response.ok) return null;
+    const html = await response.text();
+
+    const match = html.match(/PORTRAIT_BANNER","(?:type":"IMAGE",")?url":"(https:\/\/image\.api\.playstation\.com[^"]+)"/);
+    return match ? match[1] : null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Extract og:image from playstation.com game page as last-resort fallback.
+ */
+async function fetchOgImage(slug) {
+  try {
+    const url = `https://www.playstation.com/tr-tr/games/${slug}/`;
+    const response = await fetch(url, {
+      headers: { 'User-Agent': config.parsers.userAgent },
+      signal: AbortSignal.timeout(10000),
+      redirect: 'follow'
+    });
+    if (!response.ok) return null;
+    const html = await response.text();
+
+    const match = html.match(/<meta[^>]+property="og:image"[^>]+content="([^"]+)"/i)
+               || html.match(/<meta[^>]+content="([^"]+)"[^>]+property="og:image"/i);
+    return match ? match[1] : null;
+  } catch {
+    return null;
+  }
 }
 
 // === ЭКСПОРТ ===

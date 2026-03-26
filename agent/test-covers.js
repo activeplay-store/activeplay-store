@@ -1,60 +1,45 @@
 /**
- * Quick test: fetches Sony API for 5 games and shows which covers were found.
- * Run: node agent/test-covers.js
+ * Quick test: fetches portrait covers for 5 games from games.json.
+ * Run: node test-covers.js
  */
 const path = require('path');
 const fs = require('fs');
 const sony = require('./src/modules/parsers/sony');
 
 const gamesPath = path.join(__dirname, 'data', 'games.json');
-let testGames = [];
 
-try {
-  const data = JSON.parse(fs.readFileSync(gamesPath, 'utf8'));
-  const allGames = data.games || data;
-  testGames = allGames.filter(g => g.coverUrl || g.id).slice(0, 5);
-} catch (err) {
-  console.error('Cannot read games.json:', err.message);
-  process.exit(1);
-}
-
-async function test() {
-  console.log('🧪 Тест вертикальных обложек — 5 игр\n');
-
-  for (const game of testGames) {
-    console.log(`📦 ${game.name}`);
-    console.log(`   ID: ${game.id}`);
-    console.log(`   Current coverUrl:    ${game.coverUrl ? game.coverUrl.substring(0, 80) + '...' : '❌ нет'}`);
-    console.log(`   Current portraitUrl: ${game.portraitUrl ? game.portraitUrl.substring(0, 80) + '...' : '❌ нет'}`);
-
-    // Try fetching portrait via product details API
-    const regionCode = 'TR';
-    const productId = game.prices?.[regionCode]?.editions?.[0]?.productId
-      || game.prices?.UA?.editions?.[0]?.productId;
-
-    if (!productId) {
-      console.log('   ⚠️ Нет productId — пропуск');
-      console.log('');
-      continue;
-    }
-
-    try {
-      const { sonyGraphQL } = require('./src/modules/parsers/sony');
-
-      // This won't work — sonyGraphQL isn't exported. Instead use fetchPortraitCovers for a single game.
-      const found = await sony.fetchPortraitCovers([game], regionCode);
-
-      console.log(`   After fetch:`);
-      console.log(`   portraitUrl: ${game.portraitUrl ? '✅ ' + game.portraitUrl.substring(0, 80) + '...' : '❌ нет'}`);
-    } catch (err) {
-      console.log(`   ⚠️ Ошибка: ${err.message}`);
-    }
-
-    console.log('');
-    await new Promise(r => setTimeout(r, 500));
+async function main() {
+  let data;
+  try {
+    data = JSON.parse(fs.readFileSync(gamesPath, 'utf8'));
+  } catch (err) {
+    console.error('Cannot read games.json:', err.message);
+    process.exit(1);
   }
 
-  console.log('✅ Тест завершён');
+  const allGames = data.games || [];
+  const candidates = allGames.filter(g =>
+    g.prices?.TR?.editions?.[0]?.productId && !g.portraitUrl
+  );
+  const testGames = candidates.slice(0, 5);
+
+  console.log(`\nTest: portrait covers for ${testGames.length} games\n`);
+  testGames.forEach(g =>
+    console.log(`  - ${g.name} (${g.prices.TR.editions[0].productId})`)
+  );
+  console.log('');
+
+  const start = Date.now();
+  const found = await sony.fetchPortraitCovers(testGames, 'TR');
+  const elapsed = ((Date.now() - start) / 1000).toFixed(1);
+
+  console.log(`\n=== Result: ${found}/${testGames.length} portraits found in ${elapsed}s ===\n`);
+  for (const g of testGames) {
+    const ok = g.portraitUrl ? 'OK  ' : 'MISS';
+    console.log(`[${ok}] ${g.name}`);
+    if (g.portraitUrl) console.log(`       portrait: ${g.portraitUrl}`);
+    if (g.conceptId)  console.log(`       conceptId: ${g.conceptId}`);
+  }
 }
 
-test().catch(console.error);
+main().catch(err => { console.error(err); process.exit(1); });

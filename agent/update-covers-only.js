@@ -1,8 +1,8 @@
 /**
  * Update portrait covers in games.json without full re-parse.
- * Uses Sony product details API to find PORTRAIT_BANNER images.
- * Run: node agent/update-covers-only.js
- * Duration: ~6 min for 730 games (400ms delay each)
+ * Uses 3-step cascade: productRetrieve → concept page → og:image
+ * Run: node update-covers-only.js
+ * Duration: ~6-10 min for 730 games
  */
 const fs = require('fs');
 const path = require('path');
@@ -20,21 +20,22 @@ async function main() {
   }
 
   const games = data.games || [];
-  const withoutPortrait = games.filter(g => !g.portraitUrl);
-  console.log(`📸 Обновление обложек: ${withoutPortrait.length} из ${games.length} без portrait\n`);
+  const before = games.filter(g => g.portraitUrl).length;
+  console.log(`Covers update: ${games.length} games, ${before} already have portrait\n`);
 
-  if (withoutPortrait.length === 0) {
-    console.log('✅ Все игры уже имеют вертикальные обложки');
+  if (before === games.length) {
+    console.log('All games already have portrait covers');
     return;
   }
 
-  const found = await sony.fetchPortraitCovers(games, 'TR');
+  const found = await sony.fetchPortraitCovers(games, 'TR', { logProgress: true });
 
   // Save
+  data.updatedAt = new Date().toISOString();
   fs.writeFileSync(gamesPath, JSON.stringify(data, null, 2), 'utf8');
-  console.log(`\n💾 games.json сохранён`);
-  console.log(`✅ Найдено ${found} вертикальных обложек`);
-  console.log(`\nСледующий шаг: node -e 'require("./src/modules/siteWriter").generateAndWrite().then(console.log)'`);
+
+  const after = games.filter(g => g.portraitUrl).length;
+  console.log(`\ngames.json saved: ${before} -> ${after} portraits (+${found} new)`);
 }
 
-main().catch(console.error);
+main().catch(err => { console.error(err); process.exit(1); });
