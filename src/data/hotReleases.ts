@@ -1,5 +1,5 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-03-26T22:57:51.109Z
+// Обновлено: 2026-03-26T23:29:57.935Z
 // Горящих новинок: 4
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
@@ -31,7 +31,7 @@ export const hotReleases: HotRelease[] = [
     id: "crimson-desert",
     title: "Crimson Desert",
     slug: "crimson-desert",
-    description: "Open-world экшен-RPG от Pearl Abyss. Огромный мир, хардкорный бой, 3 млн копий за неделю",
+    description: "Open-world RPG от Pearl Abyss. Хардкор-бой",
     releaseDate: "19 марта 2026",
     metacritic: 0,
     genre: "Экшен",
@@ -54,7 +54,7 @@ export const hotReleases: HotRelease[] = [
     id: "resident-evil-9-requiem",
     title: "Resident Evil 9: Requiem",
     slug: "resident-evil-9-requiem",
-    description: "Survival horror от Capcom. Два героя, классический RE, Metacritic 88",
+    description: "Survival horror от Capcom. Два героя, MC 88",
     releaseDate: "27 февраля 2026",
     metacritic: 0,
     genre: "Экшен",
@@ -75,7 +75,7 @@ export const hotReleases: HotRelease[] = [
     id: "marathon",
     title: "Marathon",
     slug: "marathon",
-    description: "Extraction-шутер от Bungie и PlayStation Studios. PvPvE: добудь снаряжение или потеряй всё",
+    description: "Extraction-шутер от Bungie. PvPvE-лутер",
     releaseDate: "5 марта 2026",
     metacritic: 0,
     genre: "Шутер",
