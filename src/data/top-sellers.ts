@@ -1,5 +1,5 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-03-26T23:30:19.368Z
+// Обновлено: 2026-03-26T23:48:16.537Z
 // Топ-продаж: 10 игр
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
@@ -34,6 +34,6 @@ export const topSellers: TopSellers = {
     { rank: 7, title: "ARC Raiders", genre: "Шутер / Кооп", image: "https://image.api.playstation.com/vulcan/ap/rnd/202504/1515/99f254edff001a6a52d1d9f09af28959abfbaf1fe1a034b4.jpg", platform: "PS5", priceTR: 3900, priceUA: 3650 },
     { rank: 8, title: "REANIMAL", genre: "Хоррор-адвенчура", image: "/images/covers/reanimal.jpg", platform: "PS5", priceTR: 0, priceUA: 0 },
     { rank: 9, title: "Forza Horizon 5", genre: "Гонки / Open World", image: "https://image.api.playstation.com/vulcan/ap/rnd/202502/1221/1cdbb2177cc3c6302027f05796073b27ca7f7ccf091c3127.png", platform: "PS5", priceTR: 4200, priceUA: 3850 },
-    { rank: 10, title: "Call of Duty: Black Ops 7", genre: "Шутер / FPS", image: "https://image.api.playstation.com/vulcan/ap/rnd/202508/2119/b22bad2858eeaac332a5889000900fc1e090b81cb0a40a1f.png", platform: "PS5", priceTR: 0, priceUA: 8850 },
+    { rank: 10, title: "Call of Duty: Black Ops 7", genre: "Шутер / FPS", image: "https://image.api.playstation.com/vulcan/ap/rnd/202508/2119/b22bad2858eeaac332a5889000900fc1e090b81cb0a40a1f.png", platform: "PS5", priceTR: 8850, priceUA: 8850 },
   ],
 };
