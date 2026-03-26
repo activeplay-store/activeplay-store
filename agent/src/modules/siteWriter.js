@@ -1052,7 +1052,8 @@ function isRecentRelease(releaseDateStr) {
   if (isNaN(released.getTime())) return false;
   const now = new Date();
   const diffDays = (now - released) / (1000 * 60 * 60 * 24);
-  return diffDays >= 0 && diffDays <= NEW_RELEASE_DAYS;
+  // Строго меньше: игра ровно на границе уже не попадает
+  return diffDays >= 0 && diffDays < NEW_RELEASE_DAYS;
 }
 
 function formatReleaseDateRu(dateStr) {
@@ -1213,11 +1214,135 @@ async function generateHotReleases() {
     }
   }
 
+  // 2b. Дополнить кандидатами из RAWG (свежие релизы для PS5, которых нет в парсере)
+  try {
+    const rawgParams = new URLSearchParams({
+      key: config.parsers.rawg.apiKey,
+      dates: (() => {
+        const to = new Date(); const from = new Date();
+        from.setDate(from.getDate() - NEW_RELEASE_DAYS);
+        return from.toISOString().slice(0,10) + ',' + to.toISOString().slice(0,10);
+      })(),
+      platforms: '187', // PS5
+      ordering: '-added',
+      page_size: '20',
+      metacritic: '60,100',
+    });
+    const rawgRes = await fetch(config.parsers.rawg.endpoint + '/games?' + rawgParams, {
+      signal: AbortSignal.timeout(15000),
+      headers: { 'User-Agent': config.parsers.userAgent },
+    });
+    if (rawgRes.ok) {
+      const rawgData = await rawgRes.json();
+      for (const rg of (rawgData.results || [])) {
+        if (!rg.released) continue;
+        if (!isRecentRelease(rg.released)) continue;
+        const rgSlug = slugify(rg.name);
+        const exists = candidates.some(c =>
+          slugify(cleanGameName(cleanName(c.name))) === rgSlug
+        );
+        if (!exists) {
+          // Берём обложку из RAWG
+          const cover = rg.background_image || '';
+          candidates.push({
+            name: rg.name,
+            id: rgSlug,
+            releaseDate: rg.released,
+            metacritic: rg.metacritic || null,
+            coverUrl: cover,
+            prices: {}, // нет цен из парсера — будут добавлены из PS Store позже или вручную
+            platform: 'PS5',
+            rawgGenres: (rg.genres || []).map(g => g.name),
+            fromRawg: true,
+          });
+        }
+      }
+    }
+  } catch (err) {
+    console.log(PREFIX + ' RAWG fallback: ' + err.message);
+  }
+
   console.log(PREFIX + ' Кандидатов (недавние релизы): ' + candidates.length);
 
   if (candidates.length === 0) {
     console.log(PREFIX + ' Нет недавних релизов');
     return { written: false, count: 0 };
+  }
+
+  // 2c. Для кандидатов из RAWG без цен — попробовать найти в Sony PS Store
+  for (const game of candidates) {
+    if (game.fromRawg && (!game.prices?.TR?.editions?.length)) {
+      try {
+        await new Promise(r => setTimeout(r, 1500));
+        const searchRes = await fetch(
+          'https://store.playstation.com/store/api/chihiro/00_09_000/tumbler/TR/en/999/' +
+          encodeURIComponent(game.name) + '?suggested_size=3&mode=game',
+          { signal: AbortSignal.timeout(10000), headers: { 'User-Agent': config.parsers.userAgent } }
+        );
+        if (searchRes.ok) {
+          const searchData = await searchRes.json();
+          const productIds = (searchData.links || [])
+            .filter(l => l.name && l.name.toLowerCase().includes(game.name.toLowerCase().split(' ')[0]))
+            .map(l => l.id)
+            .filter((v, i, a) => a.indexOf(v) === i);
+
+          for (const pid of productIds.slice(0, 2)) {
+            await new Promise(r => setTimeout(r, 500));
+            const priceData = await sony.fetchGamePrice('TR', pid);
+            if (priceData?.prices?.TR?.editions?.length) {
+              // Рассчитать клиентские цены
+              for (const ed of priceData.prices.TR.editions) {
+                const price = ed.basePrice || ed.salePrice;
+                if (price) {
+                  try { ed.clientPrice = pricing.calculatePrice(price, 'TR').clientPrice; } catch {}
+                }
+              }
+              game.prices = game.prices || {};
+              game.prices.TR = priceData.prices.TR;
+              game.coverUrl = game.coverUrl || priceData.portraitUrl || priceData.coverUrl || '';
+              console.log(PREFIX + ' Sony цены для ' + game.name + ': ' +
+                priceData.prices.TR.editions.map(e => e.name + '=' + e.basePrice + 'TRY→' + e.clientPrice + '₽').join(', '));
+              break;
+            }
+          }
+        }
+
+        // Также попробовать UA
+        if (!game.prices?.UA?.editions?.length) {
+          await new Promise(r => setTimeout(r, 1000));
+          const searchResUa = await fetch(
+            'https://store.playstation.com/store/api/chihiro/00_09_000/tumbler/UA/en/999/' +
+            encodeURIComponent(game.name) + '?suggested_size=3&mode=game',
+            { signal: AbortSignal.timeout(10000), headers: { 'User-Agent': config.parsers.userAgent } }
+          );
+          if (searchResUa.ok) {
+            const searchDataUa = await searchResUa.json();
+            const productIdsUa = (searchDataUa.links || [])
+              .filter(l => l.name && l.name.toLowerCase().includes(game.name.toLowerCase().split(' ')[0]))
+              .map(l => l.id)
+              .filter((v, i, a) => a.indexOf(v) === i);
+
+            for (const pid of productIdsUa.slice(0, 2)) {
+              await new Promise(r => setTimeout(r, 500));
+              const priceData = await sony.fetchGamePrice('UA', pid);
+              if (priceData?.prices?.UA?.editions?.length) {
+                for (const ed of priceData.prices.UA.editions) {
+                  const price = ed.basePrice || ed.salePrice;
+                  if (price) {
+                    try { ed.clientPrice = pricing.calculatePrice(price, 'UA').clientPrice; } catch {}
+                  }
+                }
+                game.prices = game.prices || {};
+                game.prices.UA = priceData.prices.UA;
+                break;
+              }
+            }
+          }
+        }
+      } catch (err) {
+        console.log(PREFIX + ' Sony lookup ' + game.name + ': ' + err.message);
+      }
+    }
   }
 
   // 3. Обогатить данными из RAWG (metacritic, genre)
@@ -1227,7 +1352,7 @@ async function generateHotReleases() {
     if (!name || name.length < 3) continue;
 
     let metacritic = game.metacritic || null;
-    let genres = [];
+    let genres = game.rawgGenres || [];
 
     // Получить данные из RAWG если нет metacritic
     if (!metacritic) {
@@ -1236,7 +1361,7 @@ async function generateHotReleases() {
         const rawgData = await rawg.searchGame(name);
         if (rawgData) {
           metacritic = rawgData.metacritic;
-          genres = rawgData.genres || [];
+          if (genres.length === 0) genres = rawgData.genres || [];
         }
       } catch {}
     }
