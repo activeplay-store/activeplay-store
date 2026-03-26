@@ -1,6 +1,6 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-03-26T15:53:53.942Z
-// Игр со скидкой: 264 (TR), 262 (UA)
+// Обновлено: 2026-03-26T15:56:17.960Z
+// Игр со скидкой: 261 (TR), 261 (UA)
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
 export interface DealGame {
@@ -35,8 +35,8 @@ export interface DealGame {
 
 export const saleMeta = {
   saleName: "Весенняя распродажа PS Store 2026",
-  updatedAt: "2026-03-26T15:53:53.942Z",
-  totalGames: 331,
+  updatedAt: "2026-03-26T15:56:17.960Z",
+  totalGames: 327,
 };
 
 export const dealsData: DealGame[] = [
@@ -146,13 +146,13 @@ export const dealsData: DealGame[] = [
     saleEndDate: "2026-04-08T22:59:00.000Z",
   },
   {
-    id: "call-of-duty-black-ops-7-cross-gen-bundle",
-    name: "Call of Duty: Black Ops 7 - Cross-Gen Bundle",
+    id: "call-of-duty-black-ops-7",
+    name: "Call of Duty: Black Ops 7",
     platforms: ["PS5","PS4"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202508/2119/b22bad2858eeaac332a5889000900fc1e090b81cb0a40a1f.png",
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202508/0901/698d0728b726c5d4ec89d40dea8728ea0e097e3ff403a47c.png",
     releaseDate: "2025-11-13",
     prices: {
-      TR: { basePriceTRY: 3199, salePriceTRY: 1759, clientBasePrice: 7850, clientSalePrice: 4550 },
+      UA: { basePriceUAH: 3399, salePriceUAH: 1869, clientBasePrice: 8850, clientSalePrice: 5300 },
     },
     discountPct: 45,
     saleEndDate: "2026-04-08T22:59:00.000Z",
@@ -425,13 +425,13 @@ export const dealsData: DealGame[] = [
     saleEndDate: "2026-04-08T22:59:00.000Z",
   },
   {
-    id: "call-of-duty-black-ops-6-cross-gen-bundle",
-    name: "Call of Duty: Black Ops 6 - Cross-Gen Bundle",
+    id: "call-of-duty-black-ops-6",
+    name: "Call of Duty: Black Ops 6",
     platforms: ["PS5","PS4"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202508/2119/b22bad2858eeaac332a5889000900fc1e090b81cb0a40a1f.png",
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202405/2921/05a08ddb076656e71324f6d578bdbaa16c8925ab01dc3046.png",
     releaseDate: "2024-10-24",
     prices: {
-      TR: { basePriceTRY: 2799, salePriceTRY: 1120, clientBasePrice: 6950, clientSalePrice: 3300 },
+      UA: { basePriceUAH: 3299, salePriceUAH: 1320, clientBasePrice: 8600, clientSalePrice: 4100 },
     },
     discountPct: 60,
     saleEndDate: "2026-04-08T22:59:00.000Z",
@@ -811,13 +811,13 @@ export const dealsData: DealGame[] = [
     saleEndDate: "2026-04-08T22:59:00.000Z",
   },
   {
-    id: "call-of-duty-vanguard-cross-gen-bundle",
-    name: "Call of Duty: Vanguard - Cross-Gen Bundle",
+    id: "call-of-duty-vanguard",
+    name: "Call of Duty: Vanguard",
     platforms: ["PS5","PS4"],
-    coverUrl: "https://image.api.playstation.com/vulcan/img/rnd/202109/2219/iT6LT2yhyHzVq7qGoKnceGny.jpg",
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202108/1102/pO4SHCrXt52UPEMTSZMraIY8.png",
     releaseDate: "2021-11-05",
     prices: {
-      TR: { basePriceTRY: 599, salePriceTRY: 240, clientBasePrice: 2050, clientSalePrice: 1100 },
+      UA: { basePriceUAH: 2399, salePriceUAH: 960, clientBasePrice: 6550, clientSalePrice: 3350 },
     },
     discountPct: 60,
     saleEndDate: "2026-04-08T22:59:00.000Z",
@@ -3600,18 +3600,6 @@ export const dealsData: DealGame[] = [
     saleEndDate: "2026-04-08T22:59:00.000Z",
   },
   {
-    id: "call-of-duty-black-ops-7",
-    name: "Call of Duty: Black Ops 7Два покоління'",
-    platforms: ["PS5","PS4"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202508/0901/698d0728b726c5d4ec89d40dea8728ea0e097e3ff403a47c.png",
-    releaseDate: "2025-11-13",
-    prices: {
-      UA: { basePriceUAH: 3399, salePriceUAH: 1869, clientBasePrice: 8850, clientSalePrice: 5300 },
-    },
-    discountPct: 45,
-    saleEndDate: "2026-04-08T22:59:00.000Z",
-  },
-  {
     id: "3",
     name: "«Відьмак 3: Дикий Гін»",
     platforms: ["PS5","PS4"],
@@ -3622,30 +3610,6 @@ export const dealsData: DealGame[] = [
       UA: { basePriceUAH: 949, salePriceUAH: 190, clientBasePrice: 3300, clientSalePrice: 1150 },
     },
     discountPct: 80,
-    saleEndDate: "2026-04-08T22:59:00.000Z",
-  },
-  {
-    id: "call-of-duty-black-ops-6",
-    name: "Call of Duty: Black Ops 6Два покоління'",
-    platforms: ["PS5","PS4"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202405/2921/05a08ddb076656e71324f6d578bdbaa16c8925ab01dc3046.png",
-    releaseDate: "2024-10-24",
-    prices: {
-      UA: { basePriceUAH: 3299, salePriceUAH: 1320, clientBasePrice: 8600, clientSalePrice: 4100 },
-    },
-    discountPct: 60,
-    saleEndDate: "2026-04-08T22:59:00.000Z",
-  },
-  {
-    id: "",
-    name: "Діспатч",
-    platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202508/0621/ec31656b48fcfb5a7e3bab986250cd82bafdb8ac401a1183.png",
-    releaseDate: "",
-    prices: {
-      UA: { basePriceUAH: 3599, salePriceUAH: 288, clientBasePrice: 9250, clientSalePrice: 1450 },
-    },
-    discountPct: 92,
     saleEndDate: "2026-04-08T22:59:00.000Z",
   },
   {
@@ -3663,7 +3627,7 @@ export const dealsData: DealGame[] = [
   },
   {
     id: "gta-online-ps4",
-    name: "GTA Online: платіжна картка «Мегалодон»",
+    name: "GTA Online:",
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202211/2113/UPyQ1TcUEqvcCWpp3Sib3h0Z.png",
     releaseDate: "2013-10-01",
@@ -3745,18 +3709,6 @@ export const dealsData: DealGame[] = [
     releaseDate: "2024-11-07",
     prices: {
       UA: { basePriceUAH: 1699, salePriceUAH: 680, clientBasePrice: 4900, clientSalePrice: 2600 },
-    },
-    discountPct: 60,
-    saleEndDate: "2026-04-08T22:59:00.000Z",
-  },
-  {
-    id: "call-of-duty-vanguard",
-    name: "Call of Duty: VanguardДва покоління'",
-    platforms: ["PS5","PS4"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202108/1102/pO4SHCrXt52UPEMTSZMraIY8.png",
-    releaseDate: "2021-11-05",
-    prices: {
-      UA: { basePriceUAH: 2399, salePriceUAH: 960, clientBasePrice: 6550, clientSalePrice: 3350 },
     },
     discountPct: 60,
     saleEndDate: "2026-04-08T22:59:00.000Z",
