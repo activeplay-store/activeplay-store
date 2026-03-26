@@ -1224,9 +1224,8 @@ async function generateHotReleases() {
         return from.toISOString().slice(0,10) + ',' + to.toISOString().slice(0,10);
       })(),
       platforms: '187', // PS5
-      ordering: '-added',
+      ordering: '-released',
       page_size: '20',
-      metacritic: '60,100',
     });
     const rawgRes = await fetch(config.parsers.rawg.endpoint + '/games?' + rawgParams, {
       signal: AbortSignal.timeout(15000),
