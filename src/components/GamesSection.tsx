@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import MessengerPopup from './MessengerPopup';
-import { dealsData } from '@/data/deals';
+import { dealsData, saleMeta } from '@/data/deals';
 import type { DealGame } from '@/data/deals';
 
 /* ── Helpers ──────────────────────────────────────────────────────────── */
@@ -163,7 +163,7 @@ export default function GamesSection() {
               </h2>
             </a>
             <p className="text-[15px] text-[var(--text-secondary)]">
-              Скидки до {maxDiscount}% на хиты PS Store
+              {saleMeta?.saleName ? `${saleMeta.saleName} — скидки` : 'Скидки'} до {maxDiscount}% на хиты PS Store
             </p>
           </div>
         </div>

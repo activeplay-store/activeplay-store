@@ -33,6 +33,12 @@ export interface DealGame {
   hasPsPlusPrice?: boolean;
 }
 
+export const saleMeta = {
+  saleName: "Весенняя распродажа PS Store 2026",
+  updatedAt: "2026-03-26T01:10:10.494Z",
+  totalGames: 315,
+};
+
 export const dealsData: DealGame[] = [
   {
     id: "ea-sports-fc-26-ps4-ps5",

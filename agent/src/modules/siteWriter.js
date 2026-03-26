@@ -33,6 +33,83 @@ function cleanName(name) {
     .trim();
 }
 
+/**
+ * Deep-clean a game name: removes platform junk, broken formatting, edition suffixes for display.
+ */
+function cleanGameName(name) {
+  let n = name;
+
+  // Remove Turkish/Ukrainian platform suffixes: "PS4 ve PS5", "Sürüm", "Видання", "Версія"
+  n = n.replace(/\s*(PS[45]\s*(ve|та|&|and|,)\s*PS[45])\s*/gi, '');
+  n = n.replace(/\bSürüm\w*\b/gi, '');
+  n = n.replace(/\bВидання\b/gi, '');
+  n = n.replace(/\bВерсія\b/gi, '');
+
+  // "for PS5" / "для PS5" / "(PlayStation5)" at end
+  n = n.replace(/\s+(for|для)\s*(PS[45]|PlayStation\s*[45])?\s*$/gi, '');
+  n = n.replace(/\s*\(PlayStation\s*[45]\)\s*/gi, '');
+
+  // Remove platform tags inside name
+  n = n.replace(/\s*(PS5|PS4|PlayStation\s*[45])\s*/gi, ' ');
+
+  // Remove Turkish/Ukrainian locale noise
+  n = n.replace(/\s*[-–—]\s*(Türkçe|Turk|Turkey|Ukrainian|India)\s*/gi, '');
+
+  // Empty parentheses: "Atomic Heart - ()" → "Atomic Heart"
+  n = n.replace(/\s*\(\s*\)\s*/g, '');
+
+  // Trailing dash/colon: "Baldur's Gate 3 -" → "Baldur's Gate 3"
+  n = n.replace(/\s*[-–—:]\s*$/, '');
+
+  // "HogwartsVersion" → "Hogwarts Legacy" — stuck suffix like "LegacyVersion"
+  n = n.replace(/Version\b/gi, '');
+
+  // Ukrainian prefixed names: "Набір для X" / "Версія X для" — skip these (handled by dedup)
+  // Remove "цифрове розширене" / "набір 'Два покоління'" suffixes
+  n = n.replace(/\s*[-–—]\s*набір\s*[''"].*?[''"]?\s*/gi, '');
+  n = n.replace(/\s*[-–—]\s*цифрове\s+розширене\s*/gi, '');
+
+  // Collapse whitespace
+  n = n.replace(/\s{2,}/g, ' ').trim();
+
+  return n;
+}
+
+/**
+ * Normalize a game name for deduplication — strip edition suffixes to find the "base" game.
+ */
+function normalizeForDedup(name) {
+  let n = cleanGameName(name).toLowerCase();
+
+  // Strip common edition/bundle suffixes
+  const editionPatterns = [
+    /\s*[-–—:]\s*(cross-gen\s+bundle|digital\s+(deluxe|premium)|deluxe\s+edition|ultimate\s+edition|gold\s+edition|legendary\s+edition|game\s+of\s+the\s+year\s+edition|goty\s+edition|standard\s+edition|premium\s+edition|collector'?s?\s+edition|complete\s+edition|definitive\s+edition|royal\s+edition|enhanced\s+edition)/gi,
+    /\s+(cross-gen\s+bundle|digital\s+deluxe|deluxe|ultimate|gold|legendary|standard|premium|collector'?s?|complete|definitive|royal|enhanced)\s+(edition|bundle|collection)\s*/gi,
+    /\s+cross-gen\s+bundle\s*/gi,
+    /\s+25th\s+anniversary\s*/gi,
+    /\s+superstar\s+edition\s*/gi,
+    /\s+ultimate\s*(,?\s*\d+[- ]?(го|nd|rd|th)\s*(року|year))?\s*(edition)?\s*/gi,
+    /\s+year\s+\d+\s+edition\s*/gi,
+    /\s+remastered\s*/gi,
+    /\s*[-–—:]\s*saga\s+bundle\s*/gi,
+    /\s*[-–—:]\s*expansion\s+pass\s*/gi,
+    /\s*\|\s*перепустка.*$/gi,
+    /\s+upgrade\s*/gi,
+    /\s+ultimate\s+collection\s*/gi,
+    /\s+ultimate\s+bundle\s*/gi,
+    /\s+complete\s+bundle\s*/gi,
+  ];
+
+  for (const pat of editionPatterns) {
+    n = n.replace(pat, '');
+  }
+
+  // Trailing dash/colon after stripping
+  n = n.replace(/\s*[-–—:,]\s*$/, '').trim();
+
+  return n;
+}
+
 function parsePlatforms(platformStr) {
   if (!platformStr) return ['PS5'];
   const platforms = [];
@@ -87,7 +164,7 @@ function mapGameToDeal(game) {
   if (discountPct < MIN_DISCOUNT) return null;
 
   const id = game.id || slugify(game.name);
-  const name = cleanName(game.name);
+  const name = cleanGameName(cleanName(game.name));
   const platforms = parsePlatforms(game.platform);
   const coverUrl = game.portraitUrl || game.platprices?.coverArt || game.coverUrl || game.platprices?.img || '';
   const releaseDate = game.releaseDate || '';
@@ -158,12 +235,97 @@ function mapGameToDeal(game) {
 
 // ── Generate TypeScript string ──────────────────────────────────────────
 
+/**
+ * Deduplicate deals: group by normalized base name, keep the edition with the best saving.
+ */
+function deduplicateDeals(deals) {
+  const groups = new Map(); // normalizedName → best deal
+
+  for (const deal of deals) {
+    const key = normalizeForDedup(deal.name);
+
+    // Skip Ukrainian-only names that start with Ukrainian words (these are duplicates of TR entries)
+    if (/^(набір|версія|superstar|Перепустка)/i.test(deal.name)) continue;
+
+    if (!groups.has(key)) {
+      groups.set(key, deal);
+      continue;
+    }
+
+    const existing = groups.get(key);
+    // Compare by max saving across both regions
+    const savingNew = Math.max(
+      (deal.prices.TR ? deal.prices.TR.clientBasePrice - deal.prices.TR.clientSalePrice : 0),
+      (deal.prices.UA ? deal.prices.UA.clientBasePrice - deal.prices.UA.clientSalePrice : 0),
+    );
+    const savingExisting = Math.max(
+      (existing.prices.TR ? existing.prices.TR.clientBasePrice - existing.prices.TR.clientSalePrice : 0),
+      (existing.prices.UA ? existing.prices.UA.clientBasePrice - existing.prices.UA.clientSalePrice : 0),
+    );
+
+    if (savingNew > savingExisting) {
+      groups.set(key, deal);
+    }
+  }
+
+  return Array.from(groups.values());
+}
+
+/**
+ * Detect sale name from game data (sale end dates, tags, etc.)
+ */
+function detectSaleName(games) {
+  // Check current month/season for fallback
+  const now = new Date();
+  const month = now.getMonth(); // 0-indexed
+  const year = now.getFullYear();
+
+  const SALE_MAP = {
+    0: `Январская распродажа PS Store ${year}`,
+    1: `Февральская распродажа PS Store ${year}`,
+    2: `Весенняя распродажа PS Store ${year}`,
+    3: `Весенняя распродажа PS Store ${year}`,
+    4: `Майская распродажа PS Store ${year}`,
+    5: `Летняя распродажа PS Store ${year}`,
+    6: `Летняя распродажа PS Store ${year}`,
+    7: `Августовская распродажа PS Store ${year}`,
+    8: `Осенняя распродажа PS Store ${year}`,
+    9: `Хэллоуин-распродажа PS Store ${year}`,
+    10: `Чёрная пятница PS Store ${year}`,
+    11: `Зимняя распродажа PS Store ${year}`,
+  };
+
+  // Try to find sale name from game tags/campaign names
+  for (const g of games) {
+    const campaign = g.campaign || g.saleName || g.promoName || '';
+    if (/spring\s*sale/i.test(campaign)) return `Весенняя распродажа PS Store ${year}`;
+    if (/mega\s*march/i.test(campaign)) return `Мега Март PS Store ${year}`;
+    if (/summer\s*sale/i.test(campaign)) return `Летняя распродажа PS Store ${year}`;
+    if (/black\s*friday/i.test(campaign)) return `Чёрная пятница PS Store ${year}`;
+    if (/holiday\s*sale/i.test(campaign)) return `Зимняя распродажа PS Store ${year}`;
+    if (/january\s*sale/i.test(campaign)) return `Январская распродажа PS Store ${year}`;
+    if (/halloween/i.test(campaign)) return `Хэллоуин-распродажа PS Store ${year}`;
+    if (/big\s*in\s*japan/i.test(campaign)) return `Big in Japan — распродажа PS Store ${year}`;
+    if (/days\s*of\s*play/i.test(campaign)) return `Days of Play ${year}`;
+    if (/double\s*discount/i.test(campaign)) return `Двойные скидки PS Store ${year}`;
+  }
+
+  return SALE_MAP[month] || `Распродажа PS Store ${year}`;
+}
+
 function generateDealsTs(games) {
-  const deals = [];
+  let deals = [];
   for (const game of games) {
     const deal = mapGameToDeal(game);
     if (deal) deals.push(deal);
   }
+
+  const beforeDedup = deals.length;
+  deals = deduplicateDeals(deals);
+  const afterDedup = deals.length;
+  console.log(`${PREFIX} Дедупликация: ${beforeDedup} → ${afterDedup} (убрано ${beforeDedup - afterDedup} дублей)`);
+
+  const saleName = detectSaleName(games);
 
   const trCount = deals.filter(d => d.prices.TR).length;
   const uaCount = deals.filter(d => d.prices.UA).length;
@@ -204,6 +366,12 @@ function generateDealsTs(games) {
   out += `  saleEndDate?: string;\n`;
   out += `  hasPsPlusPrice?: boolean;\n`;
   out += `}\n\n`;
+
+  out += `export const saleMeta = {\n`;
+  out += `  saleName: ${JSON.stringify(saleName)},\n`;
+  out += `  updatedAt: ${JSON.stringify(now)},\n`;
+  out += `  totalGames: ${deals.length},\n`;
+  out += `};\n\n`;
 
   out += `export const dealsData: DealGame[] = [\n`;
 
