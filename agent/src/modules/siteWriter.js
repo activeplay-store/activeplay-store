@@ -64,6 +64,9 @@ function cleanGameName(name) {
   // "HogwartsVersion" → "Hogwarts Legacy" — stuck suffix like "LegacyVersion"
   n = n.replace(/Version\b/gi, '');
 
+  // "Borderlands4" → "Borderlands 4" (letter stuck to digit)
+  n = n.replace(/([a-zA-Zа-яА-ЯёЁ])(\d)/g, '$1 $2');
+
   // Ukrainian suffixes: "набір 'Два покоління'", "цифрове розширене", stuck "Два покоління'"
   n = n.replace(/\s*[-–—]?\s*набір\s*[''"]?.*?покоління[''"]?\s*/gi, '');
   n = n.replace(/Два\s*покоління[''"]?\s*/gi, '');
@@ -220,6 +223,7 @@ function mapGameToDeal(game) {
                          uaEditions.some(e => e.isPsPlus && e.plusPrice);
 
   const saleEndDate = primary.saleEndDate || primary.endDate || undefined;
+  const conceptId = game.conceptId || undefined;
 
   return {
     id,
@@ -232,24 +236,27 @@ function mapGameToDeal(game) {
     discountPct,
     saleEndDate,
     hasPsPlusPrice: hasPsPlusPrice || undefined,
+    _conceptId: conceptId,
   };
 }
 
 // ── Generate TypeScript string ──────────────────────────────────────────
 
 /**
- * Deduplicate deals: group by normalized base name, keep the edition with the best saving.
+ * Deduplicate deals: group by conceptId first, then by normalized name.
+ * Keep the edition with the lowest clientSalePrice (cheapest for customer).
  */
 function deduplicateDeals(deals) {
-  const groups = new Map(); // normalizedName → best deal
+  const groups = new Map(); // key → best deal
 
   for (const deal of deals) {
-    const key = normalizeForDedup(deal.name);
-
     // Skip Ukrainian-only names that start with Ukrainian words (duplicates of TR entries)
     if (/^(набір|версія|superstar|Перепустка)/i.test(deal.name)) continue;
     // Skip names that are entirely non-Latin (Ukrainian translations of existing games)
     if (/^[^a-zA-Z0-9]*$/.test(deal.name.replace(/[\s\-–—:.,!?'"«»()]/g, ''))) continue;
+
+    // Primary key: conceptId if available, otherwise normalized name
+    const key = deal._conceptId ? `concept:${deal._conceptId}` : `name:${normalizeForDedup(deal.name)}`;
 
     if (!groups.has(key)) {
       groups.set(key, deal);
@@ -257,17 +264,17 @@ function deduplicateDeals(deals) {
     }
 
     const existing = groups.get(key);
-    // Compare by max saving across both regions
-    const savingNew = Math.max(
-      (deal.prices.TR ? deal.prices.TR.clientBasePrice - deal.prices.TR.clientSalePrice : 0),
-      (deal.prices.UA ? deal.prices.UA.clientBasePrice - deal.prices.UA.clientSalePrice : 0),
+    // Pick the cheapest edition (lowest clientSalePrice) for the customer
+    const priceNew = Math.min(
+      deal.prices.TR?.clientSalePrice ?? Infinity,
+      deal.prices.UA?.clientSalePrice ?? Infinity,
     );
-    const savingExisting = Math.max(
-      (existing.prices.TR ? existing.prices.TR.clientBasePrice - existing.prices.TR.clientSalePrice : 0),
-      (existing.prices.UA ? existing.prices.UA.clientBasePrice - existing.prices.UA.clientSalePrice : 0),
+    const priceExisting = Math.min(
+      existing.prices.TR?.clientSalePrice ?? Infinity,
+      existing.prices.UA?.clientSalePrice ?? Infinity,
     );
 
-    if (savingNew > savingExisting) {
+    if (priceNew < priceExisting) {
       groups.set(key, deal);
     }
   }
@@ -333,6 +340,24 @@ function generateDealsTs(games) {
 
   const trCount = deals.filter(d => d.prices.TR).length;
   const uaCount = deals.filter(d => d.prices.UA).length;
+  const maxDiscount = deals.reduce((max, d) => Math.max(max, d.discountPct), 0);
+
+  // Find most common sale end date
+  const endDateCounts = {};
+  for (const d of deals) {
+    if (d.saleEndDate) endDateCounts[d.saleEndDate] = (endDateCounts[d.saleEndDate] || 0) + 1;
+  }
+  let endDate = '';
+  let endDateMax = 0;
+  for (const [date, count] of Object.entries(endDateCounts)) {
+    if (count > endDateMax) { endDate = date; endDateMax = count; }
+  }
+
+  // Detect English sale name
+  const month = new Date().getMonth();
+  const EN_MAP = { 0: 'January Sale', 1: 'February Sale', 2: 'Spring Sale', 3: 'Spring Sale', 4: 'May Sale', 5: 'Summer Sale', 6: 'Summer Sale', 7: 'August Sale', 8: 'Autumn Sale', 9: 'Halloween Sale', 10: 'Black Friday', 11: 'Holiday Sale' };
+  const saleNameEn = EN_MAP[month] || 'PlayStation Sale';
+
   const now = new Date().toISOString();
 
   let out = '';
@@ -373,6 +398,10 @@ function generateDealsTs(games) {
 
   out += `export const saleMeta = {\n`;
   out += `  saleName: ${JSON.stringify(saleName)},\n`;
+  out += `  saleNameEn: ${JSON.stringify(saleNameEn)},\n`;
+  out += `  maxDiscount: ${maxDiscount},\n`;
+  out += `  endDate: ${JSON.stringify(endDate || '')},\n`;
+  out += `  gamesCount: { TR: ${trCount}, UA: ${uaCount} },\n`;
   out += `  updatedAt: ${JSON.stringify(now)},\n`;
   out += `  totalGames: ${deals.length},\n`;
   out += `};\n\n`;
@@ -380,6 +409,7 @@ function generateDealsTs(games) {
   out += `export const dealsData: DealGame[] = [\n`;
 
   for (const deal of deals) {
+    // Don't write internal _conceptId to output
     out += `  {\n`;
     out += `    id: ${JSON.stringify(deal.id)},\n`;
     out += `    name: ${JSON.stringify(deal.name)},\n`;

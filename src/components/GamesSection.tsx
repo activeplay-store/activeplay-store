@@ -163,7 +163,7 @@ export default function GamesSection() {
               </h2>
             </a>
             <p className="text-[15px] text-[var(--text-secondary)]">
-              {saleMeta?.saleName ? `${saleMeta.saleName} — скидки` : 'Скидки'} до {maxDiscount}% на хиты PS Store
+              {saleMeta?.saleName || 'Распродажа PS Store'} — скидки до {saleMeta?.maxDiscount || maxDiscount}%
             </p>
           </div>
         </div>

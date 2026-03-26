@@ -58,16 +58,20 @@ function getBestDiscount(game: DealGame): number {
   return Math.round((1 - bestSale / tr.basePriceTRY) * 100);
 }
 
-function getZone(game: DealGame): Zone | null {
-  const today = new Date();
-  const release = new Date(game.releaseDate);
-  const yearsSince = (today.getTime() - release.getTime()) / (1000 * 60 * 60 * 24 * 365);
+function getDiscountZone(game: DealGame): 'red' | 'yellow' | 'green' | null {
   const disc = getBestDiscount(game);
-  if (yearsSince <= 1.1 && (game.prices.TR?.basePriceTRY ?? 0) >= 2000 && disc < 20) return 'fresh';
   if (disc >= 65) return 'red';
   if (disc >= 40) return 'yellow';
   if (disc >= 20) return 'green';
   return null;
+}
+
+function isFresh(game: DealGame): boolean {
+  if (!game.releaseDate) return false;
+  const today = new Date();
+  const release = new Date(game.releaseDate);
+  const yearsSince = (today.getTime() - release.getTime()) / (1000 * 60 * 60 * 24 * 365);
+  return yearsSince <= 1.1 && getBestDiscount(game) >= 10;
 }
 
 function getClientPrices(game: DealGame, region: Region) {
@@ -121,7 +125,13 @@ export default function SaleContent({ faqItems }: SaleContentProps) {
 
   const grouped = useMemo(() => {
     const map: Record<Zone, DealGame[]> = { red: [], yellow: [], green: [], fresh: [] };
-    filtered.forEach((g) => { const z = getZone(g); if (z) map[z].push(g); });
+    filtered.forEach((g) => {
+      // Discount zones (red/yellow/green)
+      const z = getDiscountZone(g);
+      if (z) map[z].push(g);
+      // Fresh zone — independent, game can appear in both its discount zone AND fresh
+      if (isFresh(g)) map.fresh.push(g);
+    });
     // Sort by saving in rubles (descending) — biggest savings first, using best price (PS Plus if available)
     const saving = (g: DealGame) => { const p = getClientPrices(g, region); return p ? p.base - p.best : 0; };
     const bySaving = (a: DealGame, b: DealGame) => saving(b) - saving(a);
