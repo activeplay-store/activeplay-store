@@ -1,5 +1,5 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-03-26T22:19:55.697Z
+// Обновлено: 2026-03-26T23:01:14.095Z
 // Предзаказов: 23
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
@@ -29,8 +29,8 @@ export const preorderData: PreorderGame[] = [
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202511/0718/8dc3bb026f8c0873ac11c58a584c3ee618dbfc9db4064514.png",
     releaseDate: "2026-04-02",
-    genre: "Casual",
-    description: "Play as Black Paradox, a bounty hunter, able to travel in ti",
+    genre: "Казуальная",
+    description: "Экшен-платформер от ZDT Studio и Konami. Стелс, маскировка и чернила осьминога",
     editions: {
       TR: [
         { name: "Standard", clientPrice: 3150 },
@@ -47,7 +47,7 @@ export const preorderData: PreorderGame[] = [
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202603/0401/18b516e759613304c7efc7bcd3c134d6bfb5380d655df9be.jpg",
     releaseDate: "2026-04-07",
     genre: "",
-    description: "",
+    description: "Экшен-RPG в открытом космосе от Bethesda. Тысячи планет в звёздных системах",
     editions: {
       TR: [
         { name: "Standard", clientPrice: 4250 },
@@ -65,8 +65,8 @@ export const preorderData: PreorderGame[] = [
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202603/2415/4ab56c3b6a86dca29d85b9334859f84a0516b039bad836d5.png",
     releaseDate: "2026-04-08",
-    genre: "Adventure",
-    description: "Just Updated The Survival Mode update adds an all new gamepl",
+    genre: "Приключения",
+    description: "Хоррор-приключение от DALOAR и Daedalic. Паранормальное расследование с мистическим маятником",
     editions: {
       TR: [
         { name: "Deluxe", clientPrice: 4500 },
@@ -82,8 +82,8 @@ export const preorderData: PreorderGame[] = [
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202511/2605/b7ec5836e23affe26c8ad00124a1eddddab5e1bad456c03e.jpg",
     releaseDate: "2026-04-16",
-    genre: "Action",
-    description: "Capcom’s newest IP—PRAGMATA. An all-new Science Fiction acti",
+    genre: "Экшен",
+    description: "Sci-fi экшен-адвенчура от Capcom. Дуэт человека и андроида-хакера",
     editions: {
       TR: [
         { name: "Standard", clientPrice: 6300 },
@@ -101,8 +101,8 @@ export const preorderData: PreorderGame[] = [
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202601/2013/e8cc34b3e9fc782c62214c44aa4ad60242defb0e24e31ce0.jpg",
     releaseDate: "2026-04-16",
-    genre: "Platformer",
-    description: "Neon Abyss is a frantic roguelike action platformer features",
+    genre: "Платформер",
+    description: "Нарративный хоррор от Big Bad Wolf и Nacon. Лавкрафтовское расследование в затонувшем Р'льехе",
     editions: {
       TR: [
         { name: "Standard", clientPrice: 6300 },
@@ -118,8 +118,8 @@ export const preorderData: PreorderGame[] = [
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202603/2417/cbb7c65a786cca846fe8be3bf5bf609457a36b8a5469f087.jpg",
     releaseDate: "2026-04-20",
-    genre: "Arcade",
-    description: "Jay and Silent Bob: Chronic Blunt Punch is a colorful side-s",
+    genre: "Аркада",
+    description: "Аркадный beat 'em up от Interabang и Digital Eclipse. Кооп с озвучкой Кевина Смита",
     editions: {
       TR: [
         { name: "Standard", clientPrice: 2700 },
@@ -132,8 +132,8 @@ export const preorderData: PreorderGame[] = [
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202601/0911/5889aa7d51188a5c22841f0cecb7a8232442335979f417a7.jpg",
     releaseDate: "2026-04-20",
-    genre: "Strategy",
-    description: "Sudden Strike 4 sends you off on three extensive campaigns s",
+    genre: "Стратегия",
+    description: "Тактическая стратегия от KITE Games и Kalypso. Масштабные бои Второй мировой, 300+ юнитов",
     editions: {
       TR: [
         { name: "Deluxe", clientPrice: 6300 },
@@ -149,8 +149,8 @@ export const preorderData: PreorderGame[] = [
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202506/0502/83edea47457e08b4d5be5b6a38567d5ea8bfcb297e0ccba2.jpg",
     releaseDate: "2026-04-22",
-    genre: "Indie",
-    description: "Torment: Tides of Numenera is a role-playing game developed",
+    genre: "Инди",
+    description: "Нарративное приключение от DigixArt и THQ Nordic. Решения других игроков меняют твою историю",
     editions: {
       TR: [
         { name: "Standard", clientPrice: 3650 },
@@ -166,8 +166,8 @@ export const preorderData: PreorderGame[] = [
     platforms: ["PS5","PS4"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202511/1201/0aa045b07431038b0f1a5dfd8d0ca532868b95a149496693.png",
     releaseDate: "2026-04-27",
-    genre: "Action",
-    description: "",
+    genre: "Экшен",
+    description: "Экшен-RPG дополнение от Blizzard. Два новых класса — Паладин и Чернокнижник",
     editions: {
       TR: [
         { name: "Standard", clientPrice: 4250 },
@@ -187,8 +187,8 @@ export const preorderData: PreorderGame[] = [
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202602/2015/f7d7f07d359ba0613bef8b43e1af74becad0e00357c1ccb3.jpg",
     releaseDate: "2026-04-28",
-    genre: "Racing",
-    description: "Become the star of the 2018 MotoGP™ season! Pursue your care",
+    genre: "Гонки",
+    description: "Мотогоночный симулятор от Milestone. Динамические рейтинги гонщиков по реальным заездам",
     editions: {
       TR: [
         { name: "Standard", clientPrice: 7300 },
@@ -205,7 +205,7 @@ export const preorderData: PreorderGame[] = [
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202601/2714/de6618b9259146abf211f578e1ffdb5f8caff248e3879162.jpg",
     releaseDate: "2026-04-28",
     genre: "",
-    description: "",
+    description: "Sci-fi экшен-адвенчура от DON'T NOD. Два астронавта выживают на ледяной девятой планете",
     editions: {
       TR: [
         { name: "Standard", clientPrice: 4050 },
@@ -221,8 +221,8 @@ export const preorderData: PreorderGame[] = [
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202509/2318/89c3538003fb34870e745493412408eeeed5f02b32c55d23.png",
     releaseDate: "2026-04-29",
-    genre: "Action",
-    description: "SAROS is an action game with the haunting story of a lost of",
+    genre: "Экшен",
+    description: "Рогалик-шутер от Housemarque и PlayStation Studios. Поглощай вражеские пули щитом и бей в ответ",
     editions: {
       TR: [
         { name: "Standard", clientPrice: 8300 },
@@ -239,8 +239,8 @@ export const preorderData: PreorderGame[] = [
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202602/1809/ac344c7cdb7f1f6130a0048033a1686c9e671c0040f8a5c7.png",
     releaseDate: "2026-04-29",
-    genre: "Platformer",
-    description: "Stories: The Path of Destinies is an action RPG developed by",
+    genre: "Платформер",
+    description: "Нарративный deck-builder от The Rat Project и Daedalic. Эмоции героев влияют на карточные бои",
     editions: {
       TR: [
         { name: "Standard", clientPrice: 2700 },
@@ -256,8 +256,8 @@ export const preorderData: PreorderGame[] = [
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202512/0223/abae93143736137f8d17917de28aa0eedbf2f098ee3402e4.jpg",
     releaseDate: "2026-04-30",
-    genre: "Fighting",
-    description: "Invincible VS is an upcoming fighting video game developed b",
+    genre: "Файтинг",
+    description: "2D-файтинг от Quarter Up и Skybound. Брутальные 3v3 бои героев Invincible",
     editions: {
       TR: [
         { name: "Standard", clientPrice: 5300 },
@@ -273,8 +273,8 @@ export const preorderData: PreorderGame[] = [
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202408/0522/db14c69711a13cc2d73c3964201ac80587a865a816c3c5d8.png",
     releaseDate: "2026-05-12",
-    genre: "Adventure",
-    description: "Earth is dying and humanity is running out of time. 12 light",
+    genre: "Приключения",
+    description: "Sci-fi хоррор-драма от Supermassive Games. Выживи среди инопланетных мимиков",
     editions: {
       TR: [
         { name: "Standard", clientPrice: 5300 },
@@ -290,8 +290,8 @@ export const preorderData: PreorderGame[] = [
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202511/1118/3b572e6e923f360a52cfe7845d3e2adc6e6c9d5b0fdc6d6f.jpg",
     releaseDate: "2026-05-18",
-    genre: "Adventure",
-    description: "Lego Batman: Legacy of the Dark Knight is an upcoming Lego-t",
+    genre: "Приключения",
+    description: "Экшен-адвенчура от TT Games и Warner Bros. Открытый мир Готэма, 100 костюмов Бэтмена",
     editions: {
       TR: [
         { name: "Standard", clientPrice: 7300 },
@@ -308,8 +308,8 @@ export const preorderData: PreorderGame[] = [
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202507/0215/f54f11bcf773a3bcace540344dc12154973f53d3490b93fc.png",
     releaseDate: "2026-05-25",
-    genre: "Action",
-    description: "007 First Light is a brand new James Bond video game develop",
+    genre: "Экшен",
+    description: "Стелс-экшен от IO Interactive. Оригинальная история молодого Джеймса Бонда",
     editions: {
       TR: [
         { name: "Standard", clientPrice: 7300 },
@@ -322,8 +322,8 @@ export const preorderData: PreorderGame[] = [
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202510/1009/103bc5118f4ca8bb6d93d83e06367628a77e94c692e039bb.png",
     releaseDate: "2026-05-27",
-    genre: "Adventure",
-    description: "Journey through a fantastical reimagining of ancient China i",
+    genre: "Приключения",
+    description: "Wuxia-RPG от The Swordman Studio. 20 концовок и два режима боя",
     editions: {
       TR: [
         { name: "Standard", clientPrice: 4050 },
@@ -341,8 +341,8 @@ export const preorderData: PreorderGame[] = [
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202601/1912/b5a499582e76829925ef74ec1b9b11b7068c93267dfb429b.jpg",
     releaseDate: "2026-06-17",
-    genre: "Adventure",
-    description: "Les Aventures d'Elliot : Les Contes du Millénaire vous plong",
+    genre: "Приключения",
+    description: "HD-2D экшен-RPG от Square Enix (Team Asano). Приключение с феей в стиле Zelda",
     editions: {
       TR: [
         { name: "Standard", clientPrice: 7300 },
@@ -360,8 +360,8 @@ export const preorderData: PreorderGame[] = [
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202601/2718/15b7aec0aa3065e9590934b366888a3a9806476c0df16923.png",
     releaseDate: "2026-06-24",
-    genre: "Arcade",
-    description: "The final word in fighting entertainment - DEAD OR ALIVE 5 L",
+    genre: "Аркада",
+    description: "3D-файтинг от Team NINJA и Koei Tecmo. Финальная версия DOA6 — 29 бойцов на PS5",
     editions: {
       TR: [
         { name: "Standard", clientPrice: 4500 },
@@ -379,8 +379,8 @@ export const preorderData: PreorderGame[] = [
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202602/1907/db819d43d83148bec96dbaebc3daed099761432296eff166.jpg",
     releaseDate: "2026-07-09",
-    genre: "Adventure",
-    description: "A strange satellite photo that can’t be explained. A new mus",
+    genre: "Приключения",
+    description: "Экшен-RPG от Bandai Namco по Sword Art Online. Создай героя и покоряй замок Айнкрад",
     editions: {
       TR: [
         { name: "Standard", clientPrice: 7300 },
@@ -400,8 +400,8 @@ export const preorderData: PreorderGame[] = [
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202602/0512/82ef3f898acb9608c7ca9d3ae20b012d938f444d04fd0625.jpg",
     releaseDate: "2026-08-06",
-    genre: "Fighting",
-    description: "Marvel Tōkon: Fighting Souls is an upcoming fighting game de",
+    genre: "Файтинг",
+    description: "2.5D файтинг от Arc System Works и PlayStation Studios. Зрелищные 4v4 бои героев Marvel",
     editions: {
       TR: [
         { name: "Standard", clientPrice: 7300 },
@@ -419,8 +419,8 @@ export const preorderData: PreorderGame[] = [
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202601/2903/492bf059e5c7ed0ffacd99a444a093d2a785b0cff7fe901e.jpg",
     releaseDate: "2026-08-26",
-    genre: "Action",
-    description: "The origin of stealth action returns. METAL GEAR SOLID: MAST",
+    genre: "Экшен",
+    description: "Стелс-экшен коллекция от Konami. MGS4, Peace Walker и Ghost Babel — впервые на PS5",
     editions: {
       TR: [
         { name: "Standard", clientPrice: 5300 },
