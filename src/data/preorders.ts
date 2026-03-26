@@ -1,6 +1,6 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-03-26T17:55:20.119Z
-// Предзаказов: 27
+// Обновлено: 2026-03-26T18:03:27.032Z
+// Предзаказов: 25
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
 export interface PreorderEdition {
@@ -21,251 +21,6 @@ export interface PreorderGame {
 }
 
 export const preorderData: PreorderGame[] = [
-  {
-    id: "mega-man-star-force-legacy-collection-ps4-ps5",
-    name: "Mega Man Star Force Legacy Collection",
-    platforms: ["PS5","PS4"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202510/2104/27af46b79a25c509364fbbdf12a9cba453e6dadd4ea4988b.png",
-    releaseDate: "2015-08-24",
-    editions: {
-      TR: [
-        { name: "Standard", clientPrice: 4550 },
-      ],
-      UA: [
-        { name: "Standard", clientPrice: 4300 },
-      ],
-    },
-  },
-  {
-    id: "the-occultist",
-    name: "The Occultist",
-    platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202603/2415/4ab56c3b6a86dca29d85b9334859f84a0516b039bad836d5.png",
-    releaseDate: "2015-09-29",
-    editions: {
-      TR: [
-        { name: "Deluxe", clientPrice: 4550 },
-      ],
-      UA: [
-        { name: "Standard", clientPrice: 3300 },
-      ],
-    },
-  },
-  {
-    id: "magin-the-rat-project-stories",
-    name: "Magin: The Rat Project Stories",
-    platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202602/1809/ac344c7cdb7f1f6130a0048033a1686c9e671c0040f8a5c7.png",
-    releaseDate: "2016-04-11",
-    editions: {
-      TR: [
-        { name: "Standard", clientPrice: 2750 },
-      ],
-      UA: [
-        { name: "Standard", clientPrice: 2500 },
-      ],
-    },
-  },
-  {
-    id: "magin-the-rat-project-stories-essence-edition",
-    name: "Magin: The Rat Project Stories Essence Edition",
-    platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202602/1810/516a4c9f55826f986befa072858d1314ea05806d26708e40.png",
-    releaseDate: "2016-04-11",
-    editions: {
-      TR: [
-        { name: "Standard", clientPrice: 3700 },
-      ],
-      UA: [
-        { name: "Standard", clientPrice: 3400 },
-      ],
-    },
-  },
-  {
-    id: "tides-of-tomorrow",
-    name: "Tides of Tomorrow",
-    platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202506/0502/83edea47457e08b4d5be5b6a38567d5ea8bfcb297e0ccba2.jpg",
-    releaseDate: "2017-02-27",
-    editions: {
-      TR: [
-        { name: "Standard", clientPrice: 3700 },
-      ],
-      UA: [
-        { name: "Standard", clientPrice: 3300 },
-      ],
-    },
-  },
-  {
-    id: "sudden-strike-5",
-    name: "Sudden Strike 5",
-    platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202601/0911/5889aa7d51188a5c22841f0cecb7a8232442335979f417a7.jpg",
-    releaseDate: "2017-08-10",
-    editions: {
-      TR: [
-        { name: "Deluxe", clientPrice: 6400 },
-      ],
-      UA: [
-        { name: "Deluxe", clientPrice: 5100 },
-      ],
-    },
-  },
-  {
-    id: "motogp26",
-    name: "MotoGP 26",
-    platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202602/2015/f7d7f07d359ba0613bef8b43e1af74becad0e00357c1ccb3.jpg",
-    releaseDate: "2018-06-07",
-    editions: {
-      TR: [
-        { name: "Standard", clientPrice: 7400 },
-      ],
-      UA: [
-        { name: "Standard", clientPrice: 5600 },
-      ],
-    },
-  },
-  {
-    id: "darwin-s-paradox",
-    name: "Darwin's Paradox!",
-    platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202511/0718/8dc3bb026f8c0873ac11c58a584c3ee618dbfc9db4064514.png",
-    releaseDate: "2018-07-27",
-    editions: {
-      TR: [
-        { name: "Standard", clientPrice: 3200 },
-      ],
-      UA: [
-        { name: "Standard", clientPrice: 3000 },
-      ],
-    },
-  },
-  {
-    id: "cthulhu-the-cosmic-abyss-r-lyeh-edition",
-    name: "Cthulhu: The Cosmic Abyss - R'lyeh Edition",
-    platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202601/2013/e8cc34b3e9fc782c62214c44aa4ad60242defb0e24e31ce0.jpg",
-    releaseDate: "2020-07-13",
-    editions: {
-      TR: [
-        { name: "Standard", clientPrice: 6400 },
-      ],
-      UA: [
-        { name: "Standard", clientPrice: 5100 },
-      ],
-    },
-  },
-  {
-    id: "cthulhu-the-cosmic-abyss",
-    name: "Cthulhu: The Cosmic Abyss",
-    platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202503/0315/efbadeb619a95800bf218aad72b12e3460894763243ee3ba.jpg",
-    releaseDate: "2020-07-13",
-    editions: {
-      TR: [
-        { name: "Standard", clientPrice: 5400 },
-      ],
-      UA: [
-        { name: "Standard", clientPrice: 4500 },
-      ],
-    },
-  },
-  {
-    id: "wandering-sword",
-    name: "Wandering Sword",
-    platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202510/1009/103bc5118f4ca8bb6d93d83e06367628a77e94c692e039bb.png",
-    releaseDate: "2020-10-27",
-    editions: {
-      TR: [
-        { name: "Standard", clientPrice: 4100 },
-        { name: "Deluxe", clientPrice: 4950 },
-      ],
-      UA: [
-        { name: "Standard", clientPrice: 3550 },
-        { name: "Deluxe", clientPrice: 4200 },
-      ],
-    },
-  },
-  {
-    id: "jay-and-silent-bob-chronic-blunt-punch",
-    name: "Jay and Silent Bob: Chronic Blunt Punch",
-    platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202603/2417/cbb7c65a786cca846fe8be3bf5bf609457a36b8a5469f087.jpg",
-    releaseDate: "2021-08-15",
-    editions: {
-      TR: [
-        { name: "Standard", clientPrice: 2750 },
-      ],
-    },
-  },
-  {
-    id: "echoes-of-aincrad",
-    name: "Echoes of Aincrad",
-    platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202602/1907/db819d43d83148bec96dbaebc3daed099761432296eff166.jpg",
-    releaseDate: "2021-09-28",
-    editions: {
-      TR: [
-        { name: "Ultimate", clientPrice: 11250 },
-        { name: "Standard", clientPrice: 7400 },
-        { name: "Deluxe", clientPrice: 9350 },
-      ],
-      UA: [
-        { name: "Ultimate", clientPrice: 7500 },
-        { name: "Standard", clientPrice: 5600 },
-        { name: "Deluxe", clientPrice: 6550 },
-      ],
-    },
-  },
-  {
-    id: "metal-gear-solid-master-collection-vol-2",
-    name: "METAL GEAR SOLID: MASTER COLLECTION Vol.2",
-    platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202601/2903/492bf059e5c7ed0ffacd99a444a093d2a785b0cff7fe901e.jpg",
-    releaseDate: "2023-10-23",
-    editions: {
-      TR: [
-        { name: "Standard", clientPrice: 5400 },
-      ],
-      UA: [
-        { name: "Standard", clientPrice: 4500 },
-      ],
-    },
-  },
-  {
-    id: "diablo-iv-lord-of-hatred",
-    name: "Diablo IV: Lord of Hatred",
-    platforms: ["PS5","PS4"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202511/1201/0aa045b07431038b0f1a5dfd8d0ca532868b95a149496693.png",
-    releaseDate: "2024-10-07",
-    editions: {
-      TR: [
-        { name: "Standard", clientPrice: 4300 },
-        { name: "Ultimate", clientPrice: 8750 },
-        { name: "Deluxe", clientPrice: 6000 },
-      ],
-      UA: [
-        { name: "Standard", clientPrice: 4900 },
-        { name: "Ultimate", clientPrice: 9650 },
-        { name: "Deluxe", clientPrice: 6800 },
-      ],
-    },
-  },
-  {
-    id: "diablo-iv-age-of-hatred-collection",
-    name: "Diablo IV: Age of Hatred Collection",
-    platforms: ["PS5","PS4"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202511/1222/84024460e7ec9f95d0c02b6ace0dd7477a01a212413c26ac.png",
-    releaseDate: "2024-10-07",
-    editions: {
-      TR: [
-        { name: "Standard", clientPrice: 6950 },
-        { name: "Standard", clientPrice: 4650 },
-      ],
-    },
-  },
   {
     id: "pragmata",
     name: "PRAGMATA",
@@ -426,6 +181,159 @@ export const preorderData: PreorderGame[] = [
     },
   },
   {
+    id: "cthulhu-the-cosmic-abyss-r-lyeh-edition",
+    name: "Cthulhu: The Cosmic Abyss - R'lyeh Edition",
+    platforms: ["PS5"],
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202601/2013/e8cc34b3e9fc782c62214c44aa4ad60242defb0e24e31ce0.jpg",
+    releaseDate: null,
+    editions: {
+      TR: [
+        { name: "Standard", clientPrice: 6400 },
+      ],
+      UA: [
+        { name: "Standard", clientPrice: 5100 },
+      ],
+    },
+  },
+  {
+    id: "darwin-s-paradox",
+    name: "Darwin's Paradox!",
+    platforms: ["PS5"],
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202511/0718/8dc3bb026f8c0873ac11c58a584c3ee618dbfc9db4064514.png",
+    releaseDate: null,
+    editions: {
+      TR: [
+        { name: "Standard", clientPrice: 3200 },
+      ],
+      UA: [
+        { name: "Standard", clientPrice: 3000 },
+      ],
+    },
+  },
+  {
+    id: "diablo-iv-age-of-hatred-collection",
+    name: "Diablo IV: Age of Hatred Collection",
+    platforms: ["PS5","PS4"],
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202511/1222/84024460e7ec9f95d0c02b6ace0dd7477a01a212413c26ac.png",
+    releaseDate: null,
+    editions: {
+      TR: [
+        { name: "Standard", clientPrice: 6950 },
+        { name: "Standard", clientPrice: 4650 },
+      ],
+    },
+  },
+  {
+    id: "diablo-iv-lord-of-hatred",
+    name: "Diablo IV: Lord of Hatred",
+    platforms: ["PS5","PS4"],
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202511/1201/0aa045b07431038b0f1a5dfd8d0ca532868b95a149496693.png",
+    releaseDate: null,
+    editions: {
+      TR: [
+        { name: "Standard", clientPrice: 4300 },
+        { name: "Ultimate", clientPrice: 8750 },
+        { name: "Deluxe", clientPrice: 6000 },
+      ],
+      UA: [
+        { name: "Standard", clientPrice: 4900 },
+        { name: "Ultimate", clientPrice: 9650 },
+        { name: "Deluxe", clientPrice: 6800 },
+      ],
+    },
+  },
+  {
+    id: "echoes-of-aincrad",
+    name: "Echoes of Aincrad",
+    platforms: ["PS5"],
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202602/1907/db819d43d83148bec96dbaebc3daed099761432296eff166.jpg",
+    releaseDate: null,
+    editions: {
+      TR: [
+        { name: "Ultimate", clientPrice: 11250 },
+        { name: "Standard", clientPrice: 7400 },
+        { name: "Deluxe", clientPrice: 9350 },
+      ],
+      UA: [
+        { name: "Ultimate", clientPrice: 7500 },
+        { name: "Standard", clientPrice: 5600 },
+        { name: "Deluxe", clientPrice: 6550 },
+      ],
+    },
+  },
+  {
+    id: "jay-and-silent-bob-chronic-blunt-punch",
+    name: "Jay and Silent Bob: Chronic Blunt Punch",
+    platforms: ["PS5"],
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202603/2417/cbb7c65a786cca846fe8be3bf5bf609457a36b8a5469f087.jpg",
+    releaseDate: null,
+    editions: {
+      TR: [
+        { name: "Standard", clientPrice: 2750 },
+      ],
+    },
+  },
+  {
+    id: "magin-the-rat-project-stories",
+    name: "Magin: The Rat Project Stories",
+    platforms: ["PS5"],
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202602/1809/ac344c7cdb7f1f6130a0048033a1686c9e671c0040f8a5c7.png",
+    releaseDate: null,
+    editions: {
+      TR: [
+        { name: "Standard", clientPrice: 2750 },
+      ],
+      UA: [
+        { name: "Standard", clientPrice: 2500 },
+      ],
+    },
+  },
+  {
+    id: "mega-man-star-force-legacy-collection-ps4-ps5",
+    name: "Mega Man Star Force Legacy Collection",
+    platforms: ["PS5","PS4"],
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202510/2104/27af46b79a25c509364fbbdf12a9cba453e6dadd4ea4988b.png",
+    releaseDate: null,
+    editions: {
+      TR: [
+        { name: "Standard", clientPrice: 4550 },
+      ],
+      UA: [
+        { name: "Standard", clientPrice: 4300 },
+      ],
+    },
+  },
+  {
+    id: "metal-gear-solid-master-collection-vol-2",
+    name: "METAL GEAR SOLID: MASTER COLLECTION Vol.2",
+    platforms: ["PS5"],
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202601/2903/492bf059e5c7ed0ffacd99a444a093d2a785b0cff7fe901e.jpg",
+    releaseDate: null,
+    editions: {
+      TR: [
+        { name: "Standard", clientPrice: 5400 },
+      ],
+      UA: [
+        { name: "Standard", clientPrice: 4500 },
+      ],
+    },
+  },
+  {
+    id: "motogp26",
+    name: "MotoGP 26",
+    platforms: ["PS5"],
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202602/2015/f7d7f07d359ba0613bef8b43e1af74becad0e00357c1ccb3.jpg",
+    releaseDate: null,
+    editions: {
+      TR: [
+        { name: "Standard", clientPrice: 7400 },
+      ],
+      UA: [
+        { name: "Standard", clientPrice: 5600 },
+      ],
+    },
+  },
+  {
     id: "starfield",
     name: "Starfield",
     platforms: ["PS5"],
@@ -439,6 +347,68 @@ export const preorderData: PreorderGame[] = [
       UA: [
         { name: "Premium", clientPrice: 5850 },
         { name: "Standard", clientPrice: 4500 },
+      ],
+    },
+  },
+  {
+    id: "sudden-strike-5",
+    name: "Sudden Strike 5",
+    platforms: ["PS5"],
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202601/0911/5889aa7d51188a5c22841f0cecb7a8232442335979f417a7.jpg",
+    releaseDate: null,
+    editions: {
+      TR: [
+        { name: "Deluxe", clientPrice: 6400 },
+      ],
+      UA: [
+        { name: "Deluxe", clientPrice: 5100 },
+      ],
+    },
+  },
+  {
+    id: "the-occultist",
+    name: "The Occultist",
+    platforms: ["PS5"],
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202603/2415/4ab56c3b6a86dca29d85b9334859f84a0516b039bad836d5.png",
+    releaseDate: null,
+    editions: {
+      TR: [
+        { name: "Deluxe", clientPrice: 4550 },
+      ],
+      UA: [
+        { name: "Standard", clientPrice: 3300 },
+      ],
+    },
+  },
+  {
+    id: "tides-of-tomorrow",
+    name: "Tides of Tomorrow",
+    platforms: ["PS5"],
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202506/0502/83edea47457e08b4d5be5b6a38567d5ea8bfcb297e0ccba2.jpg",
+    releaseDate: null,
+    editions: {
+      TR: [
+        { name: "Standard", clientPrice: 3700 },
+      ],
+      UA: [
+        { name: "Standard", clientPrice: 3300 },
+      ],
+    },
+  },
+  {
+    id: "wandering-sword",
+    name: "Wandering Sword",
+    platforms: ["PS5"],
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202510/1009/103bc5118f4ca8bb6d93d83e06367628a77e94c692e039bb.png",
+    releaseDate: null,
+    editions: {
+      TR: [
+        { name: "Standard", clientPrice: 4100 },
+        { name: "Deluxe", clientPrice: 4950 },
+      ],
+      UA: [
+        { name: "Standard", clientPrice: 3550 },
+        { name: "Deluxe", clientPrice: 4200 },
       ],
     },
   },
