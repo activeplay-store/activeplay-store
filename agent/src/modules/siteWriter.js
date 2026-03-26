@@ -64,10 +64,12 @@ function cleanGameName(name) {
   // "HogwartsVersion" → "Hogwarts Legacy" — stuck suffix like "LegacyVersion"
   n = n.replace(/Version\b/gi, '');
 
-  // Ukrainian prefixed names: "Набір для X" / "Версія X для" — skip these (handled by dedup)
-  // Remove "цифрове розширене" / "набір 'Два покоління'" suffixes
-  n = n.replace(/\s*[-–—]\s*набір\s*[''"].*?[''"]?\s*/gi, '');
+  // Ukrainian suffixes: "набір 'Два покоління'", "цифрове розширене", stuck "Два покоління'"
+  n = n.replace(/\s*[-–—]?\s*набір\s*[''"]?.*?покоління[''"]?\s*/gi, '');
+  n = n.replace(/Два\s*покоління[''"]?\s*/gi, '');
   n = n.replace(/\s*[-–—]\s*цифрове\s+розширене\s*/gi, '');
+  n = n.replace(/\s*платіжна\s+картка\s*[«»"'].*?[«»"']\s*/gi, '');
+  n = n.replace(/\s*,\s*\d+-го\s+року\s*/gi, '');
 
   // Collapse whitespace
   n = n.replace(/\s{2,}/g, ' ').trim();
@@ -244,8 +246,10 @@ function deduplicateDeals(deals) {
   for (const deal of deals) {
     const key = normalizeForDedup(deal.name);
 
-    // Skip Ukrainian-only names that start with Ukrainian words (these are duplicates of TR entries)
+    // Skip Ukrainian-only names that start with Ukrainian words (duplicates of TR entries)
     if (/^(набір|версія|superstar|Перепустка)/i.test(deal.name)) continue;
+    // Skip names that are entirely non-Latin (Ukrainian translations of existing games)
+    if (/^[^a-zA-Z0-9]*$/.test(deal.name.replace(/[\s\-–—:.,!?'"«»()]/g, ''))) continue;
 
     if (!groups.has(key)) {
       groups.set(key, deal);
