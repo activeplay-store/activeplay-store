@@ -226,7 +226,7 @@ export default function HotReleases() {
         </div>
 
         {/* Grid: hero слева row-span-3, три компактных справа */}
-        <div className="ap-cards grid grid-cols-1 lg:grid-cols-[1fr_1fr] lg:grid-rows-3 gap-4">
+        <div className="ap-cards grid grid-cols-1 lg:grid-cols-[2fr_1fr] lg:grid-rows-3 gap-4">
           <div className="lg:row-span-3">
             <HeroCard game={hero} region={region} />
           </div>

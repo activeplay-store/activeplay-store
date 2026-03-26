@@ -1876,6 +1876,10 @@ async function generateTopSellers(gameList) {
     if (!genre) genre = entry.genre || 'Экшен';
     if ((!image || image.startsWith('/images/')) && entry.image) image = entry.image;
 
+    // Cross-region fallback: если в одном регионе цена 0, взять из другого
+    if (priceTR === 0 && priceUA > 0) priceTR = priceUA;
+    if (priceUA === 0 && priceTR > 0) priceUA = priceTR;
+
     resolved.push({
       rank,
       title: name,
