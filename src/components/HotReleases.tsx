@@ -225,9 +225,9 @@ export default function HotReleases() {
           </div>
         </div>
 
-        {/* Grid: hero слева row-span-3, три компактных справа */}
-        <div className="ap-cards grid grid-cols-1 lg:grid-cols-[2fr_1fr] lg:grid-rows-3 gap-4">
-          <div className="lg:row-span-3">
+        {/* Grid: 3 колонки, hero col-span-2 row-span-3, 3 карточки справа */}
+        <div className="ap-cards grid grid-cols-1 lg:grid-cols-3 gap-4">
+          <div className="lg:col-span-2 lg:row-span-3">
             <HeroCard game={hero} region={region} />
           </div>
           {rest.map((game) => (
