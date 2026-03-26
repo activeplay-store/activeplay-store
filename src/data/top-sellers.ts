@@ -1,3 +1,8 @@
+// Автоматически сгенерировано AI-агентом ActivePlay
+// Обновлено: 2026-03-26T23:03:11.549Z
+// Топ-продаж: 10 игр
+// НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
+
 export interface TopSellerGame {
   rank: number;
   title: string;
@@ -16,19 +21,19 @@ export interface TopSellers {
 }
 
 export const topSellers: TopSellers = {
-  month: 'Февраль 2026',
-  region: 'Европа',
-  source: 'PlayStation Blog',
+  month: "Февраль 2026",
+  region: "Европа",
+  source: "PlayStation Blog",
   games: [
-    { rank: 1, title: 'Resident Evil Requiem', genre: 'Survival Horror', image: '/images/covers/resident-evil-requiem.jpg', platform: 'PS5', priceTR: 9220, priceUA: 7800 },
-    { rank: 2, title: 'EA SPORTS FC 26', genre: 'Sports', image: '/images/covers/ea-fc-26.jpg', platform: 'PS5', priceTR: 7790, priceUA: 6500 },
-    { rank: 3, title: 'UFC 5', genre: 'Fighting', image: '/images/covers/ufc-5.jpg', platform: 'PS5', priceTR: 7790, priceUA: 6500 },
-    { rank: 4, title: 'Grand Theft Auto V', genre: 'Action / Open World', image: '/images/covers/gta-v.jpg', platform: 'PS5', priceTR: 3890, priceUA: 3200 },
-    { rank: 5, title: 'Minecraft', genre: 'Sandbox / Survival', image: '/images/covers/minecraft.jpg', platform: 'PS5', priceTR: 2460, priceUA: 2100 },
-    { rank: 6, title: 'It Takes Two', genre: 'Co-op Adventure', image: '/images/covers/it-takes-two.jpg', platform: 'PS5', priceTR: 4150, priceUA: 3500 },
-    { rank: 7, title: 'ARC Raiders', genre: 'Sci-fi Shooter', image: '/images/covers/arc-raiders.jpg', platform: 'PS5', priceTR: 4800, priceUA: 4000 },
-    { rank: 8, title: 'REANIMAL', genre: 'Horror Adventure', image: '/images/covers/reanimal.jpg', platform: 'PS5', priceTR: 4800, priceUA: 4000 },
-    { rank: 9, title: 'Forza Horizon 5', genre: 'Racing / Open World', image: '/images/covers/forza-horizon-5.jpg', platform: 'PS5', priceTR: 4260, priceUA: 3600 },
-    { rank: 10, title: 'Call of Duty: Black Ops 7', genre: 'FPS / Shooter', image: '/images/covers/cod-blops-7.jpg', platform: 'PS5', priceTR: 8570, priceUA: 7200 },
+    { rank: 1, title: "Resident Evil Requiem", genre: "Экшен", image: "/images/covers/Resident-Evil-Requiem.jpg", platform: "PS5", priceTR: 9220, priceUA: 7800 },
+    { rank: 2, title: "EA SPORTS FC 26", genre: "Симулятор", image: "https://image.api.playstation.com/vulcan/ap/rnd/202507/1617/f0fe830f8f01600d13cce060680e0287374c58613a63c716.png", platform: "PS5", priceTR: 7150, priceUA: 6550 },
+    { rank: 3, title: "UFC 5", genre: "Файтинг", image: "https://image.api.playstation.com/vulcan/ap/rnd/202309/0421/0b3fe53ab2d54998602b41682ef1bd83e63e82d3f9ab8fff.png", platform: "PS5", priceTR: 7150, priceUA: 6550 },
+    { rank: 4, title: "Grand Theft Auto V", genre: "Экшен", image: "https://image.api.playstation.com/vulcan/ap/rnd/202202/2816/YHqWG89UegirLGRyNIn8tmnv.jpg", platform: "PS5", priceTR: 2350, priceUA: 3200 },
+    { rank: 5, title: "Minecraft", genre: "Экшен", image: "/images/covers/minecraft.jpg", platform: "PS5", priceTR: 2460, priceUA: 2100 },
+    { rank: 6, title: "It Takes Two", genre: "Платформер", image: "https://image.api.playstation.com/vulcan/ap/rnd/202012/0815/IjqyQi0J2PL7GdEo3K8jKWMh.png", platform: "PS5", priceTR: 4100, priceUA: 4300 },
+    { rank: 7, title: "ARC Raiders", genre: "Экшен", image: "https://image.api.playstation.com/vulcan/ap/rnd/202504/1515/99f254edff001a6a52d1d9f09af28959abfbaf1fe1a034b4.jpg", platform: "PS5", priceTR: 4550, priceUA: 4300 },
+    { rank: 8, title: "REANIMAL", genre: "Приключения", image: "/images/covers/reanimal.jpg", platform: "PS5", priceTR: 4800, priceUA: 4000 },
+    { rank: 9, title: "Forza Horizon 5", genre: "Гонки", image: "https://image.api.playstation.com/vulcan/ap/rnd/202502/1221/1cdbb2177cc3c6302027f05796073b27ca7f7ccf091c3127.png", platform: "PS5", priceTR: 4200, priceUA: 3850 },
+    { rank: 10, title: "Call of Duty: Black Ops 7", genre: "Шутер", image: "https://image.api.playstation.com/vulcan/ap/rnd/202508/2119/b22bad2858eeaac332a5889000900fc1e090b81cb0a40a1f.png", platform: "PS5", priceTR: 8570, priceUA: 8850 },
   ],
 };
