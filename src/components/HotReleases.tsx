@@ -5,6 +5,27 @@ import { hotReleases } from '@/data/hotReleases';
 import type { HotRelease } from '@/data/hotReleases';
 import MessengerPopup from './MessengerPopup';
 
+/** Parse Russian date "27 февраля 2026" → Date */
+function parseRuDate(s: string): Date | null {
+  const months: Record<string, number> = { января:0, февраля:1, марта:2, апреля:3, мая:4, июня:5, июля:6, августа:7, сентября:8, октября:9, ноября:10, декабря:11 };
+  const m = s.match(/^(\d{1,2})\s+(\S+)\s+(\d{4})$/);
+  if (!m) return null;
+  const mo = months[m[2].toLowerCase()];
+  if (mo === undefined) return null;
+  return new Date(+m[3], mo, +m[1]);
+}
+
+function isWithin30Days(dateStr: string): boolean {
+  const d = parseRuDate(dateStr);
+  if (!d) return true; // keep if can't parse
+  const now = new Date();
+  now.setHours(0,0,0,0);
+  const diff = (now.getTime() - d.getTime()) / (1000*60*60*24);
+  return diff <= 30;
+}
+
+const filteredReleases = hotReleases.filter(g => isWithin30Days(g.releaseDate));
+
 const btnLabels: Record<string, string> = {
   'monster-hunter-stories-3': 'Купить MH Stories 3',
 };
@@ -63,7 +84,7 @@ function HeroCard({ game, region }: { game: HotRelease; region: 'tr' | 'ua' }) {
       <div className="relative overflow-hidden" style={{ paddingTop: '48%' }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={game.cover} alt={altTexts[game.id] || game.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" style={{ objectPosition: 'center top' }} />
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, #111827 0%, rgba(17,24,39,0.3) 50%, transparent 100%)' }} />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, #111827 0%, rgba(17,24,39,0.45) 35%, transparent 70%)' }} />
 
         {/* Hit badge */}
         <div className="absolute top-3 left-3 flex items-center gap-1 px-2.5 py-1 rounded-md text-[10px] font-bold" style={{ background: '#ff6b35', color: '#fff' }}>
@@ -173,8 +194,10 @@ function CompactCard({ game, region, onClick }: { game: HotRelease; region: 'tr'
 export default function HotReleases() {
   const [region, setRegion] = useState<'tr' | 'ua'>('tr');
   const [popup, setPopup] = useState<{ name: string; price: number } | null>(null);
-  const hero = hotReleases[0];
-  const rest = hotReleases.slice(1);
+  const hero = filteredReleases[0];
+  const rest = filteredReleases.slice(1);
+
+  if (!hero) return null;
 
   return (
     <section id="hot-releases" className="relative z-10 pt-16 pb-16">

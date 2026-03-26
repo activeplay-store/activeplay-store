@@ -760,13 +760,29 @@ async function fetchReleaseDates(games) {
       }
     }
 
-    // 3. Try RAWG
+    // 3. Try RAWG (also grab genre + description)
     await sleepMs(1000);
     try {
       const rawgData = await rawg.searchGame(cleanGameName(cleanName(game.name)));
       if (rawgData?.released && isFutureDate(rawgData.released)) {
         game.releaseDate = rawgData.released;
         fromRawg++;
+      }
+      if (rawgData?.genres?.length && !game.rawgGenre) {
+        game.rawgGenre = rawgData.genres[0];
+      }
+      // Fetch details for description
+      if (rawgData?.slug) {
+        await sleepMs(500);
+        try {
+          const details = await rawg.fetchGameDetails(rawgData.slug);
+          if (details?.description) {
+            game.rawgDescription = details.description.replace(/\n/g, ' ').slice(0, 60).trim();
+          }
+          if (details?.genres?.length && !game.rawgGenre) {
+            game.rawgGenre = details.genres[0];
+          }
+        } catch {}
       }
     } catch {}
   }
@@ -823,6 +839,40 @@ function detectNewPreorders(oldData, newGames) {
   });
 }
 
+/**
+ * Enrich preorder games with RAWG genre + description (for games that didn't
+ * go through the RAWG branch in fetchReleaseDates because they already had a date).
+ */
+async function enrichWithRawg(games) {
+  let enriched = 0;
+  for (const game of games) {
+    if (game.rawgGenre && game.rawgDescription) continue;
+    const name = cleanGameName(cleanName(game.name));
+    await sleepMs(1000);
+    try {
+      const rawgData = await rawg.searchGame(name);
+      if (!rawgData) continue;
+      if (rawgData.genres?.length && !game.rawgGenre) {
+        game.rawgGenre = rawgData.genres[0];
+      }
+      if (rawgData.slug && !game.rawgDescription) {
+        await sleepMs(500);
+        try {
+          const details = await rawg.fetchGameDetails(rawgData.slug);
+          if (details?.description) {
+            game.rawgDescription = details.description.replace(/\n/g, ' ').slice(0, 60).trim();
+          }
+          if (details?.genres?.length && !game.rawgGenre) {
+            game.rawgGenre = details.genres[0];
+          }
+        } catch {}
+      }
+      if (game.rawgGenre || game.rawgDescription) enriched++;
+    } catch {}
+  }
+  console.log(PREFIX + ' RAWG enrichment: ' + enriched + '/' + games.length);
+}
+
 function generatePreordersTs(games) {
   const preorders = [];
 
@@ -837,7 +887,7 @@ function generatePreordersTs(games) {
 
     if (game.prices.TR) {
       const trEds = (game.prices.TR.editions || [])
-        .filter(e => e.basePrice && e.clientPrice)
+        .filter(e => e.clientPrice > 0)
         .map(e => ({ name: e.name, clientPrice: e.clientPrice }));
       // FIX 2: Dedup editions by name — keep cheapest
       const trDeduped = new Map();
@@ -853,7 +903,7 @@ function generatePreordersTs(games) {
 
     if (game.prices.UA) {
       const uaEds = (game.prices.UA.editions || [])
-        .filter(e => e.basePrice && e.clientPrice)
+        .filter(e => e.clientPrice > 0)
         .map(e => ({ name: e.name, clientPrice: e.clientPrice }));
       // FIX 2: Dedup editions by name — keep cheapest
       const uaDeduped = new Map();
@@ -869,7 +919,10 @@ function generatePreordersTs(games) {
 
     if (!editions.TR && !editions.UA) continue;
 
-    preorders.push({ id: slug, name, platforms, coverUrl, releaseDate, editions });
+    const genre = game.rawgGenre || '';
+    const description = game.rawgDescription || '';
+
+    preorders.push({ id: slug, name, platforms, coverUrl, releaseDate, genre, description, editions });
   }
 
   preorders.sort((a, b) => {
@@ -898,6 +951,8 @@ function generatePreordersTs(games) {
   out += '  platforms: string[];\n';
   out += '  coverUrl: string;\n';
   out += '  releaseDate: string | null;\n';
+  out += '  genre: string;\n';
+  out += '  description: string;\n';
   out += '  editions: {\n';
   out += '    TR?: PreorderEdition[];\n';
   out += '    UA?: PreorderEdition[];\n';
@@ -913,6 +968,8 @@ function generatePreordersTs(games) {
     out += '    platforms: ' + JSON.stringify(p.platforms) + ',\n';
     out += '    coverUrl: ' + JSON.stringify(p.coverUrl) + ',\n';
     out += '    releaseDate: ' + (p.releaseDate ? JSON.stringify(p.releaseDate) : 'null') + ',\n';
+    out += '    genre: ' + JSON.stringify(p.genre || '') + ',\n';
+    out += '    description: ' + JSON.stringify(p.description || '') + ',\n';
     out += '    editions: {\n';
     if (p.editions.TR) {
       out += '      TR: [\n';
@@ -979,6 +1036,7 @@ async function generatePreorders() {
 
   await sony.fetchPortraitCovers(filtered, 'TR');
   await fetchReleaseDates(filtered);
+  await enrichWithRawg(filtered);
 
   const oldData = loadPreordersJson();
   const newOnes = detectNewPreorders(oldData, filtered);

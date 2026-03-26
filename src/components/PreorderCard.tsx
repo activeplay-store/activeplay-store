@@ -84,10 +84,22 @@ export default function PreorderCard({ preorder, region, onOrder }: PreorderCard
           {preorder.name}
         </h3>
 
-        {/* Platform badge */}
-        <span className="inline-block px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-white/10 text-[var(--text-muted)] mb-2 w-fit">
-          {platformStr}
-        </span>
+        {/* Genre + Platform badges */}
+        <div className="flex items-center gap-1.5 flex-wrap mb-1">
+          {preorder.genre && (
+            <span className="inline-block px-2 py-0.5 rounded text-[10px] font-semibold" style={{ background: 'rgba(0,212,255,0.12)', color: '#00D4FF' }}>
+              {preorder.genre}
+            </span>
+          )}
+          <span className="inline-block px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-white/10 text-[var(--text-muted)] w-fit">
+            {platformStr}
+          </span>
+        </div>
+
+        {/* Description */}
+        {preorder.description && (
+          <p className="text-[10px] text-[#94a3b8] opacity-70 leading-snug line-clamp-1 mb-1">{preorder.description}</p>
+        )}
 
         {/* Spacer to push prices to bottom */}
         <div className="flex-1" />
