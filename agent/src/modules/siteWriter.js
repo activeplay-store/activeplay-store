@@ -8,6 +8,8 @@ const pricing = require('./pricing');
 const notifier = require('./notifier');
 const rawg = require('./parsers/rawg');
 const hype = require('./parsers/hype');
+const topSellersParser = require('./parsers/topSellers');
+const gameDescriptions = require('../data/gameDescriptions');
 
 const PREFIX = '[SiteWriter]';
 
@@ -25,6 +27,10 @@ const HYPE_CONFIG = config.hype || {};
 const HOT_RELEASES_FILE = HYPE_CONFIG.hotReleasesFile || 'src/data/hotReleases.ts';
 const HOT_RELEASES_COUNT = HYPE_CONFIG.hotReleasesCount || 4;
 const NEW_RELEASE_DAYS = HYPE_CONFIG.newReleaseDays || 60;
+
+const TOP_SELLERS_FILE = 'src/data/top-sellers.ts';
+const TOP_SELLERS_JSON_FILE = path.join(__dirname, '..', 'data', 'top-sellers.json');
+const TOP_SELLERS_COUNT = 10;
 
 // ── Helpers ─────────────────────────────────────────────────────────────
 
@@ -919,8 +925,8 @@ function generatePreordersTs(games) {
 
     if (!editions.TR && !editions.UA) continue;
 
-    const genre = game.rawgGenre || '';
-    const description = game.rawgDescription || '';
+    const genre = gameDescriptions.translateGenre(game.rawgGenre) || game.rawgGenre || '';
+    const description = gameDescriptions.getDescription(name) || gameDescriptions.getDescription(game.name) || game.rawgDescription || '';
 
     preorders.push({ id: slug, name, platforms, coverUrl, releaseDate, genre, description, editions });
   }
@@ -1468,7 +1474,8 @@ async function generateHotReleases() {
     const slug = slugify(name);
     const platforms = parsePlatforms(g.platform);
     const cover = g.portraitUrl || g.coverUrl || g.platprices?.coverArt || '/images/covers/' + slug + '.jpg';
-    const genre = (g.genres && g.genres.length > 0) ? g.genres[0] : 'Action';
+    const rawGenre = (g.genres && g.genres.length > 0) ? g.genres[0] : 'Action';
+    const genre = gameDescriptions.translateGenre(rawGenre) || rawGenre;
 
     // Собрать editions по регионам
     const editionsTr = [];
@@ -1516,7 +1523,7 @@ async function generateHotReleases() {
       id: slug,
       title: name,
       slug,
-      description: '', // Агент не генерирует описания — заполняется вручную или из RAWG
+      description: gameDescriptions.getDescription(name) || gameDescriptions.getDescription(g.name) || '',
       releaseDate: formatReleaseDateRu(g.releaseDate),
       metacritic: g.metacritic || 0,
       genre,
@@ -1562,6 +1569,313 @@ async function generateHotReleases() {
 }
 
 
+// ── Top Sellers (Топ-продаж) ──────────────────────────────────────────
+
+function loadTopSellersJson() {
+  try {
+    return JSON.parse(fs.readFileSync(TOP_SELLERS_JSON_FILE, 'utf8'));
+  } catch {
+    return { month: null, year: null, games: [] };
+  }
+}
+
+function saveTopSellersJson(data) {
+  const dir = path.dirname(TOP_SELLERS_JSON_FILE);
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(TOP_SELLERS_JSON_FILE, JSON.stringify(data, null, 2), 'utf8');
+}
+
+function generateTopSellersTs(games, meta) {
+  const now = new Date().toISOString();
+
+  let out = '';
+  out += '// Автоматически сгенерировано AI-агентом ActivePlay\n';
+  out += '// Обновлено: ' + now + '\n';
+  out += '// Топ-продаж: ' + games.length + ' игр\n';
+  out += '// НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом\n\n';
+
+  out += 'export interface TopSellerGame {\n';
+  out += '  rank: number;\n';
+  out += '  title: string;\n';
+  out += '  genre: string;\n';
+  out += '  image: string;\n';
+  out += '  platform: string;\n';
+  out += '  priceTR: number;\n';
+  out += '  priceUA: number;\n';
+  out += '}\n\n';
+
+  out += 'export interface TopSellers {\n';
+  out += '  month: string;\n';
+  out += '  region: string;\n';
+  out += '  source: string;\n';
+  out += '  games: TopSellerGame[];\n';
+  out += '}\n\n';
+
+  out += 'export const topSellers: TopSellers = {\n';
+  out += '  month: ' + JSON.stringify(meta.month) + ',\n';
+  out += '  region: ' + JSON.stringify(meta.region || 'Европа') + ',\n';
+  out += '  source: ' + JSON.stringify(meta.source || 'PlayStation Blog') + ',\n';
+  out += '  games: [\n';
+
+  for (const g of games) {
+    out += '    { rank: ' + g.rank +
+      ', title: ' + JSON.stringify(g.title) +
+      ', genre: ' + JSON.stringify(g.genre) +
+      ', image: ' + JSON.stringify(g.image) +
+      ', platform: ' + JSON.stringify(g.platform || 'PS5') +
+      ', priceTR: ' + g.priceTR +
+      ', priceUA: ' + g.priceUA +
+      ' },\n';
+  }
+
+  out += '  ],\n';
+  out += '};\n';
+
+  return { content: out, count: games.length };
+}
+
+function gitPushTopSellers(count) {
+  try {
+    const diff = execSync('git diff --name-only ' + TOP_SELLERS_FILE, { cwd: REPO_ROOT, encoding: 'utf8' }).trim();
+    if (!diff) {
+      const staged = execSync('git diff --cached --name-only ' + TOP_SELLERS_FILE, { cwd: REPO_ROOT, encoding: 'utf8' }).trim();
+      if (!staged) {
+        console.log(PREFIX + ' top-sellers.ts не изменился');
+        return false;
+      }
+    }
+
+    execSync('git add ' + TOP_SELLERS_FILE, { cwd: REPO_ROOT });
+    const msg = 'data: обновление топ-продаж (' + count + ' игр)';
+    execSync('git commit -m "' + msg + '"', { cwd: REPO_ROOT });
+    execSync('git push', { cwd: REPO_ROOT });
+
+    console.log(PREFIX + ' ✅ top-sellers.ts push');
+    return true;
+  } catch (err) {
+    console.error(PREFIX + ' ❌ top-sellers push: ' + err.message);
+    return false;
+  }
+}
+
+/**
+ * Generate topSellers.ts from games.json data + optional PlayStation Blog scrape.
+ *
+ * If gameList is provided (array of { name, rank }), use those directly (manual/first-run mode).
+ * Otherwise, try to fetch from PlayStation Blog.
+ */
+async function generateTopSellers(gameList) {
+  console.log(PREFIX + ' === Генерация топ-продаж ===');
+
+  const gamesData = parsers.loadGames();
+  const allGames = gamesData.games || [];
+  const preordersData = loadPreordersJson();
+  const allPreorders = preordersData.preorders || [];
+
+  let topList;
+  let meta;
+
+  if (gameList && gameList.length > 0) {
+    // Manual mode: use provided list
+    topList = gameList;
+    meta = gameList._meta || { month: 'февраль', year: 2026, source: 'PlayStation Blog', region: 'Европа' };
+    console.log(PREFIX + ' Ручной режим: ' + topList.length + ' игр');
+  } else {
+    // Auto mode: fetch from PlayStation Blog
+    const lastKnown = loadTopSellersJson();
+    const blogData = await topSellersParser.fetchLatestPost(
+      lastKnown.month ? { month: lastKnown.month, year: lastKnown.year } : null
+    );
+
+    if (!blogData) {
+      console.log(PREFIX + ' Нет нового поста, пропускаем');
+      return { written: false, count: 0 };
+    }
+
+    topList = blogData.games.slice(0, TOP_SELLERS_COUNT).map((name, i) => ({
+      name,
+      rank: i + 1,
+    }));
+    meta = {
+      month: blogData.month,
+      year: blogData.year,
+      source: 'PlayStation Blog',
+      region: 'Европа',
+    };
+    console.log(PREFIX + ' Blog: ' + blogData.month + ' ' + blogData.year + ' — ' + topList.length + ' игр');
+  }
+
+  // Known cover overrides for games with non-standard filenames
+  const COVER_OVERRIDES = {
+    'resident-evil-requiem': '/images/covers/Resident-Evil-Requiem.jpg',
+    'call-of-duty-black-ops-7': '/images/covers/cod-blops-7.jpg',
+    'grand-theft-auto-v': '/images/covers/gta-v.jpg',
+    'ea-sports-fc-26': '/images/covers/ea-fc-26.jpg',
+  };
+
+  // Resolve each game: find in games.json, fallback to preorders, then RAWG
+  const resolved = [];
+  for (const entry of topList) {
+    const name = entry.name;
+    const rank = entry.rank;
+    const slug = slugify(name);
+
+    // Search in games.json
+    let found = allGames.find(g =>
+      slugify(cleanGameName(cleanName(g.name))) === slug ||
+      cleanGameName(cleanName(g.name)).toLowerCase() === name.toLowerCase()
+    );
+
+    // Search in preorders
+    if (!found) {
+      const po = allPreorders.find(p =>
+        slugify(cleanGameName(cleanName(p.name))) === slug ||
+        cleanGameName(cleanName(p.name)).toLowerCase() === name.toLowerCase()
+      );
+      if (po) {
+        found = {
+          name: po.name,
+          prices: po.prices,
+          portraitUrl: po.portraitUrl,
+          coverUrl: po.coverUrl,
+          rawgGenre: po.rawgGenre,
+        };
+      }
+    }
+
+    // Calculate prices
+    let priceTR = 0;
+    let priceUA = 0;
+
+    if (found?.prices?.TR?.editions) {
+      const trEds = found.prices.TR.editions.filter(e => e.clientPrice > 0);
+      if (trEds.length > 0) {
+        priceTR = Math.min(...trEds.map(e => e.clientPrice));
+      }
+    }
+    if (found?.prices?.UA?.editions) {
+      const uaEds = found.prices.UA.editions.filter(e => e.clientPrice > 0);
+      if (uaEds.length > 0) {
+        priceUA = Math.min(...uaEds.map(e => e.clientPrice));
+      }
+    }
+
+    // Get cover — try Sony portrait first
+    let image = '';
+    if (found?.portraitUrl) {
+      image = found.portraitUrl;
+    } else if (found?.coverUrl) {
+      image = found.coverUrl;
+    }
+
+    // Fallback cover: known overrides, then local file
+    if (!image && COVER_OVERRIDES[slug]) {
+      image = COVER_OVERRIDES[slug];
+    }
+    if (!image) {
+      image = '/images/covers/' + slug + '.jpg';
+    }
+
+    // Genre
+    let genre = '';
+    if (found?.rawgGenre) {
+      genre = gameDescriptions.translateGenre(found.rawgGenre) || found.rawgGenre;
+    } else if (found?.genres?.length) {
+      genre = gameDescriptions.translateGenre(found.genres[0]) || found.genres[0];
+    }
+
+    // Try RAWG if no genre or no price
+    if (!genre || (priceTR === 0 && priceUA === 0)) {
+      try {
+        await new Promise(r => setTimeout(r, 500));
+        const rawgData = await rawg.searchGame(name);
+        if (rawgData) {
+          if (!genre && rawgData.genres?.length) {
+            genre = gameDescriptions.translateGenre(rawgData.genres[0]) || rawgData.genres[0];
+          }
+          if (!image || image.startsWith('/images/')) {
+            if (rawgData.slug) {
+              try {
+                const details = await rawg.fetchGameDetails(rawgData.slug);
+                if (details?.background_image) {
+                  // Only use if we have no other image
+                  if (!image || image.startsWith('/images/')) {
+                    image = details.background_image;
+                  }
+                }
+              } catch {}
+            }
+          }
+        }
+      } catch {}
+    }
+
+    // Apply cover override if still using generic local path
+    if (image.startsWith('/images/covers/') && COVER_OVERRIDES[slug]) {
+      image = COVER_OVERRIDES[slug];
+    }
+
+    // Fallback prices from existing hardcoded data
+    if (priceTR === 0) priceTR = entry.priceTR || 0;
+    if (priceUA === 0) priceUA = entry.priceUA || 0;
+    if (!genre) genre = entry.genre || 'Экшен';
+    if ((!image || image.startsWith('/images/')) && entry.image) image = entry.image;
+
+    resolved.push({
+      rank,
+      title: name,
+      genre,
+      image,
+      platform: 'PS5',
+      priceTR,
+      priceUA,
+    });
+  }
+
+  // Save JSON state
+  saveTopSellersJson({
+    month: meta.month,
+    year: meta.year,
+    source: meta.source,
+    updatedAt: new Date().toISOString(),
+    games: resolved,
+  });
+
+  // Generate TS
+  const monthCapitalized = meta.month.charAt(0).toUpperCase() + meta.month.slice(1);
+  const { content, count } = generateTopSellersTs(resolved, {
+    month: monthCapitalized + ' ' + meta.year,
+    region: meta.region || 'Европа',
+    source: meta.source || 'PlayStation Blog',
+  });
+
+  if (!ENABLED) {
+    console.log(PREFIX + ' Запись отключена');
+    return { written: false, count };
+  }
+
+  const filePath = path.join(REPO_ROOT, TOP_SELLERS_FILE);
+
+  // Check if content changed
+  try {
+    const existing = fs.readFileSync(filePath, 'utf8');
+    const strip = s => s.replace(/\/\/ Обновлено:.*\n/, '');
+    if (strip(existing) === strip(content)) {
+      console.log(PREFIX + ' top-sellers.ts не изменился');
+      return { written: false, count };
+    }
+  } catch {}
+
+  const dir = path.dirname(filePath);
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(filePath, content, 'utf8');
+  console.log(PREFIX + ' ✅ ' + filePath + ' (' + count + ' игр)');
+
+  const pushed = gitPushTopSellers(count);
+
+  return { written: true, count, pushed, month: meta.month, year: meta.year };
+}
+
 // ── Export ───────────────────────────────────────────────────────────────
 
 module.exports = {
@@ -1569,4 +1883,5 @@ module.exports = {
   generateDealsTs,
   generatePreorders,
   generateHotReleases,
+  generateTopSellers,
 };

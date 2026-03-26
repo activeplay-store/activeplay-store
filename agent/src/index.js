@@ -152,6 +152,19 @@ async function runNightlyParse() {
   } catch (err) {
     console.log(`[Agent] HotReleases ошибка: ${err.message}`);
   }
+
+  // Обновить top-sellers.ts (топ-продаж из PlayStation Blog)
+  try {
+    const topResult = await siteWriter.generateTopSellers();
+    if (topResult.written) {
+      console.log(`[Agent] top-sellers.ts обновлён: ${topResult.count} игр`);
+      if (topResult.pushed) {
+        notifier.sendAlert('site_updated', `🏆 Топ-продаж обновлён: ${topResult.month} ${topResult.year}`);
+      }
+    }
+  } catch (err) {
+    console.log(`[Agent] TopSellers ошибка: ${err.message}`);
+  }
 }
 
 function detectChanges(oldData, newGames) {
@@ -313,6 +326,12 @@ const server = http.createServer((req, res) => {
     return;
   }
 
+  if (req.url === '/top-sellers') {
+    res.end(JSON.stringify({ status: 'started' }));
+    siteWriter.generateTopSellers().catch(err => console.error('[TopSellers]', err.message));
+    return;
+  }
+
   // GET / — health check
   res.end(JSON.stringify({
     status: 'ok',
@@ -403,9 +422,26 @@ async function main() {
     }
   }, { timezone: 'Europe/Moscow' });
 
+  // Топ-продаж PS5: 06:00 МСК ежедневно (проверяет PlayStation Blog)
+  cron.schedule('0 6 * * *', async () => {
+    console.log('[Cron] Проверка топ-продаж (06:00)...');
+    try {
+      const result = await siteWriter.generateTopSellers();
+      if (result.written) {
+        console.log(`[Agent] top-sellers.ts обновлён: ${result.count} игр (${result.month} ${result.year})`);
+        if (result.pushed) {
+          notifier.sendAlert('site_updated', `🏆 Топ-продаж обновлён: ${result.month} ${result.year} — ${result.count} игр`);
+        }
+      }
+    } catch (err) {
+      console.error('[Cron] TopSellers:', err.message);
+    }
+  }, { timezone: 'Europe/Moscow' });
+
   console.log('[AP-Agent] Расписание:');
   console.log('  Парсинг скидок: 3:00 МСК ежедневно');
   console.log('  Курс ЦБ: 10:00 и 17:00 МСК');
+  console.log('  Топ-продаж: 6:00 МСК ежедневно');
   console.log('  Горящие новинки: 3:00 и 12:00 МСК');
   console.log('  Анонсы каталогов: 18:00 МСК (по календарю)');
   console.log('  Релиз каталогов: 20:00 МСК (по календарю)');
