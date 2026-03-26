@@ -1,3 +1,5 @@
+require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') });
+
 const http = require('http');
 const cron = require('node-cron');
 const config = require('./config');
@@ -136,6 +138,19 @@ async function runNightlyParse() {
     }
   } catch (err) {
     console.log(`[Agent] Preorders ошибка: ${err.message}`);
+  }
+
+  // Обновить hotReleases.ts (горящие новинки с хайп-скорингом)
+  try {
+    const hotResult = await siteWriter.generateHotReleases();
+    if (hotResult.written) {
+      console.log(`[Agent] hotReleases.ts обновлён: ${hotResult.count} новинок`);
+      if (hotResult.pushed) {
+        notifier.sendAlert('site_updated', `🔥 Горящие новинки обновлены: ${hotResult.count} игр`);
+      }
+    }
+  } catch (err) {
+    console.log(`[Agent] HotReleases ошибка: ${err.message}`);
   }
 }
 
@@ -292,6 +307,12 @@ const server = http.createServer((req, res) => {
     return;
   }
 
+  if (req.url === '/hot-releases') {
+    res.end(JSON.stringify({ status: 'started' }));
+    siteWriter.generateHotReleases().catch(err => console.error('[HotReleases]', err.message));
+    return;
+  }
+
   // GET / — health check
   res.end(JSON.stringify({
     status: 'ok',
@@ -369,9 +390,23 @@ async function main() {
     catch (err) { console.error('[Cron] Каталоги 22:00:', err.message); }
   }, { timezone: 'Europe/Moscow' });
 
+  // Горящие новинки: 12:00 МСК (дополнительный прогон для свежих хайп-данных)
+  cron.schedule('0 12 * * *', async () => {
+    console.log('[Cron] Обновление горящих новинок (12:00)...');
+    try {
+      const result = await siteWriter.generateHotReleases();
+      if (result.written) {
+        console.log(`[Agent] hotReleases.ts обновлён: ${result.count} новинок`);
+      }
+    } catch (err) {
+      console.error('[Cron] HotReleases:', err.message);
+    }
+  }, { timezone: 'Europe/Moscow' });
+
   console.log('[AP-Agent] Расписание:');
   console.log('  Парсинг скидок: 3:00 МСК ежедневно');
   console.log('  Курс ЦБ: 10:00 и 17:00 МСК');
+  console.log('  Горящие новинки: 3:00 и 12:00 МСК');
   console.log('  Анонсы каталогов: 18:00 МСК (по календарю)');
   console.log('  Релиз каталогов: 20:00 МСК (по календарю)');
   console.log('  Повтор каталогов: 22:00 МСК');

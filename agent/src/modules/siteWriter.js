@@ -7,6 +7,7 @@ const sony = require('./parsers/sony');
 const pricing = require('./pricing');
 const notifier = require('./notifier');
 const rawg = require('./parsers/rawg');
+const hype = require('./parsers/hype');
 
 const PREFIX = '[SiteWriter]';
 
@@ -19,6 +20,11 @@ const MIN_DISCOUNT = SW_CONFIG.minDiscountPct || 10;
 const PREORDERS_FILE = 'src/data/preorders.ts';
 const PREORDERS_JSON_FILE = path.join(__dirname, '..', 'data', 'preorders.json');
 const ENABLED = SW_CONFIG.enabled !== false;
+
+const HYPE_CONFIG = config.hype || {};
+const HOT_RELEASES_FILE = HYPE_CONFIG.hotReleasesFile || 'src/data/hotReleases.ts';
+const HOT_RELEASES_COUNT = HYPE_CONFIG.hotReleasesCount || 4;
+const NEW_RELEASE_DAYS = HYPE_CONFIG.newReleaseDays || 60;
 
 // ── Helpers ─────────────────────────────────────────────────────────────
 
@@ -1019,10 +1025,366 @@ async function generatePreorders() {
 }
 
 
+// ── Hot Releases (Горящие новинки) ──────────────────────────────────────
+
+/**
+ * Формула totalScore для ранжирования новинок:
+ *   totalScore = hypeScore * 0.40 + metacriticNorm * 0.30 + freshnessScore * 0.20 + brandScore * 0.10
+ *
+ * - hypeScore (1-10): из Twitch + YouTube
+ * - metacriticNorm (1-10): metacritic / 10 (85 → 8.5)
+ * - freshnessScore (1-10): чем свежее, тем выше
+ * - brandScore (1-10): из rawg.brandFallback
+ */
+function calculateTotalScore(hypeData, metacritic, releaseDate, gameName) {
+  const hs = hypeData?.hypeScore || 1;
+  const mc = metacritic ? Math.min(metacritic / 10, 10) : 5;
+  const fresh = rawg.calculateFreshness(releaseDate);
+  const brand = rawg.brandFallback(gameName).hypeScore;
+
+  const total = hs * 0.40 + mc * 0.30 + fresh * 0.20 + brand * 0.10;
+  return Math.round(total * 10) / 10;
+}
+
+function isRecentRelease(releaseDateStr) {
+  if (!releaseDateStr) return false;
+  const released = new Date(releaseDateStr);
+  if (isNaN(released.getTime())) return false;
+  const now = new Date();
+  const diffDays = (now - released) / (1000 * 60 * 60 * 24);
+  return diffDays >= 0 && diffDays <= NEW_RELEASE_DAYS;
+}
+
+function formatReleaseDateRu(dateStr) {
+  if (!dateStr) return 'TBD';
+  const d = new Date(dateStr);
+  if (isNaN(d.getTime())) return dateStr;
+
+  const months = [
+    'января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
+    'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'
+  ];
+  return d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
+}
+
+function generateHotReleasesTs(releases) {
+  const now = new Date().toISOString();
+
+  let out = '';
+  out += '// Автоматически сгенерировано AI-агентом ActivePlay\n';
+  out += '// Обновлено: ' + now + '\n';
+  out += '// Горящих новинок: ' + releases.length + '\n';
+  out += '// НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом\n\n';
+
+  out += 'export interface HotReleaseEdition {\n';
+  out += '  name: string;\n';
+  out += '  priceRUB: number;\n';
+  out += '}\n\n';
+
+  out += 'export interface HotRelease {\n';
+  out += '  id: string;\n';
+  out += '  title: string;\n';
+  out += '  slug: string;\n';
+  out += '  description: string;\n';
+  out += '  releaseDate: string;\n';
+  out += '  metacritic: number;\n';
+  out += '  genre: string;\n';
+  out += '  platforms: string[];\n';
+  out += '  cover: string;\n';
+  out += '  hypeScore: number;\n';
+  out += '  totalScore: number;\n';
+  out += '  editions: {\n';
+  out += '    tr: HotReleaseEdition[];\n';
+  out += '    ua: HotReleaseEdition[];\n';
+  out += '  };\n';
+  out += '}\n\n';
+
+  out += 'export const hotReleases: HotRelease[] = [\n';
+
+  for (const r of releases) {
+    out += '  {\n';
+    out += '    id: ' + JSON.stringify(r.id) + ',\n';
+    out += '    title: ' + JSON.stringify(r.title) + ',\n';
+    out += '    slug: ' + JSON.stringify(r.slug) + ',\n';
+    out += '    description: ' + JSON.stringify(r.description) + ',\n';
+    out += '    releaseDate: ' + JSON.stringify(r.releaseDate) + ',\n';
+    out += '    metacritic: ' + (r.metacritic || 0) + ',\n';
+    out += '    genre: ' + JSON.stringify(r.genre) + ',\n';
+    out += '    platforms: ' + JSON.stringify(r.platforms) + ',\n';
+    out += '    cover: ' + JSON.stringify(r.cover) + ',\n';
+    out += '    hypeScore: ' + r.hypeScore + ',\n';
+    out += '    totalScore: ' + r.totalScore + ',\n';
+    out += '    editions: {\n';
+
+    out += '      tr: [\n';
+    for (const ed of (r.editions.tr || [])) {
+      out += '        { name: ' + JSON.stringify(ed.name) + ', priceRUB: ' + ed.priceRUB + ' },\n';
+    }
+    out += '      ],\n';
+
+    out += '      ua: [\n';
+    for (const ed of (r.editions.ua || [])) {
+      out += '        { name: ' + JSON.stringify(ed.name) + ', priceRUB: ' + ed.priceRUB + ' },\n';
+    }
+    out += '      ],\n';
+
+    out += '    },\n';
+    out += '  },\n';
+  }
+
+  out += '];\n';
+
+  return { content: out, count: releases.length };
+}
+
+function gitPushHotReleases(count) {
+  try {
+    const diff = execSync('git diff --name-only ' + HOT_RELEASES_FILE, { cwd: REPO_ROOT, encoding: 'utf8' }).trim();
+    if (!diff) {
+      const staged = execSync('git diff --cached --name-only ' + HOT_RELEASES_FILE, { cwd: REPO_ROOT, encoding: 'utf8' }).trim();
+      if (!staged) {
+        console.log(PREFIX + ' hotReleases.ts не изменился');
+        return false;
+      }
+    }
+
+    execSync('git add ' + HOT_RELEASES_FILE, { cwd: REPO_ROOT });
+    const msg = 'data: обновление горящих новинок (' + count + ' игр)';
+    execSync('git commit -m "' + msg + '"', { cwd: REPO_ROOT });
+    execSync('git push', { cwd: REPO_ROOT });
+
+    console.log(PREFIX + ' ✅ hotReleases.ts push');
+    return true;
+  } catch (err) {
+    console.error(PREFIX + ' ❌ hotReleases push: ' + err.message);
+    return false;
+  }
+}
+
+async function generateHotReleases() {
+  if (!HYPE_CONFIG.enabled) {
+    console.log(PREFIX + ' Хайп-парсер отключён');
+    return { written: false, count: 0 };
+  }
+
+  console.log(PREFIX + ' === Генерация горящих новинок ===');
+
+  // 1. Загрузить все игры из games.json
+  const gamesData = parsers.loadGames();
+  const allGames = gamesData.games || [];
+
+  if (allGames.length === 0) {
+    console.log(PREFIX + ' Нет данных в games.json, пропускаем');
+    return { written: false, count: 0 };
+  }
+
+  // 2. Отфильтровать новинки (вышедшие за последние N дней)
+  const recentGames = allGames.filter(g => {
+    // Игры с releaseDate в окне
+    if (g.releaseDate && isRecentRelease(g.releaseDate)) return true;
+    // Игры без скидок (полная цена) — вероятно новинки
+    if (!g.bestPrice?.discountPct || g.bestPrice.discountPct === 0) return false;
+    return false;
+  });
+
+  // Также добавить игры из предзаказов, которые уже вышли
+  const preordersData = loadPreordersJson();
+  const releasedPreorders = (preordersData.preorders || []).filter(p =>
+    p.releaseDate && isRecentRelease(p.releaseDate)
+  );
+
+  // Объединить: отдать приоритет games.json, дополнить предзаказами
+  const candidates = [...recentGames];
+  for (const po of releasedPreorders) {
+    const exists = candidates.some(g =>
+      (g.conceptId && g.conceptId === po.conceptId) ||
+      slugify(cleanGameName(cleanName(g.name))) === po.slug
+    );
+    if (!exists) {
+      candidates.push({
+        name: po.name,
+        id: po.id,
+        conceptId: po.conceptId,
+        releaseDate: po.releaseDate,
+        coverUrl: po.portraitUrl || po.coverUrl || '',
+        prices: po.prices || {},
+        platform: (po.platforms || []).join(', '),
+      });
+    }
+  }
+
+  console.log(PREFIX + ' Кандидатов (недавние релизы): ' + candidates.length);
+
+  if (candidates.length === 0) {
+    console.log(PREFIX + ' Нет недавних релизов');
+    return { written: false, count: 0 };
+  }
+
+  // 3. Обогатить данными из RAWG (metacritic, genre)
+  const enriched = [];
+  for (const game of candidates) {
+    const name = cleanGameName(cleanName(game.name));
+    if (!name || name.length < 3) continue;
+
+    let metacritic = game.metacritic || null;
+    let genres = [];
+
+    // Получить данные из RAWG если нет metacritic
+    if (!metacritic) {
+      try {
+        await new Promise(r => setTimeout(r, 1000));
+        const rawgData = await rawg.searchGame(name);
+        if (rawgData) {
+          metacritic = rawgData.metacritic;
+          genres = rawgData.genres || [];
+        }
+      } catch {}
+    }
+
+    enriched.push({
+      ...game,
+      cleanName: name,
+      metacritic,
+      genres,
+    });
+  }
+
+  // 4. Получить хайп-скоры из Twitch + YouTube
+  const gameNames = enriched.map(g => g.cleanName);
+  const hypeScores = await hype.getHypeScores(gameNames, 500);
+
+  // 5. Рассчитать totalScore и отсортировать
+  const scored = enriched.map(g => {
+    const hypeData = hypeScores.get(g.cleanName) || { hypeScore: 1 };
+    const totalScore = calculateTotalScore(hypeData, g.metacritic, g.releaseDate, g.cleanName);
+
+    return {
+      ...g,
+      hypeData,
+      totalScore,
+    };
+  });
+
+  scored.sort((a, b) => b.totalScore - a.totalScore);
+
+  // 6. Взять топ-N
+  const topGames = scored.slice(0, HOT_RELEASES_COUNT);
+
+  console.log(PREFIX + ' Топ горящих новинок:');
+  for (const g of topGames) {
+    console.log(
+      PREFIX + '   ' + g.cleanName +
+      ' | score=' + g.totalScore +
+      ' | hype=' + (g.hypeData?.hypeScore || 0) +
+      ' | mc=' + (g.metacritic || '?')
+    );
+  }
+
+  // 7. Подготовить данные для TS
+  const releases = topGames.map(g => {
+    const name = g.cleanName;
+    const slug = slugify(name);
+    const platforms = parsePlatforms(g.platform);
+    const cover = g.portraitUrl || g.coverUrl || g.platprices?.coverArt || '/images/covers/' + slug + '.jpg';
+    const genre = (g.genres && g.genres.length > 0) ? g.genres[0] : 'Action';
+
+    // Собрать editions по регионам
+    const editionsTr = [];
+    const editionsUa = [];
+
+    if (g.prices?.TR?.editions) {
+      for (const ed of g.prices.TR.editions) {
+        const price = ed.clientPrice || ed.clientSalePrice || ed.basePrice;
+        if (price) {
+          editionsTr.push({ name: ed.name || 'Standard', priceRUB: price });
+        }
+      }
+    }
+    if (g.prices?.UA?.editions) {
+      for (const ed of g.prices.UA.editions) {
+        const price = ed.clientPrice || ed.clientSalePrice || ed.basePrice;
+        if (price) {
+          editionsUa.push({ name: ed.name || 'Standard', priceRUB: price });
+        }
+      }
+    }
+
+    // Dedup по name, оставить дешевле
+    const dedupEds = (eds) => {
+      const map = new Map();
+      for (const e of eds) {
+        if (!map.has(e.name) || e.priceRUB < map.get(e.name).priceRUB) {
+          map.set(e.name, e);
+        }
+      }
+      return Array.from(map.values()).sort((a, b) => a.priceRUB - b.priceRUB);
+    };
+
+    let trFinal = dedupEds(editionsTr);
+    let uaFinal = dedupEds(editionsUa);
+
+    // Фоллбэк: если один регион пуст — копируем из другого
+    if (trFinal.length === 0 && uaFinal.length > 0) trFinal = uaFinal;
+    if (uaFinal.length === 0 && trFinal.length > 0) uaFinal = trFinal;
+
+    // Нет цен вообще — пропускаем
+    if (trFinal.length === 0 && uaFinal.length === 0) return null;
+
+    return {
+      id: slug,
+      title: name,
+      slug,
+      description: '', // Агент не генерирует описания — заполняется вручную или из RAWG
+      releaseDate: formatReleaseDateRu(g.releaseDate),
+      metacritic: g.metacritic || 0,
+      genre,
+      platforms,
+      cover,
+      hypeScore: g.hypeData?.hypeScore || 1,
+      totalScore: g.totalScore,
+      editions: {
+        tr: trFinal,
+        ua: uaFinal,
+      },
+    };
+  }).filter(Boolean);
+
+  // 8. Сгенерировать TS
+  const { content, count } = generateHotReleasesTs(releases);
+
+  if (!ENABLED) {
+    console.log(PREFIX + ' Запись отключена');
+    return { written: false, count };
+  }
+
+  const filePath = path.join(REPO_ROOT, HOT_RELEASES_FILE);
+
+  // Проверить, изменился ли контент
+  try {
+    const existing = fs.readFileSync(filePath, 'utf8');
+    const strip = s => s.replace(/\/\/ Обновлено:.*\n/, '');
+    if (strip(existing) === strip(content)) {
+      console.log(PREFIX + ' hotReleases.ts не изменился');
+      return { written: false, count };
+    }
+  } catch {}
+
+  const dir = path.dirname(filePath);
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(filePath, content, 'utf8');
+  console.log(PREFIX + ' ✅ ' + filePath + ' (' + count + ' горящих новинок)');
+
+  const pushed = gitPushHotReleases(count);
+
+  return { written: true, count, pushed };
+}
+
+
 // ── Export ───────────────────────────────────────────────────────────────
 
 module.exports = {
   generateAndWrite,
   generateDealsTs,
   generatePreorders,
+  generateHotReleases,
 };

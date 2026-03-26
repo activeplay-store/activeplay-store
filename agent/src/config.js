@@ -153,5 +153,22 @@ module.exports = {
       endpoint: 'https://api.rawg.io/api',
       rateLimit: 1000
     }
-  }
+  },
+
+  // Хайп-парсер (Twitch + YouTube)
+  hype: {
+    enabled: true,
+    twitch: {
+      clientId: process.env.TWITCH_CLIENT_ID || '',
+      clientSecret: process.env.TWITCH_CLIENT_SECRET || '',
+    },
+    youtube: {
+      apiKey: process.env.YOUTUBE_API_KEY || '',
+    },
+    cacheTtlMs: 6 * 60 * 60 * 1000, // 6 часов
+    hotReleasesFile: 'src/data/hotReleases.ts',
+    hotReleasesCount: 4, // Сколько карточек на главной
+    // Окно новинок: игры вышедшие за последние N дней
+    newReleaseDays: 60,
+  },
 };
