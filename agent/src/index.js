@@ -124,6 +124,19 @@ async function runNightlyParse() {
   } catch (err) {
     console.log(`[Agent] SiteWriter ошибка: ${err.message}`);
   }
+
+  // Обновить preorders.ts на сайте
+  try {
+    const preorderResult = await siteWriter.generatePreorders();
+    if (preorderResult.written) {
+      console.log(`[Agent] preorders.ts обновлён: ${preorderResult.count} предзаказов`);
+      if (preorderResult.pushed) {
+        notifier.sendAlert('site_updated', `📦 Предзаказы обновлены: ${preorderResult.count} игр`);
+      }
+    }
+  } catch (err) {
+    console.log(`[Agent] Preorders ошибка: ${err.message}`);
+  }
 }
 
 function detectChanges(oldData, newGames) {

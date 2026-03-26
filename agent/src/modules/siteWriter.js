@@ -3,6 +3,10 @@ const path = require('path');
 const { execSync } = require('child_process');
 const config = require('../config');
 const parsers = require('./parsers');
+const sony = require('./parsers/sony');
+const pricing = require('./pricing');
+const notifier = require('./notifier');
+const rawg = require('./parsers/rawg');
 
 const PREFIX = '[SiteWriter]';
 
@@ -12,6 +16,8 @@ const SW_CONFIG = config.siteWriter || {};
 const REPO_ROOT = SW_CONFIG.repoRoot || '/var/www/activeplay-store';
 const DEALS_FILE = SW_CONFIG.dealsFile || 'src/data/deals.ts';
 const MIN_DISCOUNT = SW_CONFIG.minDiscountPct || 10;
+const PREORDERS_FILE = 'src/data/preorders.ts';
+const PREORDERS_JSON_FILE = path.join(__dirname, '..', 'data', 'preorders.json');
 const ENABLED = SW_CONFIG.enabled !== false;
 
 // ── Helpers ─────────────────────────────────────────────────────────────
@@ -527,9 +533,398 @@ async function generateAndWrite() {
   return { written: true, gamesCount: count, pushed };
 }
 
+
+// ── Preorders ────────────────────────────────────────────────────────────
+
+function sleepMs(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function calculatePreorderClientPrices(game, regionCode) {
+  const regionPrices = game.prices[regionCode];
+  if (!regionPrices?.editions) return;
+  for (const edition of regionPrices.editions) {
+    if (edition.basePrice) {
+      try {
+        const result = pricing.calculatePrice(edition.basePrice, regionCode);
+        edition.clientPrice = result.clientPrice;
+      } catch {}
+    }
+  }
+}
+
+function mergePreorders(trGames, uaGames) {
+  const merged = new Map();
+
+  function getKey(game) {
+    if (game.conceptId) return 'concept:' + game.conceptId;
+    return 'name:' + normalizeForDedup(game.name);
+  }
+
+  for (const game of trGames) {
+    const key = getKey(game);
+    merged.set(key, { ...game });
+  }
+
+  for (const game of uaGames) {
+    const key = getKey(game);
+    if (merged.has(key)) {
+      const existing = merged.get(key);
+      if (game.prices.UA) existing.prices.UA = game.prices.UA;
+      if (!existing.conceptId && game.conceptId) existing.conceptId = game.conceptId;
+      if (!existing.portraitUrl && game.portraitUrl) existing.portraitUrl = game.portraitUrl;
+    } else {
+      merged.set(key, { ...game });
+    }
+  }
+
+  return Array.from(merged.values());
+}
+
+function filterPreorders(games) {
+  const MIN_PRICE_TRY = 500;
+  const result = [];
+  const seen = new Map();
+
+  for (const game of games) {
+    const nameLower = (game.name || '').toLowerCase();
+    if (/add-on|dlc|season pass|expansion pass|upgrade|currency pack|coin|pre-order bundle|free to play/i.test(nameLower)) continue;
+    if (/^[^a-zA-Z0-9]*$/.test(game.name.replace(/[\s\-\u2013\u2014:.,!?'\u00AB\u00BB()]/g, ''))) continue;
+
+    const normKey = game.conceptId ? ('c:' + game.conceptId) : ('n:' + normalizeForDedup(game.name));
+
+    if (seen.has(normKey)) {
+      const existingIdx = seen.get(normKey);
+      const existing = result[existingIdx];
+      for (const region of ['TR', 'UA']) {
+        if (!game.prices[region]?.editions) continue;
+        if (!existing.prices[region]) {
+          existing.prices[region] = game.prices[region];
+        } else {
+          for (const ed of game.prices[region].editions) {
+            const exists = existing.prices[region].editions.find(e => e.name === ed.name);
+            if (!exists && ed.basePrice) {
+              existing.prices[region].editions.push(ed);
+            }
+          }
+        }
+      }
+      continue;
+    }
+
+    const trEditions = game.prices?.TR?.editions || [];
+    const standardTR = trEditions.find(e => e.name === 'Standard') || trEditions[0];
+    const price = standardTR?.basePrice || 0;
+    if (price < MIN_PRICE_TRY) continue;
+
+    seen.set(normKey, result.length);
+    result.push(game);
+  }
+
+  return result;
+}
+
+async function fetchReleaseDateFromConcept(conceptId) {
+  if (!conceptId) return null;
+  try {
+    const locales = ['en-tr', 'en-us'];
+    for (const locale of locales) {
+      const url = 'https://store.playstation.com/' + locale + '/concept/' + conceptId;
+      const response = await fetch(url, {
+        headers: { 'User-Agent': config.parsers.userAgent },
+        signal: AbortSignal.timeout(12000),
+        redirect: 'follow'
+      });
+      if (!response.ok) continue;
+      const html = await response.text();
+
+      const datePatterns = [
+        /releaseDate['"]\s*:\s*['"](20\d{2}-\d{2}-\d{2})/,
+        /(?:Expected|Available|Release date:?\s*)\s*(\d{1,2}\/\d{1,2}\/\d{4})/i,
+      ];
+
+      for (const pat of datePatterns) {
+        const match = html.match(pat);
+        if (match) {
+          const raw = match[1];
+          if (/^\d{4}-\d{2}-\d{2}/.test(raw)) return raw.substring(0, 10);
+          if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(raw)) {
+            const parts = raw.split('/');
+            return parts[2] + '-' + parts[0].padStart(2, '0') + '-' + parts[1].padStart(2, '0');
+          }
+        }
+      }
+    }
+  } catch {}
+  return null;
+}
+
+async function fetchReleaseDates(games) {
+  let fromConcept = 0, fromRawg = 0;
+
+  for (const game of games) {
+    if (game.releaseDate) continue;
+
+    if (game.conceptId) {
+      await sleepMs(300);
+      const date = await fetchReleaseDateFromConcept(game.conceptId);
+      if (date) {
+        game.releaseDate = date;
+        fromConcept++;
+        continue;
+      }
+    }
+
+    await sleepMs(1000);
+    try {
+      const rawgData = await rawg.searchGame(cleanGameName(cleanName(game.name)));
+      if (rawgData?.released) {
+        game.releaseDate = rawgData.released;
+        fromRawg++;
+      }
+    } catch {}
+  }
+
+  console.log(PREFIX + ' Даты: concept=' + fromConcept + ', RAWG=' + fromRawg + ', без даты=' + games.filter(g => !g.releaseDate).length);
+}
+
+function loadPreordersJson() {
+  try {
+    return JSON.parse(fs.readFileSync(PREORDERS_JSON_FILE, 'utf8'));
+  } catch {
+    return { preorders: [] };
+  }
+}
+
+function savePreordersJson(games) {
+  const data = {
+    updatedAt: new Date().toISOString(),
+    preorders: games.map(g => ({
+      name: cleanGameName(cleanName(g.name)),
+      id: g.id,
+      conceptId: g.conceptId,
+      slug: slugify(g.name),
+      platforms: parsePlatforms(g.platform),
+      releaseDate: g.releaseDate || null,
+      portraitUrl: g.portraitUrl || g.coverUrl || '',
+      coverUrl: g.coverUrl || '',
+      prices: {
+        TR: g.prices.TR ? {
+          editions: (g.prices.TR.editions || [])
+            .filter(e => e.basePrice)
+            .map(e => ({ name: e.name, priceTRY: e.basePrice, clientPrice: e.clientPrice || null }))
+        } : undefined,
+        UA: g.prices.UA ? {
+          editions: (g.prices.UA.editions || [])
+            .filter(e => e.basePrice)
+            .map(e => ({ name: e.name, priceUAH: e.basePrice, clientPrice: e.clientPrice || null }))
+        } : undefined,
+      }
+    }))
+  };
+
+  const dir = path.dirname(PREORDERS_JSON_FILE);
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(PREORDERS_JSON_FILE, JSON.stringify(data, null, 2), 'utf8');
+  console.log(PREFIX + ' preorders.json: ' + data.preorders.length + ' игр');
+}
+
+function detectNewPreorders(oldData, newGames) {
+  const oldIds = new Set((oldData.preorders || []).map(g => g.conceptId || g.slug || g.id));
+  return newGames.filter(g => {
+    const key = g.conceptId || g.id;
+    return !oldIds.has(key);
+  });
+}
+
+function generatePreordersTs(games) {
+  const preorders = [];
+
+  for (const game of games) {
+    const name = cleanGameName(cleanName(game.name));
+    const slug = game.id || slugify(name);
+    const platforms = parsePlatforms(game.platform);
+    const coverUrl = game.portraitUrl || game.coverUrl || '';
+    const releaseDate = game.releaseDate || null;
+
+    const editions = {};
+
+    if (game.prices.TR) {
+      const trEds = (game.prices.TR.editions || [])
+        .filter(e => e.basePrice && e.clientPrice)
+        .map(e => ({ name: e.name, clientPrice: e.clientPrice }));
+      if (trEds.length > 0) editions.TR = trEds;
+    }
+
+    if (game.prices.UA) {
+      const uaEds = (game.prices.UA.editions || [])
+        .filter(e => e.basePrice && e.clientPrice)
+        .map(e => ({ name: e.name, clientPrice: e.clientPrice }));
+      if (uaEds.length > 0) editions.UA = uaEds;
+    }
+
+    if (!editions.TR && !editions.UA) continue;
+
+    preorders.push({ id: slug, name, platforms, coverUrl, releaseDate, editions });
+  }
+
+  preorders.sort((a, b) => {
+    if (a.releaseDate && b.releaseDate) return a.releaseDate.localeCompare(b.releaseDate);
+    if (a.releaseDate) return -1;
+    if (b.releaseDate) return 1;
+    return a.name.localeCompare(b.name);
+  });
+
+  const now = new Date().toISOString();
+
+  let out = '';
+  out += '// \u0410\u0432\u0442\u043e\u043c\u0430\u0442\u0438\u0447\u0435\u0441\u043a\u0438 \u0441\u0433\u0435\u043d\u0435\u0440\u0438\u0440\u043e\u0432\u0430\u043d\u043e AI-\u0430\u0433\u0435\u043d\u0442\u043e\u043c ActivePlay\n';
+  out += '// Обновлено: ' + now + '\n';
+  out += '// Предзаказов: ' + preorders.length + '\n';
+  out += '// НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом\n\n';
+
+  out += 'export interface PreorderEdition {\n';
+  out += '  name: string;\n';
+  out += '  clientPrice: number;\n';
+  out += '}\n\n';
+
+  out += 'export interface PreorderGame {\n';
+  out += '  id: string;\n';
+  out += '  name: string;\n';
+  out += '  platforms: string[];\n';
+  out += '  coverUrl: string;\n';
+  out += '  releaseDate: string | null;\n';
+  out += '  editions: {\n';
+  out += '    TR?: PreorderEdition[];\n';
+  out += '    UA?: PreorderEdition[];\n';
+  out += '  };\n';
+  out += '}\n\n';
+
+  out += 'export const preorderData: PreorderGame[] = [\n';
+
+  for (const p of preorders) {
+    out += '  {\n';
+    out += '    id: ' + JSON.stringify(p.id) + ',\n';
+    out += '    name: ' + JSON.stringify(p.name) + ',\n';
+    out += '    platforms: ' + JSON.stringify(p.platforms) + ',\n';
+    out += '    coverUrl: ' + JSON.stringify(p.coverUrl) + ',\n';
+    out += '    releaseDate: ' + (p.releaseDate ? JSON.stringify(p.releaseDate) : 'null') + ',\n';
+    out += '    editions: {\n';
+    if (p.editions.TR) {
+      out += '      TR: [\n';
+      for (const ed of p.editions.TR) {
+        out += '        { name: ' + JSON.stringify(ed.name) + ', clientPrice: ' + ed.clientPrice + ' },\n';
+      }
+      out += '      ],\n';
+    }
+    if (p.editions.UA) {
+      out += '      UA: [\n';
+      for (const ed of p.editions.UA) {
+        out += '        { name: ' + JSON.stringify(ed.name) + ', clientPrice: ' + ed.clientPrice + ' },\n';
+      }
+      out += '      ],\n';
+    }
+    out += '    },\n';
+    out += '  },\n';
+  }
+
+  out += '];\n';
+
+  return { content: out, count: preorders.length };
+}
+
+function gitPushPreorders(count) {
+  try {
+    const diff = execSync('git diff --name-only ' + PREORDERS_FILE, { cwd: REPO_ROOT, encoding: 'utf8' }).trim();
+    if (!diff) {
+      const staged = execSync('git diff --cached --name-only ' + PREORDERS_FILE, { cwd: REPO_ROOT, encoding: 'utf8' }).trim();
+      if (!staged) {
+        console.log(PREFIX + ' preorders.ts не изменился');
+        return false;
+      }
+    }
+
+    execSync('git add ' + PREORDERS_FILE, { cwd: REPO_ROOT });
+    const msg = 'data: обновление предзаказов (' + count + ' игр)';
+    execSync('git commit -m "' + msg + '"', { cwd: REPO_ROOT });
+    execSync('git push', { cwd: REPO_ROOT });
+
+    console.log(PREFIX + ' ✅ preorders.ts push');
+    return true;
+  } catch (err) {
+    console.error(PREFIX + ' ❌ preorders push: ' + err.message);
+    return false;
+  }
+}
+
+async function generatePreorders() {
+  console.log(PREFIX + ' === Генерация предзаказов ===');
+
+  const trGames = await sony.fetchPreorders('TR');
+  const uaGames = await sony.fetchPreorders('UA');
+  console.log(PREFIX + ' Спарсено: TR=' + trGames.length + ', UA=' + uaGames.length);
+
+  for (const game of trGames) calculatePreorderClientPrices(game, 'TR');
+  for (const game of uaGames) calculatePreorderClientPrices(game, 'UA');
+
+  const merged = mergePreorders(trGames, uaGames);
+  console.log(PREFIX + ' Объединено: ' + merged.length);
+
+  const filtered = filterPreorders(merged);
+  console.log(PREFIX + ' После фильтрации: ' + filtered.length);
+
+  await sony.fetchPortraitCovers(filtered, 'TR');
+  await fetchReleaseDates(filtered);
+
+  const oldData = loadPreordersJson();
+  const newOnes = detectNewPreorders(oldData, filtered);
+  if (newOnes.length > 0) {
+    console.log(PREFIX + ' Новых: ' + newOnes.length);
+  }
+
+  savePreordersJson(filtered);
+
+  const { content, count } = generatePreordersTs(filtered);
+
+  if (!ENABLED) {
+    console.log(PREFIX + ' Запись отключена');
+    return { written: false, count, newCount: newOnes.length };
+  }
+
+  const filePath = path.join(REPO_ROOT, PREORDERS_FILE);
+
+  try {
+    const existing = fs.readFileSync(filePath, 'utf8');
+    const strip = s => s.replace(/\/\/ Обновлено:.*\n/, '');
+    if (strip(existing) === strip(content)) {
+      console.log(PREFIX + ' preorders.ts не изменился');
+      return { written: false, count, newCount: newOnes.length };
+    }
+  } catch {}
+
+  const dir = path.dirname(filePath);
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(filePath, content, 'utf8');
+  console.log(PREFIX + ' ✅ ' + filePath + ' (' + count + ' предзаказов)');
+
+  const pushed = gitPushPreorders(count);
+
+  for (const game of newOnes) {
+    const trEds = game.prices?.TR?.editions || [];
+    const prices = trEds.filter(e => e.basePrice).map(e => e.basePrice);
+    const minTRY = prices.length > 0 ? Math.min(...prices) : '?';
+    const rDate = game.releaseDate || 'TBD';
+    notifier.sendAlert('new_preorder', 'Новый предзаказ: ' + cleanGameName(cleanName(game.name)) + ', от ' + minTRY + ' TL, выход ' + rDate);
+  }
+
+  return { written: true, count, pushed, newCount: newOnes.length };
+}
+
+
 // ── Export ───────────────────────────────────────────────────────────────
 
 module.exports = {
   generateAndWrite,
   generateDealsTs,
+  generatePreorders,
 };

@@ -1,10 +1,10 @@
 'use client';
 
 import Image from 'next/image';
-import type { Preorder } from '@/data/preorders';
+import type { PreorderGame } from '@/data/preorders';
 
 interface PreorderCardProps {
-  preorder: Preorder;
+  preorder: PreorderGame;
   region: 'turkey' | 'ukraine';
   onOrder: () => void;
 }
@@ -18,7 +18,8 @@ function formatDate(dateStr: string): string {
   return `${date.getDate()} ${months[date.getMonth()]}`;
 }
 
-function getCountdown(dateStr: string): { text: string; color: string } {
+function getCountdown(dateStr: string | null): { text: string; color: string } {
+  if (!dateStr) return { text: 'Дата уточняется', color: '#9e9e9e' };
   const now = new Date();
   now.setHours(0, 0, 0, 0);
   const release = new Date(dateStr + 'T00:00:00');
@@ -41,31 +42,34 @@ function getCountdown(dateStr: string): { text: string; color: string } {
 
 export default function PreorderCard({ preorder, region, onOrder }: PreorderCardProps) {
   const countdown = getCountdown(preorder.releaseDate);
-  const hasMultipleEditions = preorder.editions.length > 1;
-  const getPrice = (ed: Preorder['editions'][0]) =>
-    region === 'turkey' ? ed.priceRUB_TR : ed.priceRUB_UA;
+  const regionKey = region === 'turkey' ? 'TR' : 'UA';
+  const editions = preorder.editions[regionKey] || preorder.editions.TR || [];
+  const platformStr = preorder.platforms.join(' / ');
+
+  if (editions.length === 0) return null;
 
   return (
     <div className="flex-shrink-0 w-[260px] sm:w-auto rounded-xl overflow-hidden card-base group transition-transform duration-300 hover:scale-[1.03] hover:shadow-2xl flex flex-col">
       {/* Cover */}
       <div className="relative" style={{ aspectRatio: '3/4' }}>
         <Image
-          src={preorder.image}
-          alt={`Предзаказ ${preorder.title} ${preorder.platform.replace(/\s*\/\s*/g, ' ')} купить`}
+          src={preorder.coverUrl}
+          alt={`Предзаказ ${preorder.name} ${platformStr} купить`}
           fill
           className="object-cover rounded-t-xl"
-          style={{ objectPosition: preorder.imagePosition || 'center top' }}
           sizes="(max-width: 640px) 260px, (max-width: 1024px) 50vw, 33vw"
           loading="lazy"
           unoptimized
         />
         {/* Date badge */}
-        <span
-          className="absolute top-3 left-3 px-2.5 py-1 rounded-md text-xs font-bold text-white"
-          style={{ background: '#00C853' }}
-        >
-          {formatDate(preorder.releaseDate)}
-        </span>
+        {preorder.releaseDate && (
+          <span
+            className="absolute top-3 left-3 px-2.5 py-1 rounded-md text-xs font-bold text-white"
+            style={{ background: '#00C853' }}
+          >
+            {formatDate(preorder.releaseDate)}
+          </span>
+        )}
       </div>
 
       {/* Info */}
@@ -77,24 +81,24 @@ export default function PreorderCard({ preorder, region, onOrder }: PreorderCard
 
         {/* Title */}
         <h3 className="text-base font-bold text-white mb-1 leading-tight line-clamp-2 font-display" style={{ fontStyle: 'normal' }}>
-          {preorder.title}
+          {preorder.name}
         </h3>
 
         {/* Platform badge */}
         <span className="inline-block px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-white/10 text-[var(--text-muted)] mb-2 w-fit">
-          {preorder.platform}
+          {platformStr}
         </span>
 
-        {/* Description */}
-        <p className="text-sm text-gray-400 mb-3 line-clamp-2">{preorder.description}</p>
+        {/* Spacer to push prices to bottom */}
+        <div className="flex-1" />
 
         {/* Editions & prices */}
         <div className="text-sm text-[var(--text-secondary)] mb-3 space-y-0.5">
-          {preorder.editions.map((ed) => (
+          {editions.map((ed) => (
             <div key={ed.name} className="flex justify-between items-center" style={{ whiteSpace: 'nowrap', fontSize: '13px' }}>
               <span className="text-gray-300 font-medium">{ed.name}:</span>
               <span className="text-white font-bold" style={{ fontSize: '13px' }}>
-                {getPrice(ed).toLocaleString('ru-RU')}&thinsp;₽
+                {ed.clientPrice.toLocaleString('ru-RU')}&thinsp;₽
               </span>
             </div>
           ))}
@@ -103,7 +107,7 @@ export default function PreorderCard({ preorder, region, onOrder }: PreorderCard
         {/* Order button */}
         <button
           onClick={onOrder}
-          className="btn-primary text-sm w-full py-2.5 mt-auto"
+          className="btn-primary text-sm w-full py-2.5"
         >
           Оформить предзаказ
         </button>
