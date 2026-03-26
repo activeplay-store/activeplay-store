@@ -67,6 +67,26 @@ async function searchGame(gameName) {
   }
 }
 
+async function fetchGameDetails(slug) {
+  try {
+    const params = new URLSearchParams({ key: RAWG_KEY });
+    const response = await fetch(`${BASE_URL}/games/${slug}?${params}`, {
+      signal: AbortSignal.timeout(10000),
+      headers: { 'User-Agent': config.parsers.userAgent }
+    });
+    if (!response.ok) return null;
+    const data = await response.json();
+    return {
+      description: data.description_raw || null,
+      genres: (data.genres || []).map(g => g.name),
+      metacritic: data.metacritic || null,
+    };
+  } catch (err) {
+    console.log(`[RAWG] ⚠️ details ${slug}: ${err.message}`);
+    return null;
+  }
+}
+
 function calculateHypeScore(ratingsCount, metacritic) {
   let hype = 1;
   if (ratingsCount >= 5000) hype = 10;
@@ -111,4 +131,4 @@ function brandFallback(name) {
   return { hypeScore: 3 };
 }
 
-module.exports = { searchGame, calculateHypeScore, calculateFreshness, brandFallback };
+module.exports = { searchGame, fetchGameDetails, calculateHypeScore, calculateFreshness, brandFallback };

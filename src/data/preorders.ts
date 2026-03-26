@@ -14,6 +14,8 @@ export interface PreorderGame {
   platforms: string[];
   coverUrl: string;
   releaseDate: string | null;
+  genre: string;
+  description: string;
   editions: {
     TR?: PreorderEdition[];
     UA?: PreorderEdition[];
@@ -26,6 +28,8 @@ export const preorderData: PreorderGame[] = [
     name: "PRAGMATA",
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202511/2605/b7ec5836e23affe26c8ad00124a1eddddab5e1bad456c03e.jpg",
+    genre: "",
+    description: "",
     releaseDate: "2026-04-17",
     editions: {
       TR: [
@@ -43,6 +47,8 @@ export const preorderData: PreorderGame[] = [
     name: "SAROS",
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202509/2318/89c3538003fb34870e745493412408eeeed5f02b32c55d23.png",
+    genre: "",
+    description: "",
     releaseDate: "2026-04-30",
     editions: {
       TR: [
@@ -59,6 +65,8 @@ export const preorderData: PreorderGame[] = [
     name: "Invincible VS",
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202512/0223/abae93143736137f8d17917de28aa0eedbf2f098ee3402e4.jpg",
+    genre: "",
+    description: "",
     releaseDate: "2026-04-30",
     editions: {
       TR: [
@@ -74,6 +82,8 @@ export const preorderData: PreorderGame[] = [
     name: "Directive 8020",
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202408/0522/db14c69711a13cc2d73c3964201ac80587a865a816c3c5d8.png",
+    genre: "",
+    description: "",
     releaseDate: "2026-05-12",
     editions: {
       TR: [
@@ -89,6 +99,8 @@ export const preorderData: PreorderGame[] = [
     name: "LEGO Batman: Legacy of the Dark Knight",
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202511/1118/3b572e6e923f360a52cfe7845d3e2adc6e6c9d5b0fdc6d6f.jpg",
+    genre: "",
+    description: "",
     releaseDate: "2026-05-22",
     editions: {
       TR: [
@@ -105,6 +117,8 @@ export const preorderData: PreorderGame[] = [
     name: "007 First Light",
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202507/0215/f54f11bcf773a3bcace540344dc12154973f53d3490b93fc.png",
+    genre: "",
+    description: "",
     releaseDate: "2026-05-27",
     editions: {
       TR: [
@@ -117,6 +131,8 @@ export const preorderData: PreorderGame[] = [
     name: "The Adventures of Elliot: The Millennium Tales",
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202601/1912/b5a499582e76829925ef74ec1b9b11b7068c93267dfb429b.jpg",
+    genre: "",
+    description: "",
     releaseDate: "2026-06-18",
     editions: {
       TR: [
@@ -134,6 +150,8 @@ export const preorderData: PreorderGame[] = [
     name: "DEAD OR ALIVE 6 Last Round",
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202601/2718/15b7aec0aa3065e9590934b366888a3a9806476c0df16923.png",
+    genre: "",
+    description: "",
     releaseDate: "2026-06-24",
     editions: {
       TR: [
@@ -153,6 +171,8 @@ export const preorderData: PreorderGame[] = [
     name: "MARVEL Tōkon: Fighting Souls",
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202602/0512/82ef3f898acb9608c7ca9d3ae20b012d938f444d04fd0625.jpg",
+    genre: "",
+    description: "",
     releaseDate: "2026-08-06",
     editions: {
       TR: [
@@ -170,6 +190,8 @@ export const preorderData: PreorderGame[] = [
     name: "Aphelion",
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202601/2714/de6618b9259146abf211f578e1ffdb5f8caff248e3879162.jpg",
+    genre: "",
+    description: "",
     releaseDate: null,
     editions: {
       TR: [
@@ -185,6 +207,8 @@ export const preorderData: PreorderGame[] = [
     name: "Cthulhu: The Cosmic Abyss - R'lyeh Edition",
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202601/2013/e8cc34b3e9fc782c62214c44aa4ad60242defb0e24e31ce0.jpg",
+    genre: "",
+    description: "",
     releaseDate: null,
     editions: {
       TR: [
@@ -200,6 +224,8 @@ export const preorderData: PreorderGame[] = [
     name: "Darwin's Paradox!",
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202511/0718/8dc3bb026f8c0873ac11c58a584c3ee618dbfc9db4064514.png",
+    genre: "",
+    description: "",
     releaseDate: null,
     editions: {
       TR: [
@@ -215,6 +241,8 @@ export const preorderData: PreorderGame[] = [
     name: "Diablo IV: Age of Hatred Collection",
     platforms: ["PS5","PS4"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202511/1222/84024460e7ec9f95d0c02b6ace0dd7477a01a212413c26ac.png",
+    genre: "",
+    description: "",
     releaseDate: null,
     editions: {
       TR: [
@@ -228,6 +256,8 @@ export const preorderData: PreorderGame[] = [
     name: "Diablo IV: Lord of Hatred",
     platforms: ["PS5","PS4"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202511/1201/0aa045b07431038b0f1a5dfd8d0ca532868b95a149496693.png",
+    genre: "",
+    description: "",
     releaseDate: null,
     editions: {
       TR: [
@@ -247,6 +277,8 @@ export const preorderData: PreorderGame[] = [
     name: "Echoes of Aincrad",
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202602/1907/db819d43d83148bec96dbaebc3daed099761432296eff166.jpg",
+    genre: "",
+    description: "",
     releaseDate: null,
     editions: {
       TR: [
@@ -266,6 +298,8 @@ export const preorderData: PreorderGame[] = [
     name: "Jay and Silent Bob: Chronic Blunt Punch",
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202603/2417/cbb7c65a786cca846fe8be3bf5bf609457a36b8a5469f087.jpg",
+    genre: "",
+    description: "",
     releaseDate: null,
     editions: {
       TR: [
@@ -278,6 +312,8 @@ export const preorderData: PreorderGame[] = [
     name: "Magin: The Rat Project Stories",
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202602/1809/ac344c7cdb7f1f6130a0048033a1686c9e671c0040f8a5c7.png",
+    genre: "",
+    description: "",
     releaseDate: null,
     editions: {
       TR: [
@@ -293,6 +329,8 @@ export const preorderData: PreorderGame[] = [
     name: "Mega Man Star Force Legacy Collection",
     platforms: ["PS5","PS4"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202510/2104/27af46b79a25c509364fbbdf12a9cba453e6dadd4ea4988b.png",
+    genre: "",
+    description: "",
     releaseDate: null,
     editions: {
       TR: [
@@ -308,6 +346,8 @@ export const preorderData: PreorderGame[] = [
     name: "METAL GEAR SOLID: MASTER COLLECTION Vol.2",
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202601/2903/492bf059e5c7ed0ffacd99a444a093d2a785b0cff7fe901e.jpg",
+    genre: "",
+    description: "",
     releaseDate: null,
     editions: {
       TR: [
@@ -323,6 +363,8 @@ export const preorderData: PreorderGame[] = [
     name: "MotoGP 26",
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202602/2015/f7d7f07d359ba0613bef8b43e1af74becad0e00357c1ccb3.jpg",
+    genre: "",
+    description: "",
     releaseDate: null,
     editions: {
       TR: [
@@ -338,6 +380,8 @@ export const preorderData: PreorderGame[] = [
     name: "Starfield",
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202603/0401/18b516e759613304c7efc7bcd3c134d6bfb5380d655df9be.jpg",
+    genre: "",
+    description: "",
     releaseDate: null,
     editions: {
       TR: [
@@ -355,6 +399,8 @@ export const preorderData: PreorderGame[] = [
     name: "Sudden Strike 5",
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202601/0911/5889aa7d51188a5c22841f0cecb7a8232442335979f417a7.jpg",
+    genre: "",
+    description: "",
     releaseDate: null,
     editions: {
       TR: [
@@ -370,6 +416,8 @@ export const preorderData: PreorderGame[] = [
     name: "The Occultist",
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202603/2415/4ab56c3b6a86dca29d85b9334859f84a0516b039bad836d5.png",
+    genre: "",
+    description: "",
     releaseDate: null,
     editions: {
       TR: [
@@ -385,6 +433,8 @@ export const preorderData: PreorderGame[] = [
     name: "Tides of Tomorrow",
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202506/0502/83edea47457e08b4d5be5b6a38567d5ea8bfcb297e0ccba2.jpg",
+    genre: "",
+    description: "",
     releaseDate: null,
     editions: {
       TR: [
@@ -400,6 +450,8 @@ export const preorderData: PreorderGame[] = [
     name: "Wandering Sword",
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202510/1009/103bc5118f4ca8bb6d93d83e06367628a77e94c692e039bb.png",
+    genre: "",
+    description: "",
     releaseDate: null,
     editions: {
       TR: [
