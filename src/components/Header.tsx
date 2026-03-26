@@ -37,6 +37,8 @@ const megaMenuColumns = [
 const navLinks = [
   { label: 'Главная', href: '/' },
   { label: 'Каталог', href: '#subscriptions', hasSubmenu: true },
+  { label: 'Новости', href: '/news' },
+  { label: 'Гайды', href: '/guides' },
   { label: 'FAQ', href: '#faq' },
 ];
 

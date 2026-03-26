@@ -1,9 +1,11 @@
 'use client';
 
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import MessengerPopup from './MessengerPopup';
-import { discountGames, toRubTR, toRubUA } from '@/data/discounts';
-import type { DiscountGame } from '@/data/discounts';
+import { dealsData } from '@/data/deals';
+import type { DealGame } from '@/data/deals';
+
+/* ── Helpers ──────────────────────────────────────────────────────────── */
 
 function badgeColor(discount: number): string {
   if (discount >= 65) return '#EF4444';
@@ -11,32 +13,60 @@ function badgeColor(discount: number): string {
   return '#22C55E';
 }
 
-function DiscountCard({ game, region, onBuy }: { game: DiscountGame; region: 'tr' | 'ua'; onBuy: () => void }) {
-  const oldPrice = region === 'tr' ? toRubTR(game.tr.oldTRY) : toRubUA(game.ua.oldUAH);
-  const newPrice = region === 'tr' ? toRubTR(game.tr.newTRY) : toRubUA(game.ua.newUAH);
+function formatEndDate(iso?: string): string {
+  if (!iso) return '';
+  const d = new Date(iso);
+  return `до ${d.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short' }).replace('.', '')}`;
+}
+
+function getMostCommonEndDate(games: DealGame[]): string {
+  const counts: Record<string, number> = {};
+  for (const g of games) {
+    if (g.saleEndDate) {
+      counts[g.saleEndDate] = (counts[g.saleEndDate] || 0) + 1;
+    }
+  }
+  let best = '';
+  let bestCount = 0;
+  for (const [date, count] of Object.entries(counts)) {
+    if (count > bestCount) { best = date; bestCount = count; }
+  }
+  return best;
+}
+
+/* ── Card ─────────────────────────────────────────────────────────────── */
+
+function DiscountCard({ game, region, onBuy }: { game: DealGame; region: 'tr' | 'ua'; onBuy: () => void }) {
+  const prices = region === 'tr' ? game.prices.TR : game.prices.UA;
+  if (!prices) return null;
+
+  const oldPrice = prices.clientBasePrice;
+  const newPrice = prices.clientSalePrice;
 
   return (
     <div className="flex-shrink-0 w-[200px] rounded-xl overflow-hidden flex flex-col transition-all duration-300 hover:-translate-y-1 hover:shadow-xl cursor-pointer" style={{ background: '#0a1628', border: '1px solid rgba(255,255,255,0.06)' }}>
-      {/* Cover — fixed height for uniform cards */}
+      {/* Cover */}
       <div className="relative overflow-hidden" style={{ height: '280px' }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={game.cover} alt={`Купить ${game.title} PS5 со скидкой ${game.discount}%`} className="w-full h-full object-cover" style={{ objectPosition: 'center top', borderRadius: '12px 12px 0 0' }} loading="lazy" decoding="async" />
-        {/* Discount badge — top right */}
-        <span className="absolute top-2 right-2 px-2 py-1 rounded-lg text-xs font-bold text-white" style={{ background: badgeColor(game.discount) }}>
-          -{game.discount}%
+        <img src={game.coverUrl} alt={`Купить ${game.name} PS5 со скидкой ${game.discountPct}%`} className="w-full h-full object-cover" style={{ objectPosition: 'center top', borderRadius: '12px 12px 0 0' }} loading="lazy" decoding="async" />
+        {/* Discount badge */}
+        <span className="absolute top-2 right-2 px-2 py-1 rounded-lg text-xs font-bold text-white" style={{ background: badgeColor(game.discountPct) }}>
+          -{game.discountPct}%
         </span>
-        {/* End date badge — bottom left */}
-        <span className="absolute bottom-2 left-2 text-[10px] font-bold rounded" style={{ background: '#00D4FF', color: '#0A0E17', padding: '4px 8px' }}>
-          до {game.endDate}
-        </span>
+        {/* End date badge */}
+        {game.saleEndDate && (
+          <span className="absolute bottom-2 left-2 text-[10px] font-bold rounded" style={{ background: '#00D4FF', color: '#0A0E17', padding: '4px 8px' }}>
+            {formatEndDate(game.saleEndDate)}
+          </span>
+        )}
       </div>
 
       {/* Info */}
       <div className="px-3 pt-2 pb-3 flex flex-col flex-1">
         <h4 className="text-white font-display font-bold text-[13px] leading-tight line-clamp-2" style={{ fontStyle: 'normal' }}>
-          {game.title}
+          {game.name}
         </h4>
-        <span className="text-gray-500 text-[10px] mt-0.5">{game.edition}</span>
+        <span className="text-gray-500 text-[10px] mt-0.5">{game.platforms.join(' / ')}</span>
 
         {/* Prices */}
         <div className="mt-auto pt-2">
@@ -52,17 +82,39 @@ function DiscountCard({ game, region, onBuy }: { game: DiscountGame; region: 'tr
   );
 }
 
+/* ── Section ──────────────────────────────────────────────────────────── */
+
 export default function GamesSection() {
   const [region, setRegion] = useState<'tr' | 'ua'>('tr');
   const [popup, setPopup] = useState<{ name: string; price: number } | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const [paused, setPaused] = useState(false);
 
-  // Auto-scroll right, pause on hover
+  // Select top 40 games by saving (in rubles)
+  const carouselGames = useMemo(() => {
+    return dealsData
+      .filter(g => g.prices.TR && g.discountPct >= 20)
+      .sort((a, b) => {
+        const savingA = (a.prices.TR?.clientBasePrice || 0) - (a.prices.TR?.clientSalePrice || 0);
+        const savingB = (b.prices.TR?.clientBasePrice || 0) - (b.prices.TR?.clientSalePrice || 0);
+        return savingB - savingA;
+      })
+      .slice(0, 40);
+  }, []);
+
+  const maxDiscount = useMemo(() => Math.max(...carouselGames.map(g => g.discountPct), 0), [carouselGames]);
+
+  const footerDate = useMemo(() => {
+    const d = getMostCommonEndDate(carouselGames);
+    if (!d) return '';
+    const date = new Date(d);
+    return ` Скидки действуют до ${date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' })}`;
+  }, [carouselGames]);
+
+  // Auto-scroll
   const autoScroll = useCallback(() => {
     const el = scrollRef.current;
     if (!el || paused) return;
-    // If near the end, jump back to start seamlessly
     if (el.scrollLeft >= el.scrollWidth - el.clientWidth - 10) {
       el.scrollLeft = 0;
     } else {
@@ -81,8 +133,10 @@ export default function GamesSection() {
     }
   };
 
-  // Duplicate games for infinite loop
-  const doubled = [...discountGames, ...discountGames];
+  // Duplicate for infinite loop
+  const doubled = [...carouselGames, ...carouselGames];
+
+  if (carouselGames.length === 0) return null;
 
   return (
     <section id="games" className="relative z-10 pt-20 pb-20">
@@ -109,7 +163,7 @@ export default function GamesSection() {
               </h2>
             </a>
             <p className="text-[15px] text-[var(--text-secondary)]">
-              Mega March Sale 2026 — скидки до 85% на хиты PS Store
+              Скидки до {maxDiscount}% на хиты PS Store
             </p>
           </div>
         </div>
@@ -126,7 +180,7 @@ export default function GamesSection() {
           </button>
         </div>
 
-        {/* Carousel with auto-scroll */}
+        {/* Carousel */}
         <div
           className="relative group/carousel"
           onMouseEnter={() => setPaused(true)}
@@ -137,13 +191,14 @@ export default function GamesSection() {
 
           <div ref={scrollRef} className="flex gap-4 overflow-x-auto scrollbar-hide pb-4 items-stretch">
             {doubled.map((game, idx) => {
-              const price = region === 'tr' ? toRubTR(game.tr.newTRY) : toRubUA(game.ua.newUAH);
+              const prices = region === 'tr' ? game.prices.TR : game.prices.UA;
+              if (!prices) return null;
               return (
                 <DiscountCard
                   key={`${game.id}-${idx}`}
                   game={game}
                   region={region}
-                  onBuy={() => setPopup({ name: `${game.title} (${game.edition})`, price })}
+                  onBuy={() => setPopup({ name: game.name, price: prices.clientSalePrice })}
                 />
               );
             })}
@@ -152,7 +207,7 @@ export default function GamesSection() {
 
         <div className="flex items-center gap-2 mt-6 text-xs text-[var(--text-muted)]">
           <span className="pulse-dot" />
-          Цены пересчитаны по курсу ЦБ. Акция Mega March Sale действует до 26 марта 2026
+          Цены пересчитаны по курсу ЦБ.{footerDate}
         </div>
 
         <div className="text-center mt-8">
