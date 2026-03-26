@@ -114,7 +114,7 @@ export default function TopSellersSection() {
                 backgroundClip: 'text',
               }}
             >
-              Самые продаваемые игры PS5 — февраль 2026
+              Самые продаваемые игры PS5 — {topSellers.month.toLowerCase()}
             </h2>
             <p className="text-[15px] text-[var(--text-secondary)]">
               Топ-10 продаж PS Store Europe — купить популярные игры для PS5 дёшево
