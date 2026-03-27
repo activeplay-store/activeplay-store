@@ -152,7 +152,7 @@ function CompactCard({ game, region, onClick }: { game: HotRelease; region: 'tr'
       {/* Cover */}
       <div className="relative flex-shrink-0 overflow-hidden w-32 bg-black rounded-l-xl" style={{ minHeight: '100%' }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={game.cover} alt={altTexts[game.id] || game.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" style={{ objectPosition: 'top center' }} />
+        <img src={game.cover} alt={altTexts[game.id] || game.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" style={{ objectPosition: '50% center' }} />
         <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, transparent 50%, rgba(17,24,39,0.6) 80%, rgba(17,24,39,0.95) 100%)' }} />
         {/* Metacritic — bottom right */}
         {game.metacritic > 0 && <div className="absolute bottom-2 right-2"><MetacriticBadge score={game.metacritic} /></div>}
