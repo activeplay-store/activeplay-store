@@ -152,7 +152,7 @@ function CompactCard({ game, region, onClick }: { game: HotRelease; region: 'tr'
       {/* Cover with right-to-left overlay */}
       <div className="relative flex-shrink-0 overflow-hidden" style={{ width: '150px', minHeight: '100%' }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={game.cover} alt={altTexts[game.id] || game.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" style={{ objectPosition: 'left center' }} />
+        <img src={game.cover} alt={altTexts[game.id] || game.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" style={{ objectPosition: 'top center' }} />
         <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, transparent 30%, rgba(17,24,39,0.5) 70%, rgba(17,24,39,0.9) 100%)' }} />
         <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(17,24,39,0.7) 0%, transparent 50%)' }} />
         {/* Metacritic — bottom right */}
@@ -176,7 +176,7 @@ function CompactCard({ game, region, onClick }: { game: HotRelease; region: 'tr'
         {/* Price + CTA */}
         <div className="mt-auto pt-1">
           <div className="mb-1">
-            <span className="text-[18px] font-bold text-white font-display" style={{ fontStyle: 'normal' }}>от {stdPrice.toLocaleString('ru-RU')}&thinsp;₽</span>
+            <span className="text-[18px] font-bold text-white font-display" style={{ fontStyle: 'normal' }}>{stdPrice.toLocaleString('ru-RU')}&thinsp;₽</span>
             {deluxe && (
               <span className="text-[11px] text-gray-500 ml-2">Deluxe — {deluxe.priceRUB.toLocaleString('ru-RU')}&thinsp;₽</span>
             )}

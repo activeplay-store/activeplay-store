@@ -1750,7 +1750,8 @@ async function generateTopSellers(gameList) {
   // Hardcoded price fallback for games not yet in PS Store TR/UA or not in games.json
   const PRICE_FALLBACKS = {
     'reanimal': { priceTR: 4800, priceUA: 4000 },
-    'resident-evil-requiem': { priceTR: 9220, priceUA: 7800 },
+    'resident-evil-requiem': { priceTR: 2300, priceUA: 2300 },
+    'resident-evil-9-requiem': { priceTR: 2300, priceUA: 2300 },
     'minecraft': { priceTR: 2460, priceUA: 2100 },
   };
 
@@ -1796,12 +1797,18 @@ async function generateTopSellers(gameList) {
     let priceTR = 0;
     let priceUA = 0;
 
-    // Проверить, есть ли игра в текущих скидках (строгий матчинг по slug)
+    // Проверить, есть ли игра в текущих скидках
     const gameSlug = slugify(name);
     const deal = dealsData.find(d => {
       const dealSlug = slugify(d.name);
-      // Точное совпадение slug или точное совпадение имени
-      return dealSlug === gameSlug || d.name.toLowerCase() === name.toLowerCase();
+      // Точное совпадение slug или имени
+      if (dealSlug === gameSlug || d.name.toLowerCase() === name.toLowerCase()) return true;
+      // Нечёткое: один slug содержит другой, но оба достаточно длинные (>15 символов)
+      // чтобы избежать ложных совпадений типа "resident-evil" в "resident-evil-requiem"
+      if (gameSlug.length > 15 && dealSlug.length > 15) {
+        if (dealSlug.includes(gameSlug) || gameSlug.includes(dealSlug)) return true;
+      }
+      return false;
     });
     if (deal) {
       if (deal.trSalePrice > 0) priceTR = deal.trSalePrice;
