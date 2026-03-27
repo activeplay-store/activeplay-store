@@ -25,7 +25,7 @@ export const topSellers: TopSellers = {
   region: "Европа",
   source: "PlayStation Blog",
   games: [
-    { rank: 1, title: "Resident Evil Requiem", genre: "Survival Horror", image: "/images/covers/Resident-Evil-Requiem.jpg", platform: "PS5", priceTR: 9220, priceUA: 7800 },
+    { rank: 1, title: "Resident Evil Requiem", genre: "Survival Horror", image: "/images/covers/Resident-Evil-Requiem.jpg", platform: "PS5", priceTR: 8300, priceUA: 7400 },
     { rank: 2, title: "EA SPORTS FC 26", genre: "Спорт", image: "https://image.api.playstation.com/vulcan/ap/rnd/202507/1617/f0fe830f8f01600d13cce060680e0287374c58613a63c716.png", platform: "PS5", priceTR: 2750, priceUA: 2750 },
     { rank: 3, title: "UFC 5", genre: "Файтинг", image: "https://image.api.playstation.com/vulcan/ap/rnd/202309/0421/0b3fe53ab2d54998602b41682ef1bd83e63e82d3f9ab8fff.png", platform: "PS5", priceTR: 1600, priceUA: 1650 },
     { rank: 4, title: "Grand Theft Auto V", genre: "Экшен / Open World", image: "https://image.api.playstation.com/vulcan/ap/rnd/202202/2816/YHqWG89UegirLGRyNIn8tmnv.jpg", platform: "PS5", priceTR: 1750, priceUA: 2450 },
