@@ -145,13 +145,14 @@ function CompactCard({ game, region, onClick }: { game: HotRelease; region: 'tr'
   const editions = game.editions[region];
   const stdPrice = editions[0].priceRUB;
   const deluxe = editions.length > 1 ? editions[1] : null;
+  const shortName = game.title.split(':')[0].trim().substring(0, 20);
 
   return (
     <div onClick={onClick} className="ap-card ap-card--compact group relative flex flex-1 rounded-xl overflow-hidden cursor-pointer transition-all duration-300 hover:-translate-y-0.5 hover:border-[rgba(0,212,255,0.3)] hover:shadow-[0_4px_16px_rgba(0,212,255,0.1)]" style={{ background: '#111827', border: '1px solid #1e293b' }}>
       {/* Cover with right-to-left overlay */}
       <div className="relative flex-shrink-0 overflow-hidden" style={{ width: '150px', minHeight: '100%' }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={game.cover} alt={altTexts[game.id] || game.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" style={{ objectPosition: 'center top' }} />
+        <img src={game.cover} alt={altTexts[game.id] || game.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" style={{ objectPosition: 'left center' }} />
         <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, transparent 30%, rgba(17,24,39,0.5) 70%, rgba(17,24,39,0.9) 100%)' }} />
         <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(17,24,39,0.7) 0%, transparent 50%)' }} />
         {/* Metacritic — bottom right */}
@@ -180,8 +181,8 @@ function CompactCard({ game, region, onClick }: { game: HotRelease; region: 'tr'
               <span className="text-[11px] text-gray-500 ml-2">Deluxe — {deluxe.priceRUB.toLocaleString('ru-RU')}&thinsp;₽</span>
             )}
           </div>
-          <button className="btn-primary w-full py-2.5 rounded-xl text-sm whitespace-nowrap">
-            {btnLabels[game.id] || `Купить ${game.title}`}
+          <button className="btn-primary w-full py-2.5 rounded-xl text-sm whitespace-nowrap overflow-hidden">
+            {btnLabels[game.id] || `Купить ${shortName}`}
           </button>
         </div>
       </div>
