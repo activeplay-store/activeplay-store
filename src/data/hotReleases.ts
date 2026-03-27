@@ -45,8 +45,8 @@ export const hotReleases: HotRelease[] = [
         { name: "Deluxe", priceRUB: 8300 },
       ],
       ua: [
-        { name: "Standard", priceRUB: 7300 },
-        { name: "Deluxe", priceRUB: 8300 },
+        { name: "Standard", priceRUB: 6550 },
+        { name: "Deluxe", priceRUB: 7400 },
       ],
     },
   },
@@ -64,10 +64,10 @@ export const hotReleases: HotRelease[] = [
     totalScore: 5.8,
     editions: {
       tr: [
-        { name: "Standard", priceRUB: 2300 },
+        { name: "Standard", priceRUB: 8300 },
       ],
       ua: [
-        { name: "Standard", priceRUB: 2300 },
+        { name: "Standard", priceRUB: 7400 },
       ],
     },
   },
@@ -85,10 +85,12 @@ export const hotReleases: HotRelease[] = [
     totalScore: 5.4,
     editions: {
       tr: [
-        { name: "Standard", priceRUB: 1600 },
+        { name: "Standard", priceRUB: 4050 },
+        { name: "Deluxe", priceRUB: 5550 },
       ],
       ua: [
-        { name: "Standard", priceRUB: 1600 },
+        { name: "Standard", priceRUB: 3700 },
+        { name: "Deluxe", priceRUB: 4900 },
       ],
     },
   },
@@ -106,10 +108,10 @@ export const hotReleases: HotRelease[] = [
     totalScore: 5,
     editions: {
       tr: [
-        { name: "Standard", priceRUB: 4500 },
+        { name: "Standard", priceRUB: 5550 },
       ],
       ua: [
-        { name: "Standard", priceRUB: 4500 },
+        { name: "Standard", priceRUB: 4900 },
       ],
     },
   },

@@ -150,9 +150,9 @@ function CompactCard({ game, region, onClick }: { game: HotRelease; region: 'tr'
   return (
     <div onClick={onClick} className="ap-card ap-card--compact group relative flex flex-1 rounded-xl overflow-hidden cursor-pointer transition-all duration-300 hover:-translate-y-0.5 hover:border-[rgba(0,212,255,0.3)] hover:shadow-[0_4px_16px_rgba(0,212,255,0.1)]" style={{ background: '#111827', border: '1px solid #1e293b' }}>
       {/* Cover with right-to-left overlay */}
-      <div className="relative flex-shrink-0 overflow-hidden" style={{ width: '150px', minHeight: '100%' }}>
+      <div className="relative flex-shrink-0 overflow-hidden w-28 h-36" style={{ minHeight: '144px' }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={game.cover} alt={altTexts[game.id] || game.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" style={{ objectPosition: 'top center' }} />
+        <img src={game.cover} alt={altTexts[game.id] || game.title} className="absolute inset-0 w-full h-full object-contain transition-transform duration-500 group-hover:scale-105" style={{ objectPosition: 'top center' }} />
         <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, transparent 30%, rgba(17,24,39,0.5) 70%, rgba(17,24,39,0.9) 100%)' }} />
         <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(17,24,39,0.7) 0%, transparent 50%)' }} />
         {/* Metacritic — bottom right */}
@@ -209,7 +209,7 @@ export default function HotReleases() {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/icons/fire.webp" alt="" width={72} height={72} className="object-contain" style={{width: '72px', height: '72px'}} />
             <div>
-              <h2 className="text-[26px] sm:text-[32px] md:text-[36px] font-bold gradient-text">Новинки игр для PS5 и Xbox — март 2026</h2>
+              <h2 className="text-[26px] sm:text-[32px] md:text-[36px] font-bold gradient-text">Новинки игр для PS5, PS4 и Xbox — март 2026</h2>
               <p className="text-[var(--text-secondary)] text-[15px]">Купить хиты 2026 для PS5, Xbox и PC — активация на турецком, украинском аккаунте</p>
             </div>
           </div>

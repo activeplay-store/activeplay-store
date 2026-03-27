@@ -1344,8 +1344,20 @@ async function generateHotReleases() {
         );
         if (searchRes.ok) {
           const searchData = await searchRes.json();
+          const gameNameLower = game.name.toLowerCase();
+          const gameSlugSearch = slugify(game.name);
           const productIds = (searchData.links || [])
-            .filter(l => l.name && l.name.toLowerCase().includes(game.name.toLowerCase().split(' ')[0]))
+            .filter(l => {
+              if (!l.name) return false;
+              const linkSlug = slugify(l.name);
+              // Prefer exact slug match or very close match
+              if (linkSlug === gameSlugSearch) return true;
+              // Accept if link name contains the full game name (not just first word)
+              if (l.name.toLowerCase().includes(gameNameLower)) return true;
+              // Accept if game name contains the full link name
+              if (gameNameLower.includes(l.name.toLowerCase())) return true;
+              return false;
+            })
             .map(l => l.id)
             .filter((v, i, a) => a.indexOf(v) === i);
 
@@ -1380,8 +1392,17 @@ async function generateHotReleases() {
           );
           if (searchResUa.ok) {
             const searchDataUa = await searchResUa.json();
+            const gameNameLowerUa = game.name.toLowerCase();
+            const gameSlugSearchUa = slugify(game.name);
             const productIdsUa = (searchDataUa.links || [])
-              .filter(l => l.name && l.name.toLowerCase().includes(game.name.toLowerCase().split(' ')[0]))
+              .filter(l => {
+                if (!l.name) return false;
+                const linkSlug = slugify(l.name);
+                if (linkSlug === gameSlugSearchUa) return true;
+                if (l.name.toLowerCase().includes(gameNameLowerUa)) return true;
+                if (gameNameLowerUa.includes(l.name.toLowerCase())) return true;
+                return false;
+              })
               .map(l => l.id)
               .filter((v, i, a) => a.indexOf(v) === i);
 
@@ -1483,7 +1504,11 @@ async function generateHotReleases() {
 
     if (g.prices?.TR?.editions) {
       for (const ed of g.prices.TR.editions) {
-        const price = ed.clientPrice || ed.clientSalePrice || ed.basePrice;
+        let price = ed.baseClientPrice || ed.clientPrice || ed.clientSalePrice;
+        // If no client price calculated, calculate from base price
+        if (!price && ed.basePrice) {
+          try { price = pricing.calculatePrice(ed.basePrice, 'TR').clientPrice; } catch {}
+        }
         if (price) {
           editionsTr.push({ name: ed.name || 'Standard', priceRUB: price });
         }
@@ -1491,7 +1516,11 @@ async function generateHotReleases() {
     }
     if (g.prices?.UA?.editions) {
       for (const ed of g.prices.UA.editions) {
-        const price = ed.clientPrice || ed.clientSalePrice || ed.basePrice;
+        let price = ed.baseClientPrice || ed.clientPrice || ed.clientSalePrice;
+        // If no client price calculated, calculate from base price
+        if (!price && ed.basePrice) {
+          try { price = pricing.calculatePrice(ed.basePrice, 'UA').clientPrice; } catch {}
+        }
         if (price) {
           editionsUa.push({ name: ed.name || 'Standard', priceRUB: price });
         }
@@ -1750,9 +1779,11 @@ async function generateTopSellers(gameList) {
   // Hardcoded price fallback for games not yet in PS Store TR/UA or not in games.json
   const PRICE_FALLBACKS = {
     'reanimal': { priceTR: 4800, priceUA: 4000 },
-    'resident-evil-requiem': { priceTR: 2300, priceUA: 2300 },
-    'resident-evil-9-requiem': { priceTR: 2300, priceUA: 2300 },
+    'resident-evil-requiem': { priceTR: 8300, priceUA: 7400 },
+    'resident-evil-9-requiem': { priceTR: 8300, priceUA: 7400 },
     'minecraft': { priceTR: 2460, priceUA: 2100 },
+    'monster-hunter-stories-3': { priceTR: 5550, priceUA: 4900 },
+    'monster-hunter-stories-3-twisted-reflection': { priceTR: 5550, priceUA: 4900 },
   };
 
   // Known cover overrides for games with non-standard filenames
@@ -1818,15 +1849,21 @@ async function generateTopSellers(gameList) {
 
     // Если скидки нет — обычная цена из games.json
     if (priceTR === 0 && found?.prices?.TR?.editions) {
-      const trEds = found.prices.TR.editions.filter(e => e.clientPrice > 0);
-      if (trEds.length > 0) {
-        priceTR = Math.min(...trEds.map(e => e.clientPrice));
+      for (const ed of found.prices.TR.editions) {
+        let cp = ed.baseClientPrice || ed.clientPrice || ed.clientSalePrice;
+        if (!cp && ed.basePrice) {
+          try { cp = pricing.calculatePrice(ed.basePrice, 'TR').clientPrice; } catch {}
+        }
+        if (cp > 0 && (priceTR === 0 || cp < priceTR)) priceTR = cp;
       }
     }
     if (priceUA === 0 && found?.prices?.UA?.editions) {
-      const uaEds = found.prices.UA.editions.filter(e => e.clientPrice > 0);
-      if (uaEds.length > 0) {
-        priceUA = Math.min(...uaEds.map(e => e.clientPrice));
+      for (const ed of found.prices.UA.editions) {
+        let cp = ed.baseClientPrice || ed.clientPrice || ed.clientSalePrice;
+        if (!cp && ed.basePrice) {
+          try { cp = pricing.calculatePrice(ed.basePrice, 'UA').clientPrice; } catch {}
+        }
+        if (cp > 0 && (priceUA === 0 || cp < priceUA)) priceUA = cp;
       }
     }
 
