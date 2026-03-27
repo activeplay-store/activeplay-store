@@ -8,6 +8,15 @@ import TrustBlock from '@/components/TrustBlock';
 import AntiFraudBlock from '@/components/AntiFraudBlock';
 import { dealsData, type DealGame } from '@/data/deals';
 
+function formatPlatforms(platforms: string[]): string {
+  const hasPS4 = platforms.some(p => p.includes('PS4'));
+  const hasPS5 = platforms.some(p => p.includes('PS5'));
+  if (hasPS4 && !hasPS5) return 'PS5 / PS4';
+  if (hasPS5 && hasPS4) return 'PS5 / PS4';
+  if (hasPS5) return 'PS5';
+  return platforms.join(' / ');
+}
+
 /* ── Types ─────────────────────────────────────────────────────────────── */
 
 type Region = 'TR' | 'UA';
@@ -187,7 +196,7 @@ export default function SaleContent({ faqItems }: SaleContentProps) {
         <div className="relative aspect-[4/5]">
           {!imgError ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={game.coverUrl} alt={`Купить ${game.name} ${game.platforms.join(' ')} со скидкой ${game.discountPct}%`} className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.06]" style={{ objectPosition: 'center top' }} loading="lazy" onError={() => setImgError(true)} />
+            <img src={game.coverUrl} alt={`Купить ${game.name} ${formatPlatforms(game.platforms)} со скидкой ${game.discountPct}%`} className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.06]" style={{ objectPosition: 'center top' }} loading="lazy" onError={() => setImgError(true)} />
           ) : (
             <FallbackCover name={game.name} />
           )}
@@ -200,7 +209,7 @@ export default function SaleContent({ faqItems }: SaleContentProps) {
         </div>
         <div className="p-4">
           <h3 className="font-semibold text-white text-lg mb-1 font-rajdhani">{game.name}</h3>
-          <p className="text-white/50 text-sm mb-1">{game.platforms.join(' / ')}</p>
+          <p className="text-white/50 text-sm mb-1">{formatPlatforms(game.platforms)}</p>
           <div className="flex items-baseline gap-2 mb-1">
             <span className="text-white/40 line-through text-sm">{fmt(prices.base)} руб.</span>
             {prices.hasPsPlus && prices.sale < prices.base && (
@@ -239,7 +248,7 @@ export default function SaleContent({ faqItems }: SaleContentProps) {
           {prices.hasPsPlus && <span className="bg-[#F5A623]/20 text-[#F5A623] text-xs px-1.5 py-0.5 rounded shrink-0">PS+</span>}
           <div className="min-w-0">
             <span className="text-white font-medium text-sm truncate block">{game.name}</span>
-            <span className="text-gray-500 text-xs">{game.platforms.join(' / ')}</span>
+            <span className="text-gray-500 text-xs">{formatPlatforms(game.platforms)}</span>
           </div>
         </div>
         <div className="flex items-center gap-3 shrink-0 ml-4">

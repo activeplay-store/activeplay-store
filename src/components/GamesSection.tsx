@@ -34,6 +34,15 @@ function getMostCommonEndDate(games: DealGame[]): string {
   return best;
 }
 
+function formatPlatforms(platforms: string[]): string {
+  const hasPS4 = platforms.some(p => p.includes('PS4'));
+  const hasPS5 = platforms.some(p => p.includes('PS5'));
+  if (hasPS4 && !hasPS5) return 'PS5 / PS4';
+  if (hasPS5 && hasPS4) return 'PS5 / PS4';
+  if (hasPS5) return 'PS5';
+  return platforms.join(' / ');
+}
+
 /* ── Card ─────────────────────────────────────────────────────────────── */
 
 function DiscountCard({ game, region, onBuy }: { game: DealGame; region: 'tr' | 'ua'; onBuy: () => void }) {
@@ -66,7 +75,7 @@ function DiscountCard({ game, region, onBuy }: { game: DealGame; region: 'tr' | 
         <h4 className="text-white font-display font-bold text-[13px] leading-tight line-clamp-2" style={{ fontStyle: 'normal' }}>
           {game.name}
         </h4>
-        <span className="text-gray-500 text-[10px] mt-0.5">{game.platforms.join(' / ')}</span>
+        <span className="text-[#00D4FF] text-[10px] mt-0.5">{formatPlatforms(game.platforms)}</span>
 
         {/* Prices */}
         <div className="mt-auto pt-2">

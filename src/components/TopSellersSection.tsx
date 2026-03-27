@@ -66,7 +66,7 @@ function GameCard({ game, onClick, isHero, region }: { game: TopSellerGame; onCl
         <h4 className={`text-white font-display font-bold leading-tight line-clamp-1 ${isHero ? 'text-[20px]' : 'text-[14px]'}`} style={{ fontStyle: 'normal' }}>
           {game.title}
         </h4>
-        <span className={`text-gray-400 ${isHero ? 'text-xs' : 'text-[10px]'} mt-0.5`}>{game.genre}</span>
+        <span className={`text-[#00D4FF] ${isHero ? 'text-xs' : 'text-[10px]'} mt-0.5`}>{game.genre}</span>
 
         <p className={`font-display font-bold mt-2 text-white ${isHero ? 'text-[24px]' : 'text-[22px]'}`} style={{ fontStyle: 'normal' }}>
           {price > 0 ? <>{price.toLocaleString('ru-RU')}&thinsp;₽</> : <span className="text-gray-400 text-base">Цена уточняется</span>}
