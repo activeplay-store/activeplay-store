@@ -149,12 +149,11 @@ function CompactCard({ game, region, onClick }: { game: HotRelease; region: 'tr'
 
   return (
     <div onClick={onClick} className="ap-card ap-card--compact group relative flex flex-1 rounded-xl overflow-hidden cursor-pointer transition-all duration-300 hover:-translate-y-0.5 hover:border-[rgba(0,212,255,0.3)] hover:shadow-[0_4px_16px_rgba(0,212,255,0.1)]" style={{ background: '#111827', border: '1px solid #1e293b' }}>
-      {/* Cover with right-to-left overlay */}
-      <div className="relative flex-shrink-0 overflow-hidden w-28 h-36 bg-black" style={{ minHeight: '144px' }}>
+      {/* Cover */}
+      <div className="relative flex-shrink-0 overflow-hidden w-32 bg-black rounded-l-xl" style={{ minHeight: '100%' }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={game.cover} alt={altTexts[game.id] || game.title} className="absolute inset-0 w-full h-full object-contain transition-transform duration-500 group-hover:scale-105" style={{ objectPosition: 'top center' }} />
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, transparent 30%, rgba(17,24,39,0.5) 70%, rgba(17,24,39,0.9) 100%)' }} />
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(17,24,39,0.7) 0%, transparent 50%)' }} />
+        <img src={game.cover} alt={altTexts[game.id] || game.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" style={{ objectPosition: 'top center' }} />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, transparent 50%, rgba(17,24,39,0.6) 80%, rgba(17,24,39,0.95) 100%)' }} />
         {/* Metacritic — bottom right */}
         {game.metacritic > 0 && <div className="absolute bottom-2 right-2"><MetacriticBadge score={game.metacritic} /></div>}
         {/* Status — bottom left */}

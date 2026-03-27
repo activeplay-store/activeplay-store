@@ -75,7 +75,7 @@ function DiscountCard({ game, region, onBuy }: { game: DealGame; region: 'tr' | 
         <h4 className="text-white font-display font-bold text-[13px] leading-tight line-clamp-2" style={{ fontStyle: 'normal' }}>
           {game.name}
         </h4>
-        <span className="text-[#00D4FF] text-[10px] mt-0.5">{formatPlatforms(game.platforms)}</span>
+        <span className="text-gray-400 text-[10px] mt-0.5">{formatPlatforms(game.platforms)}</span>
 
         {/* Prices */}
         <div className="mt-auto pt-2">
