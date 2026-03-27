@@ -59,7 +59,7 @@ export const hotReleases: HotRelease[] = [
     metacritic: 0,
     genre: "Экшен",
     platforms: ["PS5"],
-    cover: "https://media.rawg.io/media/games/ed6/ed613937e113a4d43fa0db771e527a2f.jpg",
+    cover: "https://image.api.playstation.com/vulcan/ap/rnd/202512/1205/e0364b3089bbbad7e0a04f87cab6c273172515a134efdf88.png",
     hypeScore: 4,
     totalScore: 5.8,
     editions: {
@@ -80,7 +80,7 @@ export const hotReleases: HotRelease[] = [
     metacritic: 0,
     genre: "Шутер",
     platforms: ["PS5"],
-    cover: "https://media.rawg.io/media/games/cab/cabc7cd14f1d9829c37d3bd2bec16c4a.jpg",
+    cover: "https://image.api.playstation.com/vulcan/ap/rnd/202512/2621/48bbb6fcf773ee326ebf5cbceb47bd8dd26e2f27cd270736.jpg",
     hypeScore: 4,
     totalScore: 5.4,
     editions: {
@@ -103,7 +103,7 @@ export const hotReleases: HotRelease[] = [
     metacritic: 0,
     genre: "Экшен",
     platforms: ["PS5"],
-    cover: "https://media.rawg.io/media/screenshots/c84/c842dbb0dcd7e2689ca2f587ef28f99f.jpg",
+    cover: "https://image.api.playstation.com/vulcan/ap/rnd/202510/1005/a09a71be0ef59273817c8f816a71cbdd1a417e169ec87719.png",
     hypeScore: 3,
     totalScore: 5,
     editions: {
