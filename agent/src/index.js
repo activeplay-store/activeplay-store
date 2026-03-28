@@ -2,6 +2,7 @@ require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') }
 
 const http = require('http');
 const cron = require('node-cron');
+const { Telegraf } = require('telegraf');
 const config = require('./config');
 const currency = require('./modules/currency');
 const pricing = require('./modules/pricing');
@@ -11,6 +12,8 @@ const notifier = require('./modules/notifier');
 const logger = require('./modules/logger');
 const siteWriter = require('./modules/siteWriter');
 const catalogMonitor = require('./modules/catalogMonitor');
+const { setupApprovalHandlers } = require('./modules/news/approval');
+const { runNewsCycle, processQueue } = require('./modules/news');
 
 const VERSION = '1.0.0';
 
@@ -347,6 +350,48 @@ async function main() {
   console.log(`[AP-Agent] Запуск v${VERSION}`);
   console.log(`[AP-Agent] Timezone: ${process.env.TZ || Intl.DateTimeFormat().resolvedOptions().timeZone}`);
 
+  // ── Telegram Bot (для новостей и уведомлений) ──────────────────────────
+  let bot = null;
+  if (process.env.BOT_TOKEN) {
+    bot = new Telegraf(process.env.BOT_TOKEN);
+
+    // Обработчики кнопок одобрения новостей
+    setupApprovalHandlers(bot);
+
+    // Команда /id — узнать свой chat ID
+    bot.command('id', (ctx) => {
+      ctx.reply(`Ваш Chat ID: ${ctx.chat.id}`);
+    });
+
+    // Команда /news — запустить цикл новостей вручную
+    bot.command('news', async (ctx) => {
+      if (String(ctx.chat.id) !== String(process.env.ADMIN_CHAT_ID)) return;
+      ctx.reply('🔄 Запускаю сбор новостей...');
+      try {
+        await runNewsCycle(bot);
+      } catch (err) {
+        ctx.reply(`❌ Ошибка: ${err.message}`);
+      }
+    });
+
+    bot.launch().then(() => {
+      console.log('[Bot] Telegram bot started');
+    }).catch(err => {
+      console.error('[Bot] Failed to start:', err.message);
+    });
+
+    // Graceful stop
+    process.once('SIGINT', () => bot.stop('SIGINT'));
+    process.once('SIGTERM', () => bot.stop('SIGTERM'));
+
+    // Проверка очереди отложенных публикаций — каждую минуту
+    setInterval(() => processQueue(bot).catch(err => {
+      console.error('[NEWS] Queue error:', err.message);
+    }), 60000);
+  } else {
+    console.log('[Bot] BOT_TOKEN not set — Telegram bot disabled');
+  }
+
   // Курсы при старте
   await updateRates();
 
@@ -438,11 +483,24 @@ async function main() {
     }
   }, { timezone: 'Europe/Moscow' });
 
+  // Новости: каждые 4 часа (8:00, 12:00, 16:00, 20:00 МСК)
+  if (bot) {
+    cron.schedule('0 8,12,16,20 * * *', async () => {
+      console.log('[Cron] Сбор новостей...');
+      try {
+        await runNewsCycle(bot);
+      } catch (err) {
+        console.error('[Cron] Новости:', err.message);
+      }
+    }, { timezone: 'Europe/Moscow' });
+  }
+
   console.log('[AP-Agent] Расписание:');
   console.log('  Парсинг скидок: 3:00 МСК ежедневно');
   console.log('  Курс ЦБ: 10:00 и 17:00 МСК');
   console.log('  Топ-продаж: 6:00 МСК ежедневно');
   console.log('  Горящие новинки: 3:00 и 12:00 МСК');
+  console.log('  Новости: 8:00, 12:00, 16:00, 20:00 МСК');
   console.log('  Анонсы каталогов: 18:00 МСК (по календарю)');
   console.log('  Релиз каталогов: 20:00 МСК (по календарю)');
   console.log('  Повтор каталогов: 22:00 МСК');
