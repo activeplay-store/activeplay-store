@@ -68,11 +68,43 @@ async function generateImage(title, description) {
   }
 }
 
+// Поиск обложки игры через RAWG API
+const RAWG_KEY = process.env.RAWG_API_KEY || 'd9ca3380009e448e8fb356b3837cafa2';
+
+async function searchRawgImage(title) {
+  if (!title) return null;
+  try {
+    // Извлечь название игры из заголовка (до первого глагола/предлога на русском)
+    // Ищем английские названия игр (латиница + цифры + спецсимволы)
+    const gameMatch = title.match(/[A-Z][A-Za-z0-9':&\- ]{2,}/);
+    const query = gameMatch ? gameMatch[0].trim() : title.substring(0, 40);
+
+    const response = await axios.get('https://api.rawg.io/api/games', {
+      params: { key: RAWG_KEY, search: query, page_size: 1 },
+      timeout: 10000,
+    });
+
+    const game = response.data?.results?.[0];
+    if (game?.background_image) {
+      console.log(`[NEWS] RAWG found: ${game.name} → ${game.background_image}`);
+      const imgResponse = await axios.get(game.background_image, {
+        responseType: 'arraybuffer',
+        timeout: 10000,
+      });
+      return Buffer.from(imgResponse.data);
+    }
+    return null;
+  } catch (err) {
+    console.error(`[NEWS] RAWG error: ${err.message}`);
+    return null;
+  }
+}
+
 // Главная функция: получить картинку для новости
 async function getNewsImage(article) {
   const filename = `${article.id}.jpg`;
 
-  // 1. Попробовать оригинал
+  // 1. Попробовать оригинал из RSS
   const sourceImage = await checkSourceImage(article.image);
   if (sourceImage) {
     console.log(`[NEWS] Using source image for: ${article.title}`);
@@ -89,9 +121,16 @@ async function getNewsImage(article) {
     return await resizeImage(generated, filename);
   }
 
-  // 3. Fallback — null (но стараемся не допускать)
+  // 3. Fallback — поиск обложки игры через RAWG
+  console.log(`[NEWS] Trying RAWG for: ${article.site?.title || article.title}`);
+  const rawgImage = await searchRawgImage(article.site?.title || article.title);
+  if (rawgImage) {
+    return await resizeImage(rawgImage, filename);
+  }
+
+  // 4. Ничего не нашли
   console.error(`[NEWS] No image for: ${article.title}`);
   return null;
 }
 
-module.exports = { getNewsImage, checkSourceImage, generateImage, resizeImage };
+module.exports = { getNewsImage, checkSourceImage, generateImage, searchRawgImage, resizeImage };
