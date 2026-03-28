@@ -1,5 +1,5 @@
 // Автогенерация — НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ
-// Обновлено: 2026-03-28T21:16:54.151Z
+// Обновлено: 2026-03-28T21:44:03.482Z
 
 export type NewsCategory = 'news' | 'insider' | 'video' | 'guide' | 'interview' | 'podcast' | 'review' | 'announcement';
 
@@ -35,6 +35,21 @@ export const NEWS_CATEGORIES: Record<NewsCategory, { label: string; color: strin
 };
 
 export const newsData: NewsItem[] = [
+  {
+    id: 'news-1774734130936-omfv',
+    slug: 'vo-chto-poigrat-6-novyh-igr-dlya-ps5-i-ps4-na-sleduyushchey-nedele',
+    category: 'news' as NewsCategory,
+    title: 'Во что поиграть: 6 новых игр для PS5 и PS4 на следующей неделе',
+    excerpt: 'На следующей неделе выходит несколько интересных игр для PlayStation. South of Midnight, ранее анонсированная для Xbox, появится на PS5. Konami готовит к релизу Darwin\'s Paradox. Также стоит обратить ',
+    content: `<p>На следующей неделе выходит несколько интересных игр для PlayStation. South of Midnight, ранее анонсированная для Xbox, появится на PS5. Konami готовит к релизу Darwin's Paradox.</p>
+<p>Также стоит обратить внимание на Legacy of Kain. Конец финансового года обычно не богат на релизы, но в этот раз есть, во что поиграть. Подробные обзоры ищите на сайте.</p>`,
+    coverUrl: '/images/news/news-1774734130936-omfv.jpg',
+    date: '2026-03-28',
+    source: 'Push Square',
+    author: 'ActivePlay',
+    tags: ["PS5","PS4","новые игры","South of Midnight","Darwin's Paradox"],
+    metaDescription: 'Обзор новых игр для PS5 и PS4, выходящих на следующей неделе. South of Midnight, Darwin\'s Paradox и другие ожидаемые релизы.',
+  },
   {
     id: 'news-1774732310559-fk9u',
     slug: 'igroki-raznosyat-dlc-dlya-borderlands-4-iz-za-ceny-i-dlitelnosti',
