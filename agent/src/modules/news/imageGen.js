@@ -39,19 +39,20 @@ async function resizeImage(imageBuffer, filename) {
 
 // Генерация через Gemini Imagen
 async function generateImage(title) {
-  const prompt = `Gaming news cover image, 16:9 format, high quality, cinematic lighting, professional gaming media style, NO TEXT on image: ${title}. Combine visual elements from the topic.`;
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${process.env.GEMINI_API_KEY}`;
+  const key = process.env.GEMINI_API_KEY;
+  if (!key) return null;
+
+  const prompt = `Generate an image: Gaming news cover image, 16:9 aspect ratio, high quality, cinematic lighting, professional gaming media style, NO TEXT on image: ${title}. Combine visual elements from the topic.`;
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${key}`;
 
   try {
     const response = await axios.post(url, {
       contents: [{ parts: [{ text: prompt }] }],
       generationConfig: {
         responseModalities: ['IMAGE', 'TEXT'],
-        imageSizeOptions: { aspectRatio: '16:9' },
       },
     }, { timeout: 60000 });
 
-    // Извлечь base64-картинку из ответа Gemini
     const parts = response.data?.candidates?.[0]?.content?.parts || [];
     const imagePart = parts.find(p => p.inlineData?.mimeType?.startsWith('image/'));
     if (!imagePart) {
@@ -61,7 +62,8 @@ async function generateImage(title) {
 
     return Buffer.from(imagePart.inlineData.data, 'base64');
   } catch (err) {
-    console.error('[NEWS] Gemini image error:', err.message);
+    const msg = err.response?.data?.error?.message || err.message;
+    console.error('[NEWS] Gemini image error:', msg);
     return null;
   }
 }
@@ -107,18 +109,18 @@ async function getNewsImage(article) {
     return await resizeImage(sourceImage, filename);
   }
 
-  // 2. Генерить через Gemini Imagen
-  console.log(`[NEWS] Generating Gemini image for: ${article.site?.title || article.title}`);
-  const generated = await generateImage(article.site?.title || article.title);
-  if (generated) {
-    return await resizeImage(generated, filename);
-  }
-
-  // 3. Fallback — поиск обложки игры через RAWG
+  // 2. Поиск обложки игры через RAWG (лучший вариант для игровых новостей)
   console.log(`[NEWS] Trying RAWG for: ${article.site?.title || article.title}`);
   const rawgImage = await searchRawgImage(article.site?.title || article.title);
   if (rawgImage) {
     return await resizeImage(rawgImage, filename);
+  }
+
+  // 3. Генерить через Gemini Imagen (может быть недоступен по геолокации)
+  console.log(`[NEWS] Generating Gemini image for: ${article.site?.title || article.title}`);
+  const generated = await generateImage(article.site?.title || article.title);
+  if (generated) {
+    return await resizeImage(generated, filename);
   }
 
   // 4. Ничего не нашли
