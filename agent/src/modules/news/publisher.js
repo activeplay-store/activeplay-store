@@ -55,6 +55,30 @@ function stripCategoryPrefix(title) {
   return (title || '').replace(CATEGORY_PREFIX_RE, '');
 }
 
+// Автоссылки на продукты (только первое вхождение каждого)
+const PRODUCT_LINKS = {
+  'PS Plus Essential': '/ps-plus-essential',
+  'PS Plus Extra': '/ps-plus-extra',
+  'PS Plus Deluxe': '/ps-plus-deluxe',
+  'Xbox Game Pass': '/xbox-game-pass-ultimate',
+  'EA Play': '/ea-play',
+  'PS Store': '/sale',
+};
+
+function addProductLinks(html) {
+  const used = new Set();
+  let result = html;
+  for (const [keyword, url] of Object.entries(PRODUCT_LINKS)) {
+    if (!used.has(keyword) && result.includes(keyword)) {
+      // Не заменять внутри уже существующих тегов <a>
+      const re = new RegExp(`(?![^<]*<\\/a>)${keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`, '');
+      result = result.replace(re, `<a href="${url}" class="text-[#00D4FF] hover:underline">${keyword}</a>`);
+      used.add(keyword);
+    }
+  }
+  return result;
+}
+
 // Разбить текст на абзацы по 2-3 предложения (макс 3 абзаца)
 function textToHtml(text) {
   if (!text) return '';
@@ -106,7 +130,7 @@ function writeToSite(articles) {
       category: CATEGORY_MAP[a.category] || 'news',
       title: cleanTitle,
       excerpt: bodyText.substring(0, 200),
-      content: textToHtml(bodyText),
+      content: addProductLinks(textToHtml(bodyText)),
       coverUrl: a.imageUrl || a.image || '',
       date: now.toISOString().split('T')[0],
       source: a.sourceName,
@@ -134,7 +158,7 @@ function writeToSite(articles) {
   const tsItems = archive.slice(0, 50).map(item => {
     const cleanTitle = stripCategoryPrefix(item.title);
     const bodyRaw = item.content || item.text || '';
-    const content = textToHtml(bodyRaw)
+    const content = addProductLinks(textToHtml(bodyRaw))
       .replace(/`/g, '\\`').replace(/\$/g, '\\$');
     const excerpt = item.excerpt || bodyRaw.replace(/<[^>]+>/g, '').substring(0, 200);
     return `  {
