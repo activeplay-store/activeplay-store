@@ -30,6 +30,14 @@ const KEYWORD_SCORES = {
   'dlc': 3, 'expansion': 3, 'update': 2, 'patch': 2,
   'review': 3, 'gameplay': 3, 'hands-on': 3,
   'multiplayer': 2, 'co-op': 2, 'remake': 4, 'remaster': 3,
+
+  // Полный бан / жёсткий минус
+  'розыгрыш': -100, 'giveaway': -100, 'raffle': -100, 'конкурс': -100,
+  'nintendo switch': -50, 'switch 2': -50,
+  'amazon': -40,
+  'kindle': -50,
+  'книг': -40, 'novel': -40, 'paperback': -40, 'book': -30,
+  'angry birds': -30,
 };
 
 const NEGATIVE_KEYWORDS = [
@@ -70,11 +78,13 @@ function scoreArticle(article) {
   // 5. Вес источника (1-10 шкала)
   score += (article.sourceWeight || 1) * 2;
 
-  // 6. Свежесть
+  // 6. Свежесть (бонус за новые, штраф за старые)
   const ageHours = (Date.now() - new Date(article.pubDate).getTime()) / (1000 * 60 * 60);
   if (ageHours < 2) score += 10;
   else if (ageHours < 6) score += 5;
   else if (ageHours < 12) score += 2;
+  if (ageHours > 48) score -= 30;
+  if (ageHours > 72) score -= 50;
 
   // 7. Категория источника
   if (article.category === 'official') score += 8;
@@ -99,10 +109,25 @@ function rankNews(articles, topN = 5) {
   const scored = articles.map(a => ({ ...a, score: scoreArticle(a) }));
   scored.sort((a, b) => b.score - a.score);
 
+  // Жёсткие фильтры: розыгрыши и Nintendo-only
+  const filtered = scored.filter(article => {
+    const t = (article.title || '').toLowerCase();
+    const cat = (article.category || '').toLowerCase();
+
+    // Полный бан розыгрышей
+    if (cat.includes('розыгрыш') || t.includes('розыгрыш') || t.includes('giveaway') || t.includes('raffle')) return false;
+
+    // Nintendo-only без упоминания PS/Xbox
+    if ((t.includes('nintendo switch') || t.includes('switch 2'))
+        && !t.includes('playstation') && !t.includes('ps5') && !t.includes('ps4') && !t.includes('xbox')) return false;
+
+    return true;
+  });
+
   // Дедупликация по теме (берём лучший из похожих)
   const selected = [];
   const usedKeys = new Set();
-  for (const article of scored) {
+  for (const article of filtered) {
     const key = normalizeForDedup(article.title);
     if (usedKeys.has(key)) continue;
     usedKeys.add(key);
