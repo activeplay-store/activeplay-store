@@ -6,6 +6,18 @@ const { translateAndRewrite } = require('./translator');
 const { sendPreview, savePending: savePendingToFile, loadQueue, saveQueue, executePublish } = require('./approval');
 
 const RESERVE_FILE = path.join(__dirname, '../../../data/reserve-news.json');
+const NEWS_ARCHIVE = path.join(__dirname, '../../../data/news-archive.json');
+
+function loadNewsArchive() {
+  try { return JSON.parse(fs.readFileSync(NEWS_ARCHIVE, 'utf-8')); } catch { return []; }
+}
+
+function isAlreadyPublished(article, archiveLinks, archiveTitles) {
+  if (article.link && archiveLinks.has(article.link)) return true;
+  const title = (article.title || '').toLowerCase().trim();
+  if (title && archiveTitles.has(title)) return true;
+  return false;
+}
 
 async function runNewsCycle(bot) {
   console.log('[NEWS] === Starting news cycle ===');
@@ -15,8 +27,16 @@ async function runNewsCycle(bot) {
   console.log(`[NEWS] ${rawNews.length} fresh articles`);
   if (rawNews.length === 0) return;
 
+  // 1.5. Фильтруем уже опубликованные
+  const archive = loadNewsArchive();
+  const archiveLinks = new Set(archive.map(a => a.sourceUrl || a.link).filter(Boolean));
+  const archiveTitles = new Set(archive.map(a => (a.title || '').toLowerCase().trim()).filter(Boolean));
+  const freshNews = rawNews.filter(a => !isAlreadyPublished(a, archiveLinks, archiveTitles));
+  console.log(`[NEWS] ${freshNews.length} after archive dedup (filtered ${rawNews.length - freshNews.length} already published)`);
+  if (freshNews.length === 0) return;
+
   // 2. Топ-10 (берём 10, предлагаем 5, остальные — запас для "Предложить другую")
-  const top = rankNews(rawNews, 10);
+  const top = rankNews(freshNews, 10);
   console.log(`[NEWS] Top 10 scored`);
 
   // 3. Переводим первые 5

@@ -110,12 +110,15 @@ function rankNews(articles, topN = 5) {
   scored.sort((a, b) => b.score - a.score);
 
   // Жёсткие фильтры: розыгрыши и Nintendo-only
+  const BANNED_WORDS = ['розыгрыш', 'giveaway', 'raffle', 'конкурс', 'подарим', 'выиграй'];
   const filtered = scored.filter(article => {
     const t = (article.title || '').toLowerCase();
+    const d = (article.description || '').toLowerCase();
     const cat = (article.category || '').toLowerCase();
+    const text = `${t} ${d} ${cat}`;
 
-    // Полный бан розыгрышей
-    if (cat.includes('розыгрыш') || t.includes('розыгрыш') || t.includes('giveaway') || t.includes('raffle')) return false;
+    // Полный бан розыгрышей — проверяем title + description + category
+    if (BANNED_WORDS.some(w => text.includes(w))) return false;
 
     // Nintendo-only без упоминания PS/Xbox
     if ((t.includes('nintendo switch') || t.includes('switch 2'))
