@@ -1,6 +1,4 @@
-const Anthropic = require('@anthropic-ai/sdk');
-
-const client = new Anthropic({ apiKey: process.env.CLAUDE_API_KEY });
+const axios = require('axios');
 
 const SYSTEM_PROMPT = `Ты — редактор новостного канала ActivePlay об игровой индустрии.
 Переведи и перепиши новость на русский в ТРЁХ форматах.
@@ -26,15 +24,22 @@ async function translateAndRewrite(article) {
 Источник: ${article.sourceName}`;
 
   try {
-    const response = await client.messages.create({
-      model: 'claude-sonnet-4-20250514',
+    const response = await axios.post('https://api.openai.com/v1/chat/completions', {
+      model: 'gpt-4o',
       max_tokens: 2000,
       messages: [
-        { role: 'user', content: `${SYSTEM_PROMPT}\n\n${userPrompt}` }
+        { role: 'system', content: SYSTEM_PROMPT },
+        { role: 'user', content: userPrompt },
       ],
+    }, {
+      headers: {
+        'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      timeout: 30000,
     });
 
-    const text = response.content[0]?.text || '';
+    const text = response.data?.choices?.[0]?.message?.content || '';
 
     // Парсинг JSON из ответа
     const jsonMatch = text.match(/\{[\s\S]*\}/);
@@ -65,7 +70,9 @@ async function translateAndRewrite(article) {
     console.log(`[NEWS] Translated: ${parsed.site.title} [${parsed.category}]`);
     return parsed;
   } catch (err) {
-    console.error(`[NEWS] Translator error: ${err.message}`);
+    const status = err.response?.status || '';
+    const body = err.response?.data ? JSON.stringify(err.response.data) : err.message;
+    console.error(`[NEWS] Translator error: ${status} ${body}`);
     return null;
   }
 }
