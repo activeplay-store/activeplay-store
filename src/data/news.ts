@@ -40,10 +40,10 @@ export const newsData: NewsItem[] = [
     slug: 'lords-of-the-fallen-vozglavit-ps-plus-essential-v-aprele-2026',
     category: 'insider' as NewsCategory,
     title: 'Lords of the Fallen возглавит PS Plus Essential в апреле 2026',
-    excerpt: 'Утечка раскрыла одну из игр, которая появится в PS Plus Essential в апреле. По информации от Dealabs, главной игрой станет Lords of the Fallen.',
-    content: `<p>Утечка раскрыла одну из игр, которая появится в PS Plus Essential в апреле. По информации от Dealabs, главной игрой станет Lords of the Fallen. Важно: речь о перезапуске 2023 года, а не об оригинальной игре 2014-го.</p>
-<p>Это souls-like экшен с мрачным фэнтези и хардкорными боссами. Разработчик: Hexworks. У игры 73 балла на Metacritic.</p>
-<p>Официальный анонс стоит ждать на следующей неделе.</p>`,
+    excerpt: 'Dealabs слил апрельскую раздачу PS Plus Essential. Главный тайтл: Lords of the Fallen 2023 года.',
+    content: `<p>Dealabs слил апрельскую раздачу PS Plus Essential. Главный тайтл месяца: Lords of the Fallen в версии 2023 года. Не путать с оригиналом 2014-го: здесь другая студия, другой движок и совершенно другой масштаб.</p>
+<p>Мрачное фэнтези в духе Dark Souls с параллельными мирами и жёсткими боссами. Студия Hexworks серьёзно подтянула проект после релиза. На Metacritic 73 балла.</p>
+<p>Официальный анонс Sony ожидается на следующей неделе.</p>`,
     coverUrl: '/images/news/news-1774728153215-k8b5.jpg',
     date: '2026-03-28',
     source: 'Push Square',
