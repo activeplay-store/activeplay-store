@@ -45,12 +45,13 @@ async function publishToVK(article) {
 // Маппинг категорий переводчика → NewsCategory для сайта
 const CATEGORY_MAP = {
   'Новость': 'news', 'Анонс': 'announcement', 'Обзор': 'review',
-  'Слух': 'insider', 'Скидки': 'news', 'Гайд': 'guide',
+  'Слух': 'rumor', 'Скидки': 'news', 'Гайд': 'guide',
   'Видео': 'video', 'Интервью': 'interview',
+  'Хайп': 'hype', 'Инсайд': 'insider',
 };
 
 // Убрать категорию из начала заголовка (например "Инсайд: Title" → "Title")
-const CATEGORY_PREFIX_RE = /^(Новость|Анонс|Обзор|Слух|Скидки|Гайд|Видео|Интервью|Инсайд|Утечка|Rumor|News)\s*[:—–\-]\s*/i;
+const CATEGORY_PREFIX_RE = /^(Новость|Анонс|Обзор|Слух|Скидки|Гайд|Видео|Интервью|Инсайд|Хайп|Утечка|Rumor|News|Hype)\s*[:—–\-]\s*/i;
 function stripCategoryPrefix(title) {
   return (title || '').replace(CATEGORY_PREFIX_RE, '');
 }
@@ -132,7 +133,7 @@ function writeToSite(articles) {
       excerpt: bodyText.substring(0, 200),
       content: addProductLinks(textToHtml(bodyText)),
       coverUrl: a.imageUrl || a.image || '',
-      date: now.toISOString().split('T')[0],
+      date: now.toISOString(),
       source: a.sourceName,
       author: 'ActivePlay',
       tags: a.site?.tags || a.tags || [],
@@ -140,7 +141,10 @@ function writeToSite(articles) {
     };
   });
 
-  archive = [...newEntries, ...archive].slice(0, 100);
+  // Deduplicate: don't overwrite existing archive entries (preserves coverUrl etc.)
+  const existingIds = new Set(archive.map(a => a.id));
+  const trulyNew = newEntries.filter(e => !existingIds.has(e.id));
+  archive = [...trulyNew, ...archive].slice(0, 100);
   fs.writeFileSync(NEWS_ARCHIVE, JSON.stringify(archive, null, 2));
 
   // Читаем существующий news.ts чтобы сохранить ручные статьи
@@ -169,7 +173,7 @@ function writeToSite(articles) {
     excerpt: '${excerpt.replace(/'/g, "\\'")}',
     content: \`${content}\`,
     coverUrl: '${item.coverUrl || item.image || ''}',
-    date: '${item.date || item.publishedAt?.split('T')[0] || now.toISOString().split('T')[0]}',
+    date: '${item.date || now.toISOString()}',
     source: '${(item.source || item.sourceName || '').replace(/'/g, "\\'")}',
     author: '${item.author || 'ActivePlay'}',
     tags: ${JSON.stringify(item.tags || [])},${item.metaDescription ? `\n    metaDescription: '${(item.metaDescription || '').replace(/'/g, "\\'")}',` : ''}
@@ -179,7 +183,7 @@ function writeToSite(articles) {
   const ts = `// Автогенерация — НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ
 // Обновлено: ${now.toISOString()}
 
-export type NewsCategory = 'news' | 'insider' | 'video' | 'guide' | 'interview' | 'podcast' | 'review' | 'announcement';
+export type NewsCategory = 'news' | 'hype' | 'insider' | 'rumor' | 'video' | 'guide' | 'interview' | 'podcast' | 'review' | 'announcement';
 
 export interface NewsItem {
   id: string;
@@ -203,11 +207,13 @@ export interface NewsItem {
 
 export const NEWS_CATEGORIES: Record<NewsCategory, { label: string; color: string; icon: string }> = {
   news:         { label: 'Новость',   color: '#00D4FF', icon: '📰' },
-  insider:      { label: 'Инсайд',   color: '#FF9500', icon: '🔍' },
-  video:        { label: 'Видео',     color: '#FF4D6A', icon: '🎬' },
+  hype:         { label: 'Хайп',      color: '#FF4D6A', icon: '🔥' },
+  insider:      { label: 'Инсайд',    color: '#A855F7', icon: '🕵️' },
+  rumor:        { label: 'Слух',      color: '#F59E0B', icon: '🤫' },
+  video:        { label: 'Видео',     color: '#EF4444', icon: '🎬' },
   guide:        { label: 'Гайд',      color: '#22C55E', icon: '📖' },
-  interview:    { label: 'Интервью',  color: '#A855F7', icon: '🎙️' },
-  podcast:      { label: 'Подкаст',   color: '#F59E0B', icon: '🎧' },
+  interview:    { label: 'Интервью',  color: '#818CF8', icon: '🎙️' },
+  podcast:      { label: 'Подкаст',   color: '#F97316', icon: '🎧' },
   review:       { label: 'Обзор',     color: '#FFD700', icon: '⭐' },
   announcement: { label: 'Анонс',     color: '#FF6B35', icon: '📢' },
 };
