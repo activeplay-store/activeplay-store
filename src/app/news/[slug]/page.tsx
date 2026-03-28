@@ -108,7 +108,6 @@ export default async function NewsArticlePage({ params }: Props) {
             <div className="flex flex-wrap items-center gap-2 text-xs font-mono text-gray-500 mb-6">
               <span>{new Date(article.date).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
               {article.author && <><span>·</span><span>{article.author}</span></>}
-              {article.source && <><span>·</span><span className="text-[#00D4FF]/70">{article.source}</span></>}
             </div>
 
             {/* Cover or YouTube */}

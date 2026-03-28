@@ -45,7 +45,7 @@ async function publishToVK(article) {
 // Маппинг категорий переводчика → NewsCategory для сайта
 const CATEGORY_MAP = {
   'Новость': 'news', 'Анонс': 'announcement', 'Обзор': 'review',
-  'Слух': 'news', 'Скидки': 'news', 'Гайд': 'guide',
+  'Слух': 'insider', 'Скидки': 'news', 'Гайд': 'guide',
   'Видео': 'video', 'Интервью': 'interview',
 };
 
@@ -53,6 +53,25 @@ const CATEGORY_MAP = {
 const CATEGORY_PREFIX_RE = /^(Новость|Анонс|Обзор|Слух|Скидки|Гайд|Видео|Интервью|Инсайд|Утечка|Rumor|News)\s*[:—–\-]\s*/i;
 function stripCategoryPrefix(title) {
   return (title || '').replace(CATEGORY_PREFIX_RE, '');
+}
+
+// Разбить текст на абзацы по 2-3 предложения (макс 3 абзаца)
+function textToHtml(text) {
+  if (!text) return '';
+  // Если уже HTML — вернуть как есть
+  if (text.trim().startsWith('<p>')) return text;
+  // Разбиваем по переносам строк (если переводчик сам разбил на абзацы)
+  let paragraphs = text.split(/\n\n+/).filter(p => p.trim());
+  if (paragraphs.length <= 1) {
+    // Один блок текста — разбить по предложениям, группировать по 2-3
+    const sentences = text.split(/(?<=\.)\s+/).filter(s => s.trim());
+    paragraphs = [];
+    for (let i = 0; i < sentences.length; i += 3) {
+      paragraphs.push(sentences.slice(i, i + 3).join(' '));
+    }
+  }
+  // Максимум 4 абзаца
+  return paragraphs.slice(0, 4).map(p => `<p>${p.trim()}</p>`).join('\n');
 }
 
 function slugify(text) {
@@ -87,7 +106,7 @@ function writeToSite(articles) {
       category: CATEGORY_MAP[a.category] || 'news',
       title: cleanTitle,
       excerpt: bodyText.substring(0, 200),
-      content: `<p>${bodyText.split(/\.\s+/).join('.</p>\n<p>')}</p>`,
+      content: textToHtml(bodyText),
       coverUrl: a.imageUrl || a.image || '',
       date: now.toISOString().split('T')[0],
       source: a.sourceName,
@@ -115,7 +134,7 @@ function writeToSite(articles) {
   const tsItems = archive.slice(0, 50).map(item => {
     const cleanTitle = stripCategoryPrefix(item.title);
     const bodyRaw = item.content || item.text || '';
-    const content = (bodyRaw.startsWith('<p>') ? bodyRaw : `<p>${bodyRaw.split(/\.\s+/).join('.</p>\n<p>')}</p>`)
+    const content = textToHtml(bodyRaw)
       .replace(/`/g, '\\`').replace(/\$/g, '\\$');
     const excerpt = item.excerpt || bodyRaw.replace(/<[^>]+>/g, '').substring(0, 200);
     return `  {
@@ -136,7 +155,7 @@ function writeToSite(articles) {
   const ts = `// Автогенерация — НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ
 // Обновлено: ${now.toISOString()}
 
-export type NewsCategory = 'news' | 'video' | 'guide' | 'interview' | 'podcast' | 'review' | 'announcement';
+export type NewsCategory = 'news' | 'insider' | 'video' | 'guide' | 'interview' | 'podcast' | 'review' | 'announcement';
 
 export interface NewsItem {
   id: string;
@@ -160,6 +179,7 @@ export interface NewsItem {
 
 export const NEWS_CATEGORIES: Record<NewsCategory, { label: string; color: string; icon: string }> = {
   news:         { label: 'Новость',   color: '#00D4FF', icon: '📰' },
+  insider:      { label: 'Инсайд',   color: '#FF9500', icon: '🔍' },
   video:        { label: 'Видео',     color: '#FF4D6A', icon: '🎬' },
   guide:        { label: 'Гайд',      color: '#22C55E', icon: '📖' },
   interview:    { label: 'Интервью',  color: '#A855F7', icon: '🎙️' },
