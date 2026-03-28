@@ -107,7 +107,7 @@ function writeToSite(articles) {
     return `  {
     id: '${item.id}',
     slug: '${item.slug || slugify(item.title)}',
-    category: '${item.category || 'news'}' as NewsCategory,
+    category: '${CATEGORY_MAP[item.category] || item.category || 'news'}' as NewsCategory,
     title: '${(item.title || '').replace(/'/g, "\\'")}',
     excerpt: '${(item.excerpt || '').replace(/'/g, "\\'")}',
     content: \`${content}\`,
