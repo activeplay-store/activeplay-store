@@ -49,6 +49,12 @@ const CATEGORY_MAP = {
   'Видео': 'video', 'Интервью': 'interview',
 };
 
+// Убрать категорию из начала заголовка (например "Инсайд: Title" → "Title")
+const CATEGORY_PREFIX_RE = /^(Новость|Анонс|Обзор|Слух|Скидки|Гайд|Видео|Интервью|Инсайд|Утечка|Rumor|News)\s*[:—–\-]\s*/i;
+function stripCategoryPrefix(title) {
+  return (title || '').replace(CATEGORY_PREFIX_RE, '');
+}
+
 function slugify(text) {
   return text
     .toLowerCase()
@@ -72,20 +78,24 @@ function writeToSite(articles) {
   try { archive = JSON.parse(fs.readFileSync(NEWS_ARCHIVE, 'utf-8')); } catch {}
 
   const now = new Date();
-  const newEntries = articles.map(a => ({
-    id: a.id,
-    slug: slugify(a.site?.title || a.title),
-    category: CATEGORY_MAP[a.category] || 'news',
-    title: a.site?.title || a.title,
-    excerpt: (a.site?.text || a.text || '').substring(0, 200),
-    content: `<p>${(a.site?.text || a.text || '').split(/\.\s+/).join('.</p>\n<p>')}</p>`,
-    coverUrl: a.imageUrl || '',
-    date: now.toISOString().split('T')[0],
-    source: a.sourceName,
-    author: 'ActivePlay',
-    tags: a.site?.tags || a.tags || [],
-    metaDescription: a.site?.metaDescription || '',
-  }));
+  const newEntries = articles.map(a => {
+    const cleanTitle = stripCategoryPrefix(a.site?.title || a.title);
+    const bodyText = a.site?.text || a.text || '';
+    return {
+      id: a.id,
+      slug: slugify(cleanTitle),
+      category: CATEGORY_MAP[a.category] || 'news',
+      title: cleanTitle,
+      excerpt: bodyText.substring(0, 200),
+      content: `<p>${bodyText.split(/\.\s+/).join('.</p>\n<p>')}</p>`,
+      coverUrl: a.imageUrl || a.image || '',
+      date: now.toISOString().split('T')[0],
+      source: a.sourceName,
+      author: 'ActivePlay',
+      tags: a.site?.tags || a.tags || [],
+      metaDescription: a.site?.metaDescription || '',
+    };
+  });
 
   archive = [...newEntries, ...archive].slice(0, 100);
   fs.writeFileSync(NEWS_ARCHIVE, JSON.stringify(archive, null, 2));
@@ -103,17 +113,21 @@ function writeToSite(articles) {
 
   // Генерация TypeScript, совместимого с интерфейсом NewsItem
   const tsItems = archive.slice(0, 50).map(item => {
-    const content = (item.content || '').replace(/`/g, '\\`').replace(/\$/g, '\\$');
+    const cleanTitle = stripCategoryPrefix(item.title);
+    const bodyRaw = item.content || item.text || '';
+    const content = (bodyRaw.startsWith('<p>') ? bodyRaw : `<p>${bodyRaw.split(/\.\s+/).join('.</p>\n<p>')}</p>`)
+      .replace(/`/g, '\\`').replace(/\$/g, '\\$');
+    const excerpt = item.excerpt || bodyRaw.replace(/<[^>]+>/g, '').substring(0, 200);
     return `  {
     id: '${item.id}',
-    slug: '${item.slug || slugify(item.title)}',
+    slug: '${item.slug || slugify(cleanTitle)}',
     category: '${CATEGORY_MAP[item.category] || item.category || 'news'}' as NewsCategory,
-    title: '${(item.title || '').replace(/'/g, "\\'")}',
-    excerpt: '${(item.excerpt || '').replace(/'/g, "\\'")}',
+    title: '${cleanTitle.replace(/'/g, "\\'")}',
+    excerpt: '${excerpt.replace(/'/g, "\\'")}',
     content: \`${content}\`,
     coverUrl: '${item.coverUrl || item.image || ''}',
     date: '${item.date || item.publishedAt?.split('T')[0] || now.toISOString().split('T')[0]}',
-    source: '${(item.source || '').replace(/'/g, "\\'")}',
+    source: '${(item.source || item.sourceName || '').replace(/'/g, "\\'")}',
     author: '${item.author || 'ActivePlay'}',
     tags: ${JSON.stringify(item.tags || [])},${item.metaDescription ? `\n    metaDescription: '${(item.metaDescription || '').replace(/'/g, "\\'")}',` : ''}
   }`;

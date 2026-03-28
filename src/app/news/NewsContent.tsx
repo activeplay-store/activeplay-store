@@ -140,13 +140,19 @@ export default function NewsContent() {
               >
                 {/* Cover */}
                 <div className={`relative overflow-hidden ${item.category === 'podcast' ? 'aspect-square' : 'aspect-video'}`}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={item.coverUrl}
-                    alt={item.title}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    loading="lazy"
-                  />
+                  {item.coverUrl ? (
+                    /* eslint-disable-next-line @next/next/no-img-element */
+                    <img
+                      src={item.coverUrl}
+                      alt={item.title}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-gradient-to-br from-[#0a0f1a] to-[#1a1f2e] flex items-center justify-center">
+                      <span className="text-4xl opacity-30">{NEWS_CATEGORIES[item.category]?.icon || '📰'}</span>
+                    </div>
+                  )}
                   {/* HOT badge */}
                   {item.hot && (
                     <span className="absolute top-3 left-3 px-2 py-1 rounded-md text-xs font-bold bg-red-500 text-white animate-pulse">
