@@ -1,7 +1,6 @@
 const axios = require('axios');
 
-const OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions';
-const MODEL = 'anthropic/claude-sonnet-4';
+const GEMINI_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
 
 const SYSTEM_PROMPT = `Ты — редактор новостного канала ActivePlay об игровой индустрии.
 Переведи и перепиши новость на русский в ТРЁХ форматах.
@@ -26,23 +25,25 @@ async function translateAndRewrite(article) {
 Текст: ${(article.description || '').substring(0, 3000)}
 Источник: ${article.sourceName}`;
 
-  try {
-    const response = await axios.post(OPENROUTER_URL, {
-      model: MODEL,
-      max_tokens: 2000,
-      messages: [
-        { role: 'system', content: SYSTEM_PROMPT },
-        { role: 'user', content: userPrompt },
-      ],
-    }, {
-      headers: {
-        'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
-      timeout: 60000,
-    });
+  const fullPrompt = `${SYSTEM_PROMPT}\n\n${userPrompt}`;
 
-    const text = response.data?.choices?.[0]?.message?.content || '';
+  try {
+    const response = await axios.post(
+      `${GEMINI_URL}?key=${process.env.GEMINI_API_KEY}`,
+      {
+        contents: [{ parts: [{ text: fullPrompt }] }],
+        generationConfig: {
+          maxOutputTokens: 2000,
+          temperature: 0.7,
+        },
+      },
+      {
+        headers: { 'Content-Type': 'application/json' },
+        timeout: 60000,
+      }
+    );
+
+    const text = response.data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
 
     // Парсинг JSON из ответа
     const jsonMatch = text.match(/\{[\s\S]*\}/);

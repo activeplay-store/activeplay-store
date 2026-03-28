@@ -1,72 +1,140 @@
 // Скоринг и ранжирование новостей
 
-// Ключевые слова с весами (чем выше — тем интереснее аудитории ActivePlay)
-const KEYWORDS = {
-  high: [
-    'ps5', 'playstation', 'ps plus', 'ps store', 'dualsense',
-    'xbox', 'game pass', 'series x',
-    'gta', 'god of war', 'spider-man', 'the last of us', 'uncharted',
-    'final fantasy', 'elden ring', 'hogwarts', 'ghost of tsushima',
-    'horizon', 'death stranding', 'resident evil', 'silent hill',
-    'free', 'бесплатно', 'sale', 'скидки', 'discount', 'deal',
-    'exclusive', 'эксклюзив', 'release date', 'дата выхода',
-    'launch', 'reveal', 'announce', 'trailer',
-  ],
-  medium: [
-    'nintendo', 'switch', 'steam', 'epic games',
-    'dlc', 'expansion', 'update', 'patch',
-    'review', 'обзор', 'gameplay', 'hands-on',
-    'multiplayer', 'co-op', 'online',
-    'indie', 'инди', 'remake', 'remaster',
-  ],
-  low: [
-    'mobile', 'ios', 'android', 'gacha',
-    'esports', 'tournament', 'league',
-    'vr', 'psvr',
-  ],
+// Ключевые слова с весами
+const KEYWORD_SCORES = {
+  // PlayStation-приоритет
+  'ps5 exclusive': 15, 'playstation studios': 15, 'state of play': 15,
+  'ps plus': 15, 'dualsense': 10, 'psn': 10, 'ps5 pro': 12, 'psvr': 8,
+  'ps store': 12, 'playstation store': 12,
+
+  // Инсайды и анонсы
+  'exclusive': 10, 'first look': 10, 'insider': 8, 'confirmed': 8,
+  'officially': 8, 'release date': 12, 'delay': 10, 'cancelled': 10,
+  'first trailer': 12, 'gameplay reveal': 12, 'showcase': 10,
+
+  // Платформы
+  'ps5': 8, 'playstation': 8, 'ps4': 5,
+  'xbox': 4, 'game pass': 5, 'series x': 3,
+
+  // Топовые франшизы
+  'gta': 10, 'god of war': 10, 'spider-man': 10, 'the last of us': 10,
+  'uncharted': 8, 'final fantasy': 8, 'elden ring': 8, 'hogwarts': 8,
+  'ghost of tsushima': 8, 'death stranding': 8, 'resident evil': 8,
+  'silent hill': 8, 'horizon': 7, 'gran turismo': 7,
+
+  // Коммерция
+  'free': 6, 'sale': 5, 'discount': 5, 'deal': 4,
+  'launch': 5, 'reveal': 6, 'announce': 6, 'trailer': 5,
+
+  // Средний приоритет
+  'dlc': 3, 'expansion': 3, 'update': 2, 'patch': 2,
+  'review': 3, 'gameplay': 3, 'hands-on': 3,
+  'multiplayer': 2, 'co-op': 2, 'remake': 4, 'remaster': 3,
 };
+
+const NEGATIVE_KEYWORDS = [
+  'mobile game', 'mobile gaming', 'gacha', 'idle game',
+  'sponsored', 'advertisement', 'affiliate',
+  'what are you playing', 'talking point', 'opinion piece',
+  'review roundup', 'podcast', 'quiz', 'best of',
+  'wordle', 'crossword', 'puzzle answer',
+];
 
 function scoreArticle(article) {
   let score = 0;
   const text = `${article.title} ${article.description}`.toLowerCase();
+  const titleLower = (article.title || '').toLowerCase();
 
-  // 1. Ключевые слова
-  for (const kw of KEYWORDS.high) {
-    if (text.includes(kw)) score += 3;
-  }
-  for (const kw of KEYWORDS.medium) {
-    if (text.includes(kw)) score += 1;
-  }
-  for (const kw of KEYWORDS.low) {
-    if (text.includes(kw)) score -= 1;
+  // 1. Ключевые слова (точные фразы)
+  for (const [keyword, points] of Object.entries(KEYWORD_SCORES)) {
+    if (text.includes(keyword)) score += points;
   }
 
-  // 2. Вес источника
-  score *= (article.sourceWeight || 1);
+  // 2. Негативные ключевые слова
+  for (const neg of NEGATIVE_KEYWORDS) {
+    if (text.includes(neg)) score -= 20;
+  }
 
-  // 3. Свежесть (чем новее — тем лучше)
+  // 3. Скидки на аксессуары (НЕ на игры) — минус
+  if ((titleLower.includes('deal') || titleLower.includes('sale') || titleLower.includes('off'))
+      && !titleLower.includes('ps store') && !titleLower.includes('game pass')
+      && !titleLower.includes('playstation') && !titleLower.includes('xbox game')) {
+    score -= 30;
+  }
+
+  // 4. Короткое описание — скорее всего мусор
+  if ((article.description || '').length < 100) {
+    score -= 20;
+  }
+
+  // 5. Вес источника (1-10 шкала)
+  score += (article.sourceWeight || 1) * 2;
+
+  // 6. Свежесть
   const ageHours = (Date.now() - new Date(article.pubDate).getTime()) / (1000 * 60 * 60);
-  if (ageHours < 2) score += 5;
-  else if (ageHours < 6) score += 3;
-  else if (ageHours < 12) score += 1;
+  if (ageHours < 2) score += 10;
+  else if (ageHours < 6) score += 5;
+  else if (ageHours < 12) score += 2;
 
-  // 4. Официальный источник = бонус
-  if (article.sourceCategory === 'official') score += 4;
+  // 7. Категория источника
+  if (article.category === 'official') score += 8;
+  if (article.category === 'insider') score += 6;
+  if (article.category === 'platform') score += 3;
 
-  // 5. Длина описания (подробные — лучше)
-  if ((article.description || '').length > 500) score += 2;
-  if ((article.description || '').length > 1000) score += 1;
+  // 8. Длина описания (подробные — лучше)
+  if ((article.description || '').length > 500) score += 3;
+  if ((article.description || '').length > 1000) score += 2;
 
-  // 6. Наличие картинки — бонус
+  // 9. Наличие картинки
   if (article.image) score += 1;
+
+  // 10. Reddit score бонус
+  if (article.redditScore && article.redditScore > 500) score += 5;
+  if (article.redditScore && article.redditScore > 2000) score += 5;
 
   return Math.max(0, Math.round(score * 10) / 10);
 }
 
-function rankNews(articles, topN = 10) {
+function rankNews(articles, topN = 5) {
   const scored = articles.map(a => ({ ...a, score: scoreArticle(a) }));
   scored.sort((a, b) => b.score - a.score);
-  return scored.slice(0, topN);
+
+  // Дедупликация по теме (берём лучший из похожих)
+  const selected = [];
+  const usedKeys = new Set();
+  for (const article of scored) {
+    const key = normalizeForDedup(article.title);
+    if (usedKeys.has(key)) continue;
+    usedKeys.add(key);
+    selected.push(article);
+    if (selected.length >= topN * 3) break; // запас для Xbox-лимита
+  }
+
+  // Лимит: максимум 1 Xbox-only новость из 5
+  let xboxCount = 0;
+  const finalSelected = [];
+  for (const article of selected) {
+    const title = article.title.toLowerCase();
+    const isXboxOnly = (title.includes('xbox') || (article.sourceId || '').includes('xbox'))
+      && !title.includes('playstation') && !title.includes('ps5') && !title.includes('ps4');
+
+    if (isXboxOnly) {
+      xboxCount++;
+      if (xboxCount > 1) continue;
+    }
+    finalSelected.push(article);
+    if (finalSelected.length >= topN) break;
+  }
+  return finalSelected;
+}
+
+function normalizeForDedup(title) {
+  return (title || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, '')
+    .split(/\s+/)
+    .slice(0, 5)
+    .join(' ');
 }
 
 module.exports = { rankNews, scoreArticle };
