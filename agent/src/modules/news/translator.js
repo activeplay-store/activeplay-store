@@ -1,5 +1,8 @@
 const axios = require('axios');
 
+const OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions';
+const MODEL = 'anthropic/claude-sonnet-4';
+
 const SYSTEM_PROMPT = `Ты — редактор новостного канала ActivePlay об игровой индустрии.
 Переведи и перепиши новость на русский в ТРЁХ форматах.
 
@@ -24,8 +27,8 @@ async function translateAndRewrite(article) {
 Источник: ${article.sourceName}`;
 
   try {
-    const response = await axios.post('https://api.openai.com/v1/chat/completions', {
-      model: 'gpt-4o',
+    const response = await axios.post(OPENROUTER_URL, {
+      model: MODEL,
       max_tokens: 2000,
       messages: [
         { role: 'system', content: SYSTEM_PROMPT },
@@ -33,10 +36,10 @@ async function translateAndRewrite(article) {
       ],
     }, {
       headers: {
-        'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
+        'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
         'Content-Type': 'application/json',
       },
-      timeout: 30000,
+      timeout: 60000,
     });
 
     const text = response.data?.choices?.[0]?.message?.content || '';
