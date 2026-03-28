@@ -37,33 +37,31 @@ async function resizeImage(imageBuffer, filename) {
   return `/images/news/${filename}`;
 }
 
-// Генерация через DALL-E 3
-async function generateImage(title, description) {
-  const prompt = `Gaming news illustration, 16:9 format, modern digital art style: ${title}. ${(description || '').substring(0, 200)}. Professional gaming media style, no text on image, vibrant colors.`;
+// Генерация через Gemini Imagen
+async function generateImage(title) {
+  const prompt = `Gaming news cover image, 16:9 format, high quality, cinematic lighting, professional gaming media style, NO TEXT on image: ${title}. Combine visual elements from the topic.`;
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${process.env.GEMINI_API_KEY}`;
 
   try {
-    const response = await axios.post('https://api.openai.com/v1/images/generations', {
-      model: 'dall-e-3',
-      prompt,
-      n: 1,
-      size: '1792x1024', // Ближайший к 16:9 у DALL-E
-      quality: 'standard',
-    }, {
-      headers: {
-        'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
-        'Content-Type': 'application/json',
+    const response = await axios.post(url, {
+      contents: [{ parts: [{ text: prompt }] }],
+      generationConfig: {
+        responseModalities: ['IMAGE', 'TEXT'],
+        imageSizeOptions: { aspectRatio: '16:9' },
       },
-      timeout: 60000,
-    });
+    }, { timeout: 60000 });
 
-    const imageUrl = response.data?.data?.[0]?.url;
-    if (!imageUrl) return null;
+    // Извлечь base64-картинку из ответа Gemini
+    const parts = response.data?.candidates?.[0]?.content?.parts || [];
+    const imagePart = parts.find(p => p.inlineData?.mimeType?.startsWith('image/'));
+    if (!imagePart) {
+      console.error('[NEWS] Gemini: no image in response');
+      return null;
+    }
 
-    // Скачать сгенерированное изображение
-    const imgResponse = await axios.get(imageUrl, { responseType: 'arraybuffer', timeout: 30000 });
-    return Buffer.from(imgResponse.data);
+    return Buffer.from(imagePart.inlineData.data, 'base64');
   } catch (err) {
-    console.error('[NEWS] DALL-E error:', err.message);
+    console.error('[NEWS] Gemini image error:', err.message);
     return null;
   }
 }
@@ -74,8 +72,6 @@ const RAWG_KEY = process.env.RAWG_API_KEY || 'd9ca3380009e448e8fb356b3837cafa2';
 async function searchRawgImage(title) {
   if (!title) return null;
   try {
-    // Извлечь название игры из заголовка (до первого глагола/предлога на русском)
-    // Ищем английские названия игр (латиница + цифры + спецсимволы)
     const gameMatch = title.match(/[A-Z][A-Za-z0-9':&\- ]{2,}/);
     const query = gameMatch ? gameMatch[0].trim() : title.substring(0, 40);
 
@@ -111,12 +107,9 @@ async function getNewsImage(article) {
     return await resizeImage(sourceImage, filename);
   }
 
-  // 2. Генерить через DALL-E
-  console.log(`[NEWS] Generating DALL-E image for: ${article.title}`);
-  const generated = await generateImage(
-    article.site?.title || article.title,
-    article.site?.text || article.description
-  );
+  // 2. Генерить через Gemini Imagen
+  console.log(`[NEWS] Generating Gemini image for: ${article.site?.title || article.title}`);
+  const generated = await generateImage(article.site?.title || article.title);
   if (generated) {
     return await resizeImage(generated, filename);
   }
