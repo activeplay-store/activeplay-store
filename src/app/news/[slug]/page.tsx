@@ -121,14 +121,55 @@ export default async function NewsArticlePage({ params }: Props) {
               />
             )}
 
+            {/* Product CTA */}
+            {article.tags?.some((t) => t.toLowerCase().includes('ps plus')) && (
+              <div className="mt-8 p-6 rounded-xl bg-gradient-to-r from-[#00D4FF]/10 to-transparent border border-[#00D4FF]/20">
+                <p className="text-lg font-semibold text-white mb-2">Оформить PS Plus Essential</p>
+                <p className="text-sm text-gray-400 mb-4">Активация на турецком аккаунте за 5 минут. От 1 250 ₽/мес.</p>
+                <a href="/ps-plus-essential" className="inline-block px-6 py-3 bg-[#00D4FF] text-black font-semibold rounded-lg hover:bg-[#00B8D9] transition">
+                  Купить PS Plus Essential →
+                </a>
+              </div>
+            )}
+            {article.tags?.some((t) => t.toLowerCase().includes('game pass')) && (
+              <div className="mt-8 p-6 rounded-xl bg-gradient-to-r from-[#107C10]/10 to-transparent border border-[#107C10]/20">
+                <p className="text-lg font-semibold text-white mb-2">Оформить Xbox Game Pass</p>
+                <p className="text-sm text-gray-400 mb-4">Подписка на сотни игр. Активация за 5 минут.</p>
+                <a href="/xbox-game-pass-ultimate" className="inline-block px-6 py-3 bg-[#107C10] text-white font-semibold rounded-lg hover:bg-[#0e6b0e] transition">
+                  Купить Game Pass →
+                </a>
+              </div>
+            )}
+            {article.tags?.some((t) => t.toLowerCase().includes('скидки') || t.toLowerCase().includes('распродажа')) && (
+              <div className="mt-8 p-6 rounded-xl bg-gradient-to-r from-[#EF4444]/10 to-transparent border border-[#EF4444]/20">
+                <p className="text-lg font-semibold text-white mb-2">Скидки PS Store</p>
+                <p className="text-sm text-gray-400 mb-4">Весенняя распродажа — скидки до 92%</p>
+                <a href="/sale" className="inline-block px-6 py-3 bg-[#EF4444] text-white font-semibold rounded-lg hover:bg-[#DC2626] transition">
+                  Смотреть скидки →
+                </a>
+              </div>
+            )}
+
             {/* Tags */}
             {article.tags && article.tags.length > 0 && (
               <div className="flex flex-wrap gap-2 mt-8 pt-6 border-t border-white/10">
-                {article.tags.map((tag) => (
-                  <span key={tag} className="px-3 py-1 rounded-full text-xs bg-white/5 text-gray-400 border border-white/10">
-                    {tag}
-                  </span>
-                ))}
+                {article.tags.map((tag) => {
+                  const tagLinks: Record<string, string> = {
+                    'PS Plus': '/ps-plus-essential',
+                    'PS Plus Essential': '/ps-plus-essential',
+                    'PS Plus Extra': '/ps-plus-extra',
+                    'PS Plus Deluxe': '/ps-plus-deluxe',
+                    'Xbox Game Pass': '/xbox-game-pass-ultimate',
+                    'EA Play': '/ea-play',
+                    'PS Store': '/sale',
+                  };
+                  const href = tagLinks[tag] || `/news?tag=${encodeURIComponent(tag)}`;
+                  return (
+                    <a key={tag} href={href} className="px-3 py-1 rounded-full text-xs bg-white/5 text-gray-400 border border-white/10 hover:border-[#00D4FF]/40 hover:text-[#00D4FF] transition-colors">
+                      {tag}
+                    </a>
+                  );
+                })}
               </div>
             )}
 
