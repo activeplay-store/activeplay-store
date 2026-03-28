@@ -33,17 +33,19 @@ function pluralize(n: number, one: string, few: string, many: string): string {
 /* ── Constants ─────────────────────────────────────────────────────────── */
 
 const ITEMS_PER_PAGE = 6;
-const ALL_CATEGORIES: ('all' | NewsCategory)[] = ['all', 'news', 'video', 'guide', 'interview', 'podcast', 'review', 'announcement'];
+const ALL_CATEGORIES: ('all' | NewsCategory)[] = ['all', 'news', 'hype', 'insider', 'rumor', 'video', 'guide', 'review', 'announcement', 'interview', 'podcast'];
 const CATEGORY_LABELS: Record<string, string> = {
   all: 'Все',
-  ...Object.fromEntries(Object.entries(NEWS_CATEGORIES).map(([k, v]) => [k, v.label + 'и'])),
   news: 'Новости',
+  hype: 'Хайп',
+  insider: 'Инсайды',
+  rumor: 'Слухи',
   video: 'Видео',
   guide: 'Гайды',
-  interview: 'Интервью',
-  podcast: 'Подкасты',
   review: 'Обзоры',
   announcement: 'Анонсы',
+  interview: 'Интервью',
+  podcast: 'Подкасты',
 };
 
 /* ── Component ─────────────────────────────────────────────────────────── */
@@ -198,12 +200,6 @@ export default function NewsContent() {
                   {/* Meta */}
                   <div className="flex items-center gap-2 text-[11px] font-mono text-gray-500">
                     <span>{formatRelativeDate(item.date)}</span>
-                    {item.source && (
-                      <>
-                        <span>·</span>
-                        <span className="text-[#00D4FF]/70">{item.source}</span>
-                      </>
-                    )}
                   </div>
                 </div>
               </a>

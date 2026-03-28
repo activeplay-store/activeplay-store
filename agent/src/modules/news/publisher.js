@@ -45,8 +45,9 @@ async function publishToVK(article) {
 // Маппинг категорий переводчика → NewsCategory для сайта
 const CATEGORY_MAP = {
   'Новость': 'news', 'Анонс': 'announcement', 'Обзор': 'review',
-  'Слух': 'news', 'Скидки': 'news', 'Гайд': 'guide',
+  'Слух': 'rumor', 'Скидки': 'news', 'Гайд': 'guide',
   'Видео': 'video', 'Интервью': 'interview',
+  'Хайп': 'hype', 'Инсайд': 'insider',
 };
 
 function slugify(text) {
@@ -80,14 +81,17 @@ function writeToSite(articles) {
     excerpt: (a.site?.text || a.text || '').substring(0, 200),
     content: `<p>${(a.site?.text || a.text || '').split(/\.\s+/).join('.</p>\n<p>')}</p>`,
     coverUrl: a.imageUrl || '',
-    date: now.toISOString().split('T')[0],
+    date: now.toISOString(),
     source: a.sourceName,
     author: 'ActivePlay',
     tags: a.site?.tags || a.tags || [],
     metaDescription: a.site?.metaDescription || '',
   }));
 
-  archive = [...newEntries, ...archive].slice(0, 100);
+  // Deduplicate: don't overwrite existing archive entries (preserves coverUrl etc.)
+  const existingIds = new Set(archive.map(a => a.id));
+  const trulyNew = newEntries.filter(e => !existingIds.has(e.id));
+  archive = [...trulyNew, ...archive].slice(0, 100);
   fs.writeFileSync(NEWS_ARCHIVE, JSON.stringify(archive, null, 2));
 
   // Читаем существующий news.ts чтобы сохранить ручные статьи
@@ -112,7 +116,7 @@ function writeToSite(articles) {
     excerpt: '${(item.excerpt || '').replace(/'/g, "\\'")}',
     content: \`${content}\`,
     coverUrl: '${item.coverUrl || item.image || ''}',
-    date: '${item.date || item.publishedAt?.split('T')[0] || now.toISOString().split('T')[0]}',
+    date: '${item.date || now.toISOString()}',
     source: '${(item.source || '').replace(/'/g, "\\'")}',
     author: '${item.author || 'ActivePlay'}',
     tags: ${JSON.stringify(item.tags || [])},${item.metaDescription ? `\n    metaDescription: '${(item.metaDescription || '').replace(/'/g, "\\'")}',` : ''}
@@ -122,7 +126,7 @@ function writeToSite(articles) {
   const ts = `// Автогенерация — НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ
 // Обновлено: ${now.toISOString()}
 
-export type NewsCategory = 'news' | 'video' | 'guide' | 'interview' | 'podcast' | 'review' | 'announcement';
+export type NewsCategory = 'news' | 'video' | 'guide' | 'interview' | 'podcast' | 'review' | 'announcement' | 'hype' | 'insider' | 'rumor';
 
 export interface NewsItem {
   id: string;
@@ -146,10 +150,13 @@ export interface NewsItem {
 
 export const NEWS_CATEGORIES: Record<NewsCategory, { label: string; color: string; icon: string }> = {
   news:         { label: 'Новость',   color: '#00D4FF', icon: '📰' },
-  video:        { label: 'Видео',     color: '#FF4D6A', icon: '🎬' },
+  hype:         { label: 'Хайп',      color: '#FF4D6A', icon: '🔥' },
+  insider:      { label: 'Инсайд',    color: '#A855F7', icon: '🕵️' },
+  rumor:        { label: 'Слух',      color: '#F59E0B', icon: '🤫' },
+  video:        { label: 'Видео',     color: '#EF4444', icon: '🎬' },
   guide:        { label: 'Гайд',      color: '#22C55E', icon: '📖' },
-  interview:    { label: 'Интервью',  color: '#A855F7', icon: '🎙️' },
-  podcast:      { label: 'Подкаст',   color: '#F59E0B', icon: '🎧' },
+  interview:    { label: 'Интервью',  color: '#818CF8', icon: '🎙️' },
+  podcast:      { label: 'Подкаст',   color: '#F97316', icon: '🎧' },
   review:       { label: 'Обзор',     color: '#FFD700', icon: '⭐' },
   announcement: { label: 'Анонс',     color: '#FF6B35', icon: '📢' },
 };
