@@ -44,7 +44,7 @@ export const newsData: NewsItem[] = [
     content: `<p>Утечка раскрыла одну из игр, которая появится в PS Plus Essential в апреле. По информации от Dealabs, главной игрой станет Lords of the Fallen. Важно: речь о перезапуске 2023 года, а не об оригинальной игре 2014-го.</p>
 <p>Это souls-like экшен с мрачным фэнтези и хардкорными боссами. Разработчик: Hexworks. У игры 73 балла на Metacritic.</p>
 <p>Официальный анонс стоит ждать на следующей неделе.</p>`,
-    coverUrl: '',
+    coverUrl: '/images/news/news-1774728153215-k8b5.jpg',
     date: '2026-03-28',
     source: 'Push Square',
     author: 'ActivePlay',
