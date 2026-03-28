@@ -88,8 +88,21 @@ export const newsData: NewsArticle[] = ${JSON.stringify(archive.slice(0, 50), nu
 
 function deployToSite() {
   try {
+    // Ensure images directory exists
+    const imagesDir = path.join(SITE_ROOT, 'public/images/news');
+    if (!fs.existsSync(imagesDir)) {
+      fs.mkdirSync(imagesDir, { recursive: true });
+    }
+
+    // Stage news.ts always, images only if directory has files
+    let gitAdd = `cd ${SITE_ROOT} && git add src/data/news.ts`;
+    const hasImages = fs.readdirSync(imagesDir).length > 0;
+    if (hasImages) {
+      gitAdd += ' public/images/news/';
+    }
+
     execSync(
-      `cd ${SITE_ROOT} && git add src/data/news.ts public/images/news/ && git commit -m "news: auto update" && git push`,
+      `${gitAdd} && git commit -m "news: auto update" && git push`,
       { timeout: 30000 }
     );
     console.log('[NEWS] Deployed');
