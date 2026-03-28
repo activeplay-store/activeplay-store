@@ -118,10 +118,10 @@ function setupApprovalHandlers(bot) {
 
     // Спросить КОГДА
     const targetLabel = targets.join(' + ');
+    const safeTitle = (article.site?.title || article.title || '').replace(/[*_`\[\]]/g, '');
     await ctx.editMessageText(
-      `📰 *${article.site?.title || article.title}*\n\n📢 Куда: ${targetLabel}\n\n⏰ Когда публикуем?`,
+      `📰 ${safeTitle}\n\n📢 Куда: ${targetLabel}\n\n⏰ Когда публикуем?`,
       {
-        parse_mode: 'Markdown',
         reply_markup: {
           inline_keyboard: [
             [
@@ -148,21 +148,24 @@ async function sendPreview(bot, article) {
   const ADMIN_ID = process.env.ADMIN_CHAT_ID;
   const cat = article.category || 'Новость';
 
+  const title = (article.site?.title || article.title || '').replace(/[*_`\[\]]/g, '');
+  const text = (article.site?.text || article.text || '').replace(/[*_`\[\]]/g, '');
+  const tags = (article.site?.tags || article.tags || []).map(t => '#' + t.replace(/[*_`\[\]]/g, '')).join(' ');
+
   const preview = [
-    `📰 *${cat.toUpperCase()}*`,
+    `📰 ${cat.toUpperCase()}`,
     '',
-    `*${article.site?.title || article.title}*`,
+    title,
     '',
-    article.site?.text || article.text,
+    text,
     '',
-    `🏷 ${(article.site?.tags || article.tags || []).map(t => '#' + t).join(' ')}`,
+    `🏷 ${tags}`,
     `📡 ${article.sourceName} | Score: ${article.score}`,
     `🔗 ${article.link}`,
     article.image ? '🖼 Картинка: есть' : '🖼 Картинка: будет сгенерирована',
   ].join('\n');
 
   await bot.telegram.sendMessage(ADMIN_ID, preview, {
-    parse_mode: 'Markdown',
     reply_markup: {
       inline_keyboard: [
         [
