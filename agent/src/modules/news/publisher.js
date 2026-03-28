@@ -99,6 +99,71 @@ function textToHtml(text) {
   return paragraphs.slice(0, 4).map(p => `<p>${p.trim()}</p>`).join('\n');
 }
 
+// Поиск цены игры в games.json для автоматического CTA
+const GAMES_FILE = path.join(__dirname, '../../../data/games.json');
+const DLC_RE = /\b(dlc|дополнение|expansion|season pass|сезонный абонемент)\b/i;
+
+function findGamePrice(title, content) {
+  try {
+    const data = JSON.parse(fs.readFileSync(GAMES_FILE, 'utf-8'));
+    const games = data.games || [];
+    const text = (title + ' ' + content).toLowerCase();
+    const isDlc = DLC_RE.test(text);
+
+    for (const game of games) {
+      const name = game.name?.toLowerCase();
+      if (!name) continue;
+      // Точное вхождение названия или первых 3 слов
+      const shortName = name.split(' ').slice(0, 3).join(' ');
+      if (text.includes(name) || text.includes(shortName)) {
+        const tr = game.prices?.TR?.editions?.[0];
+        if (tr && tr.clientPrice) {
+          return {
+            name: game.name,
+            priceTRY: tr.basePrice || tr.salePrice,
+            priceRUB: tr.clientPrice,
+            salePriceRUB: tr.clientSalePrice || null,
+            hasSale: !!tr.salePrice && tr.salePrice < tr.basePrice,
+          };
+        }
+      }
+    }
+
+    // Для DLC — попробовать найти базовую игру (без суффикса DLC)
+    if (isDlc) {
+      const cleaned = text
+        .replace(/dlc|дополнение|expansion|season pass|сезонный абонемент/gi, '')
+        .replace(/\s+/g, ' ').trim();
+      for (const game of games) {
+        const name = game.name?.toLowerCase();
+        if (!name) continue;
+        if (cleaned.includes(name)) {
+          const tr = game.prices?.TR?.editions?.[0];
+          if (tr && tr.clientPrice) {
+            return {
+              name: game.name,
+              priceTRY: tr.basePrice || tr.salePrice,
+              priceRUB: tr.clientPrice,
+              salePriceRUB: tr.clientSalePrice || null,
+              hasSale: !!tr.salePrice && tr.salePrice < tr.basePrice,
+            };
+          }
+        }
+      }
+    }
+
+    return null;
+  } catch { return null; }
+}
+
+function buildPriceCta(gamePrice) {
+  const price = gamePrice.hasSale ? gamePrice.salePriceRUB : gamePrice.priceRUB;
+  const priceText = gamePrice.hasSale
+    ? `${gamePrice.salePriceRUB} ₽ (скидка с ${gamePrice.priceRUB} ₽)`
+    : `${gamePrice.priceRUB} ₽`;
+  return `\n\n<div class="mt-8 p-6 rounded-xl bg-gradient-to-r from-[#00D4FF]/10 to-transparent border border-[#00D4FF]/20">\n<p class="text-lg font-semibold text-white mb-2">Купить ${gamePrice.name}</p>\n<p class="text-sm text-gray-400 mb-4">Цена в турецком PS Store: ${priceText}. Активация за 5 минут.</p>\n<a href="/sale" class="inline-block px-6 py-3 bg-[#00D4FF] text-black font-semibold rounded-lg hover:bg-[#00B8D9] transition">Купить за ${price} ₽ →</a>\n</div>`;
+}
+
 function slugify(text) {
   return text
     .toLowerCase()
@@ -125,13 +190,22 @@ function writeToSite(articles) {
   const newEntries = articles.map(a => {
     const cleanTitle = stripCategoryPrefix(a.site?.title || a.title);
     const bodyText = a.site?.text || a.text || '';
+    let htmlContent = addProductLinks(textToHtml(bodyText));
+
+    // Автоматический CTA с ценой игры
+    const gamePrice = findGamePrice(cleanTitle, bodyText);
+    if (gamePrice) {
+      htmlContent += buildPriceCta(gamePrice);
+      console.log(`[NEWS] CTA: ${gamePrice.name} — ${gamePrice.priceRUB} ₽`);
+    }
+
     return {
       id: a.id,
       slug: slugify(cleanTitle),
       category: CATEGORY_MAP[a.category] || 'news',
       title: cleanTitle,
       excerpt: bodyText.substring(0, 200),
-      content: addProductLinks(textToHtml(bodyText)),
+      content: htmlContent,
       coverUrl: a.imageUrl || a.image || '',
       date: now.toISOString(),
       source: a.sourceName,
