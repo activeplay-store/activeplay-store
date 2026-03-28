@@ -51,6 +51,8 @@ export default function NewsArticleContent({ article }: Props) {
   }
 
   // Regular cover image
+  if (!article.coverUrl) return null;
+
   return (
     <div className="aspect-video rounded-xl overflow-hidden">
       {/* eslint-disable-next-line @next/next/no-img-element */}
