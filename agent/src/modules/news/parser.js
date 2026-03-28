@@ -31,6 +31,33 @@ function extractImageFromItem(item) {
   return extractImage(html);
 }
 
+// === Fulltext fetch для коротких описаний ===
+async function fetchFulltext(url) {
+  try {
+    const { data } = await axios.get(url, {
+      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; ActivePlayBot/1.0)' },
+      timeout: 8000,
+      maxRedirects: 3,
+    });
+    const $ = cheerio.load(data);
+    // Убрать скрипты, стили, навигацию
+    $('script, style, nav, header, footer, aside, .ad, .sidebar, .comments').remove();
+    // Искать основной контент по приоритету селекторов
+    const selectors = ['article', '.post-content', '.entry-content', '.article-body', '.story-body', 'main'];
+    for (const sel of selectors) {
+      const content = $(sel).text().trim();
+      if (content && content.length > 200) {
+        return content.replace(/\s+/g, ' ').substring(0, 1500);
+      }
+    }
+    // Fallback: body text
+    const body = $('body').text().trim().replace(/\s+/g, ' ');
+    return body.length > 200 ? body.substring(0, 1500) : '';
+  } catch {
+    return '';
+  }
+}
+
 // === RSS ===
 async function fetchRSS(source) {
   try {
@@ -149,6 +176,7 @@ async function fetchTelegram(source) {
 async function fetchAll() {
   const allArticles = [];
   const seen = new Set();
+  const stats = { ok: 0, blocked: 0, dead: 0, timeout: 0, nitterDown: 0 };
 
   // Batch по 10 для параллельного фетча
   const batchSize = 10;
@@ -163,8 +191,22 @@ async function fetchAll() {
       })
     );
 
-    for (const result of results) {
-      if (result.status !== 'fulfilled') continue;
+    for (let j = 0; j < results.length; j++) {
+      const result = results[j];
+      const source = batch[j];
+
+      if (result.status !== 'fulfilled' || result.value.length === 0) {
+        if (source.type === 'nitter') { stats.nitterDown++; continue; }
+        // Определяем тип ошибки из логов
+        const errMsg = result.reason?.message || '';
+        if (errMsg.includes('403')) stats.blocked++;
+        else if (errMsg.includes('404')) stats.dead++;
+        else if (errMsg.includes('timeout') || errMsg.includes('ETIMEDOUT')) stats.timeout++;
+        else if (result.value?.length === 0) stats.dead++;
+        continue;
+      }
+
+      stats.ok++;
       for (const article of result.value) {
         const key = normalizeTitle(article.title);
         if (!key || seen.has(key)) continue;
@@ -177,6 +219,27 @@ async function fetchAll() {
         allArticles.push(article);
       }
     }
+  }
+
+  // Статистика источников
+  console.log(`[NEWS] Sources: ${stats.ok} OK, ${stats.blocked} blocked (403), ${stats.dead} dead (404), ${stats.timeout} timeout, ${stats.nitterDown} Nitter down`);
+
+  // Fulltext enrichment для статей с коротким описанием
+  const shortArticles = allArticles.filter(a => (a.description || '').length < 200 && a.link);
+  if (shortArticles.length > 0) {
+    console.log(`[NEWS] Fetching fulltext for ${shortArticles.length} short articles...`);
+    const fulltextBatchSize = 5;
+    for (let i = 0; i < shortArticles.length; i += fulltextBatchSize) {
+      const batch = shortArticles.slice(i, i + fulltextBatchSize);
+      const texts = await Promise.all(batch.map(a => fetchFulltext(a.link)));
+      for (let j = 0; j < batch.length; j++) {
+        if (texts[j] && texts[j].length > batch[j].description.length) {
+          batch[j].description = texts[j];
+        }
+      }
+    }
+    const enriched = shortArticles.filter(a => (a.description || '').length >= 200).length;
+    console.log(`[NEWS] Fulltext: ${enriched}/${shortArticles.length} enriched`);
   }
 
   console.log(`[NEWS] Total unique articles (24h): ${allArticles.length}`);
