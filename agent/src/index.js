@@ -14,6 +14,7 @@ const siteWriter = require('./modules/siteWriter');
 const catalogMonitor = require('./modules/catalogMonitor');
 const { setupApprovalHandlers } = require('./modules/news/approval');
 const { runNewsCycle, processQueue } = require('./modules/news');
+const { handleVoice } = require('./modules/voice/handler');
 
 const VERSION = '1.0.0';
 
@@ -373,6 +374,10 @@ async function main() {
         ctx.reply(`❌ Ошибка: ${err.message}`);
       }
     });
+
+    // Голосовые команды
+    bot.on('voice', (ctx) => handleVoice(ctx, bot));
+    bot.on('audio', (ctx) => handleVoice(ctx, bot));
 
     bot.launch().then(() => {
       console.log('[Bot] Telegram bot started');
