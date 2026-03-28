@@ -8,7 +8,7 @@ module.exports = {
     fallback: 'https://www.cbr-xml-daily.ru/daily_json.js'
   },
 
-  markup: 0.10,
+  markup: 0.15,
   threshold: 0.03,
   cronSchedule: '0 9 * * *',
   ratesFile: path.join(__dirname, '..', 'data', 'rates.json'),
