@@ -168,7 +168,7 @@ module.exports = {
     cacheTtlMs: 6 * 60 * 60 * 1000, // 6 часов
     hotReleasesFile: 'src/data/hotReleases.ts',
     hotReleasesCount: 4, // Сколько карточек на главной
-    // Окно новинок: игры вышедшие за последние N дней (строго меньше)
-    newReleaseDays: 30,
+    // Окно новинок: игры вышедшие за последние N дней (включительно)
+    newReleaseDays: 31,
   },
 };

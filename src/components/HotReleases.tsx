@@ -15,16 +15,31 @@ function parseRuDate(s: string): Date | null {
   return new Date(+m[3], mo, +m[1]);
 }
 
-function isWithin30Days(dateStr: string): boolean {
+function daysSinceRelease(dateStr: string): number {
   const d = parseRuDate(dateStr);
-  if (!d) return true; // keep if can't parse
+  if (!d) return 0; // keep if can't parse
   const now = new Date();
   now.setHours(0,0,0,0);
-  const diff = (now.getTime() - d.getTime()) / (1000*60*60*24);
-  return diff <= 30;
+  return (now.getTime() - d.getTime()) / (1000*60*60*24);
 }
 
-const filteredReleases = hotReleases.filter(g => isWithin30Days(g.releaseDate));
+const MAX_DAYS = 31;
+const MIN_CARDS = 4;
+
+// Primary: games within 31 days. Fallback: if fewer than 4, fill from older games sorted by totalScore
+const withinWindow = hotReleases.filter(g => daysSinceRelease(g.releaseDate) <= MAX_DAYS);
+const filteredReleases = withinWindow.length >= MIN_CARDS
+  ? withinWindow
+  : [
+      ...withinWindow,
+      ...hotReleases
+        .filter(g => daysSinceRelease(g.releaseDate) > MAX_DAYS)
+        .sort((a, b) => b.totalScore - a.totalScore)
+        .slice(0, MIN_CARDS - withinWindow.length),
+    ];
+
+const monthNamesRu = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'];
+const currentMonthYear = monthNamesRu[new Date().getMonth()] + ' ' + new Date().getFullYear();
 
 const btnLabels: Record<string, string> = {
   'monster-hunter-stories-3': 'Купить MH Stories 3',
@@ -83,7 +98,7 @@ function HeroCard({ game, region }: { game: HotRelease; region: 'tr' | 'ua' }) {
       {/* Cover */}
       <div className="relative overflow-hidden" style={{ paddingTop: '48%' }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={game.cover} alt={altTexts[game.id] || game.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" style={{ objectPosition: 'center top' }} />
+        <img src={game.cover} alt={altTexts[game.id] || game.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" style={{ objectPosition: 'center top' }} onError={(e) => { (e.target as HTMLImageElement).src = '/images/covers/' + game.slug + '.jpg'; }} />
         <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, #111827 0%, rgba(17,24,39,0.45) 35%, transparent 70%)' }} />
 
         {/* Hit badge */}
@@ -152,7 +167,7 @@ function CompactCard({ game, region, onClick }: { game: HotRelease; region: 'tr'
       {/* Cover */}
       <div className="relative flex-shrink-0 overflow-hidden w-32 bg-black rounded-l-xl" style={{ minHeight: '100%' }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={game.cover} alt={altTexts[game.id] || game.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" style={{ objectPosition: '50% center' }} />
+        <img src={game.cover} alt={altTexts[game.id] || game.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" style={{ objectPosition: '50% center' }} onError={(e) => { (e.target as HTMLImageElement).src = '/images/covers/' + game.slug + '.jpg'; }} />
         <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, transparent 50%, rgba(17,24,39,0.6) 80%, rgba(17,24,39,0.95) 100%)' }} />
         {/* Metacritic — bottom right */}
         {game.metacritic > 0 && <div className="absolute bottom-2 right-2"><MetacriticBadge score={game.metacritic} /></div>}
@@ -208,8 +223,8 @@ export default function HotReleases() {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/icons/fire.webp" alt="" width={72} height={72} className="object-contain" style={{width: '72px', height: '72px'}} />
             <div>
-              <h2 className="text-[26px] sm:text-[32px] md:text-[36px] font-bold gradient-text">Новинки игр для PS5, PS4 и Xbox — март 2026</h2>
-              <p className="text-[var(--text-secondary)] text-[15px]">Купить хиты 2026 для PS5, Xbox и PC — активация на турецком, украинском аккаунте</p>
+              <h2 className="text-[26px] sm:text-[32px] md:text-[36px] font-bold gradient-text">Новинки игр для PS5, PS4 и Xbox — {currentMonthYear}</h2>
+              <p className="text-[var(--text-secondary)] text-[15px]">Купить хиты {new Date().getFullYear()} для PS5, Xbox и PC — активация на турецком, украинском аккаунте</p>
             </div>
           </div>
 

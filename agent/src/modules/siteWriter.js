@@ -1116,8 +1116,8 @@ function isRecentRelease(releaseDateStr) {
   if (isNaN(released.getTime())) return false;
   const now = new Date();
   const diffDays = (now - released) / (1000 * 60 * 60 * 24);
-  // Строго меньше: игра ровно на границе уже не попадает
-  return diffDays >= 0 && diffDays < NEW_RELEASE_DAYS;
+  // Включительно: игра на границе попадает
+  return diffDays >= 0 && diffDays <= NEW_RELEASE_DAYS;
 }
 
 function formatReleaseDateRu(dateStr) {
@@ -1326,6 +1326,26 @@ async function generateHotReleases() {
   }
 
   console.log(PREFIX + ' Кандидатов (недавние релизы): ' + candidates.length);
+
+  // Фоллбэк: если кандидатов < 4, расширить окно до 60 дней
+  if (candidates.length < HOT_RELEASES_COUNT) {
+    console.log(PREFIX + ' Кандидатов меньше ' + HOT_RELEASES_COUNT + ', расширяем окно до 60 дней');
+    const extendedGames = allGames.filter(g => {
+      if (!g.releaseDate) return false;
+      const released = new Date(g.releaseDate);
+      if (isNaN(released.getTime())) return false;
+      const diffDays = (new Date() - released) / (1000 * 60 * 60 * 24);
+      return diffDays > NEW_RELEASE_DAYS && diffDays <= 60;
+    });
+    for (const eg of extendedGames) {
+      const exists = candidates.some(c =>
+        (c.conceptId && c.conceptId === eg.conceptId) ||
+        slugify(cleanGameName(cleanName(c.name))) === slugify(cleanGameName(cleanName(eg.name)))
+      );
+      if (!exists) candidates.push(eg);
+    }
+    console.log(PREFIX + ' Кандидатов после расширения: ' + candidates.length);
+  }
 
   if (candidates.length === 0) {
     console.log(PREFIX + ' Нет недавних релизов');
