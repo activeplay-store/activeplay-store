@@ -59,47 +59,10 @@ async function publishToVK(article) {
       access_token: VK_TOKEN,
     });
 
-    // Upload photo to VK if available
-    if (article.imageUrl && article.imageUrl.startsWith('http')) {
-      try {
-        // Step 1: Get upload URL
-        const uploadRes = await fetch(`https://api.vk.com/method/photos.getWallUploadServer?group_id=${VK_GROUP_ID}&v=5.199&access_token=${VK_TOKEN}`);
-        const uploadData = await uploadRes.json();
-        if (uploadData.response?.upload_url) {
-          // Step 2: Download image to temp file
-          const imgRes = await fetch(article.imageUrl);
-          const imgBuffer = Buffer.from(await imgRes.arrayBuffer());
-          const tmpPath = '/tmp/vk_upload_' + Date.now() + '.jpg';
-          fs.writeFileSync(tmpPath, imgBuffer);
-
-          // Step 3: Upload to VK via multipart
-          const { execSync } = require('child_process');
-          const curlResult = execSync(
-            `curl -s -X POST -F "photo=@${tmpPath}" "${uploadData.response.upload_url}"`,
-            { encoding: 'utf-8', timeout: 30000 }
-          );
-          fs.unlinkSync(tmpPath);
-          const vkUpData = JSON.parse(curlResult);
-
-          if (vkUpData.photo && vkUpData.photo !== '[]') {
-            // Step 4: Save photo
-            const saveParams = new URLSearchParams({
-              group_id: VK_GROUP_ID, photo: vkUpData.photo,
-              server: String(vkUpData.server), hash: vkUpData.hash,
-              v: '5.199', access_token: VK_TOKEN,
-            });
-            const saveRes = await fetch(`https://api.vk.com/method/photos.saveWallPhoto?${saveParams.toString()}`);
-            const saveData = await saveRes.json();
-            if (saveData.response?.[0]) {
-              const p = saveData.response[0];
-              params.set('attachments', `photo${p.owner_id}_${p.id}`);
-              console.log(`[NEWS] VK photo attached: photo${p.owner_id}_${p.id}`);
-            }
-          }
-        }
-      } catch (imgErr) {
-        console.error(`[NEWS] VK photo upload error: ${imgErr.message}`);
-      }
+    // Attach article link so VK auto-generates preview with image
+    if (article.slug) {
+      const articleUrl = `https://activeplay.games/news/${article.slug}`;
+      params.set('attachments', articleUrl);
     }
 
     const res = await fetch(`https://api.vk.com/method/wall.post?${params.toString()}`, {
