@@ -274,7 +274,7 @@ function readSiteNews() {
       .replace(/\u20BD/g, '\u20BD')
       .replace(/\n/g, '\n')
       .trim()
-      .slice(0, 800);
+      .slice(0, 4000);
 
     const cover = coverM ? coverM[1] : '';
     const imageUrl = (cover && !cover.startsWith('http')) ? 'https://activeplay.games' + cover : cover;

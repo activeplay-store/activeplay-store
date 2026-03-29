@@ -66,21 +66,20 @@ async function publishToVK(article) {
         const uploadRes = await fetch(`https://api.vk.com/method/photos.getWallUploadServer?group_id=${VK_GROUP_ID}&v=5.199&access_token=${VK_TOKEN}`);
         const uploadData = await uploadRes.json();
         if (uploadData.response?.upload_url) {
-          // Step 2: Download image
+          // Step 2: Download image to temp file
           const imgRes = await fetch(article.imageUrl);
           const imgBuffer = Buffer.from(await imgRes.arrayBuffer());
-          const ext = article.imageUrl.match(/\.(jpg|jpeg|png|webp)/i)?.[1] || 'jpg';
-          const mime = ext === 'png' ? 'image/png' : 'image/jpeg';
+          const tmpPath = '/tmp/vk_upload_' + Date.now() + '.jpg';
+          fs.writeFileSync(tmpPath, imgBuffer);
 
-          // Step 3: Upload to VK
-          const FormData = (await import('node-fetch')).FormData || globalThis.FormData;
-          const { Blob } = require('buffer');
-          const formData = new FormData();
-          const blob = new Blob([imgBuffer], { type: mime });
-          formData.append('photo', blob, `photo.${ext}`);
-
-          const vkUpRes = await fetch(uploadData.response.upload_url, { method: 'POST', body: formData });
-          const vkUpData = await vkUpRes.json();
+          // Step 3: Upload to VK via multipart
+          const { execSync } = require('child_process');
+          const curlResult = execSync(
+            `curl -s -X POST -F "photo=@${tmpPath}" "${uploadData.response.upload_url}"`,
+            { encoding: 'utf-8', timeout: 30000 }
+          );
+          fs.unlinkSync(tmpPath);
+          const vkUpData = JSON.parse(curlResult);
 
           if (vkUpData.photo && vkUpData.photo !== '[]') {
             // Step 4: Save photo
@@ -94,6 +93,7 @@ async function publishToVK(article) {
             if (saveData.response?.[0]) {
               const p = saveData.response[0];
               params.set('attachments', `photo${p.owner_id}_${p.id}`);
+              console.log(`[NEWS] VK photo attached: photo${p.owner_id}_${p.id}`);
             }
           }
         }
