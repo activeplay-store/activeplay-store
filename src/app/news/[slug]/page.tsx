@@ -114,37 +114,49 @@ export default async function NewsArticlePage({ params }: Props) {
             <NewsArticleContent article={article} />
 
             {/* Article body */}
-            {article.content && (
-              <div
-                className="prose-custom font-[family-name:var(--font-body)] text-base text-gray-300 leading-[1.7] mt-8 [&_p]:mb-4 [&_ul]:mb-4 [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:mb-4 [&_ol]:list-decimal [&_ol]:pl-6 [&_li]:mb-1 [&_strong]:text-white [&_a]:text-[#00D4FF] [&_a]:underline [&_a:hover]:text-white"
-                dangerouslySetInnerHTML={{ __html: article.content }}
-              />
-            )}
+            {article.content && (() => {
+              // Strip inline CTA divs from content (rendered separately below)
+              let processed = article.content.replace(/<div class="mt-8 p-6[\s\S]*?<\/div>/g, '');
+              // Convert literal \n\n to paragraph breaks for non-HTML content
+              if (!processed.includes('<p>')) {
+                processed = processed
+                  .split('\n\n')
+                  .filter((p: string) => p.trim())
+                  .map((p: string) => `<p>${p.trim()}</p>`)
+                  .join('');
+              }
+              return (
+                <div
+                  className="prose-custom font-[family-name:var(--font-body)] text-base text-gray-300 leading-[1.7] mt-8 [&_p]:mb-4 [&_ul]:mb-4 [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:mb-4 [&_ol]:list-decimal [&_ol]:pl-6 [&_li]:mb-1 [&_strong]:text-white [&_a]:text-[#00D4FF] [&_a]:underline [&_a:hover]:text-white"
+                  dangerouslySetInnerHTML={{ __html: processed }}
+                />
+              );
+            })()}
 
             {/* Product CTA */}
             {article.tags?.some((t) => t.toLowerCase().includes('ps plus')) && (
-              <div className="mt-8 p-6 rounded-xl bg-gradient-to-r from-[#00D4FF]/10 to-transparent border border-[#00D4FF]/20">
-                <p className="text-lg font-semibold text-white mb-2">Оформить PS Plus Essential</p>
-                <p className="text-sm text-gray-400 mb-4">Активация на турецком аккаунте за 5 минут. От 1 250 ₽/мес.</p>
-                <a href="/ps-plus-essential" className="inline-block px-6 py-3 bg-[#00D4FF] text-black font-semibold rounded-lg hover:bg-[#00B8D9] transition">
+              <div className="bg-[#0d1f3c] border border-cyan-500/30 rounded-xl p-6 mt-8">
+                <p className="text-white text-lg font-bold">Оформить PS Plus Essential</p>
+                <p className="text-gray-400 text-sm mt-1">Активация на турецком аккаунте за 5 минут. От 1 250 ₽/мес.</p>
+                <a href="/ps-plus-essential" className="bg-cyan-500 hover:bg-cyan-400 text-black font-bold rounded-lg px-6 py-3 mt-4 inline-block transition">
                   Купить PS Plus Essential →
                 </a>
               </div>
             )}
             {article.tags?.some((t) => t.toLowerCase().includes('game pass')) && (
-              <div className="mt-8 p-6 rounded-xl bg-gradient-to-r from-[#107C10]/10 to-transparent border border-[#107C10]/20">
-                <p className="text-lg font-semibold text-white mb-2">Оформить Xbox Game Pass</p>
-                <p className="text-sm text-gray-400 mb-4">Подписка на сотни игр. Активация за 5 минут.</p>
-                <a href="/xbox-game-pass-ultimate" className="inline-block px-6 py-3 bg-[#107C10] text-white font-semibold rounded-lg hover:bg-[#0e6b0e] transition">
+              <div className="bg-[#0d1f3c] border border-cyan-500/30 rounded-xl p-6 mt-8">
+                <p className="text-white text-lg font-bold">Оформить Xbox Game Pass</p>
+                <p className="text-gray-400 text-sm mt-1">Подписка на сотни игр. Активация за 5 минут.</p>
+                <a href="/xbox-game-pass-ultimate" className="bg-cyan-500 hover:bg-cyan-400 text-black font-bold rounded-lg px-6 py-3 mt-4 inline-block transition">
                   Купить Game Pass →
                 </a>
               </div>
             )}
             {article.tags?.some((t) => t.toLowerCase().includes('скидки') || t.toLowerCase().includes('распродажа')) && (
-              <div className="mt-8 p-6 rounded-xl bg-gradient-to-r from-[#EF4444]/10 to-transparent border border-[#EF4444]/20">
-                <p className="text-lg font-semibold text-white mb-2">Скидки PS Store</p>
-                <p className="text-sm text-gray-400 mb-4">Весенняя распродажа — скидки до 92%</p>
-                <a href="/sale" className="inline-block px-6 py-3 bg-[#EF4444] text-white font-semibold rounded-lg hover:bg-[#DC2626] transition">
+              <div className="bg-[#0d1f3c] border border-cyan-500/30 rounded-xl p-6 mt-8">
+                <p className="text-white text-lg font-bold">Скидки PS Store</p>
+                <p className="text-gray-400 text-sm mt-1">Весенняя распродажа — скидки до 92%</p>
+                <a href="/sale" className="bg-cyan-500 hover:bg-cyan-400 text-black font-bold rounded-lg px-6 py-3 mt-4 inline-block transition">
                   Смотреть скидки →
                 </a>
               </div>
