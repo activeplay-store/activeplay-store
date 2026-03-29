@@ -49,11 +49,6 @@ export const newsData: NewsItem[] = [
 <p>ARC Raiders — это PvE-шутер на 21 игрока, где команды выживают на Земле против агрессивных роботов ARC. Игра вышла в раннем доступе и за короткое время собрала 55 тысяч оценок в <a href="/sale" class="text-[#00D4FF] hover:underline">PS Store</a> со средним баллом 4.22 — цифра для мультиплеерного шутера отличная. Визуал на уровне, PS5 Pro Enhanced, и Embark активно обновляют контент.</p>
 <p>Обновление Flashpoint бесплатное для всех владельцев игры. А сама ARC Raiders сейчас идёт со скидкой 20% в PS Store Турция и Украина — через ActivePlay это примерно 3 050\u20BD вместо обычных 3 750\u20BD. Акция до 9 апреля. Хороший момент зайти перед крупным апдейтом.</p>
 
-<div class="mt-8 p-6 rounded-xl bg-gradient-to-r from-[#00D4FF]/10 to-transparent border border-[#00D4FF]/20">
-<p class="text-lg font-semibold text-white mb-2">Купить ARC Raiders</p>
-<p class="text-sm text-gray-400 mb-4">Скидка 20%. Турция и Украина. Активация за 5 минут.</p>
-<a href="/sale" class="inline-block px-6 py-3 bg-[#00D4FF] text-black font-semibold rounded-lg hover:bg-[#00B8D9] transition">Купить за 3 050 \u20BD \u2192</a>
-</div>`,
     coverUrl: '/images/covers/arc-raiders.jpg',
     date: '2026-03-29',
     source: 'ActivePlay',
