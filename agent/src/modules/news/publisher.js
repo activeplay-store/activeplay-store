@@ -247,6 +247,8 @@ function writeToSite(articles) {
       author: 'ActivePlay',
       tags: a.site?.tags || a.tags || [],
       metaDescription: a.site?.metaDescription || '',
+      cta: a.site?.cta || a.cta || undefined,
+      cta2: a.site?.cta2 || a.cta2 || undefined,
     };
   });
 
@@ -285,7 +287,7 @@ function writeToSite(articles) {
     date: '${item.date || now.toISOString()}',
     source: '${(item.source || item.sourceName || '').replace(/'/g, "\\'")}',
     author: '${item.author || 'ActivePlay'}',
-    tags: ${JSON.stringify(item.tags || [])},${item.metaDescription ? `\n    metaDescription: '${(item.metaDescription || '').replace(/'/g, "\\'")}',` : ''}
+    tags: ${JSON.stringify(item.tags || [])},${item.metaDescription ? `\n    metaDescription: '${(item.metaDescription || '').replace(/'/g, "\\'")}',` : ''}${item.cta ? `\n    cta: ${JSON.stringify(item.cta)},` : ''}${item.cta2 ? `\n    cta2: ${JSON.stringify(item.cta2)},` : ''}
   }`;
   }).join(',\n');
 
@@ -294,6 +296,7 @@ function writeToSite(articles) {
 
 export type NewsCategory = 'news' | 'hype' | 'insider' | 'rumor' | 'video' | 'guide' | 'interview' | 'podcast' | 'review' | 'announcement';
 
+export interface NewsCta {  gameId?: string;  productLink?: string;  title: string;  price?: string;  oldPrice?: string;  link: string;  subtitle?: string;}
 export interface NewsItem {
   id: string;
   slug: string;
@@ -312,6 +315,7 @@ export interface NewsItem {
   pinned?: boolean;
   metaTitle?: string;
   metaDescription?: string;
+cta?: NewsCta;  cta2?: NewsCta;
 }
 
 export const NEWS_CATEGORIES: Record<NewsCategory, { label: string; color: string; icon: string }> = {
