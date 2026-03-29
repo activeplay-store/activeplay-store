@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { newsData, NEWS_CATEGORIES } from '@/data/news';
+import { dealsData } from '@/data/deals';
 import { notFound } from 'next/navigation';
 import NewsArticleContent from './NewsArticleContent';
 
@@ -114,53 +115,86 @@ export default async function NewsArticlePage({ params }: Props) {
             <NewsArticleContent article={article} />
 
             {/* Article body */}
-            {article.content && (() => {
-              // Strip inline CTA divs from content (rendered separately below)
-              let processed = article.content.replace(/<div class="mt-8 p-6[\s\S]*?<\/div>/g, '');
-              // Convert literal \n\n to paragraph breaks for non-HTML content
-              if (!processed.includes('<p>')) {
-                processed = processed
-                  .split('\n\n')
-                  .filter((p: string) => p.trim())
-                  .map((p: string) => `<p>${p.trim()}</p>`)
-                  .join('');
-              }
-              return (
-                <div
-                  className="prose-custom font-[family-name:var(--font-body)] text-base text-gray-300 leading-[1.7] mt-8 [&_p]:mb-4 [&_ul]:mb-4 [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:mb-4 [&_ol]:list-decimal [&_ol]:pl-6 [&_li]:mb-1 [&_strong]:text-white [&_a]:text-[#00D4FF] [&_a]:underline [&_a:hover]:text-white"
-                  dangerouslySetInnerHTML={{ __html: processed }}
-                />
-              );
-            })()}
+            {article.content && (
+              <div
+                className="prose-custom font-[family-name:var(--font-body)] text-base text-gray-300 leading-[1.7] mt-8 [&_p]:mb-4 [&_ul]:mb-4 [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:mb-4 [&_ol]:list-decimal [&_ol]:pl-6 [&_li]:mb-1 [&_strong]:text-white [&_a]:text-[#00D4FF] [&_a]:underline [&_a:hover]:text-white"
+                dangerouslySetInnerHTML={{ __html: article.content }}
+              />
+            )}
 
-            {/* Product CTA */}
-            {article.tags?.some((t) => t.toLowerCase().includes('ps plus')) && (
-              <div className="bg-[#0d1f3c] border border-cyan-500/30 rounded-xl p-6 mt-8">
-                <p className="text-white text-lg font-bold">Оформить PS Plus Essential</p>
-                <p className="text-gray-400 text-sm mt-1">Активация на турецком аккаунте за 5 минут. От 1 250 ₽/мес.</p>
-                <a href="/ps-plus-essential" className="bg-cyan-500 hover:bg-cyan-400 text-black font-bold rounded-lg px-6 py-3 mt-4 inline-block transition">
-                  Купить PS Plus Essential →
-                </a>
-              </div>
-            )}
-            {article.tags?.some((t) => t.toLowerCase().includes('game pass')) && (
-              <div className="bg-[#0d1f3c] border border-cyan-500/30 rounded-xl p-6 mt-8">
-                <p className="text-white text-lg font-bold">Оформить Xbox Game Pass</p>
-                <p className="text-gray-400 text-sm mt-1">Подписка на сотни игр. Активация за 5 минут.</p>
-                <a href="/xbox-game-pass-ultimate" className="bg-cyan-500 hover:bg-cyan-400 text-black font-bold rounded-lg px-6 py-3 mt-4 inline-block transition">
-                  Купить Game Pass →
-                </a>
-              </div>
-            )}
-            {article.tags?.some((t) => t.toLowerCase().includes('скидки') || t.toLowerCase().includes('распродажа')) && (
-              <div className="bg-[#0d1f3c] border border-cyan-500/30 rounded-xl p-6 mt-8">
-                <p className="text-white text-lg font-bold">Скидки PS Store</p>
-                <p className="text-gray-400 text-sm mt-1">Весенняя распродажа — скидки до 92%</p>
-                <a href="/sale" className="bg-cyan-500 hover:bg-cyan-400 text-black font-bold rounded-lg px-6 py-3 mt-4 inline-block transition">
-                  Смотреть скидки →
-                </a>
-              </div>
-            )}
+            {/* Product CTA blocks with live prices */}
+            {(() => {
+              function getGamePrice(gameId: string) {
+                const game = dealsData.find(g => g.id === gameId);
+                if (!game) return null;
+                const tr = game.prices.TR;
+                if (!tr) return null;
+                return {
+                  price: tr.clientSalePrice || tr.clientBasePrice,
+                  oldPrice: tr.clientSalePrice ? tr.clientBasePrice : null,
+                  discount: game.discountPct,
+                };
+              }
+
+              const ctaBlocks: React.ReactNode[] = [];
+
+              // CTA 1
+              if (article.cta) {
+                const priceData = article.cta.gameId ? getGamePrice(article.cta.gameId) : null;
+                const displayPrice = priceData?.price ? `${priceData.price.toLocaleString('ru-RU')} ₽` : article.cta.price || '';
+                const displayOldPrice = priceData?.oldPrice ? `${priceData.oldPrice.toLocaleString('ru-RU')} ₽` : article.cta.oldPrice || '';
+                const discount = priceData?.discount;
+
+                ctaBlocks.push(
+                  <div key="cta1" className="bg-[#0d1f3c] border border-cyan-500/30 rounded-xl p-6 mt-8">
+                    <h3 className="text-white text-lg font-bold">{article.cta.title}</h3>
+                    {article.cta.subtitle && <p className="text-gray-400 text-sm mt-1">{article.cta.subtitle}</p>}
+                    <div className="flex items-center gap-3 mt-3">
+                      {displayPrice && <span className="text-cyan-400 text-2xl font-bold">{displayPrice}</span>}
+                      {displayOldPrice && <span className="text-gray-500 line-through text-lg">{displayOldPrice}</span>}
+                      {discount && discount > 0 && <span className="bg-red-500/20 text-red-400 px-2 py-1 rounded text-sm font-bold">-{discount}%</span>}
+                    </div>
+                    <a href={article.cta.productLink || article.cta.link} className="inline-block bg-cyan-500 hover:bg-cyan-400 text-black font-bold rounded-lg px-6 py-3 mt-4 transition-colors">
+                      {article.cta.title} →
+                    </a>
+                  </div>
+                );
+              }
+
+              // CTA 2
+              if (article.cta2) {
+                const priceData = article.cta2.gameId ? getGamePrice(article.cta2.gameId) : null;
+                const displayPrice = priceData?.price ? `${priceData.price.toLocaleString('ru-RU')} ₽` : article.cta2.price || '';
+                const displayOldPrice = priceData?.oldPrice ? `${priceData.oldPrice.toLocaleString('ru-RU')} ₽` : '';
+
+                ctaBlocks.push(
+                  <div key="cta2" className="bg-[#1a1a2e] border border-orange-500/30 rounded-xl p-6 mt-4">
+                    <h3 className="text-white text-lg font-bold">{article.cta2.title}</h3>
+                    {article.cta2.subtitle && <p className="text-gray-400 text-sm mt-1">{article.cta2.subtitle}</p>}
+                    <div className="flex items-center gap-3 mt-3">
+                      {displayPrice && <span className="text-orange-400 text-2xl font-bold">{displayPrice}</span>}
+                      {displayOldPrice && <span className="text-gray-500 line-through text-lg">{displayOldPrice}</span>}
+                    </div>
+                    <a href={article.cta2.link} className="inline-block bg-orange-500 hover:bg-orange-400 text-black font-bold rounded-lg px-6 py-3 mt-4 transition-colors">
+                      {article.cta2.title} →
+                    </a>
+                  </div>
+                );
+              }
+
+              // Always show "Скидки PS Store" block
+              ctaBlocks.push(
+                <div key="cta-sale" className="bg-[#111827] border border-gray-600/30 rounded-xl p-6 mt-4">
+                  <h3 className="text-white text-lg font-bold">Скидки PS Store</h3>
+                  <p className="text-gray-400 text-sm mt-1">Весенняя распродажа — скидки до 92%</p>
+                  <a href="/sale" className="inline-block bg-gray-700 hover:bg-gray-600 text-white font-bold rounded-lg px-6 py-3 mt-4 transition-colors">
+                    Смотреть скидки →
+                  </a>
+                </div>
+              );
+
+              return ctaBlocks;
+            })()}
 
             {/* Tags */}
             {article.tags && article.tags.length > 0 && (
