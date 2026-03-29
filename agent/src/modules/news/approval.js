@@ -276,7 +276,7 @@ function readSiteNews() {
       slug: slugs[i] || '',
       title: titles[i] || '',
       text,
-      imageUrl: covers[i] || '',
+      imageUrl: (covers[i] && !covers[i].startsWith('http') ? 'https://activeplay.games' + covers[i] : covers[i]) || '',
       tags: tagsAll[i] || [],
     });
   }
