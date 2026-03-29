@@ -36,6 +36,28 @@ export const NEWS_CATEGORIES: Record<NewsCategory, { label: string; color: strin
 
 export const newsData: NewsItem[] = [
   {
+    id: 'news-arc-raiders-flashpoint-2026',
+    slug: 'arc-raiders-flashpoint-update',
+    category: 'news' as NewsCategory,
+    title: 'ARC Raiders выпускает крупное обновление Flashpoint',
+    excerpt: 'Кооперативный шутер ARC Raiders от Embark Studios готовится к крупному апдейту. Обновление Flashpoint выходит 31 марта и обещает серьёзно встряхнуть игру.',
+    content: `<p>Кооперативный шутер ARC Raiders от Embark Studios готовится к крупному апдейту. Обновление Flashpoint выходит 31 марта и обещает серьёзно встряхнуть игру: новые квесты, враги, проекты, улучшения геймплея и качество жизни. По слухам, появится новый ARC-противник Bishop и локация Toxic Swamp. Плюс свежая косметика в магазине и проекты с эксклюзивными наградами.</p>
+<p>ARC Raiders — это PvE-шутер на 21 игрока, где команды выживают на Земле против агрессивных роботов ARC. Игра вышла в раннем доступе и за короткое время собрала 55 тысяч оценок в <a href="/sale" class="text-[#00D4FF] hover:underline">PS Store</a> со средним баллом 4.22 — цифра для мультиплеерного шутера отличная. Визуал на уровне, PS5 Pro Enhanced, и Embark активно обновляют контент.</p>
+<p>Обновление Flashpoint бесплатное для всех владельцев игры. А сама ARC Raiders сейчас идёт со скидкой 20% в PS Store Турция и Украина — через ActivePlay это примерно 3 050\u20BD вместо обычных 3 750\u20BD. Акция до 9 апреля. Хороший момент зайти перед крупным апдейтом.</p>
+
+<div class="mt-8 p-6 rounded-xl bg-gradient-to-r from-[#00D4FF]/10 to-transparent border border-[#00D4FF]/20">
+<p class="text-lg font-semibold text-white mb-2">Купить ARC Raiders</p>
+<p class="text-sm text-gray-400 mb-4">Скидка 20%. Турция и Украина. Активация за 5 минут.</p>
+<a href="/sale" class="inline-block px-6 py-3 bg-[#00D4FF] text-black font-semibold rounded-lg hover:bg-[#00B8D9] transition">Купить за 3 050 \u20BD \u2192</a>
+</div>`,
+    coverUrl: '/images/covers/arc-raiders.jpg',
+    date: '2026-03-29',
+    source: 'ActivePlay',
+    author: 'ActivePlay',
+    tags: ["ARC Raiders","Flashpoint","обновление","кооператив","PS5","скидки PS Store"],
+    metaDescription: 'ARC Raiders получает крупное обновление Flashpoint 31 марта — новые квесты, враги и локации. Игра со скидкой 20% в PS Store.',
+  },
+  {
     id: 'news-1774734130936-omfv',
     slug: 'vo-chto-poigrat-6-novyh-igr-dlya-ps5-i-ps4-na-sleduyushchey-nedele',
     category: 'news' as NewsCategory,

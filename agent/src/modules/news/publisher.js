@@ -37,9 +37,48 @@ async function publishToTelegram(bot, article) {
 }
 
 async function publishToVK(article) {
-  // VK API — wall.post
-  // Заглушка, подключим позже когда протестируем TG
-  console.log(`[NEWS] VK publish placeholder: ${article.vk?.title || article.title}`);
+  const VK_TOKEN = process.env.VK_ACCESS_TOKEN;
+  const VK_GROUP_ID = process.env.VK_GROUP_ID; // числовой ID группы (без минуса)
+  if (!VK_TOKEN || !VK_GROUP_ID) {
+    console.error('[NEWS] VK publish skipped: VK_ACCESS_TOKEN or VK_GROUP_ID not set');
+    return;
+  }
+
+  const vk = article.vk || {};
+  const title = vk.title || article.site?.title || article.title || '';
+  const text = vk.text || article.site?.text || article.text || '';
+  const tags = (article.site?.tags || article.tags || []).map(t => `#${t.replace(/\s+/g, '_')}`).join(' ');
+  const message = `📰 ${title}\n\n${text}\n\n${tags}\n\n🎮 activeplay.games`;
+
+  try {
+    const params = new URLSearchParams({
+      owner_id: `-${VK_GROUP_ID}`,
+      from_group: '1',
+      message,
+      v: '5.199',
+      access_token: VK_TOKEN,
+    });
+
+    // Прикрепить картинку если есть (через URL)
+    if (article.imageUrl && article.imageUrl.startsWith('http')) {
+      // Загрузить фото на стену VK: получить upload URL → загрузить → сохранить → прикрепить
+      // Пока прикрепляем как ссылку в тексте (VK сам сделает превью)
+      params.set('attachments', article.imageUrl);
+    }
+
+    const res = await fetch(`https://api.vk.com/method/wall.post?${params.toString()}`, {
+      method: 'POST',
+    });
+    const data = await res.json();
+
+    if (data.error) {
+      console.error(`[NEWS] VK error: ${data.error.error_msg}`);
+    } else {
+      console.log(`[NEWS] Published to VK: post_id=${data.response?.post_id}, title="${title}"`);
+    }
+  } catch (err) {
+    console.error(`[NEWS] VK error: ${err.message}`);
+  }
 }
 
 // Маппинг категорий переводчика → NewsCategory для сайта

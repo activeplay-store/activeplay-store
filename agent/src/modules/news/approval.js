@@ -19,25 +19,26 @@ function saveQueue(data) {
 
 function setupApprovalHandlers(bot) {
   // ===== ПУБЛИКАЦИЯ =====
+  // ВАЖНО: длинные префиксы ПЕРЕД короткими, иначе news_site_(.+) перехватит news_site_vk_xxx
 
-  // Только сайт
-  bot.action(/^news_site_(.+)$/, async (ctx) => {
-    await handlePublish(ctx, ctx.match[1], ['site']);
-  });
-
-  // Только Telegram
-  bot.action(/^news_tg_(.+)$/, async (ctx) => {
-    await handlePublish(ctx, ctx.match[1], ['telegram']);
-  });
-
-  // Telegram + сайт
+  // Telegram + сайт (ПЕРЕД news_tg_)
   bot.action(/^news_tg_site_(.+)$/, async (ctx) => {
     await handlePublish(ctx, ctx.match[1], ['telegram', 'site']);
   });
 
-  // Сайт + VK
+  // Сайт + VK (ПЕРЕД news_site_)
   bot.action(/^news_site_vk_(.+)$/, async (ctx) => {
     await handlePublish(ctx, ctx.match[1], ['site', 'vk']);
+  });
+
+  // Только сайт (negative lookahead чтобы не ловить news_site_vk_)
+  bot.action(/^news_site_(?!vk_)(.+)$/, async (ctx) => {
+    await handlePublish(ctx, ctx.match[1], ['site']);
+  });
+
+  // Только Telegram (negative lookahead чтобы не ловить news_tg_site_)
+  bot.action(/^news_tg_(?!site_)(.+)$/, async (ctx) => {
+    await handlePublish(ctx, ctx.match[1], ['telegram']);
   });
 
   // Везде
@@ -190,9 +191,25 @@ async function sendPreview(bot, article) {
 
 // Выполнить публикацию
 async function executePublish(bot, articleId) {
+  // Ищем статью в pending ИЛИ в queue (для отложенных публикаций)
   const pending = loadPending();
-  const article = pending.find(a => a.id === articleId);
-  if (!article) return;
+  let article = pending.find(a => a.id === articleId);
+  let source = 'pending';
+
+  if (!article) {
+    const queue = loadQueue();
+    article = queue.find(a => a.id === articleId);
+    source = 'queue';
+    if (article) {
+      // Убрать из queue
+      saveQueue(queue.filter(a => a.id !== articleId));
+    }
+  }
+
+  if (!article) {
+    console.error(`[NEWS] executePublish: article ${articleId} not found in pending or queue`);
+    return;
+  }
 
   const targets = article.targets || ['site'];
   const { getNewsImage } = require('./imageGen');
@@ -215,8 +232,10 @@ async function executePublish(bot, articleId) {
     await publishToVK(article);
   }
 
-  // Убрать из pending
-  savePending(pending.filter(a => a.id !== articleId));
+  // Убрать из pending (если статья была оттуда)
+  if (source === 'pending') {
+    savePending(pending.filter(a => a.id !== articleId));
+  }
 }
 
 module.exports = { setupApprovalHandlers, sendPreview, executePublish, loadPending, savePending, loadQueue, saveQueue };
