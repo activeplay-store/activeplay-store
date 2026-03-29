@@ -271,7 +271,7 @@ function readSiteNews() {
 
     const text = (contentM ? contentM[1] : '')
       .replace(/<[^>]+>/g, '')
-      .replace(/\u20BD/g, '\u20BD')
+      .replace(/\u20BD/g, '\u20bd').replace(/\u20BD/g, '\u20bd')
       .replace(/\n/g, '\n')
       .trim()
       .slice(0, 4000);
