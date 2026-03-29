@@ -238,4 +238,107 @@ async function executePublish(bot, articleId) {
   }
 }
 
-module.exports = { setupApprovalHandlers, sendPreview, executePublish, loadPending, savePending, loadQueue, saveQueue };
+
+// ===== REPUBLISH: publish existing site news to VK/TG =====
+
+const SITE_ROOT_PATH = process.env.SITE_ROOT || '/var/www/activeplay-store';
+
+function readSiteNews() {
+  const newsFile = path.join(SITE_ROOT_PATH, 'src/data/news.ts');
+  const raw = fs.readFileSync(newsFile, 'utf-8');
+  const articles = [];
+  const idRe = /id:\s*'([^']+)'/g;
+  const slugRe = /slug:\s*'([^']+)'/g;
+  const titleRe = /title:\s*'([^']+)'/g;
+  const coverRe = /coverUrl:\s*'([^']*)'/g;
+  const ids = [...raw.matchAll(idRe)].map(m => m[1]);
+  const slugs = [...raw.matchAll(slugRe)].map(m => m[1]);
+  const titles = [...raw.matchAll(titleRe)].map(m => m[1]);
+  const covers = [...raw.matchAll(coverRe)].map(m => m[1]);
+  // Extract content blocks
+  const contentRe = /content:\s*`([\s\S]*?)`/g;
+  const contents = [...raw.matchAll(contentRe)].map(m => m[1]);
+  // Extract tags arrays
+  const tagsRe = /tags:\s*\[([\s\S]*?)\]/g;
+  const tagsAll = [...raw.matchAll(tagsRe)].map(m =>
+    m[1].replace(/["']/g, '').split(',').map(t => t.trim()).filter(Boolean)
+  );
+
+  for (let i = 0; i < ids.length; i++) {
+    const text = (contents[i] || '')
+      .replace(/<[^>]+>/g, '')
+      .replace(/\u20BD/g, '\u20BD')
+      .replace(/\n/g, '\n')
+      .trim()
+      .slice(0, 800);
+    articles.push({
+      id: ids[i],
+      slug: slugs[i] || '',
+      title: titles[i] || '',
+      text,
+      imageUrl: covers[i] || '',
+      tags: tagsAll[i] || [],
+    });
+  }
+  return articles;
+}
+
+async function showRepublishMenu(bot, ctx) {
+  const articles = readSiteNews().slice(0, 5);
+  if (!articles.length) return ctx.reply('No news on site');
+  const buttons = articles.map(a => ([{
+    text: a.title.length > 50 ? a.title.slice(0, 47) + '...' : a.title,
+    callback_data: `repub_pick_${a.slug.slice(0, 40)}`,
+  }]));
+  await ctx.reply('\ud83d\udcf0 \u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u043d\u043e\u0432\u043e\u0441\u0442\u044c \u0434\u043b\u044f \u043f\u0443\u0431\u043b\u0438\u043a\u0430\u0446\u0438\u0438:', {
+    reply_markup: { inline_keyboard: buttons },
+  });
+}
+
+function setupRepublishHandlers(bot) {
+  bot.action(/^repub_pick_(.+)$/, async (ctx) => {
+    const slug = ctx.match[1];
+    await ctx.editMessageText('\ud83d\udce2 \u041a\u0443\u0434\u0430 \u043e\u043f\u0443\u0431\u043b\u0438\u043a\u043e\u0432\u0430\u0442\u044c?', {
+      reply_markup: {
+        inline_keyboard: [
+          [
+            { text: '\ud83d\udcd8 VK', callback_data: `repub_vk_${slug}` },
+            { text: '\ud83d\udcf1 TG', callback_data: `repub_tg_${slug}` },
+          ],
+          [
+            { text: '\ud83d\udcd8\ud83d\udcf1 VK+TG', callback_data: `repub_all_${slug}` },
+          ],
+        ],
+      },
+    });
+    await ctx.answerCbQuery();
+  });
+
+  bot.action(/^repub_vk_(.+)$/, async (ctx) => {
+    await doRepublish(bot, ctx, ctx.match[1], ['vk']);
+  });
+  bot.action(/^repub_tg_(.+)$/, async (ctx) => {
+    await doRepublish(bot, ctx, ctx.match[1], ['telegram']);
+  });
+  bot.action(/^repub_all_(.+)$/, async (ctx) => {
+    await doRepublish(bot, ctx, ctx.match[1], ['vk', 'telegram']);
+  });
+}
+
+async function doRepublish(bot, ctx, slug, targets) {
+  const articles = readSiteNews();
+  const article = articles.find(a => a.slug.startsWith(slug));
+  if (!article) {
+    await ctx.editMessageText('\u274c \u0421\u0442\u0430\u0442\u044c\u044f \u043d\u0435 \u043d\u0430\u0439\u0434\u0435\u043d\u0430');
+    return ctx.answerCbQuery('\u041d\u0435 \u043d\u0430\u0439\u0434\u0435\u043d\u0430');
+  }
+  const { publishToTelegram, publishToVK } = require('./publisher');
+  const results = [];
+  if (targets.includes('vk')) { await publishToVK(article); results.push('VK'); }
+  if (targets.includes('telegram')) { await publishToTelegram(bot, article); results.push('TG'); }
+  await ctx.editMessageText(`\u2705 \u041e\u043f\u0443\u0431\u043b\u0438\u043a\u043e\u0432\u0430\u043d\u043e \u0432 ${results.join(' + ')}: ${article.title}`);
+  await ctx.answerCbQuery('\u041e\u043f\u0443\u0431\u043b\u0438\u043a\u043e\u0432\u0430\u043d\u043e');
+}
+
+
+module.exports = { setupApprovalHandlers, sendPreview, executePublish, loadPending, savePending, loadQueue, saveQueue, showRepublishMenu, setupRepublishHandlers };

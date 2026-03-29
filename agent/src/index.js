@@ -374,6 +374,17 @@ async function main() {
       }
     });
 
+    // Команда /republish — опубликовать существующую новость в VK/TG
+    bot.command('republish', async (ctx) => {
+      if (String(ctx.chat.id) !== String(process.env.ADMIN_CHAT_ID)) return;
+      const { showRepublishMenu } = require('./modules/news/approval');
+      await showRepublishMenu(bot, ctx);
+    });
+
+    // Подключить обработчики republish кнопок
+    const { setupRepublishHandlers } = require('./modules/news/approval');
+    setupRepublishHandlers(bot);
+
     bot.launch().then(() => {
       console.log('[Bot] Telegram bot started');
     }).catch(err => {
