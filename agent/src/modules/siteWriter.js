@@ -1597,9 +1597,14 @@ async function generateHotReleases() {
 
   const filePath = path.join(REPO_ROOT, HOT_RELEASES_FILE);
 
-  // Проверить, изменился ли контент
+  // Защита: не перезаписывать файл если новый результат имеет меньше игр чем существующий
   try {
     const existing = fs.readFileSync(filePath, 'utf8');
+    const existingCount = (existing.match(/^\s+id: "/gm) || []).length;
+    if (count < existingCount && count < HOT_RELEASES_COUNT) {
+      console.log(PREFIX + ' ⚠️ Новых игр (' + count + ') меньше чем в файле (' + existingCount + ') и меньше ' + HOT_RELEASES_COUNT + ' — НЕ перезаписываем');
+      return { written: false, count, skippedDueToFewer: true };
+    }
     const strip = s => s.replace(/\/\/ Обновлено:.*\n/, '');
     if (strip(existing) === strip(content)) {
       console.log(PREFIX + ' hotReleases.ts не изменился');
