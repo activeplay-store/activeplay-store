@@ -59,12 +59,6 @@ async function publishToVK(article) {
       access_token: VK_TOKEN,
     });
 
-    // Attach article link so VK auto-generates preview with image
-    if (article.slug) {
-      const articleUrl = `https://activeplay.games/news/${article.slug}`;
-      params.set('attachments', articleUrl);
-    }
-
     const res = await fetch(`https://api.vk.com/method/wall.post?${params.toString()}`, {
       method: 'POST',
     });
