@@ -46,9 +46,12 @@ async function publishToVK(article) {
 
   const vk = article.vk || {};
   const title = vk.title || article.site?.title || article.title || '';
-  const text = vk.text || article.site?.text || article.text || '';
+  const rawText = vk.text || article.site?.text || article.text || '';
+  // Clean text for VK: convert unicode escapes to actual symbols
+  const text = rawText.replace(/\\u20BD/g, '\u20BD');
   const tags = (article.site?.tags || article.tags || []).map(t => `#${t.replace(/\s+/g, '_')}`).join(' ');
-  const message = `📰 ${title}\n\n${text}\n\n${tags}\n\n🎮 activeplay.games`;
+  const articleUrl = article.slug ? `https://activeplay.games/news/${article.slug}` : 'https://activeplay.games';
+  const message = `📰 ${title}\n\n${text}\n\n${tags}\n\n🔗 Читать на сайте: ${articleUrl}`;
 
   try {
     const params = new URLSearchParams({
