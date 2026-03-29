@@ -59,11 +59,47 @@ async function publishToVK(article) {
       access_token: VK_TOKEN,
     });
 
-    // Прикрепить картинку если есть (через URL)
+    // Upload photo to VK if available
     if (article.imageUrl && article.imageUrl.startsWith('http')) {
-      // Загрузить фото на стену VK: получить upload URL → загрузить → сохранить → прикрепить
-      // Пока прикрепляем как ссылку в тексте (VK сам сделает превью)
-      params.set('attachments', article.imageUrl);
+      try {
+        // Step 1: Get upload URL
+        const uploadRes = await fetch(`https://api.vk.com/method/photos.getWallUploadServer?group_id=${VK_GROUP_ID}&v=5.199&access_token=${VK_TOKEN}`);
+        const uploadData = await uploadRes.json();
+        if (uploadData.response?.upload_url) {
+          // Step 2: Download image
+          const imgRes = await fetch(article.imageUrl);
+          const imgBuffer = Buffer.from(await imgRes.arrayBuffer());
+          const ext = article.imageUrl.match(/\.(jpg|jpeg|png|webp)/i)?.[1] || 'jpg';
+          const mime = ext === 'png' ? 'image/png' : 'image/jpeg';
+
+          // Step 3: Upload to VK
+          const FormData = (await import('node-fetch')).FormData || globalThis.FormData;
+          const { Blob } = require('buffer');
+          const formData = new FormData();
+          const blob = new Blob([imgBuffer], { type: mime });
+          formData.append('photo', blob, `photo.${ext}`);
+
+          const vkUpRes = await fetch(uploadData.response.upload_url, { method: 'POST', body: formData });
+          const vkUpData = await vkUpRes.json();
+
+          if (vkUpData.photo && vkUpData.photo !== '[]') {
+            // Step 4: Save photo
+            const saveParams = new URLSearchParams({
+              group_id: VK_GROUP_ID, photo: vkUpData.photo,
+              server: String(vkUpData.server), hash: vkUpData.hash,
+              v: '5.199', access_token: VK_TOKEN,
+            });
+            const saveRes = await fetch(`https://api.vk.com/method/photos.saveWallPhoto?${saveParams.toString()}`);
+            const saveData = await saveRes.json();
+            if (saveData.response?.[0]) {
+              const p = saveData.response[0];
+              params.set('attachments', `photo${p.owner_id}_${p.id}`);
+            }
+          }
+        }
+      } catch (imgErr) {
+        console.error(`[NEWS] VK photo upload error: ${imgErr.message}`);
+      }
     }
 
     const res = await fetch(`https://api.vk.com/method/wall.post?${params.toString()}`, {
