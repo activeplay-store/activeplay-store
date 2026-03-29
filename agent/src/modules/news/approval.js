@@ -234,55 +234,23 @@ async function executePublish(bot, articleId) {
 const SITE_ROOT_PATH = process.env.SITE_ROOT || '/var/www/activeplay-store';
 
 function readSiteNews() {
-  const newsFile = path.join(SITE_ROOT_PATH, 'src/data/news.ts');
-  const raw = fs.readFileSync(newsFile, 'utf-8');
-  const articles = [];
-
-  // Split by top-level objects in newsData array
-  const arrMatch = raw.match(/newsData:\s*NewsItem\[\]\s*=\s*\[([\s\S]*)\];/);
-  if (!arrMatch) return articles;
-  const arrBody = arrMatch[1];
-
-  // Split into individual article blocks by "  {" at start of line
-  const blocks = arrBody.split(/\n  \{/).slice(1); // skip first empty
-
-  for (const block of blocks) {
-    const idM = block.match(/^\s*id:\s*'([^']+)'/m);
-    const slugM = block.match(/^\s*slug:\s*'([^']+)'/m);
-    const titleM = block.match(/^\s*title:\s*'([^']+)'/m);
-    const coverM = block.match(/^\s*coverUrl:\s*'([^']*)'/m);
-    const contentM = block.match(/^\s*content:\s*`([\s\S]*?)`/m);
-    const tagsM = block.match(/^\s*tags:\s*\[([^\]]+)\]/m);
-    const catM = block.match(/^\s*category:\s*'([^']+)'/m);
-
-    if (!idM || !slugM || !titleM) continue;
-    // Skip guides
-    if (catM && catM[1] === 'guide') continue;
-
-    const text = (contentM ? contentM[1] : '')
-      .replace(/<[^>]+>/g, '')
-      .replace(/\u20BD/g, '\u20bd').replace(/\u20BD/g, '\u20bd')
-      .replace(/\n/g, '\n')
-      .trim()
-      .slice(0, 4000);
-
-    const cover = coverM ? coverM[1] : '';
-    const imageUrl = (cover && !cover.startsWith('http')) ? 'https://activeplay.games' + cover : cover;
-
-    const tags = tagsM
-      ? tagsM[1].replace(/["']/g, '').split(',').map(t => t.trim()).filter(Boolean)
-      : [];
-
-    articles.push({
-      id: idM[1],
-      slug: slugM[1],
-      title: titleM[1],
-      text,
-      imageUrl,
-      tags,
-    });
+  const newsFile = path.join(SITE_ROOT_PATH, 'src/data/news.json');
+  try {
+    const data = JSON.parse(fs.readFileSync(newsFile, 'utf-8'));
+    return data
+      .filter(a => a.category !== 'guide')
+      .map(a => ({
+        id: a.id,
+        slug: a.slug,
+        title: a.title,
+        text: a.content || '',
+        imageUrl: (a.coverUrl && !a.coverUrl.startsWith('http')) ? 'https://activeplay.games' + a.coverUrl : (a.coverUrl || ''),
+        tags: a.tags || [],
+      }));
+  } catch (err) {
+    console.error('[NEWS] readSiteNews error:', err.message);
+    return [];
   }
-  return articles;
 }
 
 async function showRepublishMenu(bot, ctx) {

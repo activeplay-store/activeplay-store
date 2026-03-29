@@ -1,8 +1,11 @@
 import type { Metadata } from 'next';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { newsData, NEWS_CATEGORIES } from '@/data/news';
+import { NEWS_CATEGORIES, type NewsItem } from '@/data/news-types';
+import newsJson from '@/data/news.json';
 import { dealsData } from '@/data/deals';
+
+const newsData = newsJson as unknown as NewsItem[];
 import { notFound } from 'next/navigation';
 import NewsArticleContent from './NewsArticleContent';
 
@@ -20,12 +23,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const article = newsData.find((n) => n.slug === slug);
   if (!article) return {};
+  const desc = article.metaDescription || article.excerpt || article.content.substring(0, 160);
   return {
-    title: article.metaTitle || `${article.title} | ActivePlay`,
-    description: article.metaDescription || article.excerpt,
+    title: `${article.title} | ActivePlay`,
+    description: desc,
     openGraph: {
       title: article.title,
-      description: article.excerpt,
+      description: desc,
       images: [article.coverUrl],
       type: 'article',
     },
@@ -50,7 +54,7 @@ export default async function NewsArticlePage({ params }: Props) {
     '@type': 'NewsArticle',
     headline: article.title,
     image: article.coverUrl,
-    datePublished: article.date,
+    datePublished: article.publishedAt,
     author: { '@type': 'Organization', name: article.author || 'ActivePlay' },
     publisher: {
       '@type': 'Organization',
@@ -58,7 +62,7 @@ export default async function NewsArticlePage({ params }: Props) {
       url: 'https://activeplay.games',
       logo: { '@type': 'ImageObject', url: 'https://activeplay.games/images/logo/AP_WHITE.png' },
     },
-    description: article.excerpt,
+    description: article.metaDescription || article.content.substring(0, 160),
   };
 
   const breadcrumbSchema = {
@@ -107,94 +111,56 @@ export default async function NewsArticlePage({ params }: Props) {
 
             {/* Meta */}
             <div className="flex flex-wrap items-center gap-2 text-xs font-mono text-gray-500 mb-6">
-              <span>{new Date(article.date).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
+              <span>{new Date(article.publishedAt).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
               {article.author && <><span>·</span><span>{article.author}</span></>}
             </div>
 
             {/* Cover or YouTube */}
             <NewsArticleContent article={article} />
 
-            {/* Article body */}
+            {/* Article body — plain text split into paragraphs */}
             {article.content && (
-              <div
-                className="prose-custom font-[family-name:var(--font-body)] text-base text-gray-300 leading-[1.7] mt-8 [&_p]:mb-4 [&_ul]:mb-4 [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:mb-4 [&_ol]:list-decimal [&_ol]:pl-6 [&_li]:mb-1 [&_strong]:text-white [&_a]:text-[#00D4FF] [&_a]:underline [&_a:hover]:text-white"
-                dangerouslySetInnerHTML={{ __html: article.content }}
-              />
+              <div className="prose-custom font-[family-name:var(--font-body)] text-base text-gray-300 leading-[1.7] mt-8">
+                {article.content.split('\n\n').filter(Boolean).map((paragraph, i) => (
+                  <p key={i} className="mb-4">{paragraph.replace(/\n/g, ' ')}</p>
+                ))}
+              </div>
             )}
 
-            {/* Product CTA blocks with live prices */}
-            {(() => {
-              function getGamePrice(gameId: string) {
-                const game = dealsData.find(g => g.id === gameId);
-                if (!game) return null;
-                const tr = game.prices.TR;
-                if (!tr) return null;
-                return {
-                  price: tr.clientSalePrice || tr.clientBasePrice,
-                  oldPrice: tr.clientSalePrice ? tr.clientBasePrice : null,
-                  discount: game.discountPct,
-                };
-              }
-
-              const ctaBlocks: React.ReactNode[] = [];
-
-              // CTA 1
-              if (article.cta) {
-                const priceData = article.cta.gameId ? getGamePrice(article.cta.gameId) : null;
-                const displayPrice = priceData?.price ? `${priceData.price.toLocaleString('ru-RU')} ₽` : article.cta.price || '';
-                const displayOldPrice = priceData?.oldPrice ? `${priceData.oldPrice.toLocaleString('ru-RU')} ₽` : article.cta.oldPrice || '';
-                const discount = priceData?.discount;
-
-                ctaBlocks.push(
-                  <div key="cta1" className="bg-[#0d1f3c] border border-cyan-500/30 rounded-xl p-6 mt-8">
-                    <h3 className="text-white text-lg font-bold">{article.cta.title}</h3>
-                    {article.cta.subtitle && <p className="text-gray-400 text-sm mt-1">{article.cta.subtitle}</p>}
-                    <div className="flex items-center gap-3 mt-3">
-                      {displayPrice && <span className="text-cyan-400 text-2xl font-bold">{displayPrice}</span>}
-                      {displayOldPrice && <span className="text-gray-500 line-through text-lg">{displayOldPrice}</span>}
-                      {discount && discount > 0 && <span className="bg-red-500/20 text-red-400 px-2 py-1 rounded text-sm font-bold">-{discount}%</span>}
-                    </div>
-                    <a href={article.cta.productLink || article.cta.link} className="inline-block bg-cyan-500 hover:bg-cyan-400 text-black font-bold rounded-lg px-6 py-3 mt-4 transition-colors">
-                      {article.cta.title} →
-                    </a>
-                  </div>
-                );
-              }
-
-              // CTA 2
-              if (article.cta2) {
-                const priceData = article.cta2.gameId ? getGamePrice(article.cta2.gameId) : null;
-                const displayPrice = priceData?.price ? `${priceData.price.toLocaleString('ru-RU')} ₽` : article.cta2.price || '';
-                const displayOldPrice = priceData?.oldPrice ? `${priceData.oldPrice.toLocaleString('ru-RU')} ₽` : '';
-
-                ctaBlocks.push(
-                  <div key="cta2" className="bg-[#1a1a2e] border border-orange-500/30 rounded-xl p-6 mt-4">
-                    <h3 className="text-white text-lg font-bold">{article.cta2.title}</h3>
-                    {article.cta2.subtitle && <p className="text-gray-400 text-sm mt-1">{article.cta2.subtitle}</p>}
-                    <div className="flex items-center gap-3 mt-3">
-                      {displayPrice && <span className="text-orange-400 text-2xl font-bold">{displayPrice}</span>}
-                      {displayOldPrice && <span className="text-gray-500 line-through text-lg">{displayOldPrice}</span>}
-                    </div>
-                    <a href={article.cta2.link} className="inline-block bg-orange-500 hover:bg-orange-400 text-black font-bold rounded-lg px-6 py-3 mt-4 transition-colors">
-                      {article.cta2.title} →
-                    </a>
-                  </div>
-                );
-              }
-
-              // Always show "Скидки PS Store" block
-              ctaBlocks.push(
-                <div key="cta-sale" className="bg-[#111827] border border-gray-600/30 rounded-xl p-6 mt-4">
-                  <h3 className="text-white text-lg font-bold">Скидки PS Store</h3>
-                  <p className="text-gray-400 text-sm mt-1">Весенняя распродажа — скидки до 92%</p>
-                  <a href="/sale" className="inline-block bg-gray-700 hover:bg-gray-600 text-white font-bold rounded-lg px-6 py-3 mt-4 transition-colors">
-                    Смотреть скидки →
-                  </a>
+            {/* Product CTA blocks */}
+            {article.cta && (
+              <div className="bg-[#0d1f3c] border border-cyan-500/30 rounded-xl p-6 mt-8">
+                <h3 className="text-white text-lg font-bold">{article.cta.title}</h3>
+                {article.cta.description && <p className="text-gray-400 text-sm mt-1">{article.cta.description}</p>}
+                <div className="flex items-center gap-3 mt-3">
+                  {article.cta.price && <span className="text-cyan-400 text-2xl font-bold">{typeof article.cta.price === 'number' ? `${article.cta.price.toLocaleString('ru-RU')} ₽` : article.cta.price}</span>}
+                  {article.cta.oldPrice && <span className="text-gray-500 line-through text-lg">{typeof article.cta.oldPrice === 'number' ? `${article.cta.oldPrice.toLocaleString('ru-RU')} ₽` : article.cta.oldPrice}</span>}
+                  {article.cta.discount && article.cta.discount > 0 && <span className="bg-red-500/20 text-red-400 px-2 py-1 rounded text-sm font-bold">-{article.cta.discount}%</span>}
                 </div>
-              );
+                <a href={article.cta.url} className="inline-block bg-cyan-500 hover:bg-cyan-400 text-black font-bold rounded-lg px-6 py-3 mt-4 transition-colors">
+                  {article.cta.buttonText || `${article.cta.title} →`}
+                </a>
+              </div>
+            )}
 
-              return ctaBlocks;
-            })()}
+            {article.cta2 && (
+              <div className="bg-[#1a1a2e] border border-orange-500/30 rounded-xl p-6 mt-4">
+                <h3 className="text-white text-lg font-bold">{article.cta2.title}</h3>
+                {article.cta2.description && <p className="text-gray-400 text-sm mt-1">{article.cta2.description}</p>}
+                <a href={article.cta2.url} className="inline-block bg-orange-500 hover:bg-orange-400 text-black font-bold rounded-lg px-6 py-3 mt-4 transition-colors">
+                  {article.cta2.buttonText || `${article.cta2.title} →`}
+                </a>
+              </div>
+            )}
+
+            {/* Always show PS Store block */}
+            <div className="bg-[#111827] border border-gray-600/30 rounded-xl p-6 mt-4">
+              <h3 className="text-white text-lg font-bold">Скидки PS Store</h3>
+              <p className="text-gray-400 text-sm mt-1">Весенняя распродажа — скидки до 92%</p>
+              <a href="/sale" className="inline-block bg-gray-700 hover:bg-gray-600 text-white font-bold rounded-lg px-6 py-3 mt-4 transition-colors">
+                Смотреть скидки →
+              </a>
+            </div>
 
             {/* Tags */}
             {article.tags && article.tags.length > 0 && (

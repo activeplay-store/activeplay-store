@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import type { NewsItem } from '@/data/news';
+import type { NewsItem } from '@/data/news-types';
 
 interface Props {
   article: NewsItem;
