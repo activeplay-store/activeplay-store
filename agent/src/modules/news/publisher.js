@@ -3,8 +3,7 @@ const path = require('path');
 const { execSync } = require('child_process');
 
 const SITE_ROOT = process.env.SITE_ROOT || '/var/www/activeplay-store';
-const SITE_DATA = path.join(SITE_ROOT, 'src/data');
-const NEWS_FILE = path.join(SITE_DATA, 'news.ts');
+const NEWS_JSON = path.join(SITE_ROOT, 'src/data/news.json');
 const NEWS_ARCHIVE = path.join(__dirname, '../../../data/news-archive.json');
 const CHANNEL_ID = '@PS_PLUS_RUS';
 
@@ -91,49 +90,6 @@ function stripCategoryPrefix(title) {
   return (title || '').replace(CATEGORY_PREFIX_RE, '');
 }
 
-// Автоссылки на продукты (только первое вхождение каждого)
-const PRODUCT_LINKS = {
-  'PS Plus Essential': '/ps-plus-essential',
-  'PS Plus Extra': '/ps-plus-extra',
-  'PS Plus Deluxe': '/ps-plus-deluxe',
-  'Xbox Game Pass': '/xbox-game-pass-ultimate',
-  'EA Play': '/ea-play',
-  'PS Store': '/sale',
-};
-
-function addProductLinks(html) {
-  const used = new Set();
-  let result = html;
-  for (const [keyword, url] of Object.entries(PRODUCT_LINKS)) {
-    if (!used.has(keyword) && result.includes(keyword)) {
-      // Не заменять внутри уже существующих тегов <a>
-      const re = new RegExp(`(?![^<]*<\\/a>)${keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`, '');
-      result = result.replace(re, `<a href="${url}" class="text-[#00D4FF] hover:underline">${keyword}</a>`);
-      used.add(keyword);
-    }
-  }
-  return result;
-}
-
-// Разбить текст на абзацы по 2-3 предложения (макс 3 абзаца)
-function textToHtml(text) {
-  if (!text) return '';
-  // Если уже HTML — вернуть как есть
-  if (text.trim().startsWith('<p>')) return text;
-  // Разбиваем по переносам строк (если переводчик сам разбил на абзацы)
-  let paragraphs = text.split(/\n\n+/).filter(p => p.trim());
-  if (paragraphs.length <= 1) {
-    // Один блок текста — разбить по предложениям, группировать по 2-3
-    const sentences = text.split(/(?<=\.)\s+/).filter(s => s.trim());
-    paragraphs = [];
-    for (let i = 0; i < sentences.length; i += 3) {
-      paragraphs.push(sentences.slice(i, i + 3).join(' '));
-    }
-  }
-  // Максимум 4 абзаца
-  return paragraphs.slice(0, 4).map(p => `<p>${p.trim()}</p>`).join('\n');
-}
-
 // Поиск цены игры в games.json для автоматического CTA
 const GAMES_FILE = path.join(__dirname, '../../../data/games.json');
 const DLC_RE = /\b(dlc|дополнение|expansion|season pass|сезонный абонемент)\b/i;
@@ -191,28 +147,27 @@ function findGamePrice(title, content) {
   } catch { return null; }
 }
 
-// CTA теперь — JSON-объекты, а не HTML. Фронт рендерит сам.
+// CTA — JSON-объекты для фронта
 function buildCtaData(gamePrice) {
   if (!gamePrice) return null;
   const price = gamePrice.hasSale ? gamePrice.salePriceRUB : gamePrice.priceRUB;
   return {
     gameId: gamePrice.gameId || undefined,
     title: `Купить ${gamePrice.name}`,
-    subtitle: 'Активация за 5 минут. Турецкий PS Store.',
-    price: `${price} ₽`,
-    oldPrice: gamePrice.hasSale ? `${gamePrice.priceRUB} ₽` : undefined,
-    link: '/sale',
-    productLink: '/sale',
+    description: 'Активация за 5 минут. Турецкий PS Store.',
+    price: price,
+    oldPrice: gamePrice.hasSale ? gamePrice.priceRUB : undefined,
+    url: '/sale',
+    buttonText: `Купить за ${price} ₽ →`,
   };
 }
 
-// Продуктовый CTA (подписки)
 const PRODUCT_CTA_MAP = {
-  'ps-plus-essential': { title: 'PS Plus Essential', link: '/ps-plus-essential', subtitle: 'Бесплатные игры каждый месяц', price: 'от 1200 ₽' },
-  'ps-plus-extra': { title: 'PS Plus Extra', link: '/ps-plus-extra', subtitle: 'Каталог из 400+ игр', price: 'от 2400 ₽' },
-  'ps-plus-deluxe': { title: 'PS Plus Deluxe', link: '/ps-plus-deluxe', subtitle: 'Каталог + классика + пробные версии', price: 'от 2900 ₽' },
-  'xbox-game-pass': { title: 'Xbox Game Pass', link: '/xbox-game-pass-ultimate', subtitle: 'Сотни игр по подписке', price: 'от 800 ₽' },
-  'ea-play': { title: 'EA Play', link: '/ea-play', subtitle: 'Все игры EA по подписке', price: 'от 600 ₽' },
+  'ps-plus-essential': { title: 'PS Plus Essential', description: 'Бесплатные игры каждый месяц', url: '/ps-plus-essential', buttonText: 'Подробнее →' },
+  'ps-plus-extra': { title: 'PS Plus Extra', description: 'Каталог из 400+ игр', url: '/ps-plus-extra', buttonText: 'Подробнее →' },
+  'ps-plus-deluxe': { title: 'PS Plus Deluxe', description: 'Каталог + классика + пробные версии', url: '/ps-plus-deluxe', buttonText: 'Подробнее →' },
+  'xbox-game-pass': { title: 'Xbox Game Pass', description: 'Сотни игр по подписке', url: '/xbox-game-pass-ultimate', buttonText: 'Подробнее →' },
+  'ea-play': { title: 'EA Play', description: 'Все игры EA по подписке', url: '/ea-play', buttonText: 'Подробнее →' },
 };
 
 function buildProductCta(relatedProduct) {
@@ -220,41 +175,34 @@ function buildProductCta(relatedProduct) {
   return PRODUCT_CTA_MAP[relatedProduct];
 }
 
-// Валидация записи перед записью в news.ts
+// Валидация: чистый текст, без HTML
 function validateNewsEntry(entry) {
-  // Проверяем content (HTML), а не text (сырой). Допускаем <p>, <a>, но не <div>, <script> и т.д.
-  const dangerousHtml = /<(?!\/?(p|a|br|strong|em|ul|ol|li)\b)[a-z][\s\S]*?>/i;
-  if (entry.content && dangerousHtml.test(entry.content)) {
-    throw new Error(`Опасный HTML в контенте новости: ${entry.id}`);
+  if (/<[a-z][\s\S]*>/i.test(entry.content || '')) {
+    throw new Error(`HTML в content у "${entry.title}"! Запись отменена.`);
   }
-  const rawText = (entry.content || '').replace(/<[^>]+>/g, '');
-  if (rawText.length < 300) {
-    throw new Error(`Текст слишком короткий: ${rawText.length} знаков (мин. 300) — ${entry.id}`);
+  if ((entry.content || '').length < 100) {
+    throw new Error(`Текст слишком короткий: ${(entry.content || '').length} знаков — ${entry.id}`);
   }
-  if (!entry.title || entry.title.length > 120) {
-    throw new Error(`Проблема с заголовком: "${entry.title}" — ${entry.id}`);
-  }
-  if (!entry.id || !entry.slug || !entry.category) {
+  if (!entry.id || !entry.title || !entry.content) {
     throw new Error(`Отсутствуют обязательные поля — ${entry.id}`);
   }
   return true;
 }
 
-// Backup news.ts перед записью
+// Backup news.json
 const BACKUP_DIR = path.join(__dirname, '../../../data/news-backups');
 
-function backupNewsFile() {
+function backupNewsJson() {
   try {
-    if (!fs.existsSync(NEWS_FILE)) return;
+    if (!fs.existsSync(NEWS_JSON)) return;
     if (!fs.existsSync(BACKUP_DIR)) fs.mkdirSync(BACKUP_DIR, { recursive: true });
 
     const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-    const backupPath = path.join(BACKUP_DIR, `news-${timestamp}.ts`);
-    fs.copyFileSync(NEWS_FILE, backupPath);
+    const backupPath = path.join(BACKUP_DIR, `news-${timestamp}.json`);
+    fs.copyFileSync(NEWS_JSON, backupPath);
     console.log(`[NEWS] Backup: ${backupPath}`);
 
-    // Хранить максимум 20 бэкапов
-    const backups = fs.readdirSync(BACKUP_DIR).filter(f => f.endsWith('.ts')).sort();
+    const backups = fs.readdirSync(BACKUP_DIR).filter(f => f.endsWith('.json')).sort();
     while (backups.length > 20) {
       fs.unlinkSync(path.join(BACKUP_DIR, backups.shift()));
     }
@@ -268,9 +216,6 @@ function slugify(text) {
     .toLowerCase()
     .replace(/[ёЁ]/g, 'е')
     .replace(/[а-яА-Я]/g, c => {
-      const map = 'абвгдежзийклмнопрстуфхцчшщъыьэюя';
-      const lat = 'abvgdezhziyklmnoprstufhcchshshchyeyuya'.match(/.{1,2}/g) || [];
-      // Simple transliteration
       const ru = 'абвгдежзийклмнопрстуфхцчшщъыьэюя';
       const en = ['a','b','v','g','d','e','zh','z','i','y','k','l','m','n','o','p','r','s','t','u','f','h','c','ch','sh','shch','','y','','e','yu','ya'];
       const idx = ru.indexOf(c.toLowerCase());
@@ -281,24 +226,32 @@ function slugify(text) {
     .substring(0, 80);
 }
 
-function writeToSite(articles) {
-  // BACKUP перед записью
-  backupNewsFile();
+// Очистить текст от HTML
+function stripHtml(text) {
+  return (text || '').replace(/<[^>]*>/g, '');
+}
 
-  let archive = [];
-  try { archive = JSON.parse(fs.readFileSync(NEWS_ARCHIVE, 'utf-8')); } catch {}
+function writeToSite(newArticles) {
+  // 1. BACKUP
+  backupNewsJson();
 
-  const now = new Date();
-  const newEntries = articles.map(a => {
+  // 2. Прочитать текущие новости
+  let existing = [];
+  try {
+    existing = JSON.parse(fs.readFileSync(NEWS_JSON, 'utf-8'));
+  } catch (e) {
+    console.error('[NEWS] Не удалось прочитать news.json, начинаем с пустого:', e.message);
+  }
+
+  // 3. Подготовить новые записи
+  const prepared = newArticles.map(a => {
     const cleanTitle = stripCategoryPrefix(a.site?.title || a.title);
-    const bodyText = a.site?.text || a.text || '';
-    const htmlContent = addProductLinks(textToHtml(bodyText));
+    const bodyText = stripHtml(a.site?.text || a.text || a.content || '');
 
-    // CTA: из данных пайплайна или автоматический поиск цены
-    let cta = a.cta || a.site?.cta || undefined;
-    let cta2 = a.cta2 || a.site?.cta2 || undefined;
+    // CTA
+    let cta = a.cta || null;
+    let cta2 = a.cta2 || null;
 
-    // Если CTA не передан пайплайном — попробовать найти цену
     if (!cta) {
       const gamePrice = findGamePrice(cleanTitle, bodyText);
       if (gamePrice) {
@@ -306,159 +259,71 @@ function writeToSite(articles) {
         console.log(`[NEWS] Auto CTA: ${gamePrice.name} — ${gamePrice.priceRUB} ₽`);
       }
     }
-
-    // Если relatedProduct передан — создать cta2
     if (!cta2 && a.relatedProduct) {
       cta2 = buildProductCta(a.relatedProduct);
     }
 
     const entry = {
-      id: a.id,
+      id: a.slug || slugify(cleanTitle),
       slug: a.slug || slugify(cleanTitle),
-      category: CATEGORY_MAP[a.category] || 'news',
       title: cleanTitle,
-      excerpt: bodyText.substring(0, 200),
-      content: htmlContent,
+      content: bodyText,
+      metaDescription: a.site?.metaDescription || a.metaDescription || '',
       coverUrl: a.imageUrl || a.image || '',
-      date: now.toISOString(),
-      source: a.sourceName,
-      author: 'ActivePlay',
       tags: a.site?.tags || a.tags || [],
-      metaDescription: a.site?.metaDescription || '',
+      category: CATEGORY_MAP[a.category] || a.category || 'news',
+      source: a.sourceName || a.source || '',
+      sourceUrl: a.link || a.sourceUrl || '',
+      publishedAt: new Date().toISOString(),
+      gameId: a.gameSlug || a.gameId || null,
+      relatedProduct: a.relatedProduct || null,
       cta: cta,
       cta2: cta2,
     };
 
     // Валидация
     validateNewsEntry(entry);
-
     return entry;
   });
 
-  // Deduplicate: don't overwrite existing archive entries (preserves coverUrl etc.)
-  const existingIds = new Set(archive.map(a => a.id));
-  const trulyNew = newEntries.filter(e => !existingIds.has(e.id));
-  archive = [...trulyNew, ...archive].slice(0, 100);
-  fs.writeFileSync(NEWS_ARCHIVE, JSON.stringify(archive, null, 2));
+  // 4. Дедупликация и слияние
+  const existingIds = new Set(existing.map(n => n.id));
+  const toAdd = prepared.filter(a => !existingIds.has(a.id));
+  const merged = [...toAdd, ...existing].slice(0, 50);
 
-  // Читаем существующий news.ts чтобы сохранить ручные статьи
-  let existingItems = [];
+  // 5. Записать JSON
+  fs.writeFileSync(NEWS_JSON, JSON.stringify(merged, null, 2), 'utf-8');
+  console.log(`[NEWS] Записано в news.json: ${toAdd.length} новых, ${merged.length} всего`);
+
+  // 6. Обновить архив
   try {
-    const existing = fs.readFileSync(NEWS_FILE, 'utf-8');
-    // Извлечь ID уже существующих статей из архива
-    const idMatch = existing.match(/id:\s*'([^']+)'/g);
-    if (idMatch) {
-      existingItems = idMatch.map(m => m.match(/id:\s*'([^']+)'/)[1]);
-    }
-  } catch {}
-
-  // Экранирование для одинарных кавычек в TS
-  function escSingle(s) {
-    return (s || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/\n/g, ' ').replace(/\r/g, '');
+    let archive = [];
+    try { archive = JSON.parse(fs.readFileSync(NEWS_ARCHIVE, 'utf-8')); } catch {}
+    const archiveIds = new Set(archive.map(a => a.id));
+    const newForArchive = toAdd.filter(a => !archiveIds.has(a.id));
+    archive = [...newForArchive, ...archive].slice(0, 100);
+    fs.writeFileSync(NEWS_ARCHIVE, JSON.stringify(archive, null, 2));
+  } catch (err) {
+    console.error('[NEWS] Archive update error:', err.message);
   }
-  // Экранирование для backtick template literals
-  function escBacktick(s) {
-    return (s || '').replace(/\\/g, '\\\\').replace(/`/g, '\\`').replace(/\$/g, '\\$');
-  }
-
-  // Генерация TypeScript, совместимого с интерфейсом NewsItem
-  const tsItems = archive.slice(0, 50).map(item => {
-    const cleanTitle = stripCategoryPrefix(item.title);
-    const bodyRaw = item.content || item.text || '';
-    const content = escBacktick(addProductLinks(textToHtml(bodyRaw)));
-    const excerpt = (item.excerpt || bodyRaw.replace(/<[^>]+>/g, '').substring(0, 200));
-    return `  {
-    id: '${item.id}',
-    slug: '${item.slug || slugify(cleanTitle)}',
-    category: '${CATEGORY_MAP[item.category] || item.category || 'news'}' as NewsCategory,
-    title: '${escSingle(cleanTitle)}',
-    excerpt: '${escSingle(excerpt)}',
-    content: \`${content}\`,
-    coverUrl: '${item.coverUrl || item.image || ''}',
-    date: '${item.date || now.toISOString()}',
-    source: '${escSingle(item.source || item.sourceName || '')}',
-    author: '${escSingle(item.author || 'ActivePlay')}',
-    tags: ${JSON.stringify(item.tags || [])},${item.metaDescription ? `\n    metaDescription: '${escSingle(item.metaDescription || '')}',` : ''}${item.cta ? `\n    cta: ${JSON.stringify(item.cta)},` : ''}${item.cta2 ? `\n    cta2: ${JSON.stringify(item.cta2)},` : ''}
-  }`;
-  }).join(',\n');
-
-  const ts = `// Автогенерация — НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ
-// Обновлено: ${now.toISOString()}
-
-export type NewsCategory = 'news' | 'hype' | 'insider' | 'rumor' | 'video' | 'guide' | 'interview' | 'podcast' | 'review' | 'announcement';
-
-export interface NewsCta {
-  gameId?: string;
-  productLink?: string;
-  title: string;
-  price?: string;
-  oldPrice?: string;
-  link: string;
-  subtitle?: string;
-}
-
-export interface NewsItem {
-  id: string;
-  slug: string;
-  category: NewsCategory;
-  title: string;
-  excerpt: string;
-  content?: string;
-  coverUrl: string;
-  date: string;
-  source?: string;
-  author?: string;
-  tags?: string[];
-  youtubeUrl?: string;
-  duration?: string;
-  hot?: boolean;
-  pinned?: boolean;
-  metaTitle?: string;
-  metaDescription?: string;
-  cta?: NewsCta;
-  cta2?: NewsCta;
-}
-
-export const NEWS_CATEGORIES: Record<NewsCategory, { label: string; color: string; icon: string }> = {
-  news:         { label: 'Новость',   color: '#00D4FF', icon: '📰' },
-  hype:         { label: 'Хайп',      color: '#FF4D6A', icon: '🔥' },
-  insider:      { label: 'Инсайд',    color: '#A855F7', icon: '🕵️' },
-  rumor:        { label: 'Слух',      color: '#F59E0B', icon: '🤫' },
-  video:        { label: 'Видео',     color: '#EF4444', icon: '🎬' },
-  guide:        { label: 'Гайд',      color: '#22C55E', icon: '📖' },
-  interview:    { label: 'Интервью',  color: '#818CF8', icon: '🎙️' },
-  podcast:      { label: 'Подкаст',   color: '#F97316', icon: '🎧' },
-  review:       { label: 'Обзор',     color: '#FFD700', icon: '⭐' },
-  announcement: { label: 'Анонс',     color: '#FF6B35', icon: '📢' },
-};
-
-export const newsData: NewsItem[] = [
-${tsItems}
-];
-`;
-
-  fs.writeFileSync(NEWS_FILE, ts);
-  console.log(`[NEWS] Written to site: ${newEntries.length} new, ${archive.length} total`);
 }
 
 function deployToSite() {
   try {
-    // Ensure images directory exists
     const imagesDir = path.join(SITE_ROOT, 'public/images/news');
     if (!fs.existsSync(imagesDir)) {
       fs.mkdirSync(imagesDir, { recursive: true });
     }
 
-    // Stage news.ts always, images only if directory has files
-    let gitAdd = `cd ${SITE_ROOT} && git add src/data/news.ts`;
+    let gitAdd = `cd ${SITE_ROOT} && git add src/data/news.json`;
     const hasImages = fs.readdirSync(imagesDir).length > 0;
     if (hasImages) {
       gitAdd += ' public/images/news/';
     }
 
     execSync(
-      `${gitAdd} && git commit -m "news: auto update" && git push`,
-      { timeout: 30000 }
+      `${gitAdd} && git commit -m "news: update" && git push`,
+      { timeout: 60000 }
     );
     console.log('[NEWS] Deployed');
   } catch (err) {
@@ -466,4 +331,4 @@ function deployToSite() {
   }
 }
 
-module.exports = { publishToTelegram, publishToVK, writeToSite, deployToSite, validateNewsEntry, buildCtaData, buildProductCta, findGamePrice, slugify };
+module.exports = { publishToTelegram, publishToVK, writeToSite, deployToSite, validateNewsEntry, buildCtaData, buildProductCta, findGamePrice, slugify, stripHtml, CATEGORY_MAP, stripCategoryPrefix };

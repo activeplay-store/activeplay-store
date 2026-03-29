@@ -2,7 +2,8 @@
 
 import { useState, useMemo } from 'react';
 import ScrollReveal from '@/components/ScrollReveal';
-import { newsData, NEWS_CATEGORIES, type NewsCategory, type NewsItem } from '@/data/news';
+import { NEWS_CATEGORIES, type NewsCategory, type NewsItem } from '@/data/news-types';
+import newsJson from '@/data/news.json';
 import { guidesData } from '@/data/guides';
 
 /* ── Helpers ───────────────────────────────────────────────────────────── */
@@ -54,6 +55,9 @@ export default function NewsContent() {
   const [activeCategory, setActiveCategory] = useState<'all' | NewsCategory>('all');
   const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
 
+  // Cast JSON to typed array
+  const newsData = newsJson as unknown as NewsItem[];
+
   // Merge guides into news feed as "guide" category items
   const allItems = useMemo(() => {
     const guideNewsItems: NewsItem[] = guidesData.map((g) => ({
@@ -61,15 +65,16 @@ export default function NewsContent() {
       slug: g.slug,
       category: 'guide' as NewsCategory,
       title: g.title,
+      content: g.excerpt,
       excerpt: g.excerpt,
       coverUrl: g.coverUrl,
-      date: g.updatedDate || g.date,
+      publishedAt: g.updatedDate || g.date,
       source: 'ActivePlay',
       author: g.author,
-      tags: g.tags,
+      tags: g.tags || [],
     }));
-    return [...newsData, ...guideNewsItems].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-  }, []);
+    return [...newsData, ...guideNewsItems].sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
+  }, [newsData]);
 
   const filtered = useMemo(() => {
     if (activeCategory === 'all') return allItems;
@@ -205,7 +210,7 @@ export default function NewsContent() {
 
                   {/* Meta */}
                   <div className="flex items-center gap-2 text-[11px] font-mono text-gray-500">
-                    <span>{formatRelativeDate(item.date)}</span>
+                    <span>{formatRelativeDate(item.publishedAt)}</span>
                   </div>
                 </div>
               </a>
