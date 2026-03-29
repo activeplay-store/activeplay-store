@@ -51,9 +51,14 @@ function setupApprovalHandlers(bot) {
   // Сейчас
   bot.action(/^news_now_(.+)$/, async (ctx) => {
     const articleId = ctx.match[1];
-    await executePublish(bot, articleId);
-    await ctx.editMessageText('✅ Опубликовано!');
-    await ctx.answerCbQuery('Опубликовано');
+    await ctx.editMessageText('⏳ Запускаю пайплайн...');
+    await ctx.answerCbQuery('Запуск пайплайна');
+    try {
+      await executePublish(bot, articleId);
+    } catch (err) {
+      // Ошибка уже отправлена в чат через pipeline.js
+      console.error(`[NEWS] Publish error for ${articleId}:`, err.message);
+    }
   });
 
   // Через 30 мин / 1 час / 2 часа / 3 часа
@@ -189,7 +194,7 @@ async function sendPreview(bot, article) {
   });
 }
 
-// Выполнить публикацию
+// Выполнить публикацию через пайплайн v2
 async function executePublish(bot, articleId) {
   // Ищем статью в pending ИЛИ в queue (для отложенных публикаций)
   const pending = loadPending();
@@ -212,25 +217,10 @@ async function executePublish(bot, articleId) {
   }
 
   const targets = article.targets || ['site'];
-  const { getNewsImage } = require('./imageGen');
-  const { writeToSite, deployToSite, publishToTelegram, publishToVK } = require('./publisher');
 
-  // Получить/сгенерить картинку
-  if (!article.imageUrl) {
-    article.imageUrl = await getNewsImage(article);
-  }
-
-  // Публикация по целям
-  if (targets.includes('site')) {
-    writeToSite([article]);
-    deployToSite();
-  }
-  if (targets.includes('telegram')) {
-    await publishToTelegram(bot, article);
-  }
-  if (targets.includes('vk')) {
-    await publishToVK(article);
-  }
+  // Запустить пайплайн v2
+  const { runPipeline } = require('./pipeline');
+  await runPipeline(article, targets, bot);
 
   // Убрать из pending (если статья была оттуда)
   if (source === 'pending') {

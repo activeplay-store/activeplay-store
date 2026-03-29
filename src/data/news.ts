@@ -3,6 +3,16 @@
 
 export type NewsCategory = 'news' | 'hype' | 'insider' | 'rumor' | 'video' | 'guide' | 'interview' | 'podcast' | 'review' | 'announcement';
 
+export interface NewsCta {
+  gameId?: string;
+  productLink?: string;
+  title: string;
+  price?: string;
+  oldPrice?: string;
+  link: string;
+  subtitle?: string;
+}
+
 export interface NewsItem {
   id: string;
   slug: string;
@@ -21,6 +31,8 @@ export interface NewsItem {
   pinned?: boolean;
   metaTitle?: string;
   metaDescription?: string;
+  cta?: NewsCta;
+  cta2?: NewsCta;
 }
 
 export const NEWS_CATEGORIES: Record<NewsCategory, { label: string; color: string; icon: string }> = {

@@ -98,6 +98,57 @@ async function searchRawgImage(title) {
   }
 }
 
+// Поиск картинки через Steam CDN
+async function searchSteamImage(title) {
+  if (!title) return null;
+  try {
+    // Извлечь название игры для поиска
+    const gameName = title.replace(/^(Новость|Анонс|Обзор|Слух|Инсайд|Хайп)\s*[:—–\-]\s*/i, '').trim();
+    // Поиск через Steam store search API
+    const response = await axios.get('https://store.steampowered.com/api/storesearch/', {
+      params: { term: gameName, l: 'english', cc: 'US' },
+      timeout: 10000,
+      headers: { 'User-Agent': 'ActivePlay News Bot 1.0' },
+    });
+
+    const app = response.data?.items?.[0];
+    if (!app?.id) return null;
+
+    // Steam header image (460x215, но лучше чем ничего)
+    const steamUrl = `https://cdn.akamai.steamstatic.com/steam/apps/${app.id}/header.jpg`;
+    console.log(`[NEWS] Steam found: ${app.name} (${app.id})`);
+
+    const imgResponse = await axios.get(steamUrl, {
+      responseType: 'arraybuffer',
+      timeout: 10000,
+    });
+    return Buffer.from(imgResponse.data);
+  } catch (err) {
+    console.error(`[NEWS] Steam image error: ${err.message}`);
+    return null;
+  }
+}
+
+// Дефолтная картинка-заглушка
+const DEFAULT_IMAGE = path.join(IMAGES_DIR, 'default-news.jpg');
+
+async function ensureDefaultImage() {
+  if (fs.existsSync(DEFAULT_IMAGE)) return;
+  // Создать простую заглушку через sharp
+  if (!fs.existsSync(IMAGES_DIR)) fs.mkdirSync(IMAGES_DIR, { recursive: true });
+  await sharp({
+    create: {
+      width: TARGET_WIDTH,
+      height: TARGET_HEIGHT,
+      channels: 3,
+      background: { r: 15, g: 23, b: 42 },
+    },
+  })
+    .jpeg({ quality: 85 })
+    .toFile(DEFAULT_IMAGE);
+  console.log('[NEWS] Created default news image');
+}
+
 // Главная функция: получить картинку для новости
 async function getNewsImage(article) {
   const filename = `${article.id}.jpg`;
@@ -109,23 +160,32 @@ async function getNewsImage(article) {
     return await resizeImage(sourceImage, filename);
   }
 
-  // 2. Поиск обложки игры через RAWG (лучший вариант для игровых новостей)
+  // 2. Поиск обложки игры через RAWG
   console.log(`[NEWS] Trying RAWG for: ${article.site?.title || article.title}`);
   const rawgImage = await searchRawgImage(article.site?.title || article.title);
   if (rawgImage) {
     return await resizeImage(rawgImage, filename);
   }
 
-  // 3. Генерить через Gemini Imagen (может быть недоступен по геолокации)
+  // 3. Steam CDN
+  console.log(`[NEWS] Trying Steam for: ${article.site?.title || article.title}`);
+  const steamImage = await searchSteamImage(article.site?.title || article.title);
+  if (steamImage) {
+    return await resizeImage(steamImage, filename);
+  }
+
+  // 4. Генерить через Gemini Imagen
   console.log(`[NEWS] Generating Gemini image for: ${article.site?.title || article.title}`);
   const generated = await generateImage(article.site?.title || article.title);
   if (generated) {
     return await resizeImage(generated, filename);
   }
 
-  // 4. Ничего не нашли
-  console.error(`[NEWS] No image for: ${article.title}`);
-  return null;
+  // 5. Дефолтная заглушка
+  console.warn(`[NEWS] Using default image for: ${article.title}`);
+  await ensureDefaultImage();
+  const defaultBuf = fs.readFileSync(DEFAULT_IMAGE);
+  return await resizeImage(defaultBuf, filename);
 }
 
-module.exports = { getNewsImage, checkSourceImage, generateImage, searchRawgImage, resizeImage };
+module.exports = { getNewsImage, checkSourceImage, generateImage, searchRawgImage, searchSteamImage, resizeImage };

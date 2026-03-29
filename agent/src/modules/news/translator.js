@@ -127,4 +127,186 @@ async function translateAndRewrite(article) {
   }
 }
 
-module.exports = { translateAndRewrite };
+// ====== PIPELINE V2: полная генерация текста с обогащённым контекстом ======
+
+const GEMINI_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
+
+const FULL_ARTICLE_PROMPT = `Ты — главный редактор новостного канала ActivePlay о видеоиграх. Аудитория — русскоязычные геймеры.
+
+ЗАДАЧА: Написать новость на русский язык в трёх форматах (сайт, Telegram, VK).
+
+ИСХОДНИК:
+Заголовок: {title}
+Текст: {translatedDescription}
+Источник: {sourceName}
+
+ДОПОЛНИТЕЛЬНЫЕ ФАКТЫ:
+{enrichedContext}
+
+═══════════════════════════════════════
+ПРАВИЛА ЯЗЫКА (ОБЯЗАТЕЛЬНЫЕ):
+═══════════════════════════════════════
+
+1. Живой русский. Пишешь как рассказываешь другу, который тоже геймер.
+2. Короткие предложения. Максимум 15 слов в предложении.
+3. Без канцелярита. Запрещено: «стоит отметить», «данная информация», «важно подчеркнуть», «следует обратить внимание», «в рамках», «является», «осуществлять».
+4. Без причастных и деепричастных оборотов. Вместо «вышедшая на прошлой неделе игра» — «игра вышла на прошлой неделе».
+5. Без длинных тире в начале предложений.
+6. Без риторических вопросов.
+7. Конкретика. Если в патче 5 маунтов — назови их. Если продали 3 млн — напиши 3 млн.
+
+═══════════════════════════════════════
+СТРУКТУРА ТЕКСТА ДЛЯ САЙТА (3 блока):
+═══════════════════════════════════════
+
+БЛОК 1 — НОВОСТЬ ПОДРОБНО (60% текста)
+Что случилось. Все детали из исходника и дополнительных фактов. Конкретные названия, цифры, механики, даты. Не пересказывай одним предложением — раскрывай.
+
+БЛОК 2 — ОБЩИЙ КОНТЕКСТ (30% текста)
+Что это за игра/консоль/подписка. Кто разработчик. Когда вышла. Сколько продали. На каких платформах. Почему это интересно. Для тех кто НЕ в теме — чтобы поняли зачем читать.
+
+БЛОК 3 — ВОРОНКА (10% текста)
+Если игра продаётся на ActivePlay — плавный переход: «{Название} доступна в магазине ActivePlay от {цена} рублей.» Если это подписка — упомянуть подписку. Если продукт не продаётся — пропустить этот блок.
+
+ОБЩИЙ ОБЪЁМ текста для сайта: минимум 1000 знаков, оптимально 1500-2000. Абзацы разделяй двойным переносом строки.
+
+═══════════════════════════════════════
+ЗАГОЛОВОК ДЛЯ САЙТА:
+═══════════════════════════════════════
+
+- Включи название игры/продукта
+- Включи самый яркий факт из новости
+- Включи SEO-ключевики (патч, обновление, скидка, PS Plus, дата выхода — что подходит)
+- Максимум 80 символов
+- Без кликбейта, но с зацепкой
+- НЕ добавляй категорию в заголовок
+
+═══════════════════════════════════════
+ФОРМАТ ОТВЕТА — СТРОГО JSON:
+═══════════════════════════════════════
+
+Ответь ТОЛЬКО JSON. Без маркдауна, без backticks, без пояснений.
+
+{
+  "category": "Новость|Анонс|Инсайд|Слух|Хайп",
+  "site": {
+    "title": "SEO-заголовок 60-80 символов",
+    "text": "Полный текст, минимум 1000 знаков, абзацы через \\n\\n",
+    "metaDescription": "Мета-описание 140-160 символов",
+    "tags": ["тег1", "тег2", "тег3", "тег4", "тег5"]
+  },
+  "telegram": {
+    "title": "Заголовок для TG (короче, ярче)",
+    "text": "3-5 предложений, суть + зацепка. Макс 600 символов. Хэштеги в конце."
+  },
+  "vk": {
+    "title": "Заголовок для VK",
+    "text": "5-8 предложений, подробнее чем TG. Макс 1500 символов. Хэштеги в конце."
+  },
+  "gameSlug": "slug-игры-если-есть-на-сайте-или-null",
+  "relatedProduct": "ps-plus-extra|ps-plus-essential|xbox-game-pass|ea-play|fc-points|null"
+}`;
+
+async function callGemini(prompt, maxTokens = 4000) {
+  const key = process.env.GEMINI_API_KEY;
+  if (!key) throw new Error('GEMINI_API_KEY not set');
+
+  const response = await axios.post(`${GEMINI_URL}?key=${key}`, {
+    contents: [{ parts: [{ text: prompt }] }],
+    generationConfig: {
+      maxOutputTokens: maxTokens,
+      temperature: 0.7,
+    },
+  }, {
+    timeout: 60000,
+    headers: { 'Content-Type': 'application/json' },
+  });
+
+  return response.data?.candidates?.[0]?.content?.parts
+    ?.map(p => p.text)
+    .filter(Boolean)
+    .join('') || '';
+}
+
+// Генерация полноценной статьи с обогащённым контекстом
+async function generateFullArticle(article, enrichedContext) {
+  const title = article.site?.title || article.title || '';
+  const description = article.site?.text || article.description || '';
+  const source = article.sourceName || '';
+
+  const prompt = FULL_ARTICLE_PROMPT
+    .replace('{title}', title)
+    .replace('{translatedDescription}', description.substring(0, 3000))
+    .replace('{sourceName}', source)
+    .replace('{enrichedContext}', enrichedContext || 'Нет дополнительных фактов.');
+
+  try {
+    const text = await callGemini(prompt);
+
+    const jsonMatch = text.match(/\{[\s\S]*\}/);
+    if (!jsonMatch) {
+      console.error('[NEWS] generateFullArticle: no JSON in response');
+      return null;
+    }
+
+    const parsed = JSON.parse(jsonMatch[0]);
+
+    if (!parsed.site?.text || !parsed.site?.title) {
+      console.error('[NEWS] generateFullArticle: missing required fields');
+      return null;
+    }
+
+    // Лимиты
+    if (parsed.telegram?.text?.length > 600) {
+      parsed.telegram.text = parsed.telegram.text.substring(0, 597) + '...';
+    }
+    if (parsed.vk?.text?.length > 1500) {
+      parsed.vk.text = parsed.vk.text.substring(0, 1497) + '...';
+    }
+    if (parsed.site.metaDescription?.length > 160) {
+      parsed.site.metaDescription = parsed.site.metaDescription.substring(0, 157) + '...';
+    }
+
+    console.log(`[NEWS] Full article: ${parsed.site.title} (${parsed.site.text.length} chars)`);
+    return parsed;
+  } catch (err) {
+    const msg = err.response?.data?.error?.message || err.message;
+    console.error(`[NEWS] generateFullArticle error: ${msg}`);
+    return null;
+  }
+}
+
+// Проверка и улучшение заголовка (отдельный вызов)
+async function checkHeadline(title, summary) {
+  const prompt = `Проверь заголовок новости для игрового сайта ActivePlay.
+
+Заголовок: ${title}
+Тема новости: ${summary}
+
+Критерии:
+1. Есть конкретика (цифры, названия, даты)?
+2. Есть SEO-ключевики по которым люди ищут?
+3. Длина 60-80 символов?
+4. Цепляет внимание?
+5. Нет канцелярита?
+
+Если заголовок хорош — верни его как есть.
+Если можно улучшить — верни улучшенный вариант.
+
+Ответь ТОЛЬКО заголовком, без пояснений.`;
+
+  try {
+    const result = await callGemini(prompt, 200);
+    const cleaned = result.trim().replace(/^["']|["']$/g, '');
+    if (cleaned && cleaned.length >= 20 && cleaned.length <= 120) {
+      console.log(`[NEWS] Headline: "${title}" → "${cleaned}"`);
+      return cleaned;
+    }
+    return title;
+  } catch (err) {
+    console.error(`[NEWS] checkHeadline error: ${err.message}`);
+    return title;
+  }
+}
+
+module.exports = { translateAndRewrite, generateFullArticle, checkHeadline };
