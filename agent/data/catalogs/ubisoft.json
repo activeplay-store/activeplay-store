@@ -1,0 +1,413 @@
+{
+  "updatedAt": "2026-03-26T00:14:58.693Z",
+  "month": "2026-03",
+  "source": "playstation.com/en-tr Ubisoft+ Classics",
+  "games": [
+    {
+      "id": "anno-1800-console-edition-standard",
+      "name": "Anno 1800 Console Edition - Standard",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "assassin-s-creed-4-black-flag",
+      "name": "Assassin's Creed 4 Black Flag",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "assassin-s-creed-chronicles-china",
+      "name": "Assassin's Creed Chronicles: China",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "assassin-s-creed-odyssey",
+      "name": "Assassin's Creed Odyssey",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "assassin-s-creed-origins",
+      "name": "Assassin's Creed Origins",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "assassin-s-creed-unity",
+      "name": "Assassin's Creed Unity",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "assassin-s-creed-valhalla",
+      "name": "Assassin's Creed Valhalla",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "assassin-s-creed-freedom-cry",
+      "name": "Assassin's Creed Freedom Cry",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "assassin-s-creed-iii-remastered",
+      "name": "Assassin's Creed III Remastered",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "assassin-s-creed-rogue-remastered",
+      "name": "Assassin's Creed Rogue Remastered",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "assassin-s-creed-syndicate",
+      "name": "Assassin's Creed Syndicate",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "assassin-s-creed-chronicles-india",
+      "name": "Assassin's Creed Chronicles: India",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "assassin-s-creed-chronicles-russia",
+      "name": "Assassin's Creed Chronicles: Russia",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "assassin-s-creed-the-ezio-collection",
+      "name": "Assassin's Creed The Ezio Collection",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "child-of-light",
+      "name": "Child of Light",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "eagle-flight",
+      "name": "Eagle Flight",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "far-cry-5",
+      "name": "Far Cry 5",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "far-cry-primal",
+      "name": "Far Cry Primal",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "far-cry-new-dawn",
+      "name": "Far Cry New Dawn",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "far-cry-3-classic-edition",
+      "name": "Far Cry 3 Classic Edition",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "far-cry-6-standard-edition-ps4-ps5",
+      "name": "FAR CRY 6 Standard Edition PS4 & PS5",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "for-honor",
+      "name": "FOR HONOR",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "hungry-shark-world",
+      "name": "Hungry Shark World",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "immortals-fenyx-rising-ps4-ps5",
+      "name": "Immortals Fenyx Rising PS4 & PS5",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "legendary-fishing",
+      "name": "Legendary Fishing",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "monopoly-madness",
+      "name": "MONOPOLY Madness",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "oddballers",
+      "name": "ODDBALLERS",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "rabbids-invasion-the-interactive-tv-show",
+      "name": "Rabbids Invasion: The interactive TV Show",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "rayman-legends",
+      "name": "Rayman Legends",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "riders-republic-ps4-ps5",
+      "name": "Riders Republic PS4 & PS5",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "risk-urban-assault",
+      "name": "Risk Urban Assault",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "scott-pilgrim-vs-the-world-the-game",
+      "name": "Scott Pilgrim vs. The World: The Game",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "south-park-the-fractured-but-whole",
+      "name": "South Park: The Fractured but Whole",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "south-park-the-stick-of-truth",
+      "name": "South Park: The Stick of Truth",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "space-junkies",
+      "name": "Space Junkies",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "starlink-battle-for-atlas",
+      "name": "Starlink: Battle for Atlas",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "steep",
+      "name": "STEEP",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "the-crew-2-standard-edition",
+      "name": "The Crew 2 Standard Edition",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "the-settlers-new-allies",
+      "name": "The Settlers: New Allies",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "tom-clancy-s-ghost-recon-breakpoint",
+      "name": "Tom Clancy's Ghost Recon Breakpoint",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "tom-clancy-s-the-division",
+      "name": "TOM CLANCY'S THE DIVISION",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "tom-clancy-s-ghost-recon-wildlands",
+      "name": "Tom Clancy's Ghost Recon Wildlands",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "tom-clancy-s-rainbow-six-extraction-ps4-ps5",
+      "name": "Tom Clancy's Rainbow Six Extraction PS4 & PS5",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "tom-clancy-s-the-division-2",
+      "name": "Tom Clancy's The Division 2",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "trackmania-turbo",
+      "name": "Trackmania Turbo",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "transference",
+      "name": "Transference",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "trials-fusion",
+      "name": "Trials Fusion",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "trials-of-the-blood-dragon",
+      "name": "Trials of the Blood Dragon",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "trials-rising",
+      "name": "Trials Rising",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "uno",
+      "name": "UNO",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "valiant-hearts-the-great-war",
+      "name": "Valiant Hearts: The Great War",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "watch-dogs-2",
+      "name": "Watch Dogs 2",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "watch-dogs-legion-ps4-ps5",
+      "name": "Watch Dogs: Legion PS4 & PS5",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "watch-dogs",
+      "name": "Watch Dogs",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "werewolves-within",
+      "name": "Werewolves Within",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "zombi",
+      "name": "ZOMBI",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "far-cry-4",
+      "name": "Far Cry 4",
+      "platforms": [
+        "PS4"
+      ]
+    },
+    {
+      "id": "skull-and-bones",
+      "name": "Skull and Bones",
+      "platforms": [
+        "PS4"
+      ]
+    }
+  ]
+}

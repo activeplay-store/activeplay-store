@@ -1,0 +1,10 @@
+{
+  "updatedAt": "2026-03-04T20:00:00+03:00",
+  "month": "2026-03",
+  "games": [
+    {"id": "monster-hunter-rise", "name": "Monster Hunter Rise", "platforms": ["PS4", "PS5"]},
+    {"id": "pga-tour-2k25", "name": "PGA Tour 2K25", "platforms": ["PS5"]},
+    {"id": "slime-rancher-2", "name": "Slime Rancher 2", "platforms": ["PS5"]},
+    {"id": "elder-scrolls-online", "name": "The Elder Scrolls Online: Tamriel Unlimited", "platforms": ["PS4", "PS5"]}
+  ]
+}

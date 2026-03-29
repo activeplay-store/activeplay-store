@@ -1,0 +1,844 @@
+{
+  "updatedAt": "2026-03-26T23:28:50.945Z",
+  "preorders": [
+    {
+      "name": "Starfield",
+      "id": "starfield",
+      "conceptId": null,
+      "slug": "starfield",
+      "platforms": [
+        "PS5"
+      ],
+      "releaseDate": "2026-04-07",
+      "portraitUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202603/0401/18b516e759613304c7efc7bcd3c134d6bfb5380d655df9be.jpg",
+      "coverUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202603/0401/79a18f39494627fd6bfc30841c8f0e5097d66453624893ee.jpg",
+      "prices": {
+        "TR": {
+          "editions": [
+            {
+              "name": "Premium",
+              "priceTRY": 2265,
+              "clientPrice": 5600
+            },
+            {
+              "name": "Standard",
+              "priceTRY": 1618,
+              "clientPrice": 4250
+            }
+          ]
+        },
+        "UA": {
+          "editions": [
+            {
+              "name": "Premium",
+              "priceUAH": 2099,
+              "clientPrice": 5750
+            },
+            {
+              "name": "Standard",
+              "priceUAH": 1499,
+              "clientPrice": 4450
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Diablo IV: Lord of Hatred",
+      "id": "diablo-iv-lord-of-hatred",
+      "conceptId": null,
+      "slug": "diablo-iv-lord-of-hatred",
+      "platforms": [
+        "PS5",
+        "PS4"
+      ],
+      "releaseDate": "2026-04-27",
+      "portraitUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202511/1201/0aa045b07431038b0f1a5dfd8d0ca532868b95a149496693.png",
+      "coverUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202511/1201/123196105a0a561c38b35051fd893250c816f19ce2b3b9dd.jpg",
+      "prices": {
+        "TR": {
+          "editions": [
+            {
+              "name": "Standard",
+              "priceTRY": 1599,
+              "clientPrice": 4250
+            },
+            {
+              "name": "Ultimate",
+              "priceTRY": 3599,
+              "clientPrice": 8650
+            },
+            {
+              "name": "Deluxe",
+              "priceTRY": 2399,
+              "clientPrice": 5900
+            }
+          ]
+        },
+        "UA": {
+          "editions": [
+            {
+              "name": "Standard",
+              "priceUAH": 1699,
+              "clientPrice": 4850
+            },
+            {
+              "name": "Ultimate",
+              "priceUAH": 3799,
+              "clientPrice": 9500
+            },
+            {
+              "name": "Deluxe",
+              "priceUAH": 2499,
+              "clientPrice": 6700
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "007 First Light",
+      "id": "007-first-light",
+      "conceptId": null,
+      "slug": "007-first-light",
+      "platforms": [
+        "PS5"
+      ],
+      "releaseDate": "2026-05-25",
+      "portraitUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202507/0215/f54f11bcf773a3bcace540344dc12154973f53d3490b93fc.png",
+      "coverUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202506/0421/3f7672a695a9487071b261cc7c0d55ad7c25ebb39c8dc3ec.png",
+      "prices": {
+        "TR": {
+          "editions": [
+            {
+              "name": "Standard",
+              "priceTRY": 2999,
+              "clientPrice": 7300
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "LEGO Batman: Legacy of the Dark Knight",
+      "id": "lego-batman-legacy-of-the-dark-knight",
+      "conceptId": null,
+      "slug": "lego-batman-legacy-of-the-dark-knight",
+      "platforms": [
+        "PS5"
+      ],
+      "releaseDate": "2026-05-18",
+      "portraitUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202511/1118/3b572e6e923f360a52cfe7845d3e2adc6e6c9d5b0fdc6d6f.jpg",
+      "coverUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202511/1118/b9ec9112587902ebd2322af9bd76e04fd570a58f89201ea9.png",
+      "prices": {
+        "TR": {
+          "editions": [
+            {
+              "name": "Deluxe",
+              "priceTRY": 3849,
+              "clientPrice": 9200
+            },
+            {
+              "name": "Standard",
+              "priceTRY": 2999,
+              "clientPrice": 7300
+            }
+          ]
+        },
+        "UA": {
+          "editions": [
+            {
+              "name": "Standard",
+              "priceUAH": 1999,
+              "clientPrice": 5500
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "PRAGMATA",
+      "id": "pragmata",
+      "conceptId": null,
+      "slug": "pragmata",
+      "platforms": [
+        "PS5"
+      ],
+      "releaseDate": "2026-04-16",
+      "portraitUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202511/2605/b7ec5836e23affe26c8ad00124a1eddddab5e1bad456c03e.jpg",
+      "coverUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202511/2605/903271eb79de107c27515fd04ee6f9e9cfdf2d6028a48673.png",
+      "prices": {
+        "TR": {
+          "editions": [
+            {
+              "name": "Standard",
+              "priceTRY": 2579,
+              "clientPrice": 6300
+            },
+            {
+              "name": "Deluxe",
+              "priceTRY": 2999,
+              "clientPrice": 7300
+            }
+          ]
+        },
+        "UA": {
+          "editions": [
+            {
+              "name": "Deluxe",
+              "priceUAH": 1999,
+              "clientPrice": 5500
+            },
+            {
+              "name": "Standard",
+              "priceUAH": 1799,
+              "clientPrice": 5050
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Echoes of Aincrad",
+      "id": "echoes-of-aincrad",
+      "conceptId": null,
+      "slug": "echoes-of-aincrad",
+      "platforms": [
+        "PS5"
+      ],
+      "releaseDate": "2026-07-09",
+      "portraitUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202602/1907/db819d43d83148bec96dbaebc3daed099761432296eff166.jpg",
+      "coverUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202602/1907/0af33d095d07dd8c0c7abeebec8eab4497c32f3d8e266883.png",
+      "prices": {
+        "TR": {
+          "editions": [
+            {
+              "name": "Ultimate",
+              "priceTRY": 4749,
+              "clientPrice": 11100
+            },
+            {
+              "name": "Standard",
+              "priceTRY": 2999,
+              "clientPrice": 7300
+            },
+            {
+              "name": "Deluxe",
+              "priceTRY": 3849,
+              "clientPrice": 9200
+            }
+          ]
+        },
+        "UA": {
+          "editions": [
+            {
+              "name": "Ultimate",
+              "priceUAH": 2799,
+              "clientPrice": 7400
+            },
+            {
+              "name": "Standard",
+              "priceUAH": 1999,
+              "clientPrice": 5500
+            },
+            {
+              "name": "Deluxe",
+              "priceUAH": 2399,
+              "clientPrice": 6450
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "SAROS",
+      "id": "saros",
+      "conceptId": null,
+      "slug": "saros",
+      "platforms": [
+        "PS5"
+      ],
+      "releaseDate": "2026-04-29",
+      "portraitUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202509/2318/89c3538003fb34870e745493412408eeeed5f02b32c55d23.png",
+      "coverUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202509/2318/ca19e7b6909c03a0d64a84981109c0cdaa98e7fdb8820e36.png",
+      "prices": {
+        "TR": {
+          "editions": [
+            {
+              "name": "Standard",
+              "priceTRY": 3449,
+              "clientPrice": 8300
+            },
+            {
+              "name": "Digital Deluxe",
+              "priceTRY": 3849,
+              "clientPrice": 9200
+            }
+          ]
+        },
+        "UA": {
+          "editions": [
+            {
+              "name": "Standard",
+              "priceUAH": 2199,
+              "clientPrice": 5950
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "MARVEL Tōkon: Fighting Souls",
+      "id": "marvel-t-kon-fighting-souls",
+      "conceptId": null,
+      "slug": "marvel-t-kon-fighting-souls",
+      "platforms": [
+        "PS5"
+      ],
+      "releaseDate": "2026-08-06",
+      "portraitUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202602/0512/82ef3f898acb9608c7ca9d3ae20b012d938f444d04fd0625.jpg",
+      "coverUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202506/0507/18b5830b8d028aef8b351a8c266535883e7d6445747ec655.jpg",
+      "prices": {
+        "TR": {
+          "editions": [
+            {
+              "name": "Ultimate",
+              "priceTRY": 4749,
+              "clientPrice": 11100
+            },
+            {
+              "name": "Digital Deluxe",
+              "priceTRY": 4049,
+              "clientPrice": 9600
+            },
+            {
+              "name": "Standard",
+              "priceTRY": 2999,
+              "clientPrice": 7300
+            }
+          ]
+        },
+        "UA": {
+          "editions": [
+            {
+              "name": "Standard",
+              "priceUAH": 1999,
+              "clientPrice": 5500
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Directive 8020",
+      "id": "directive-8020",
+      "conceptId": null,
+      "slug": "directive-8020",
+      "platforms": [
+        "PS5"
+      ],
+      "releaseDate": "2026-05-12",
+      "portraitUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202408/0522/db14c69711a13cc2d73c3964201ac80587a865a816c3c5d8.png",
+      "coverUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202408/0522/6b8810d7de4dce391d4a12877e6c04042b975a8aa2d29fb4.jpg",
+      "prices": {
+        "TR": {
+          "editions": [
+            {
+              "name": "Standard",
+              "priceTRY": 2149,
+              "clientPrice": 5300
+            }
+          ]
+        },
+        "UA": {
+          "editions": [
+            {
+              "name": "Standard",
+              "priceUAH": 1499,
+              "clientPrice": 4450
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Invincible VS",
+      "id": "invincible-vs",
+      "conceptId": null,
+      "slug": "invincible-vs",
+      "platforms": [
+        "PS5"
+      ],
+      "releaseDate": "2026-04-30",
+      "portraitUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202512/0223/abae93143736137f8d17917de28aa0eedbf2f098ee3402e4.jpg",
+      "coverUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202512/0223/f16e80cc4c7f6e17254071e9fa829b752653d8cb91d52fae.jpg",
+      "prices": {
+        "TR": {
+          "editions": [
+            {
+              "name": "Standard",
+              "priceTRY": 2149,
+              "clientPrice": 5300
+            }
+          ]
+        },
+        "UA": {
+          "editions": [
+            {
+              "name": "Standard",
+              "priceUAH": 1699,
+              "clientPrice": 4850
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "MotoGP 26",
+      "id": "motogp26",
+      "conceptId": null,
+      "slug": "motogp26",
+      "platforms": [
+        "PS5"
+      ],
+      "releaseDate": "2026-04-28",
+      "portraitUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202602/2015/f7d7f07d359ba0613bef8b43e1af74becad0e00357c1ccb3.jpg",
+      "coverUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202602/2015/63c358a42759630f3e538ab47f622bc1879b092241d016e3.jpg",
+      "prices": {
+        "TR": {
+          "editions": [
+            {
+              "name": "Standard",
+              "priceTRY": 2999,
+              "clientPrice": 7300
+            }
+          ]
+        },
+        "UA": {
+          "editions": [
+            {
+              "name": "Standard",
+              "priceUAH": 1999,
+              "clientPrice": 5500
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Cthulhu: The Cosmic Abyss - R'lyeh Edition",
+      "id": "cthulhu-the-cosmic-abyss-r-lyeh-edition",
+      "conceptId": null,
+      "slug": "cthulhu-the-cosmic-abyss-r-lyeh-edition",
+      "platforms": [
+        "PS5"
+      ],
+      "releaseDate": "2026-04-16",
+      "portraitUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202601/2013/e8cc34b3e9fc782c62214c44aa4ad60242defb0e24e31ce0.jpg",
+      "coverUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202601/2013/4e1ce6982382c0a61520510469572492bb064afbedd02743.jpg",
+      "prices": {
+        "TR": {
+          "editions": [
+            {
+              "name": "Standard",
+              "priceTRY": 2579,
+              "clientPrice": 6300
+            }
+          ]
+        },
+        "UA": {
+          "editions": [
+            {
+              "name": "Standard",
+              "priceUAH": 1799,
+              "clientPrice": 5050
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "METAL GEAR SOLID: MASTER COLLECTION Vol.2",
+      "id": "metal-gear-solid-master-collection-vol-2",
+      "conceptId": null,
+      "slug": "metal-gear-solid-master-collection-vol-2",
+      "platforms": [
+        "PS5"
+      ],
+      "releaseDate": "2026-08-26",
+      "portraitUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202601/2903/492bf059e5c7ed0ffacd99a444a093d2a785b0cff7fe901e.jpg",
+      "coverUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202601/2903/809466ea5dca03e287de3174e70a27e567fe3dc956ee115a.jpg",
+      "prices": {
+        "TR": {
+          "editions": [
+            {
+              "name": "Standard",
+              "priceTRY": 2149,
+              "clientPrice": 5300
+            }
+          ]
+        },
+        "UA": {
+          "editions": [
+            {
+              "name": "Standard",
+              "priceUAH": 1499,
+              "clientPrice": 4450
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Aphelion",
+      "id": "aphelion",
+      "conceptId": null,
+      "slug": "aphelion",
+      "platforms": [
+        "PS5"
+      ],
+      "releaseDate": "2026-04-28",
+      "portraitUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202601/2714/de6618b9259146abf211f578e1ffdb5f8caff248e3879162.jpg",
+      "coverUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202510/2416/848f3c300fb71e2032c1d6644da931dda634588a57c6c0bf.jpg",
+      "prices": {
+        "TR": {
+          "editions": [
+            {
+              "name": "Standard",
+              "priceTRY": 1499,
+              "clientPrice": 4050
+            }
+          ]
+        },
+        "UA": {
+          "editions": [
+            {
+              "name": "Standard",
+              "priceUAH": 1109,
+              "clientPrice": 3600
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Darwin's Paradox!",
+      "id": "darwin-s-paradox",
+      "conceptId": null,
+      "slug": "darwin-s-paradox",
+      "platforms": [
+        "PS5"
+      ],
+      "releaseDate": "2026-04-02",
+      "portraitUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202511/0718/8dc3bb026f8c0873ac11c58a584c3ee618dbfc9db4064514.png",
+      "coverUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202502/1323/38538b48aaa9a611c3d4e330394b111bf0d77a92543a6962.png",
+      "prices": {
+        "TR": {
+          "editions": [
+            {
+              "name": "Standard",
+              "priceTRY": 1079,
+              "clientPrice": 3150
+            }
+          ]
+        },
+        "UA": {
+          "editions": [
+            {
+              "name": "Standard",
+              "priceUAH": 819,
+              "clientPrice": 2950
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Jay and Silent Bob: Chronic Blunt Punch",
+      "id": "jay-and-silent-bob-chronic-blunt-punch",
+      "conceptId": null,
+      "slug": "jay-and-silent-bob-chronic-blunt-punch",
+      "platforms": [
+        "PS5"
+      ],
+      "releaseDate": "2026-04-20",
+      "portraitUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202603/2417/cbb7c65a786cca846fe8be3bf5bf609457a36b8a5469f087.jpg",
+      "coverUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202603/2417/e33f3edef0fa99ca63422fc8602f70b868549a1304fdcfa7.jpg",
+      "prices": {
+        "TR": {
+          "editions": [
+            {
+              "name": "Standard",
+              "priceTRY": 849,
+              "clientPrice": 2700
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "The Occultist",
+      "id": "the-occultist",
+      "conceptId": null,
+      "slug": "the-occultist",
+      "platforms": [
+        "PS5"
+      ],
+      "releaseDate": "2026-04-08",
+      "portraitUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202603/2415/4ab56c3b6a86dca29d85b9334859f84a0516b039bad836d5.png",
+      "coverUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202603/2415/d0c0a75f4ba1d2e65c38c9a31b02b162fe6c7df8dddc5cdc.png",
+      "prices": {
+        "TR": {
+          "editions": [
+            {
+              "name": "Deluxe",
+              "priceTRY": 1749,
+              "clientPrice": 4500
+            }
+          ]
+        },
+        "UA": {
+          "editions": [
+            {
+              "name": "Standard",
+              "priceUAH": 949,
+              "clientPrice": 3250
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "DEAD OR ALIVE 6 Last Round",
+      "id": "dead-or-alive-6-last-round",
+      "conceptId": "231800",
+      "slug": "dead-or-alive-6-last-round",
+      "platforms": [
+        "PS5"
+      ],
+      "releaseDate": "2026-06-24",
+      "portraitUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202601/2718/15b7aec0aa3065e9590934b366888a3a9806476c0df16923.png",
+      "coverUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202601/2718/15b7aec0aa3065e9590934b366888a3a9806476c0df16923.png",
+      "prices": {
+        "TR": {
+          "editions": [
+            {
+              "name": "Standard",
+              "priceTRY": 1749,
+              "clientPrice": 4500
+            },
+            {
+              "name": "Standard",
+              "priceTRY": 2499,
+              "clientPrice": 6150
+            },
+            {
+              "name": "Deluxe",
+              "priceTRY": 2999,
+              "clientPrice": 7300
+            }
+          ]
+        },
+        "UA": {
+          "editions": [
+            {
+              "name": "Standard",
+              "priceUAH": 1399,
+              "clientPrice": 4200
+            },
+            {
+              "name": "Standard",
+              "priceUAH": 1999,
+              "clientPrice": 5500
+            },
+            {
+              "name": "Deluxe",
+              "priceUAH": 2299,
+              "clientPrice": 6200
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Magin: The Rat Project Stories",
+      "id": "magin-the-rat-project-stories",
+      "conceptId": null,
+      "slug": "magin-the-rat-project-stories",
+      "platforms": [
+        "PS5"
+      ],
+      "releaseDate": "2026-04-29",
+      "portraitUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202602/1809/ac344c7cdb7f1f6130a0048033a1686c9e671c0040f8a5c7.png",
+      "coverUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202602/1809/5025825728c9b4cfc8219d6dc05344927ae06e6901ad9984.png",
+      "prices": {
+        "TR": {
+          "editions": [
+            {
+              "name": "Standard",
+              "priceTRY": 849,
+              "clientPrice": 2700
+            }
+          ]
+        },
+        "UA": {
+          "editions": [
+            {
+              "name": "Standard",
+              "priceUAH": 649,
+              "clientPrice": 2500
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Sudden Strike 5",
+      "id": "sudden-strike-5",
+      "conceptId": null,
+      "slug": "sudden-strike-5",
+      "platforms": [
+        "PS5"
+      ],
+      "releaseDate": "2026-04-20",
+      "portraitUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202601/0911/5889aa7d51188a5c22841f0cecb7a8232442335979f417a7.jpg",
+      "coverUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202507/0908/d7250867be16996b83d0a20435d75740d2a340842cbb04ee.jpg",
+      "prices": {
+        "TR": {
+          "editions": [
+            {
+              "name": "Deluxe",
+              "priceTRY": 2579,
+              "clientPrice": 6300
+            }
+          ]
+        },
+        "UA": {
+          "editions": [
+            {
+              "name": "Deluxe",
+              "priceUAH": 1799,
+              "clientPrice": 5050
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "The Adventures of Elliot: The Millennium Tales",
+      "id": "the-adventures-of-elliot-the-millennium-tales",
+      "conceptId": null,
+      "slug": "the-adventures-of-elliot-the-millennium-tales",
+      "platforms": [
+        "PS5"
+      ],
+      "releaseDate": "2026-06-17",
+      "portraitUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202601/1912/b5a499582e76829925ef74ec1b9b11b7068c93267dfb429b.jpg",
+      "coverUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202601/1912/297790c49e88f85662ea635eca6984f877f203914dfce4cd.png",
+      "prices": {
+        "TR": {
+          "editions": [
+            {
+              "name": "Standard",
+              "priceTRY": 2999,
+              "clientPrice": 7300
+            },
+            {
+              "name": "Digital Deluxe",
+              "priceTRY": 3449,
+              "clientPrice": 8300
+            }
+          ]
+        },
+        "UA": {
+          "editions": [
+            {
+              "name": "Standard",
+              "priceUAH": 1999,
+              "clientPrice": 5500
+            },
+            {
+              "name": "Digital Deluxe",
+              "priceUAH": 2199,
+              "clientPrice": 5950
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Tides of Tomorrow",
+      "id": "tides-of-tomorrow",
+      "conceptId": null,
+      "slug": "tides-of-tomorrow",
+      "platforms": [
+        "PS5"
+      ],
+      "releaseDate": "2026-04-22",
+      "portraitUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202506/0502/83edea47457e08b4d5be5b6a38567d5ea8bfcb297e0ccba2.jpg",
+      "coverUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202506/0502/7550f1ac000c3a41c210e24084be26e5c077dd520fbe87b1.jpg",
+      "prices": {
+        "TR": {
+          "editions": [
+            {
+              "name": "Standard",
+              "priceTRY": 1299,
+              "clientPrice": 3650
+            }
+          ]
+        },
+        "UA": {
+          "editions": [
+            {
+              "name": "Standard",
+              "priceUAH": 949,
+              "clientPrice": 3250
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Wandering Sword",
+      "id": "wandering-sword",
+      "conceptId": null,
+      "slug": "wandering-sword",
+      "platforms": [
+        "PS5"
+      ],
+      "releaseDate": "2026-05-27",
+      "portraitUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202510/1009/103bc5118f4ca8bb6d93d83e06367628a77e94c692e039bb.png",
+      "coverUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202510/1009/1896a877099ef707c4876591fc16ffaabe8814630d587fe2.jpg",
+      "prices": {
+        "TR": {
+          "editions": [
+            {
+              "name": "Standard",
+              "priceTRY": 1499,
+              "clientPrice": 4050
+            },
+            {
+              "name": "Deluxe",
+              "priceTRY": 1949,
+              "clientPrice": 4850
+            }
+          ]
+        },
+        "UA": {
+          "editions": [
+            {
+              "name": "Standard",
+              "priceUAH": 1049,
+              "clientPrice": 3500
+            },
+            {
+              "name": "Deluxe",
+              "priceUAH": 1349,
+              "clientPrice": 4100
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,1432 @@
+{
+  "updatedAt": "2026-03-25T23:58:15.682Z",
+  "month": "2026-03",
+  "games": [
+    {
+      "id": "the-last-of-us-remastered",
+      "name": "The Last of Us Remastered",
+      "platforms": [
+        "PS4"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "god-of-war-iii-remastered",
+      "name": "God of War III Remastered",
+      "platforms": [
+        "PS4"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "beyond-two-souls",
+      "name": "BEYOND: Two Souls",
+      "platforms": [
+        "PS4"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "uncharted-the-nathan-drake-collection",
+      "name": "Uncharted: The Nathan Drake Collection",
+      "platforms": [
+        "PS4"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "mount-blade-warband",
+      "name": "Mount & Blade: Warband",
+      "platforms": [
+        "PS4"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "crysis-remastered",
+      "name": "Crysis Remastered",
+      "platforms": [
+        "PS4"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "tekken-dark-resurrection",
+      "name": "TEKKEN DARK RESURRECTION",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "disney-pixar-wall-e",
+      "name": "Disney•Pixar Wall-E",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "tekken-3-ps4-ps5",
+      "name": "TEKKEN 3 PS4 & PS5",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "tekken-6-ps4-ps5",
+      "name": "Tekken 6 PS4 & PS5",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "tomb-raider-legend",
+      "name": "Tomb Raider: Legend",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "resident-evil-3-nemesis",
+      "name": "Resident Evil 3 Nemesis",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "star-wars-racer-revenge",
+      "name": "STAR WARS RACER REVENGE",
+      "platforms": [
+        "PS4"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "serious-sam-collection",
+      "name": "Serious Sam Collection",
+      "platforms": [
+        "PS4"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "tomb-raider-anniversary-ps4-ps5",
+      "name": "Tomb Raider: Anniversary PS4 & PS5",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "gravity-rush-remastered",
+      "name": "Gravity Rush Remastered",
+      "platforms": [
+        "PS4"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "disney-pixar-toy-story-3",
+      "name": "Disney•Pixar Toy Story 3",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "resident-evil-2",
+      "name": "Resident Evil 2",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "worms-armageddon-ps1-emulation",
+      "name": "Worms Armageddon [PS1 Emulation]",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "disney-pixar-up",
+      "name": "Disney•Pixar Up",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "the-last-of-us-left-behind-standalone",
+      "name": "The Last of Us: Left Behind (Standalone)",
+      "platforms": [
+        "PS4"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "lego-star-wars-ii-the-original-trilogy",
+      "name": "LEGO Star Wars II: The Original Trilogy",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "locoroco-remastered",
+      "name": "LocoRoco Remastered",
+      "platforms": [
+        "PS4"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "jak-and-daxter-the-precursor-legacy",
+      "name": "Jak and Daxter: The Precursor Legacy",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "resident-evil-director-s-cut",
+      "name": "Resident Evil Director’s Cut",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "ridge-racer-2-ps4-ps5",
+      "name": "Ridge Racer 2 PS4 & PS5",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "disney-pixar-toy-story-2-buzz-lightyear-to-the-rescue",
+      "name": "Disney•Pixar Toy Story 2: Buzz Lightyear to the Rescue!",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "worms-world-party-ps1-emulation",
+      "name": "Worms World Party [PS1 Emulation]",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "jak-3",
+      "name": "Jak 3",
+      "platforms": [
+        "PS4"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "indiana-jones-and-the-staff-of-kings",
+      "name": "Indiana Jones and the Staff of Kings",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "ape-escape",
+      "name": "Ape Escape",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "ratchet-clank-size-matters",
+      "name": "Ratchet & Clank: Size Matters",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "ridge-racer-ps4-ps5",
+      "name": "RIDGE RACER PS4 & PS5",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "syphon-filter",
+      "name": "Syphon Filter",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "syphon-filter-2",
+      "name": "Syphon Filter 2",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "tekken2-ps4-ps5",
+      "name": "TEKKEN2 PS4 & PS5",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "twisted-metal-4",
+      "name": "Twisted Metal 4",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "jak-ii-renegade",
+      "name": "Jak II: Renegade",
+      "platforms": [
+        "PS4"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "dishonored-definitive-edition",
+      "name": "Dishonored Definitive Edition",
+      "platforms": [
+        "PS4"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "patapon-remastered",
+      "name": "Patapon Remastered",
+      "platforms": [
+        "PS4"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "dino-crisis",
+      "name": "Dino Crisis",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "wipeout-omega-collection",
+      "name": "WipEout Omega Collection",
+      "platforms": [
+        "PS4"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "jakx-combat-racing",
+      "name": "JakX: Combat Racing",
+      "platforms": [
+        "PS4"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "blood-omen-legacy-of-kain",
+      "name": "Blood Omen: Legacy of Kain",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "deus-ex-the-conspiracy-ps4-ps5",
+      "name": "Deus Ex: The Conspiracy PS4 & PS5",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "cool-boarders",
+      "name": "Cool Boarders",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "killzone-liberation",
+      "name": "Killzone: Liberation",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "kurushi",
+      "name": "Kurushi",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "medievil-2",
+      "name": "MediEvil 2",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "mr-moskeeto",
+      "name": "Mr Moskeeto",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "pursuit-force",
+      "name": "Pursuit Force",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "pursuit-force-extreme-justice",
+      "name": "Pursuit Force: Extreme Justice",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "secret-agent-clank",
+      "name": "Secret Agent Clank",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "soulcalibur-broken-destiny-ps4-ps5",
+      "name": "Soulcalibur: Broken Destiny PS4 & PS5",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "soulcalibur-iii-ps4-ps5",
+      "name": "SOULCALIBUR III PS4 & PS5",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "twisted-metal",
+      "name": "Twisted Metal",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "twisted-metal-iii",
+      "name": "Twisted Metal III",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "twisted-metal-world-tour",
+      "name": "Twisted Metal World Tour",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "worms-ps1-emulation",
+      "name": "Worms [PS1 Emulation]",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "r-type-dimensions-ex",
+      "name": "R-Type Dimensions EX",
+      "platforms": [
+        "PS4"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "alone-in-the-dark-the-new-nightmare-2001",
+      "name": "Alone in the Dark: The New Nightmare (2001)",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "doom-3",
+      "name": "DOOM 3",
+      "platforms": [
+        "PS4"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "timesplitters",
+      "name": "TimeSplitters",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "timesplitters-2",
+      "name": "TimeSplitters 2",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "timesplitters-future-perfect",
+      "name": "TimeSplitters: Future Perfect",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "blood-omen-2-legacy-of-kain",
+      "name": "Blood Omen 2: Legacy of Kain",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "riven-ps1",
+      "name": "Riven (PS1)",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "myst-ps1",
+      "name": "Myst (PS1)",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "oddworld-abe-s-oddysee-ps1-emulation",
+      "name": "Oddworld: Abe's Oddysee (PS1 Emulation)",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "star-wars-the-clone-wars",
+      "name": "STAR WARS The Clone Wars",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "summoner-ps2-emulation-2000",
+      "name": "Summoner PS2 Emulation (2000)",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "2xtreme",
+      "name": "2Xtreme",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "alone-in-the-dark-2-1996",
+      "name": "Alone in the Dark 2 (1996)",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "ape-academy",
+      "name": "Ape Academy",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "ape-academy-2",
+      "name": "Ape Academy 2",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "ape-escape-2",
+      "name": "Ape Escape 2",
+      "platforms": [
+        "PS4"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "ape-escape-p",
+      "name": "Ape Escape P",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "arc-the-lad-twilight-of-the-spirits",
+      "name": "Arc the Lad: Twilight of the Spirits",
+      "platforms": [
+        "PS4"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "armored-core",
+      "name": "ARMORED CORE",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "armored-core-master-of-arena",
+      "name": "ARMORED CORE MASTER OF ARENA",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "armored-core-project-phantasma",
+      "name": "ARMORED CORE PROJECT PHANTASMA",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "atari-flashback-classics-vol-1",
+      "name": "Atari Flashback Classics Vol. 1",
+      "platforms": [
+        "PS4"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "atari-flashback-classics-vol-2",
+      "name": "Atari Flashback Classics Vol. 2",
+      "platforms": [
+        "PS4"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "battle-engine-aquila",
+      "name": "Battle Engine Aquila",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "blade-dancer-lineage-of-light",
+      "name": "Blade Dancer: Lineage of Light",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "dark-chronicle",
+      "name": "Dark Chronicle",
+      "platforms": [
+        "PS4"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "dark-cloud",
+      "name": "Dark Cloud",
+      "platforms": [
+        "PS4"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "daxter",
+      "name": "Daxter",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "disney-pixar-buzz-lightyear-of-star-command",
+      "name": "Disney•Pixar Buzz Lightyear of Star Command",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "doom-1993",
+      "name": "DOOM (1993)",
+      "platforms": [
+        "PS4"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "doom-64",
+      "name": "DOOM 64",
+      "platforms": [
+        "PS4"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "doom-ii-classic",
+      "name": "DOOM II (Classic)",
+      "platforms": [
+        "PS4"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "dropship-united-peace-force",
+      "name": "Dropship: United Peace Force",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "echochrome",
+      "name": "echochrome",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "echoshift",
+      "name": "echoshift",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "everybody-s-golf",
+      "name": "Everybody's Golf",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "everybody-s-golf-2-ps1",
+      "name": "Everybody's Golf 2 (PS1)",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "everybody-s-tennis",
+      "name": "Everybody’s Tennis",
+      "platforms": [
+        "PS4"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "fantavision",
+      "name": "FantaVision",
+      "platforms": [
+        "PS4"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "forbidden-siren",
+      "name": "Forbidden Siren",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "garou-mark-of-the-wolves",
+      "name": "GAROU: MARK OF THE WOLVES",
+      "platforms": [
+        "PS4"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "ghosthunter",
+      "name": "Ghosthunter",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "gods-eater-burst-ps4-ps5",
+      "name": "GODS EATER BURST PS4 & PS5",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "g-police",
+      "name": "G-Police",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "grandia",
+      "name": "Grandia",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "gravity-crash-portable",
+      "name": "Gravity Crash Portable",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "guilty-gear-xrd-revelator",
+      "name": "GUILTY GEAR Xrd -REVELATOR-",
+      "platforms": [
+        "PS4"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "harvest-moon-back-to-nature",
+      "name": "Harvest Moon: Back to Nature",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "heavy-rain",
+      "name": "Heavy Rain",
+      "platforms": [
+        "PS4"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "herc-s-adventures",
+      "name": "Herc's Adventures",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "jak-and-daxter-the-lost-frontier",
+      "name": "Jak and Daxter: The Lost Frontier",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "jeanne-d-arc",
+      "name": "Jeanne d'Arc",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "jet-rider",
+      "name": "Jet Rider",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "jet-rider-2",
+      "name": "Jet Rider 2",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "jumping-flash",
+      "name": "Jumping Flash!",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "key-of-heaven",
+      "name": "Key of Heaven",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "kinetica",
+      "name": "Kinetica",
+      "platforms": [
+        "PS4"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "kurushi-final-mental-blocks",
+      "name": "Kurushi Final: Mental Blocks",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "legacy-of-kain-defiance-ps4-ps5",
+      "name": "Legacy of Kain: Defiance PS4 & PS5",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "lock-s-quest",
+      "name": "Lock's Quest",
+      "platforms": [
+        "PS4"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "locoroco-2-remastered",
+      "name": "LocoRoco 2 Remastered",
+      "platforms": [
+        "PS4"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "locoroco-midnight-carnival",
+      "name": "LocoRoco Midnight Carnival",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "lumines-remastered",
+      "name": "LUMINES REMASTERED",
+      "platforms": [
+        "PS4"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "medievil",
+      "name": "MediEvil",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "medievil-resurrection",
+      "name": "MediEvil Resurrection",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "mr-driller-ps4-ps5",
+      "name": "Mr. Driller PS4 & PS5",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "no-heroes-allowed",
+      "name": "No Heroes Allowed!",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "oddworld-abe-s-exoddus-ps1-emulation",
+      "name": "Oddworld: Abe's Exoddus (PS1 Emulation)",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "okage-shadow-king",
+      "name": "OKAGE: Shadow King",
+      "platforms": [
+        "PS4"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "outcast-second-contact",
+      "name": "Outcast - Second Contact",
+      "platforms": [
+        "PS4"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "parappa-the-rapper-2",
+      "name": "PaRappa The Rapper 2",
+      "platforms": [
+        "PS4"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "patapon-2-remastered",
+      "name": "Patapon 2 Remastered",
+      "platforms": [
+        "PS4"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "patapon-3",
+      "name": "Patapon 3",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "pinball-heroes",
+      "name": "Pinball Heroes",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "primal",
+      "name": "Primal",
+      "platforms": [
+        "PS4"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "r4-ridge-racer-type-4-ps4-ps5",
+      "name": "R4 RIDGE RACER TYPE 4 PS4 & PS5",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "rainbow-moon",
+      "name": "Rainbow Moon",
+      "platforms": [
+        "PS4"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "rally-cross",
+      "name": "Rally Cross",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "resistance-retribution",
+      "name": "Resistance: Retribution",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "rise-of-the-kasai",
+      "name": "Rise of the Kasai",
+      "platforms": [
+        "PS4"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "rogue-galaxy",
+      "name": "Rogue Galaxy",
+      "platforms": [
+        "PS4"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "skygunner",
+      "name": "SkyGunner",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "sly-2-band-of-thieves",
+      "name": "Sly 2: Band of Thieves",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "sly-3-honour-among-thieves",
+      "name": "Sly 3: Honour Among Thieves",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "sly-raccoon",
+      "name": "Sly Raccoon",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "star-wars-demolition",
+      "name": "STAR WARS Demolition",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "star-wars-episode-i-the-phantom-menace",
+      "name": "STAR WARS Episode I - The Phantom Menace",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "star-wars-jedi-starfighter",
+      "name": "STAR WARS JEDI STARFIGHTER",
+      "platforms": [
+        "PS4"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "star-wars-rebel-assault-ii-the-hidden-empire",
+      "name": "STAR WARS Rebel Assault II - The Hidden Empire",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "strider",
+      "name": "STRIDER",
+      "platforms": [
+        "PS4"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "super-stardust-portable",
+      "name": "Super Stardust Portable",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "syphon-filter-3",
+      "name": "Syphon Filter 3",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "syphon-filter-dark-mirror",
+      "name": "Syphon Filter: Dark Mirror",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "syphon-filter-logan-s-shadow",
+      "name": "Syphon Filter: Logan's Shadow",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "the-legend-of-dragoon",
+      "name": "The Legend of Dragoon",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "the-mark-of-kri",
+      "name": "The Mark of Kri",
+      "platforms": [
+        "PS4"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "the-raven-remastered",
+      "name": "The Raven Remastered",
+      "platforms": [
+        "PS4"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "thrillville",
+      "name": "Thrillville",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "thrillville-off-the-rails",
+      "name": "Thrillville: Off the Rails",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "war-of-the-monsters",
+      "name": "War of the Monsters",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "wild-arms",
+      "name": "Wild Arms",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "wild-arms-2",
+      "name": "Wild Arms 2",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "wild-arms-3",
+      "name": "Wild Arms 3",
+      "platforms": [
+        "PS4"
+      ],
+      "addedAt": "2026-03-25"
+    },
+    {
+      "id": "worms-pinball-ps1-emulation",
+      "name": "Worms Pinball [PS1 Emulation]",
+      "platforms": [
+        "PS4",
+        "PS5"
+      ],
+      "addedAt": "2026-03-25"
+    }
+  ]
+}
