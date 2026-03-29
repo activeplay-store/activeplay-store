@@ -1,6 +1,6 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-03-28T13:45:20.751Z
-// Игр со скидкой: 226 (TR), 216 (UA)
+// Обновлено: 2026-03-29T14:21:31.139Z
+// Игр со скидкой: 226 (TR), 217 (UA)
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
 export interface DealGame {
@@ -38,8 +38,8 @@ export const saleMeta = {
   saleNameEn: "Spring Sale",
   maxDiscount: 92,
   endDate: "2026-04-08T22:59:00.000Z",
-  gamesCount: { TR: 226, UA: 216 },
-  updatedAt: "2026-03-28T13:45:20.751Z",
+  gamesCount: { TR: 226, UA: 217 },
+  updatedAt: "2026-03-29T14:21:31.139Z",
   totalGames: 270,
 };
 
@@ -131,8 +131,8 @@ export const dealsData: DealGame[] = [
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202502/1221/1cdbb2177cc3c6302027f05796073b27ca7f7ccf091c3127.png",
     releaseDate: "2021-11-08",
     prices: {
-      TR: { basePriceTRY: 2570, salePriceTRY: 1542, clientBasePrice: 6400, clientSalePrice: 4200 },
-      UA: { basePriceUAH: 1999, salePriceUAH: 1199, clientBasePrice: 5600, clientSalePrice: 3850 },
+      TR: { basePriceTRY: 1541, salePriceTRY: 925, clientBasePrice: 4200, clientSalePrice: 2850 },
+      UA: { basePriceUAH: 1199, salePriceUAH: 719, clientBasePrice: 3850, clientSalePrice: 2750 },
     },
     discountPct: 40,
     saleEndDate: "2026-04-08T22:59:00.000Z",
@@ -290,22 +290,23 @@ export const dealsData: DealGame[] = [
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202308/0312/7d3a133bb2f995b7edf9fc74961637017cf02a688228c154.jpg",
     releaseDate: "2024-01-25",
     prices: {
-      TR: { basePriceTRY: 3899, salePriceTRY: 2339, clientBasePrice: 9450, clientSalePrice: 5850 },
-      UA: { basePriceUAH: 2799, salePriceUAH: 1679, clientBasePrice: 7500, clientSalePrice: 4900 },
+      TR: { basePriceTRY: 2099, salePriceTRY: 840, clientBasePrice: 5300, clientSalePrice: 2700 },
+      UA: { basePriceUAH: 1799, salePriceUAH: 720, clientBasePrice: 5100, clientSalePrice: 2750 },
     },
-    discountPct: 40,
+    discountPct: 60,
     saleEndDate: "2026-04-08T22:59:00.000Z",
   },
   {
-    id: "the-crew-motorfest-3",
-    name: "The Crew Motorfest | Перепустка на 3-й рік",
-    platforms: ["PS5"],
+    id: "the-crew-motorfest",
+    name: "The Crew Motorfest",
+    platforms: ["PS4"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202411/2217/5fb8cf06e2f894195efe2ab7d8cbdb13b8129eeae1c2a653.jpg",
     releaseDate: "2023-09-14",
     prices: {
-      UA: { basePriceUAH: 859, salePriceUAH: 601, clientBasePrice: 3100, clientSalePrice: 2400 },
+      TR: { basePriceTRY: 1249, salePriceTRY: 250, clientBasePrice: 3600, clientSalePrice: 1150 },
+      UA: { basePriceUAH: 1999, salePriceUAH: 400, clientBasePrice: 5600, clientSalePrice: 1750 },
     },
-    discountPct: 30,
+    discountPct: 80,
     saleEndDate: "2026-04-08T22:59:00.000Z",
   },
   {
@@ -343,7 +344,7 @@ export const dealsData: DealGame[] = [
     releaseDate: "2023-09-19",
     prices: {
       TR: { basePriceTRY: 1749, salePriceTRY: 350, clientBasePrice: 4550, clientSalePrice: 1350 },
-      UA: { basePriceUAH: 1999, salePriceUAH: 400, clientBasePrice: 5600, clientSalePrice: 1750 },
+      UA: { basePriceUAH: 1499, salePriceUAH: 300, clientBasePrice: 4500, clientSalePrice: 1450 },
     },
     discountPct: 80,
     saleEndDate: "2026-04-08T22:59:00.000Z",
@@ -475,7 +476,7 @@ export const dealsData: DealGame[] = [
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202209/2815/wQEe1u0VwuBPArynFWFpEHqZ.jpg",
     releaseDate: "2025-01-28",
     prices: {
-      TR: { basePriceTRY: 3899, salePriceTRY: 1170, clientBasePrice: 9450, clientSalePrice: 3450 },
+      TR: { basePriceTRY: 2499, salePriceTRY: 750, clientBasePrice: 6250, clientSalePrice: 2500 },
     },
     discountPct: 70,
     saleEndDate: "2026-04-08T22:59:00.000Z",
@@ -515,8 +516,8 @@ export const dealsData: DealGame[] = [
     releaseDate: "2009-10-02",
     metacritic: 80,
     prices: {
-      TR: { basePriceTRY: 4749, salePriceTRY: 3799, clientBasePrice: 11250, clientSalePrice: 9200 },
-      UA: { basePriceUAH: 2799, salePriceUAH: 2239, clientBasePrice: 7500, clientSalePrice: 6200 },
+      TR: { basePriceTRY: 2579, salePriceTRY: 2063, clientBasePrice: 6400, clientSalePrice: 5200 },
+      UA: { basePriceUAH: 1799, salePriceUAH: 1439, clientBasePrice: 5100, clientSalePrice: 4400 },
     },
     discountPct: 20,
     saleEndDate: "2026-04-08T22:59:00.000Z",
@@ -608,7 +609,7 @@ export const dealsData: DealGame[] = [
     metacritic: 89,
     prices: {
       TR: { basePriceTRY: 343, salePriceTRY: 240, clientBasePrice: 1350, clientSalePrice: 1100 },
-      UA: { basePriceUAH: 879, salePriceUAH: 615, clientBasePrice: 3150, clientSalePrice: 2400 },
+      UA: { basePriceUAH: 649, salePriceUAH: 454, clientBasePrice: 2500, clientSalePrice: 1950 },
     },
     discountPct: 30,
     saleEndDate: "2026-04-08T22:59:00.000Z",
@@ -648,10 +649,10 @@ export const dealsData: DealGame[] = [
     releaseDate: "2015-11-03",
     metacritic: 66,
     prices: {
-      TR: { basePriceTRY: 3399, salePriceTRY: 510, clientBasePrice: 8300, clientSalePrice: 1750 },
-      UA: { basePriceUAH: 2899, salePriceUAH: 435, clientBasePrice: 7700, clientSalePrice: 1850 },
+      TR: { basePriceTRY: 1400, salePriceTRY: 140, clientBasePrice: 3900, clientSalePrice: 850 },
+      UA: { basePriceUAH: 2399, salePriceUAH: 240, clientBasePrice: 6550, clientSalePrice: 1300 },
     },
-    discountPct: 85,
+    discountPct: 90,
     saleEndDate: "2026-04-08T22:59:00.000Z",
   },
   {
@@ -741,8 +742,8 @@ export const dealsData: DealGame[] = [
     releaseDate: "2018-03-20",
     metacritic: 68,
     prices: {
-      TR: { basePriceTRY: 1499, salePriceTRY: 750, clientBasePrice: 4100, clientSalePrice: 2500 },
-      UA: { basePriceUAH: 1540, salePriceUAH: 770, clientBasePrice: 4600, clientSalePrice: 2850 },
+      TR: { basePriceTRY: 999, salePriceTRY: 500, clientBasePrice: 3000, clientSalePrice: 1750 },
+      UA: { basePriceUAH: 1030, salePriceUAH: 515, clientBasePrice: 3500, clientSalePrice: 2100 },
     },
     discountPct: 50,
     saleEndDate: "2026-04-08T22:59:00.000Z",
@@ -762,17 +763,15 @@ export const dealsData: DealGame[] = [
     saleEndDate: "2026-04-08T22:59:00.000Z",
   },
   {
-    id: "star-wars-jedi-cross-gen-bundle-edition",
-    name: "STAR WARS Jedi Cross-Gen Bundle Edition",
-    platforms: ["PS5","PS4"],
+    id: "star-wars-jedi-survivor",
+    name: "STAR WARS Jedi: Survivor",
+    platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202304/1016/3e820877aad9933e39974aa8a28abb42ff6dcd85a823e4dc.png",
-    releaseDate: "2002-03-10",
-    metacritic: 80,
+    releaseDate: "2023-04-27",
     prices: {
-      TR: { basePriceTRY: 3300, salePriceTRY: 660, clientBasePrice: 8100, clientSalePrice: 2250 },
-      UA: { basePriceUAH: 2699, salePriceUAH: 540, clientBasePrice: 7250, clientSalePrice: 2200 },
+      TR: { basePriceTRY: 2900, salePriceTRY: 435, clientBasePrice: 7150, clientSalePrice: 1600 },
     },
-    discountPct: 80,
+    discountPct: 85,
     saleEndDate: "2026-04-08T22:59:00.000Z",
   },
   {
@@ -807,7 +806,7 @@ export const dealsData: DealGame[] = [
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202508/0417/3cac48afc9496fa1e81fdf7261da559f85d9f8b71a572e3d.jpg",
     releaseDate: "2011-09-22",
     prices: {
-      TR: { basePriceTRY: 1799, salePriceTRY: 1259, clientBasePrice: 4650, clientSalePrice: 3600 },
+      TR: { basePriceTRY: 999, salePriceTRY: 699, clientBasePrice: 3000, clientSalePrice: 2350 },
     },
     discountPct: 30,
     saleEndDate: "2026-04-08T22:59:00.000Z",
@@ -858,8 +857,8 @@ export const dealsData: DealGame[] = [
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202509/1301/2f039f8c3c9b36180c7dab41dfee133e0738617736882cf0.png",
     releaseDate: "2025-10-22",
     prices: {
-      TR: { basePriceTRY: 1949, salePriceTRY: 1559, clientBasePrice: 4950, clientSalePrice: 4200 },
-      UA: { basePriceUAH: 1499, salePriceUAH: 1199, clientBasePrice: 4500, clientSalePrice: 3850 },
+      TR: { basePriceTRY: 1499, salePriceTRY: 1199, clientBasePrice: 4100, clientSalePrice: 3500 },
+      UA: { basePriceUAH: 1109, salePriceUAH: 887, clientBasePrice: 3650, clientSalePrice: 3150 },
     },
     discountPct: 20,
     saleEndDate: "2026-04-08T22:59:00.000Z",
@@ -912,10 +911,10 @@ export const dealsData: DealGame[] = [
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202501/3008/87037ec1ddf7ffe5269fb01d8f15138f6899e542e2c8be59.jpg",
     releaseDate: "2025-05-30",
     prices: {
-      TR: { basePriceTRY: 2349, salePriceTRY: 1879, clientBasePrice: 5850, clientSalePrice: 4800 },
-      UA: { basePriceUAH: 1649, salePriceUAH: 1319, clientBasePrice: 4800, clientSalePrice: 4100 },
+      TR: { basePriceTRY: 1749, salePriceTRY: 1312, clientBasePrice: 4550, clientSalePrice: 3700 },
+      UA: { basePriceUAH: 1199, salePriceUAH: 899, clientBasePrice: 3850, clientSalePrice: 3200 },
     },
-    discountPct: 20,
+    discountPct: 25,
     saleEndDate: "2026-04-08T22:59:00.000Z",
   },
   {
@@ -925,8 +924,8 @@ export const dealsData: DealGame[] = [
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202506/0210/3dd77d508c64eb14d0bc7ce534579d34a4b5c5edd68f035b.jpg",
     releaseDate: "",
     prices: {
-      TR: { basePriceTRY: 4680, salePriceTRY: 3276, clientBasePrice: 11150, clientSalePrice: 8050 },
-      UA: { basePriceUAH: 5599, salePriceUAH: 3919, clientBasePrice: 13400, clientSalePrice: 9900 },
+      TR: { basePriceTRY: 2900, salePriceTRY: 2030, clientBasePrice: 7150, clientSalePrice: 5100 },
+      UA: { basePriceUAH: 2999, salePriceUAH: 2099, clientBasePrice: 7950, clientSalePrice: 5850 },
     },
     discountPct: 30,
     saleEndDate: "2026-04-08T22:59:00.000Z",
@@ -1000,14 +999,14 @@ export const dealsData: DealGame[] = [
     saleEndDate: "2026-04-08T22:59:00.000Z",
   },
   {
-    id: "crash-team-racing-nitro-fueled",
-    name: "Crash Team Racing Nitro-Fueled",
+    id: "crash-bandicoot-bundle-n-sane-trilogy-ctr-nitro-fueled",
+    name: "Crash Bandicoot Bundle - N. Sane Trilogy + CTR Nitro-Fueled",
     platforms: ["PS4"],
-    coverUrl: "https://image.api.playstation.com/vulcan/img/cfn/11307w1Vu0rTkl1oHzyJ85uOo8aFBXz3OBxG6_7oeN-ZBUjsLjCt0-a5BKrpzMUfI15w4hHupVLserGpxqzKYF-psWgHwAvi.png",
-    releaseDate: "2019-06-21",
-    metacritic: 82,
+    coverUrl: "https://image.api.playstation.com/vulcan/img/rnd/202010/2621/6wZ4EbMA1kDwiQQ9dSsunRVA.png",
+    releaseDate: "2017-06-30",
+    metacritic: 81,
     prices: {
-      TR: { basePriceTRY: 2349, salePriceTRY: 822, clientBasePrice: 5850, clientSalePrice: 2650 },
+      TR: { basePriceTRY: 436, salePriceTRY: 153, clientBasePrice: 1600, clientSalePrice: 900 },
       UA: { basePriceUAH: 1149, salePriceUAH: 402, clientBasePrice: 3750, clientSalePrice: 1750 },
     },
     discountPct: 65,
@@ -1048,10 +1047,10 @@ export const dealsData: DealGame[] = [
     releaseDate: "2019-03-15",
     metacritic: 83,
     prices: {
-      TR: { basePriceTRY: 1800, salePriceTRY: 450, clientBasePrice: 4650, clientSalePrice: 1600 },
-      UA: { basePriceUAH: 1999, salePriceUAH: 500, clientBasePrice: 5600, clientSalePrice: 2050 },
+      TR: { basePriceTRY: 749, salePriceTRY: 112, clientBasePrice: 2500, clientSalePrice: 750 },
+      UA: { basePriceUAH: 859, salePriceUAH: 129, clientBasePrice: 3100, clientSalePrice: 950 },
     },
-    discountPct: 75,
+    discountPct: 85,
     saleEndDate: "2026-04-08T22:59:00.000Z",
   },
   {
@@ -1154,7 +1153,7 @@ export const dealsData: DealGame[] = [
     releaseDate: "2023-10-05",
     prices: {
       TR: { basePriceTRY: 1749, salePriceTRY: 700, clientBasePrice: 4550, clientSalePrice: 2350 },
-      UA: { basePriceUAH: 2599, salePriceUAH: 1040, clientBasePrice: 7000, clientSalePrice: 3500 },
+      UA: { basePriceUAH: 1429, salePriceUAH: 572, clientBasePrice: 4350, clientSalePrice: 2300 },
     },
     discountPct: 60,
     saleEndDate: "2026-04-08T22:59:00.000Z",
@@ -1188,15 +1187,15 @@ export const dealsData: DealGame[] = [
     saleEndDate: "2026-04-08T22:59:00.000Z",
   },
   {
-    id: "final-fantasy-xvi-complete-edition",
-    name: "FINAL FANTASY XVI COMPLETE EDITION",
+    id: "final-fantasy-xvi",
+    name: "FINAL FANTASY XVI",
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202212/0108/yPQHi9pITw5RwQnuQcY0262O.jpg",
-    releaseDate: "2018-02-08",
-    metacritic: 72,
+    releaseDate: "2023-06-22",
+    metacritic: 88,
     prices: {
-      TR: { basePriceTRY: 2799, salePriceTRY: 1400, clientBasePrice: 6950, clientSalePrice: 3900 },
-      UA: { basePriceUAH: 2199, salePriceUAH: 1100, clientBasePrice: 6050, clientSalePrice: 3650 },
+      TR: { basePriceTRY: 2099, salePriceTRY: 1050, clientBasePrice: 5300, clientSalePrice: 3150 },
+      UA: { basePriceUAH: 819, salePriceUAH: 410, clientBasePrice: 3000, clientSalePrice: 1800 },
     },
     discountPct: 50,
     saleEndDate: "2026-04-08T22:59:00.000Z",
@@ -1235,8 +1234,8 @@ export const dealsData: DealGame[] = [
     releaseDate: "2018-09-07",
     metacritic: 66,
     prices: {
-      TR: { basePriceTRY: 3449, salePriceTRY: 2587, clientBasePrice: 8450, clientSalePrice: 6450 },
-      UA: { basePriceUAH: 2599, salePriceUAH: 1949, clientBasePrice: 7000, clientSalePrice: 5450 },
+      TR: { basePriceTRY: 2579, salePriceTRY: 1934, clientBasePrice: 6400, clientSalePrice: 4900 },
+      UA: { basePriceUAH: 1999, salePriceUAH: 1499, clientBasePrice: 5600, clientSalePrice: 4500 },
     },
     discountPct: 25,
     saleEndDate: "2026-04-08T22:59:00.000Z",
@@ -1248,8 +1247,8 @@ export const dealsData: DealGame[] = [
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202307/2605/6baaae2db9ae0bfa2c1ac692e2f866fd9b1b75cb7969fee1.png",
     releaseDate: "2024-02-01",
     prices: {
-      TR: { basePriceTRY: 3849, salePriceTRY: 1540, clientBasePrice: 9350, clientSalePrice: 4200 },
-      UA: { basePriceUAH: 2399, salePriceUAH: 960, clientBasePrice: 6550, clientSalePrice: 3350 },
+      TR: { basePriceTRY: 2579, salePriceTRY: 1032, clientBasePrice: 6400, clientSalePrice: 3100 },
+      UA: { basePriceUAH: 1799, salePriceUAH: 720, clientBasePrice: 5100, clientSalePrice: 2750 },
     },
     discountPct: 60,
     saleEndDate: "2026-04-08T22:59:00.000Z",
@@ -1301,8 +1300,8 @@ export const dealsData: DealGame[] = [
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202406/2604/27407ee04cd79fc83148f64bd67f16251651392174e3c569.png",
     releaseDate: "2025-03-27",
     prices: {
-      TR: { basePriceTRY: 1599, salePriceTRY: 1119, clientBasePrice: 4300, clientSalePrice: 3300 },
-      UA: { basePriceUAH: 1799, salePriceUAH: 1259, clientBasePrice: 5100, clientSalePrice: 3950 },
+      TR: { basePriceTRY: 1399, salePriceTRY: 979, clientBasePrice: 3900, clientSalePrice: 3000 },
+      UA: { basePriceUAH: 1649, salePriceUAH: 1154, clientBasePrice: 4800, clientSalePrice: 3750 },
     },
     discountPct: 30,
     saleEndDate: "2026-04-08T22:59:00.000Z",
@@ -1335,13 +1334,14 @@ export const dealsData: DealGame[] = [
     saleEndDate: "2026-04-08T22:59:00.000Z",
   },
   {
-    id: "sid-meier-s-civilization-vii-settler-s-edition",
-    name: "Sid Meier's Civilization VII Settler's Edition",
+    id: "sid-meier-s-civilization-vii",
+    name: "Sid Meier's Civilization VII",
     platforms: ["PS5","PS4"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202408/1323/17da9a134effa01060636fa3463344f97d144791d6516ebe.jpg",
     releaseDate: "2025-02-10",
     prices: {
-      TR: { basePriceTRY: 4299, salePriceTRY: 2579, clientBasePrice: 10350, clientSalePrice: 6400 },
+      TR: { basePriceTRY: 2499, salePriceTRY: 1499, clientBasePrice: 6250, clientSalePrice: 4100 },
+      UA: { basePriceUAH: 2999, salePriceUAH: 1799, clientBasePrice: 7950, clientSalePrice: 5100 },
     },
     discountPct: 40,
     saleEndDate: "2026-04-08T22:59:00.000Z",
@@ -1419,8 +1419,8 @@ export const dealsData: DealGame[] = [
     releaseDate: "2018-10-26",
     metacritic: 70,
     prices: {
-      TR: { basePriceTRY: 4749, salePriceTRY: 3799, clientBasePrice: 11250, clientSalePrice: 9200 },
-      UA: { basePriceUAH: 2799, salePriceUAH: 2239, clientBasePrice: 7500, clientSalePrice: 6200 },
+      TR: { basePriceTRY: 2999, salePriceTRY: 2399, clientBasePrice: 7400, clientSalePrice: 6000 },
+      UA: { basePriceUAH: 1999, salePriceUAH: 1599, clientBasePrice: 5600, clientSalePrice: 4700 },
     },
     discountPct: 20,
     saleEndDate: "2026-04-08T22:59:00.000Z",
@@ -1432,9 +1432,9 @@ export const dealsData: DealGame[] = [
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202405/2216/a521b1ec4b9557681bbe347fdbfd7b1e9524425d31e4e1ae.jpg",
     releaseDate: "2025-10-10",
     prices: {
-      TR: { basePriceTRY: 4199, salePriceTRY: 2267, clientBasePrice: 10100, clientSalePrice: 5700 },
+      TR: { basePriceTRY: 2799, salePriceTRY: 1400, clientBasePrice: 6950, clientSalePrice: 3900 },
     },
-    discountPct: 46,
+    discountPct: 50,
     saleEndDate: "2026-04-08T22:59:00.000Z",
   },
   {
@@ -1486,10 +1486,10 @@ export const dealsData: DealGame[] = [
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202510/1011/ef5dee0029d56c1de98ba6da01c072acd7aaf16a833127f6.jpg",
     releaseDate: "2023-10-24",
     prices: {
-      TR: { basePriceTRY: 2599, salePriceTRY: 1819, clientBasePrice: 6450, clientSalePrice: 4700 },
-      UA: { basePriceUAH: 2149, salePriceUAH: 1504, clientBasePrice: 5950, clientSalePrice: 4500 },
+      TR: { basePriceTRY: 1749, salePriceTRY: 1049, clientBasePrice: 4550, clientSalePrice: 3150 },
+      UA: { basePriceUAH: 1429, salePriceUAH: 857, clientBasePrice: 4350, clientSalePrice: 3100 },
     },
-    discountPct: 30,
+    discountPct: 40,
     saleEndDate: "2026-04-08T22:59:00.000Z",
   },
   {
@@ -1607,10 +1607,10 @@ export const dealsData: DealGame[] = [
     releaseDate: "2019-01-18",
     metacritic: 79,
     prices: {
-      TR: { basePriceTRY: 3899, salePriceTRY: 702, clientBasePrice: 9450, clientSalePrice: 2350 },
-      UA: { basePriceUAH: 2799, salePriceUAH: 504, clientBasePrice: 7500, clientSalePrice: 2050 },
+      TR: { basePriceTRY: 2499, salePriceTRY: 250, clientBasePrice: 6250, clientSalePrice: 1150 },
+      UA: { basePriceUAH: 1999, salePriceUAH: 200, clientBasePrice: 5600, clientSalePrice: 1150 },
     },
-    discountPct: 82,
+    discountPct: 90,
     saleEndDate: "2026-04-08T22:59:00.000Z",
   },
   {
@@ -1660,21 +1660,22 @@ export const dealsData: DealGame[] = [
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202410/1113/b933b08d2155b8310e30a0e4d9434b512f3e1124f4c9a330.jpg",
     releaseDate: "2016-01-13",
     prices: {
-      TR: { basePriceTRY: 3899, salePriceTRY: 1950, clientBasePrice: 9450, clientSalePrice: 4950 },
-      UA: { basePriceUAH: 2799, salePriceUAH: 1400, clientBasePrice: 7500, clientSalePrice: 4300 },
+      TR: { basePriceTRY: 2499, salePriceTRY: 1250, clientBasePrice: 6250, clientSalePrice: 3600 },
+      UA: { basePriceUAH: 1999, salePriceUAH: 1000, clientBasePrice: 5600, clientSalePrice: 3400 },
     },
     discountPct: 50,
     saleEndDate: "2026-04-08T22:59:00.000Z",
   },
   {
-    id: "sniper-ghost-warrior-contracts-1-2-double-pack",
-    name: "Sniper Ghost Warrior Contracts 1 & 2 Double Pack",
+    id: "sniper-ghost-warrior-contracts-2",
+    name: "Sniper Ghost Warrior Contracts 2",
     platforms: ["PS5","PS4"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202105/0415/Shg6j0vaSbRMS2UqfyzlWXmF.png",
     releaseDate: "2021-06-04",
     metacritic: 74,
     prices: {
-      TR: { basePriceTRY: 2099, salePriceTRY: 210, clientBasePrice: 5300, clientSalePrice: 1000 },
+      TR: { basePriceTRY: 1399, salePriceTRY: 140, clientBasePrice: 3900, clientSalePrice: 850 },
+      UA: { basePriceUAH: 1199, salePriceUAH: 120, clientBasePrice: 3850, clientSalePrice: 950 },
     },
     discountPct: 90,
     saleEndDate: "2026-04-08T22:59:00.000Z",
@@ -1792,8 +1793,8 @@ export const dealsData: DealGame[] = [
     releaseDate: "2018-06-06",
     metacritic: 67,
     prices: {
-      TR: { basePriceTRY: 2149, salePriceTRY: 430, clientBasePrice: 5400, clientSalePrice: 1550 },
-      UA: { basePriceUAH: 1499, salePriceUAH: 300, clientBasePrice: 4500, clientSalePrice: 1450 },
+      TR: { basePriceTRY: 1749, salePriceTRY: 350, clientBasePrice: 4550, clientSalePrice: 1350 },
+      UA: { basePriceUAH: 1199, salePriceUAH: 240, clientBasePrice: 3850, clientSalePrice: 1300 },
     },
     discountPct: 80,
     saleEndDate: "2026-04-08T22:59:00.000Z",
@@ -2068,8 +2069,8 @@ export const dealsData: DealGame[] = [
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202508/2218/6e65eb4269ce9cf10aa643c08437863f7f38bc2619b3fec0.jpg",
     releaseDate: "2026-01-30",
     prices: {
-      TR: { basePriceTRY: 4299, salePriceTRY: 3224, clientBasePrice: 10350, clientSalePrice: 7900 },
-      UA: { basePriceUAH: 2599, salePriceUAH: 1949, clientBasePrice: 7000, clientSalePrice: 5450 },
+      TR: { basePriceTRY: 2999, salePriceTRY: 2249, clientBasePrice: 7400, clientSalePrice: 5650 },
+      UA: { basePriceUAH: 1999, salePriceUAH: 1499, clientBasePrice: 5600, clientSalePrice: 4500 },
     },
     discountPct: 25,
     saleEndDate: "2026-04-08T22:59:00.000Z",
@@ -2082,9 +2083,9 @@ export const dealsData: DealGame[] = [
     releaseDate: "2020-10-29",
     metacritic: 72,
     prices: {
-      TR: { basePriceTRY: 699, salePriceTRY: 140, clientBasePrice: 2350, clientSalePrice: 850 },
+      TR: { basePriceTRY: 470, salePriceTRY: 71, clientBasePrice: 1650, clientSalePrice: 500 },
     },
-    discountPct: 80,
+    discountPct: 85,
     saleEndDate: "2026-04-08T22:59:00.000Z",
   },
   {
@@ -2237,7 +2238,7 @@ export const dealsData: DealGame[] = [
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202308/1413/54a054b9e848ada2f929df12cf1802602743f081187a4bd4.jpg",
     releaseDate: "2023-05-22",
     prices: {
-      TR: { basePriceTRY: 2275, salePriceTRY: 910, clientBasePrice: 5700, clientSalePrice: 2850 },
+      TR: { basePriceTRY: 1749, salePriceTRY: 700, clientBasePrice: 4550, clientSalePrice: 2350 },
     },
     discountPct: 60,
     saleEndDate: "2026-04-08T22:59:00.000Z",
@@ -2250,9 +2251,9 @@ export const dealsData: DealGame[] = [
     releaseDate: "2019-09-13",
     metacritic: 83,
     prices: {
-      TR: { basePriceTRY: 2799, salePriceTRY: 560, clientBasePrice: 6950, clientSalePrice: 1950 },
+      TR: { basePriceTRY: 459, salePriceTRY: 46, clientBasePrice: 1650, clientSalePrice: 300 },
     },
-    discountPct: 80,
+    discountPct: 90,
     saleEndDate: "2026-04-08T22:59:00.000Z",
   },
   {
@@ -2275,7 +2276,7 @@ export const dealsData: DealGame[] = [
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202505/0808/5ca25b1294a95b0a88fb2357d7cc5d362e80bdf47da177b4.jpg",
     releaseDate: "2025-09-30",
     prices: {
-      TR: { basePriceTRY: 2999, salePriceTRY: 2099, clientBasePrice: 7400, clientSalePrice: 5300 },
+      TR: { basePriceTRY: 2579, salePriceTRY: 1805, clientBasePrice: 6400, clientSalePrice: 4650 },
     },
     discountPct: 30,
     saleEndDate: "2026-04-08T22:59:00.000Z",
@@ -2395,7 +2396,7 @@ export const dealsData: DealGame[] = [
     releaseDate: "2019-03-14",
     metacritic: 58,
     prices: {
-      TR: { basePriceTRY: 2579, salePriceTRY: 1547, clientBasePrice: 6400, clientSalePrice: 4200 },
+      TR: { basePriceTRY: 2349, salePriceTRY: 1409, clientBasePrice: 5850, clientSalePrice: 3950 },
     },
     discountPct: 40,
     saleEndDate: "2026-04-08T22:59:00.000Z",
@@ -2486,9 +2487,9 @@ export const dealsData: DealGame[] = [
     releaseDate: "2020-09-04",
     metacritic: 78,
     prices: {
-      TR: { basePriceTRY: 2499, salePriceTRY: 250, clientBasePrice: 6250, clientSalePrice: 1150 },
+      TR: { basePriceTRY: 749, salePriceTRY: 112, clientBasePrice: 2500, clientSalePrice: 750 },
     },
-    discountPct: 90,
+    discountPct: 85,
     saleEndDate: "2026-04-08T22:59:00.000Z",
   },
   {
@@ -2505,17 +2506,15 @@ export const dealsData: DealGame[] = [
     saleEndDate: "2026-04-08T22:59:00.000Z",
   },
   {
-    id: "styx-master-of-stealth-collection",
-    name: "Styx: Master of Stealth Collection",
-    platforms: ["PS5","PS4"],
+    id: "styx-blades-of-greed-quartz-edition",
+    name: "Styx: Blades of Greed - Quartz Edition",
+    platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202509/0808/ed252cada24d0c52d87c1f41f75b7b02fdde36460254387e.jpg",
-    releaseDate: "2014-10-06",
-    metacritic: 71,
+    releaseDate: "2026-02-19",
     prices: {
-      TR: { basePriceTRY: 2999, salePriceTRY: 2099, clientBasePrice: 7400, clientSalePrice: 5300 },
-      UA: { basePriceUAH: 1999, salePriceUAH: 1399, clientBasePrice: 5600, clientSalePrice: 4300 },
+      UA: { basePriceUAH: 1799, salePriceUAH: 1349, clientBasePrice: 5100, clientSalePrice: 4200 },
     },
-    discountPct: 30,
+    discountPct: 25,
     saleEndDate: "2026-04-08T22:59:00.000Z",
   },
   {
@@ -2887,8 +2886,8 @@ export const dealsData: DealGame[] = [
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202010/1913/oWeHixBpp3inIYrwK1MFJ8Ho.jpg",
     releaseDate: "2019-12-20",
     prices: {
-      TR: { basePriceTRY: 1049, salePriceTRY: 734, clientBasePrice: 3150, clientSalePrice: 2450 },
-      UA: { basePriceUAH: 999, salePriceUAH: 699, clientBasePrice: 3400, clientSalePrice: 2650 },
+      TR: { basePriceTRY: 419, salePriceTRY: 293, clientBasePrice: 1550, clientSalePrice: 1250 },
+      UA: { basePriceUAH: 399, salePriceUAH: 279, clientBasePrice: 1750, clientSalePrice: 1400 },
     },
     discountPct: 30,
     saleEndDate: "2026-04-08T22:59:00.000Z",
@@ -2993,10 +2992,10 @@ export const dealsData: DealGame[] = [
     releaseDate: "2019-10-04",
     metacritic: 59,
     prices: {
-      TR: { basePriceTRY: 810, salePriceTRY: 162, clientBasePrice: 2650, clientSalePrice: 950 },
-      UA: { basePriceUAH: 2496, salePriceUAH: 499, clientBasePrice: 6800, clientSalePrice: 2050 },
+      TR: { basePriceTRY: 549, salePriceTRY: 82, clientBasePrice: 1900, clientSalePrice: 550 },
+      UA: { basePriceUAH: 2228, salePriceUAH: 334, clientBasePrice: 6150, clientSalePrice: 1550 },
     },
-    discountPct: 80,
+    discountPct: 85,
     saleEndDate: "2026-04-08T22:59:00.000Z",
   },
   {
@@ -3149,7 +3148,7 @@ export const dealsData: DealGame[] = [
     releaseDate: "2023-02-17",
     metacritic: 57,
     prices: {
-      UA: { basePriceUAH: 1429, salePriceUAH: 429, clientBasePrice: 4350, clientSalePrice: 1850 },
+      UA: { basePriceUAH: 1139, salePriceUAH: 342, clientBasePrice: 3700, clientSalePrice: 1600 },
     },
     discountPct: 70,
     saleEndDate: "2026-04-08T22:59:00.000Z",
@@ -3275,9 +3274,9 @@ export const dealsData: DealGame[] = [
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202506/0223/f4f49185f8885de59ffa32687c067cf772091388d089915f.png",
     releaseDate: "2025-10-02",
     prices: {
-      UA: { basePriceUAH: 3899, salePriceUAH: 2924, clientBasePrice: 9850, clientSalePrice: 7750 },
+      UA: { basePriceUAH: 1999, salePriceUAH: 1399, clientBasePrice: 5600, clientSalePrice: 4300 },
     },
-    discountPct: 25,
+    discountPct: 30,
     saleEndDate: "2026-04-08T22:59:00.000Z",
   },
   {
@@ -3300,7 +3299,7 @@ export const dealsData: DealGame[] = [
     releaseDate: "2020-07-29",
     metacritic: 69,
     prices: {
-      UA: { basePriceUAH: 2299, salePriceUAH: 759, clientBasePrice: 6300, clientSalePrice: 2850 },
+      UA: { basePriceUAH: 1999, salePriceUAH: 660, clientBasePrice: 5600, clientSalePrice: 2550 },
     },
     discountPct: 67,
     saleEndDate: "2026-04-08T22:59:00.000Z",
@@ -3351,7 +3350,7 @@ export const dealsData: DealGame[] = [
     releaseDate: "2020-07-29",
     metacritic: 69,
     prices: {
-      UA: { basePriceUAH: 3199, salePriceUAH: 1919, clientBasePrice: 8350, clientSalePrice: 5400 },
+      UA: { basePriceUAH: 1999, salePriceUAH: 1199, clientBasePrice: 5600, clientSalePrice: 3850 },
     },
     discountPct: 40,
     saleEndDate: "2026-04-08T22:59:00.000Z",
