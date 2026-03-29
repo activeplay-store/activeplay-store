@@ -1,7 +1,7 @@
 // Автогенерация — НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ
 // Обновлено: 2026-03-28T21:44:03.482Z
 
-export type NewsCategory = 'news' | 'insider' | 'video' | 'guide' | 'interview' | 'podcast' | 'review' | 'announcement';
+export type NewsCategory = 'news' | 'hype' | 'insider' | 'rumor' | 'video' | 'guide' | 'interview' | 'podcast' | 'review' | 'announcement';
 
 export interface NewsItem {
   id: string;
@@ -25,7 +25,9 @@ export interface NewsItem {
 
 export const NEWS_CATEGORIES: Record<NewsCategory, { label: string; color: string; icon: string }> = {
   news:         { label: 'Новость',   color: '#00D4FF', icon: '📰' },
+  hype:         { label: 'Хайп',      color: '#FF4D6A', icon: '🔥' },
   insider:      { label: 'Инсайд',   color: '#FF9500', icon: '🔍' },
+  rumor:        { label: 'Слух',      color: '#F59E0B', icon: '🤫' },
   video:        { label: 'Видео',     color: '#FF4D6A', icon: '🎬' },
   guide:        { label: 'Гайд',      color: '#22C55E', icon: '📖' },
   interview:    { label: 'Интервью',  color: '#A855F7', icon: '🎙️' },
