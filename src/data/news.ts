@@ -1,9 +1,8 @@
 // Автогенерация — НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ
-// Обновлено: 2026-03-28T21:44:03.482Z
+// Обновлено: 2026-03-29T14:56:54.705Z
 
 export type NewsCategory = 'news' | 'hype' | 'insider' | 'rumor' | 'video' | 'guide' | 'interview' | 'podcast' | 'review' | 'announcement';
 
-export interface NewsCta {  gameId?: string;  productLink?: string;  title: string;  price?: string;  oldPrice?: string;  link: string;  subtitle?: string;}
 export interface NewsItem {
   id: string;
   slug: string;
@@ -22,88 +21,83 @@ export interface NewsItem {
   pinned?: boolean;
   metaTitle?: string;
   metaDescription?: string;
-cta?: NewsCta;  cta2?: NewsCta;
 }
 
 export const NEWS_CATEGORIES: Record<NewsCategory, { label: string; color: string; icon: string }> = {
   news:         { label: 'Новость',   color: '#00D4FF', icon: '📰' },
   hype:         { label: 'Хайп',      color: '#FF4D6A', icon: '🔥' },
-  insider:      { label: 'Инсайд',   color: '#FF9500', icon: '🔍' },
+  insider:      { label: 'Инсайд',    color: '#A855F7', icon: '🕵️' },
   rumor:        { label: 'Слух',      color: '#F59E0B', icon: '🤫' },
-  video:        { label: 'Видео',     color: '#FF4D6A', icon: '🎬' },
+  video:        { label: 'Видео',     color: '#EF4444', icon: '🎬' },
   guide:        { label: 'Гайд',      color: '#22C55E', icon: '📖' },
-  interview:    { label: 'Интервью',  color: '#A855F7', icon: '🎙️' },
-  podcast:      { label: 'Подкаст',   color: '#F59E0B', icon: '🎧' },
+  interview:    { label: 'Интервью',  color: '#818CF8', icon: '🎙️' },
+  podcast:      { label: 'Подкаст',   color: '#F97316', icon: '🎧' },
   review:       { label: 'Обзор',     color: '#FFD700', icon: '⭐' },
   announcement: { label: 'Анонс',     color: '#FF6B35', icon: '📢' },
 };
 
 export const newsData: NewsItem[] = [
   {
-    id: 'news-arc-raiders-flashpoint-2026',
-    slug: 'arc-raiders-flashpoint-update',
+    id: 'news-1774796143853-imy7',
+    slug: 'crimson-desert-vyshel-patch-1-01-00-s-novymi-mauntami-i-uluchsheniyami',
     category: 'news' as NewsCategory,
-    title: 'ARC Raiders выпускает крупное обновление Flashpoint',
-    excerpt: 'Кооперативный шутер ARC Raiders от Embark Studios готовится к крупному апдейту. Обновление Flashpoint выходит 31 марта и обещает серьёзно встряхнуть игру.',
-    content: `<p>Кооперативный шутер ARC Raiders от Embark Studios готовится к крупному апдейту. Обновление Flashpoint выходит 31 марта и обещает серьёзно встряхнуть игру: новые квесты, враги, проекты, улучшения геймплея и качество жизни. По слухам, появится новый ARC-противник Bishop и локация Toxic Swamp. Плюс свежая косметика в магазине и проекты с эксклюзивными наградами.</p>
-<p>ARC Raiders — это PvE-шутер на 21 игрока, где команды выживают на Земле против агрессивных роботов ARC. Игра вышла в раннем доступе и за короткое время собрала 55 тысяч оценок в <a href="/sale" class="text-[#00D4FF] hover:underline">PS Store</a> со средним баллом 4.22 — цифра для мультиплеерного шутера отличная. Визуал на уровне, PS5 Pro Enhanced, и Embark активно обновляют контент.</p>
-<p>Обновление Flashpoint бесплатное для всех владельцев игры. А сама ARC Raiders сейчас идёт со скидкой 20% в PS Store Турция и Украина — через ActivePlay это примерно 3 050\u20BD вместо обычных 3 750\u20BD. Акция до 9 апреля. Хороший момент зайти перед крупным апдейтом.</p>`,
-    coverUrl: '/images/covers/arc-raiders.jpg',
-    date: '2026-03-29',
-    source: 'ActivePlay',
+    title: 'Crimson Desert: вышел патч 1.01.00 с новыми маунтами и улучшениями',
+    excerpt: 'Для Crimson Desert вышло обновление 1.01.00 на PC. Главное: в игре появились пять новых легендарных маунтов. Их можно получить после выполнения определенных условий. Разработчики также добавили сундук',
+    content: `<p>Для Crimson Desert вышло обновление 1.01.00 на PC. Главное: в игре появились пять новых легендарных маунтов. Их можно получить после выполнения определенных условий. Разработчики также добавили сундуки с ресурсами в Pywel.</p>
+<p>Еще одно важное нововведение: жетоны улучшения. С ними можно поднять уровень экипировки сразу до 4 стадии. Никаких дополнительных ресурсов не потребуется. Жетоны дают за выполнение основных и фракционных квестов. Появилась и функция быстрого создания предметов. Больше не нужно выбирать ингредиенты вручную.</p>
+<p>Разработчики добавили функцию перемещения всех выбранных предметов в личное хранилище. Преступления больше не снижают уровень вклада фракции, если вас не поймали.</p>`,
+    coverUrl: '/images/news/news-1774796143853-imy7.jpg',
+    date: '2026-03-29T14:56:54.705Z',
+    source: 'Destructoid',
     author: 'ActivePlay',
-    tags: ["ARC Raiders","Flashpoint","обновление","кооператив","PS5","скидки PS Store"],
-    metaDescription: 'ARC Raiders получает крупное обновление Flashpoint 31 марта — новые квесты, враги и локации. Игра со скидкой 20% в PS Store.',
-    cta: {
-      gameId: 'arc-raiders',
-      title: 'Купить ARC Raiders',
-      link: '/sale',
-      subtitle: 'Скидка 20%. Турция и Украина. Активация за 5 минут.',
-    },
+    tags: ["Crimson Desert","патч","обновление"],
+    metaDescription: 'Патч 1.01.00 для Crimson Desert добавил новых маунтов, жетоны улучшения и исправил баланс.',
+  },
+  {
+    id: 'news-1774734130936-omfv',
+    slug: 'vo-chto-poigrat-6-novyh-igr-dlya-ps5-i-ps4-na-sleduyushchey-nedele',
+    category: 'news' as NewsCategory,
+    title: 'Во что поиграть: 6 новых игр для PS5 и PS4 на следующей неделе',
+    excerpt: 'На следующей неделе выходит несколько интересных игр для PlayStation. South of Midnight, ранее анонсированная для Xbox, появится на PS5. Konami готовит к релизу Darwin\'s Paradox. Также стоит обратить ',
+    content: `<p>На следующей неделе выходит несколько интересных игр для PlayStation. South of Midnight, ранее анонсированная для Xbox, появится на PS5. Konami готовит к релизу Darwin's Paradox.</p>
+<p>Также стоит обратить внимание на Legacy of Kain. Конец финансового года обычно не богат на релизы, но в этот раз есть, во что поиграть. Подробные обзоры ищите на сайте.</p>`,
+    coverUrl: '/images/news/news-1774734130936-omfv.jpg',
+    date: '2026-03-28',
+    source: 'Push Square',
+    author: 'ActivePlay',
+    tags: ["PS5","PS4","новые игры","South of Midnight","Darwin's Paradox"],
+    metaDescription: 'Обзор новых игр для PS5 и PS4, выходящих на следующей неделе. South of Midnight, Darwin\'s Paradox и другие ожидаемые релизы.',
   },
   {
     id: 'news-1774732310559-fk9u',
     slug: 'igroki-raznosyat-dlc-dlya-borderlands-4-iz-za-ceny-i-dlitelnosti',
-    category: 'hype' as NewsCategory,
-    title: 'Borderlands 4 DLC Mad Ellie: игроки уничтожили сразу после выхода',
+    category: 'news' as NewsCategory,
+    title: 'Игроки разносят DLC для Borderlands 4 из-за цены и длительности',
     excerpt: 'Новое DLC для Borderlands 4 под названием Mad Ellie and the Vault of the Damned столкнулось с разгромными отзывами в Steam. Геймеры недовольны ценой в 30$ и короткой продолжительностью. У дополнения "',
-    content: `<p>Первое сюжетное дополнение для Borderlands 4 не продержалось и суток. Mad Ellie and the Vault of the Damned вышло — и тут же утонуло в негативе. В Steam у дополнения статус «в основном отрицательные», соцсети кипят, а игроки не стесняются в выражениях. Главная претензия простая: за $30 они получили контента на два часа.</p>
-<p>Формально в DLC есть всё что обещали: новый охотник, новая карта, боссы и снаряжение. Проблема в том, что всё это пролетает за пару вечерних часов. Для сравнения — дополнение Blood and Wine для Ведьмака 3 стоило $20 и давало 40 часов отдельной истории с целым новым регионом. Здесь же $30 за контент, который заканчивается раньше, чем успеваешь распробовать. Сюжет тоже хвалят не все — многим он показался скучным и предсказуемым.</p>
-<p>При этом сама Borderlands 4 — отличный лутер-шутер и одна из самых ожидаемых игр года. Gearbox вернулись к корням серии: безумный юмор, тонны оружия, кооп на четверых. Mad Ellie — это первый из запланированных Story Pack, так что у студии ещё есть шанс исправиться со вторым дополнением Legend of the Stone Demon. А пока DLC можно спокойно подождать до скидки.</p>
-<p>Кстати, сама Borderlands 4 сейчас продаётся со скидкой 30% в <a href="/sale" class="text-[#00D4FF] hover:underline">PS Store</a> Турция и Украина — через ActivePlay это примерно 4 250\u20BD вместо обычных 5 950\u20BD. Акция до 9 апреля. DLC Mad Ellie обойдётся в ~2 800\u20BD. Если давно хотел попробовать — самое время взять базу по скидке, а дополнение прикупить позже, когда подешевеет.</p>`,
-    coverUrl: 'https://image.api.playstation.com/vulcan/ap/rnd/202603/1108/ea43bd79bb5cb00f3d728a02ea78e32956050f8998594a4c.png',
+    content: `<p>Новое DLC для Borderlands 4 под названием Mad Ellie and the Vault of the Damned столкнулось с разгромными отзывами в Steam. Геймеры недовольны ценой в 30\$ и короткой продолжительностью. У дополнения "в основном отрицательные" отзывы.</p>
+<p>Игроки считают, что контента слишком мало для такой стоимости.  В DLC есть новый охотник, новая карта, боссы и снаряжение. Однако всё это проходится всего за пару часов. Многие уверены: это мало для полноценного расширения за полную цену.</p>
+<p>Для сравнения, дополнение Blood and Wine для Witcher 3 стоило 20\$ на старте. При этом оно предлагало 40 часов геймплея и отдельную историю. Некоторые игроки отмечают скучный сюжет DLC.</p>`,
+    coverUrl: '/images/news/news-1774732310559-fk9u.jpg',
     date: '2026-03-28',
     source: 'Destructoid',
     author: 'ActivePlay',
-    tags: ["Borderlands 4", "DLC", "Mad Ellie", "Gearbox", "лутер-шутер", "PS5", "скидки PS Store"],
+    tags: ["Borderlands 4","DLC","Steam","Обзор"],
     metaDescription: 'Новое DLC для Borderlands 4 получило плохие отзывы в Steam из-за высокой цены и короткой продолжительности.',
-    cta: {
-      gameId: 'borderlands4',
-      title: 'Купить Borderlands 4',
-      link: '/sale',
-    },
   },
   {
     id: 'news-1774728153215-k8b5',
     slug: 'lords-of-the-fallen-vozglavit-ps-plus-essential-v-aprele-2026',
-    category: 'insider' as NewsCategory,
+    category: 'rumor' as NewsCategory,
     title: 'Lords of the Fallen возглавит PS Plus Essential в апреле 2026',
     excerpt: 'Утечка раскрыла одну из игр, которая появится в PS Plus Essential в апреле. По информации от Dealabs, главной игрой станет Lords of the Fallen. Важно: речь о перезапуске 2023 года, а не об оригинально',
-    content: `<p>Инсайдер billbill-kun опубликовал на Dealabs утечку: главной игрой <a href="/ps-plus-essential" class="text-[#00D4FF] hover:underline">PS Plus Essential</a> в апреле станет Lords of the Fallen. Речь о перезапуске 2023 года от студии Hexworks, а не об оригинале 2014-го. billbill-kun — один из самых надёжных источников по составу PS Plus, его сливы подтверждаются уже два года подряд.</p>
-<p>Для тех, кто пропустил: Lords of the Fallen — жёсткий action RPG с двумя параллельными мирами. Мир живых Axiom и мир мёртвых Umbral переплетаются прямо во время боя, и переключаться между ними можно в любой момент. На старте игра получила смешанные отзывы, но после серии крупных патчей преобразилась — стала плавнее, красивее и затягивает по-настоящему. Кооп на двоих, десятки боссов, около 30 часов на прохождение. Если нравится Dark Souls или Elden Ring — зайдёт однозначно.</p>
-<p>Напомним, PS Plus Essential — базовая подписка PlayStation, которая помимо онлайн-мультиплеера каждый месяц дарит подписчикам бесплатные игры для PS5 и PS4. Прямо сейчас, в марте, можно забрать Monster Hunter Rise, PGA Tour 2K25, Slime Rancher 2 и The Elder Scrolls Online. Каталог обновляется в первый вторник месяца, так что Lords of the Fallen стоит ждать 7 апреля. Если подписки ещё нет — самое время оформить, чтобы не пропустить.</p>`,
-    coverUrl: 'https://image.api.playstation.com/vulcan/ap/rnd/202308/2307/5b5caedff1afc1f8e36bafb49abe2a55baf873e0fd84fcd8.png',
-    date: '2026-03-28',
+    content: `<p>Утечка раскрыла одну из игр, которая появится в <a href="/ps-plus-essential" class="text-[#00D4FF] hover:underline">PS Plus Essential</a> в апреле. По информации от Dealabs, главной игрой станет Lords of the Fallen. Важно: речь о перезапуске 2023 года, а не об оригинальной игре 2014-го.</p>
+<p>Это souls-like экшен с мрачным фэнтези и хардкорными боссами. Разработчик: Hexworks. У игры 73 балла на Metacritic.</p>
+<p>Официальный анонс стоит ждать на следующей неделе.</p>`,
+    coverUrl: '',
+    date: '2026-03-29T14:56:54.705Z',
     source: 'Push Square',
     author: 'ActivePlay',
-    tags: ["PS Plus", "PS Plus Essential", "Lords of the Fallen", "апрель 2026", "бесплатные игры PlayStation"],
+    tags: ["PS Plus","Lords of the Fallen","игры","слухи","анонс"],
     metaDescription: 'Утечка: Lords of the Fallen станет одной из бесплатных игр PS Plus Essential в апреле. Подробности и детали.',
-    cta: {
-      productLink: '/ps-plus-essential',
-      title: 'Оформить PS Plus Essential',
-      price: '1 250 ₽/мес',
-      link: '/ps-plus-essential',
-      subtitle: 'Активация на турецком аккаунте за 5 минут.',
-    },
   }
 ];
