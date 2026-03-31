@@ -1,6 +1,6 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-03-30T01:19:05.702Z
-// Предзаказов: 23
+// Обновлено: 2026-03-31T01:14:27.164Z
+// Предзаказов: 24
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
 export interface PreorderEdition {
@@ -254,16 +254,33 @@ export const preorderData: PreorderGame[] = [
     id: "invincible-vs",
     name: "Invincible VS",
     platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202512/0223/15539affbc76982465016d8f9800a13dcee3adff9685c037.jpg",
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202512/0223/abae93143736137f8d17917de28aa0eedbf2f098ee3402e4.jpg",
     releaseDate: "2026-04-30",
     genre: "Файтинг",
     description: "2D-файтинг от Skybound. 3v3 бои Invincible",
     editions: {
       TR: [
-        { name: "Deluxe", clientPrice: 7150 },
+        { name: "Standard", clientPrice: 5250 },
       ],
       UA: [
         { name: "Standard", clientPrice: 4750 },
+      ],
+    },
+  },
+  {
+    id: "bus-bound",
+    name: "Bus Bound",
+    platforms: ["PS5"],
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202603/2421/f16ce1ece2c04164106f28f406fa390ec64d8a5921a80c03.png",
+    releaseDate: "2026-04-30",
+    genre: "Экшен",
+    description: "In Bound, the player takes on the role of a dancing lady in",
+    editions: {
+      TR: [
+        { name: "Deluxe", clientPrice: 4450 },
+      ],
+      UA: [
+        { name: "Deluxe", clientPrice: 3700 },
       ],
     },
   },
