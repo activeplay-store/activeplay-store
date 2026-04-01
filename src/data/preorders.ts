@@ -1,5 +1,5 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-03-31T01:14:27.164Z
+// Обновлено: 2026-04-01T01:16:56.944Z
 // Предзаказов: 24
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
@@ -96,19 +96,19 @@ export const preorderData: PreorderGame[] = [
     },
   },
   {
-    id: "cthulhu-the-cosmic-abyss-r-lyeh-edition",
-    name: "Cthulhu: The Cosmic Abyss - R'lyeh Edition",
+    id: "cthulhu-the-cosmic-abyss",
+    name: "Cthulhu: The Cosmic Abyss",
     platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202601/2013/e8cc34b3e9fc782c62214c44aa4ad60242defb0e24e31ce0.jpg",
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202503/0315/efbadeb619a95800bf218aad72b12e3460894763243ee3ba.jpg",
     releaseDate: "2026-04-16",
     genre: "Хоррор",
     description: "Хоррор от Big Bad Wolf. Лавкрафт, Р'льех",
     editions: {
       TR: [
-        { name: "Standard", clientPrice: 6200 },
+        { name: "Standard", clientPrice: 5250 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 4950 },
+        { name: "Standard", clientPrice: 4350 },
       ],
     },
   },
@@ -156,7 +156,7 @@ export const preorderData: PreorderGame[] = [
         { name: "Standard", clientPrice: 5250 },
       ],
       UA: [
-        { name: "Deluxe", clientPrice: 4950 },
+        { name: "Standard", clientPrice: 4350 },
       ],
     },
   },
@@ -176,7 +176,7 @@ export const preorderData: PreorderGame[] = [
       ],
       UA: [
         { name: "Standard", clientPrice: 4750 },
-        { name: "Deluxe", clientPrice: 6600 },
+        { name: "Deluxe", clientPrice: 6550 },
         { name: "Ultimate", clientPrice: 9350 },
       ],
     },
@@ -271,13 +271,13 @@ export const preorderData: PreorderGame[] = [
     id: "bus-bound",
     name: "Bus Bound",
     platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202603/2421/f16ce1ece2c04164106f28f406fa390ec64d8a5921a80c03.png",
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202512/1113/0466c34c4f4ceeeb44c46ba875dcc58753f1a5ae30d7257c.png",
     releaseDate: "2026-04-30",
     genre: "Экшен",
     description: "In Bound, the player takes on the role of a dancing lady in",
     editions: {
       TR: [
-        { name: "Deluxe", clientPrice: 4450 },
+        { name: "Standard", clientPrice: 3600 },
       ],
       UA: [
         { name: "Deluxe", clientPrice: 3700 },
@@ -347,7 +347,7 @@ export const preorderData: PreorderGame[] = [
         { name: "Deluxe", clientPrice: 4800 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 3450 },
+        { name: "Standard", clientPrice: 3400 },
         { name: "Deluxe", clientPrice: 4050 },
       ],
     },
