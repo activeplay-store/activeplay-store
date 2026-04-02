@@ -1,6 +1,6 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-04-01T01:16:56.944Z
-// Предзаказов: 24
+// Обновлено: 2026-04-02T01:15:41.957Z
+// Предзаказов: 25
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
 export interface PreorderEdition {
@@ -176,7 +176,7 @@ export const preorderData: PreorderGame[] = [
       ],
       UA: [
         { name: "Standard", clientPrice: 4750 },
-        { name: "Deluxe", clientPrice: 6550 },
+        { name: "Deluxe", clientPrice: 6600 },
         { name: "Ultimate", clientPrice: 9350 },
       ],
     },
@@ -320,6 +320,20 @@ export const preorderData: PreorderGame[] = [
     },
   },
   {
+    id: "bubsy-4d",
+    name: "Bubsy 4D",
+    platforms: ["PS5"],
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202508/1222/2ecf79cd82dd87ef94fea0b917f0e6c1b147533a1681bc7b.jpg",
+    releaseDate: "2026-05-22",
+    genre: "Платформер",
+    description: "Join Bubsy on an intergalactic, platforming adventure! The i",
+    editions: {
+      TR: [
+        { name: "Standard", clientPrice: 2650 },
+      ],
+    },
+  },
+  {
     id: "007-first-light",
     name: "007 First Light",
     platforms: ["PS5"],
@@ -347,7 +361,7 @@ export const preorderData: PreorderGame[] = [
         { name: "Deluxe", clientPrice: 4800 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 3400 },
+        { name: "Standard", clientPrice: 3450 },
         { name: "Deluxe", clientPrice: 4050 },
       ],
     },
