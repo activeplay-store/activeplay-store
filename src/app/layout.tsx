@@ -242,18 +242,6 @@ export default function RootLayout({
             <img src="https://mc.yandex.ru/watch/108381188" style={{ position: 'absolute', left: '-9999px' }} alt="" />
           </div>
         </noscript>
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-6K78910V6C"
-          strategy="afterInteractive"
-        />
-        <Script id="ga4-init" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-6K78910V6C');
-          `}
-        </Script>
         {/* TODO: VK Pixel — вставить код */}
         {/* TODO: цели на клик "Оформить за 5 мин", "Предзаказать", выбор мессенджера */}
       </head>
@@ -266,6 +254,18 @@ export default function RootLayout({
         </div>
         {children}
         <ChatWidget />
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-6K78910V6C"
+          strategy="afterInteractive"
+        />
+        <Script id="ga4-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-6K78910V6C');
+          `}
+        </Script>
       </body>
     </html>
   );
