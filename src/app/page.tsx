@@ -1,20 +1,22 @@
+import dynamic from 'next/dynamic';
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
 import SubscriptionSection from '@/components/SubscriptionSection';
 import HowItWorks from '@/components/HowItWorks';
-import GamesSection from '@/components/GamesSection';
-import PreordersSection from '@/components/PreordersSection';
-import HotReleases from '@/components/HotReleases';
-import TopSellersSection from '@/components/TopSellersSection';
-import TrustBlock from '@/components/TrustBlock';
-import FAQ from '@/components/FAQ';
-import SeoTextBlock from '@/components/SeoTextBlock';
-import CTABlock from '@/components/CTABlock';
-import AntiFraudBlock from '@/components/AntiFraudBlock';
-import Footer from '@/components/Footer';
-import StickyMobileCTA from '@/components/StickyMobileCTA';
-import PromoBadge from '@/components/PromoBadge';
 import ScrollReveal from '@/components/ScrollReveal';
+
+const PreordersSection = dynamic(() => import('@/components/PreordersSection'), { ssr: false });
+const HotReleases = dynamic(() => import('@/components/HotReleases'), { ssr: false });
+const TopSellersSection = dynamic(() => import('@/components/TopSellersSection'), { ssr: false });
+const GamesSection = dynamic(() => import('@/components/GamesSection'), { ssr: false });
+const TrustBlock = dynamic(() => import('@/components/TrustBlock'), { ssr: false });
+const FAQ = dynamic(() => import('@/components/FAQ'), { ssr: false });
+const SeoTextBlock = dynamic(() => import('@/components/SeoTextBlock'), { ssr: false });
+const AntiFraudBlock = dynamic(() => import('@/components/AntiFraudBlock'), { ssr: false });
+const CTABlock = dynamic(() => import('@/components/CTABlock'), { ssr: false });
+const Footer = dynamic(() => import('@/components/Footer'), { ssr: false });
+const StickyMobileCTA = dynamic(() => import('@/components/StickyMobileCTA'), { ssr: false });
+const PromoBadge = dynamic(() => import('@/components/PromoBadge'), { ssr: false });
 
 function SectionDivider() {
   return <div className="section-divider" />;
