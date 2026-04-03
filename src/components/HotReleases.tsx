@@ -83,7 +83,7 @@ function StatusBadge() {
 
 /* ── Hero card ── */
 
-function HeroCard({ game, region }: { game: HotRelease; region: 'tr' | 'ua' }) {
+function HeroCard({ game, region, onBuy }: { game: HotRelease; region: 'tr' | 'ua'; onBuy: (name: string, price: number) => void }) {
   const editions = game.editions[region];
   const [sel, setSel] = useState(0);
 
@@ -145,7 +145,7 @@ function HeroCard({ game, region }: { game: HotRelease; region: 'tr' | 'ua' }) {
           </div>
 
           {/* CTA */}
-          <button className="btn-primary w-full py-3.5 rounded-xl whitespace-nowrap">
+          <button onClick={() => onBuy(game.title, editions[sel].priceRUB)} className="btn-primary w-full py-3.5 rounded-xl whitespace-nowrap cursor-pointer">
             Купить за {editions[sel].priceRUB.toLocaleString('ru-RU')}&thinsp;₽
           </button>
         </div>
@@ -243,7 +243,7 @@ export default function HotReleases() {
         {/* Grid: 3 колонки, hero col-span-2 row-span-3, 3 карточки справа */}
         <div className="ap-cards grid grid-cols-1 lg:grid-cols-3 gap-4">
           <div className="lg:col-span-2 lg:row-span-3">
-            <HeroCard game={hero} region={region} />
+            <HeroCard game={hero} region={region} onBuy={(name, price) => setPopup({ name, price })} />
           </div>
           {rest.map((game) => (
             <CompactCard key={game.id} game={game} region={region} onClick={() => setPopup({ name: game.title, price: game.editions[region][0].priceRUB })} />

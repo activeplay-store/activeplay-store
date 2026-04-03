@@ -46,6 +46,7 @@ const messengerLinks = [
   {
     name: 'Чат на сайте',
     href: '#',
+    isChat: true,
     className: 'bg-[#00E676] text-black hover:brightness-110',
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
@@ -55,7 +56,7 @@ const messengerLinks = [
   },
   {
     name: 'Telegram',
-    href: 'https://t.me/activeplay1',
+    href: 'https://t.me/activeplay2',
     className: 'btn-telegram',
     icon: (
       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -65,7 +66,7 @@ const messengerLinks = [
   },
   {
     name: 'VK',
-    href: 'https://vk.com/activeplay',
+    href: 'https://vk.com/im?sel=-214354347',
     className: 'btn-vk',
     icon: (
       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -168,19 +169,30 @@ export default function Header() {
                 />
                 <div className="absolute top-full right-0 mt-2 w-56 rounded-xl glass-card p-3 shadow-2xl z-50">
                   <div className="space-y-2">
-                    {messengerLinks.map((m) => (
-                      <a
-                        key={m.name}
-                        href={m.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={`flex items-center justify-center gap-3 w-full px-4 py-2.5 rounded-lg font-semibold text-sm text-white transition-all ${m.className}`}
-                        onClick={() => setContactOpen(false)}
-                      >
-                        {m.icon}
-                        {m.name}
-                      </a>
-                    ))}
+                    {messengerLinks.map((m) =>
+                      m.isChat ? (
+                        <button
+                          key={m.name}
+                          onClick={() => { setContactOpen(false); window.loadChatwoot?.(); setTimeout(() => window.$chatwoot?.toggle('open'), 100); }}
+                          className={`flex items-center justify-center gap-3 w-full px-4 py-2.5 rounded-lg font-semibold text-sm transition-all cursor-pointer ${m.className}`}
+                        >
+                          {m.icon}
+                          {m.name}
+                        </button>
+                      ) : (
+                        <a
+                          key={m.name}
+                          href={m.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={`flex items-center justify-center gap-3 w-full px-4 py-2.5 rounded-lg font-semibold text-sm text-white transition-all ${m.className}`}
+                          onClick={() => setContactOpen(false)}
+                        >
+                          {m.icon}
+                          {m.name}
+                        </a>
+                      )
+                    )}
                   </div>
                 </div>
               </>
@@ -214,19 +226,30 @@ export default function Header() {
           <div className="fixed inset-0 z-40 bg-black/50" onClick={() => setContactOpen(false)} />
           <div className="fixed top-20 left-4 right-4 z-50 glass-card rounded-2xl p-5 shadow-2xl animate-fade-in-up">
             <div className="space-y-2.5">
-              {messengerLinks.map((m) => (
-                <a
-                  key={m.name}
-                  href={m.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`flex items-center justify-center gap-3 w-full px-6 py-3.5 rounded-xl font-bold text-sm text-white transition-all ${m.className}`}
-                  onClick={() => setContactOpen(false)}
-                >
-                  {m.icon}
-                  {m.name}
-                </a>
-              ))}
+              {messengerLinks.map((m) =>
+                m.isChat ? (
+                  <button
+                    key={m.name}
+                    onClick={() => { setContactOpen(false); window.loadChatwoot?.(); setTimeout(() => window.$chatwoot?.toggle('open'), 100); }}
+                    className={`flex items-center justify-center gap-3 w-full px-6 py-3.5 rounded-xl font-bold text-sm transition-all cursor-pointer ${m.className}`}
+                  >
+                    {m.icon}
+                    {m.name}
+                  </button>
+                ) : (
+                  <a
+                    key={m.name}
+                    href={m.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`flex items-center justify-center gap-3 w-full px-6 py-3.5 rounded-xl font-bold text-sm text-white transition-all ${m.className}`}
+                    onClick={() => setContactOpen(false)}
+                  >
+                    {m.icon}
+                    {m.name}
+                  </a>
+                )
+              )}
             </div>
           </div>
         </div>

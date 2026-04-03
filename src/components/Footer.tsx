@@ -19,7 +19,7 @@ const iconChat = <svg className="shrink-0" width="18" height="18" fill="none" st
 
 const socialItems = [
   { label: 'Telegram @PS_PLUS_RUS', href: 'https://t.me/PS_PLUS_RUS', icon: iconTelegram },
-  { label: 'VK vk.com/activeplay', href: 'https://vk.com/activeplay', icon: iconVK },
+  { label: 'VK ActivePlay', href: 'https://vk.com/im?sel=-214354347', icon: iconVK },
   { label: 'YouTube @activeplay2023', href: 'https://youtube.com/@activeplay2023', icon: iconYoutube },
 ];
 

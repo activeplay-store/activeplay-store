@@ -18,7 +18,7 @@ const messengers = [
   },
   {
     name: 'Telegram',
-    href: 'https://t.me/activeplay1',
+    href: 'https://t.me/activeplay2',
     isChat: false,
     className: 'btn-telegram',
     style: {},
@@ -31,7 +31,7 @@ const messengers = [
   },
   {
     name: 'VK',
-    href: 'https://vk.com/activeplay',
+    href: 'https://vk.com/im?sel=-214354347',
     isChat: false,
     className: 'btn-vk',
     style: {},

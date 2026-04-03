@@ -30,7 +30,7 @@ export default function StickyMobileCTA() {
         }}
       >
         <a
-          href="https://t.me/activeplay1"
+          href="https://t.me/activeplay2"
           target="_blank"
           rel="noopener noreferrer"
           className="btn-primary flex items-center justify-center gap-2 w-full"

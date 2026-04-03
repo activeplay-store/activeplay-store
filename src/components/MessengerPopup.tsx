@@ -98,7 +98,7 @@ function QuickOrderForm({ product }: { product: string }) {
       });
       setSubmitted(true);
     } catch {
-      window.open('https://t.me/activeplay1', '_blank');
+      window.open('https://t.me/activeplay2', '_blank');
     }
   };
 
@@ -142,7 +142,7 @@ export default function MessengerPopup({ isOpen, onClose, planName, price }: Mes
   const humanReadable = `${planName} — ${price.toLocaleString('ru-RU')} \u20BD`;
 
   const telegramHref = `https://t.me/ActivePlayStoreBot?start=${productCode}`;
-  const vkHref = `https://vk.me/activeplay?ref=${productCode}`;
+  const vkHref = `https://vk.com/im?sel=-214354347`;
 
   const openChat = () => {
     onClose();
