@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { hotReleases } from '@/data/hotReleases';
 import type { HotRelease } from '@/data/hotReleases';
 import MessengerPopup from './MessengerPopup';
@@ -26,20 +26,7 @@ function daysSinceRelease(dateStr: string): number {
 const MAX_DAYS = 31;
 const MIN_CARDS = 4;
 
-// Primary: games within 31 days. Fallback: if fewer than 4, fill from older games sorted by totalScore
-const withinWindow = hotReleases.filter(g => daysSinceRelease(g.releaseDate) <= MAX_DAYS);
-const filteredReleases = withinWindow.length >= MIN_CARDS
-  ? withinWindow
-  : [
-      ...withinWindow,
-      ...hotReleases
-        .filter(g => daysSinceRelease(g.releaseDate) > MAX_DAYS)
-        .sort((a, b) => b.totalScore - a.totalScore)
-        .slice(0, MIN_CARDS - withinWindow.length),
-    ];
-
 const monthNamesRu = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'];
-const currentMonthYear = monthNamesRu[new Date().getMonth()] + ' ' + new Date().getFullYear();
 
 const btnLabels: Record<string, string> = {
   'monster-hunter-stories-3': 'Купить MH Stories 3',
@@ -209,6 +196,24 @@ function CompactCard({ game, region, onClick }: { game: HotRelease; region: 'tr'
 export default function HotReleases() {
   const [region, setRegion] = useState<'tr' | 'ua'>('tr');
   const [popup, setPopup] = useState<{ name: string; price: number } | null>(null);
+
+  const filteredReleases = useMemo(() => {
+    const withinWindow = hotReleases.filter(g => daysSinceRelease(g.releaseDate) <= MAX_DAYS);
+    return withinWindow.length >= MIN_CARDS
+      ? withinWindow
+      : [
+          ...withinWindow,
+          ...hotReleases
+            .filter(g => daysSinceRelease(g.releaseDate) > MAX_DAYS)
+            .sort((a, b) => b.totalScore - a.totalScore)
+            .slice(0, MIN_CARDS - withinWindow.length),
+        ];
+  }, []);
+
+  const currentMonthYear = useMemo(() =>
+    monthNamesRu[new Date().getMonth()] + ' ' + new Date().getFullYear()
+  , []);
+
   const hero = filteredReleases[0];
   const rest = filteredReleases.slice(1);
 
@@ -223,8 +228,8 @@ export default function HotReleases() {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/icons/fire.webp" alt="" width={72} height={72} className="object-contain" style={{width: '72px', height: '72px'}} />
             <div>
-              <h2 className="text-[26px] sm:text-[32px] md:text-[36px] font-bold gradient-text">Новинки игр для PS5, PS4 и Xbox — {currentMonthYear}</h2>
-              <p className="text-[var(--text-secondary)] text-[15px]">Купить хиты {new Date().getFullYear()} для PS5, Xbox и PC — активация на турецком, украинском аккаунте</p>
+              <h2 suppressHydrationWarning className="text-[26px] sm:text-[32px] md:text-[36px] font-bold gradient-text">Новинки игр для PS5, PS4 и Xbox — {currentMonthYear}</h2>
+              <p suppressHydrationWarning className="text-[var(--text-secondary)] text-[15px]">Купить хиты {currentMonthYear.split(' ').pop()} для PS5, Xbox и PC — активация на турецком, украинском аккаунте</p>
             </div>
           </div>
 

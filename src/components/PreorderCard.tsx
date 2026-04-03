@@ -75,7 +75,7 @@ export default function PreorderCard({ preorder, region, onOrder }: PreorderCard
       {/* Info */}
       <div className="p-4 flex flex-col flex-1">
         {/* Countdown */}
-        <p className="text-xs font-semibold mb-1" style={{ color: countdown.color }}>
+        <p suppressHydrationWarning className="text-xs font-semibold mb-1" style={{ color: countdown.color }}>
           {countdown.text}
         </p>
 
