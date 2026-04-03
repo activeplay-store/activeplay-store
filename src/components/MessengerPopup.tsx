@@ -14,17 +14,22 @@ interface MessengerPopupProps {
 
 /**
  * Generate a product code from the human-readable plan name + price.
+ * All codes are ASCII-only (no cyrillic) for Telegram deep link compatibility.
+ *
  * Examples:
  *   "PS Plus Extra (1 мес, Турция)" + 1490 → "psplus_extra_1m_turkey_1490"
  *   "Xbox Game Pass Ultimate (3 мес)" + 3990 → "xbox_gamepass_ultimate_3m_global_3990"
  *   "EA Play (1 год)" + 1990 → "eaplay_basic_12m_global_1990"
- *   "Карта PS Store 1000 TL" + 2900 → "psstore_1000tl_turkey_2900"
+ *   "Карта PS Store 3000 TL" + 7800 → "psstore_3000tl_turkey_7800"
+ *   "FC Points 5900 (Турция, с EA Play)" + 4500 → "fcpoints_5900_turkey_eaplay_4500"
+ *   "Pragmata" + 6300 (preorder) → "preorder_pragmata_6300"
+ *   "Grand Theft Auto V" + 1750 → "game_grand_theft_auto_v_1750"
  */
 function generateProductCode(planName: string, price: number): string {
   const name = planName.toLowerCase();
 
-  // PS Store gift cards: "карта ps store 1000 tl"
-  if (name.startsWith('карта ps store')) {
+  // PS Store gift cards: "карта ps store 3000 tl"
+  if (name.startsWith('карта ps store') || name.startsWith('psn ')) {
     const nominalMatch = planName.match(/(\d+)\s*(TL|INR|UAH)/i);
     if (nominalMatch) {
       const nominal = nominalMatch[1] + nominalMatch[2].toLowerCase();
@@ -35,9 +40,24 @@ function generateProductCode(planName: string, price: number): string {
     return `psstore_card_global_${price}`;
   }
 
-  // EA Play: "ea play (1 год)"
+  // FC Points: "FC Points 5900 (Турция, с EA Play)"
+  if (name.includes('fc points')) {
+    const nomMatch = planName.match(/(\d+)/);
+    const nom = nomMatch ? nomMatch[1] : '0';
+    const region = name.includes('украин') ? 'ukraine' : 'turkey';
+    const ea = name.includes('с ea play') || name.includes('с ea') ? 'eaplay' : 'noeaplay';
+    return `fcpoints_${nom}_${region}_${ea}_${price}`;
+  }
+
+  // EA Play: "ea play (1 год)" / "EA Play Pro (12 мес, ПК)"
   if (name.startsWith('ea play')) {
-    return `eaplay_basic_12m_global_${price}`;
+    const isPro = name.includes('pro');
+    const periodMatch = name.match(/(\d+)\s*(мес|год)/);
+    let period = '12m';
+    if (periodMatch) {
+      period = periodMatch[2] === 'год' ? `${parseInt(periodMatch[1]) * 12}m` : `${periodMatch[1]}m`;
+    }
+    return `eaplay_${isPro ? 'pro' : 'basic'}_${period}_global_${price}`;
   }
 
   // PS Plus: "ps plus extra (1 мес, турция)"
@@ -46,7 +66,7 @@ function generateProductCode(planName: string, price: number): string {
     const tier = tierMatch ? tierMatch[1] : 'essential';
     const periodMatch = name.match(/(\d+)\s*мес/);
     const period = periodMatch ? `${periodMatch[1]}m` : '1m';
-    const region = name.includes('украина') ? 'ukraine' : 'turkey';
+    const region = name.includes('украин') ? 'ukraine' : 'turkey';
     return `psplus_${tier}_${period}_${region}_${price}`;
   }
 
@@ -59,8 +79,23 @@ function generateProductCode(planName: string, price: number): string {
     return `xbox_gamepass_${tier}_${period}_global_${price}`;
   }
 
-  // Preorders / games: fallback
-  return `game_${name.replace(/[^a-zа-я0-9]/g, '_').replace(/_+/g, '_').replace(/^_|_$/g, '')}_${price}`;
+  // Создание аккаунта PlayStation
+  if (name.includes('создание аккаунта')) {
+    return `service_psn_account_${price}`;
+  }
+
+  // Games: strip cyrillic prefixes, keep only ASCII
+  const cleaned = name
+    .replace(/^хочу предзаказ\s*/i, '')
+    .replace(/^хочу купить\s*/i, '')
+    .replace(/[^a-z0-9\s]/g, '')
+    .trim()
+    .replace(/\s+/g, '_');
+
+  const isPreorder = name.startsWith('хочу предзаказ') || planName.includes('предзаказ');
+  const prefix = isPreorder ? 'preorder' : 'game';
+
+  return `${prefix}_${cleaned || 'unknown'}_${price}`;
 }
 
 const telegramIcon = (
