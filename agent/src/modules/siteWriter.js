@@ -804,31 +804,38 @@ function loadPreordersJson() {
   }
 }
 
-function savePreordersJson(games) {
+function savePreordersJson(games, recentlyReleased = []) {
+  const preorders = games.map(g => ({
+    name: cleanGameName(cleanName(g.name)),
+    id: g.id,
+    conceptId: g.conceptId,
+    slug: slugify(g.name),
+    platforms: parsePlatforms(g.platform),
+    releaseDate: g.releaseDate || null,
+    portraitUrl: g.portraitUrl || g.coverUrl || '',
+    coverUrl: g.coverUrl || '',
+    prices: {
+      TR: g.prices.TR ? {
+        editions: (g.prices.TR.editions || [])
+          .filter(e => e.basePrice)
+          .map(e => ({ name: e.name, priceTRY: e.basePrice, clientPrice: e.clientPrice || null }))
+      } : undefined,
+      UA: g.prices.UA ? {
+        editions: (g.prices.UA.editions || [])
+          .filter(e => e.basePrice)
+          .map(e => ({ name: e.name, priceUAH: e.basePrice, clientPrice: e.clientPrice || null }))
+      } : undefined,
+    }
+  }));
+
+  // Добавить недавно вышедшие (уже в правильном формате из старого файла)
+  for (const rr of recentlyReleased) {
+    preorders.push(rr);
+  }
+
   const data = {
     updatedAt: new Date().toISOString(),
-    preorders: games.map(g => ({
-      name: cleanGameName(cleanName(g.name)),
-      id: g.id,
-      conceptId: g.conceptId,
-      slug: slugify(g.name),
-      platforms: parsePlatforms(g.platform),
-      releaseDate: g.releaseDate || null,
-      portraitUrl: g.portraitUrl || g.coverUrl || '',
-      coverUrl: g.coverUrl || '',
-      prices: {
-        TR: g.prices.TR ? {
-          editions: (g.prices.TR.editions || [])
-            .filter(e => e.basePrice)
-            .map(e => ({ name: e.name, priceTRY: e.basePrice, clientPrice: e.clientPrice || null }))
-        } : undefined,
-        UA: g.prices.UA ? {
-          editions: (g.prices.UA.editions || [])
-            .filter(e => e.basePrice)
-            .map(e => ({ name: e.name, priceUAH: e.basePrice, clientPrice: e.clientPrice || null }))
-        } : undefined,
-      }
-    }))
+    preorders,
   };
 
   const dir = path.dirname(PREORDERS_JSON_FILE);
@@ -1050,7 +1057,29 @@ async function generatePreorders() {
     console.log(PREFIX + ' Новых: ' + newOnes.length);
   }
 
-  savePreordersJson(filtered);
+  // Сохранить недавно вышедшие игры из старого файла — они нужны для hotReleases
+  // (когда игра выходит, Sony убирает её из предзаказов, но она ещё не в games.json)
+  const recentlyReleased = (oldData.preorders || []).filter(p => {
+    if (!p.releaseDate) return false;
+    const released = new Date(p.releaseDate);
+    if (isNaN(released.getTime())) return false;
+    const diffDays = (new Date() - released) / (1000 * 60 * 60 * 24);
+    return diffDays >= 0 && diffDays <= NEW_RELEASE_DAYS;
+  });
+
+  // Добавить к filtered только тех, кого нет в новом списке
+  const recentToKeep = recentlyReleased.filter(rr => {
+    return !filtered.some(f =>
+      (f.conceptId && f.conceptId === rr.conceptId) ||
+      slugify(cleanGameName(cleanName(f.name))) === rr.slug
+    );
+  });
+
+  if (recentToKeep.length > 0) {
+    console.log(PREFIX + ' Сохраняем недавно вышедших: ' + recentToKeep.map(g => g.name).join(', '));
+  }
+
+  savePreordersJson(filtered, recentToKeep);
 
   const { content, count } = generatePreordersTs(filtered);
 
@@ -1509,6 +1538,40 @@ async function generateHotReleases() {
     );
   }
 
+  // 6b. Загрузить текущие цены из hotReleases.ts для fallback
+  //     (Sony API нестабилен — если игра уже была с ценами, не терять их)
+  const existingPrices = {};
+  try {
+    const hrPath = path.join(REPO_ROOT, HOT_RELEASES_FILE);
+    const hrContent = fs.readFileSync(hrPath, 'utf8');
+    const idRegex = /id:\s*"([^"]+)"/g;
+    const trPriceRegex = /tr:\s*\[([\s\S]*?)\]/g;
+    const uaPriceRegex = /ua:\s*\[([\s\S]*?)\]/g;
+    // Простой парсинг: извлечь id и editions для каждой записи
+    const blocks = hrContent.split(/\n  \{/).slice(1);
+    for (const block of blocks) {
+      const idMatch = block.match(/id:\s*"([^"]+)"/);
+      if (!idMatch) continue;
+      const id = idMatch[1];
+      const trMatch = block.match(/tr:\s*\[([\s\S]*?)\]/);
+      const uaMatch = block.match(/ua:\s*\[([\s\S]*?)\]/);
+      const parseEditions = (str) => {
+        if (!str) return [];
+        const eds = [];
+        const edRx = /name:\s*"([^"]+)",\s*priceRUB:\s*(\d+)/g;
+        let m;
+        while ((m = edRx.exec(str)) !== null) {
+          eds.push({ name: m[1], priceRUB: parseInt(m[2]) });
+        }
+        return eds;
+      };
+      existingPrices[id] = {
+        tr: parseEditions(trMatch?.[1]),
+        ua: parseEditions(uaMatch?.[1]),
+      };
+    }
+  } catch {}
+
   // 7. Подготовить данные для TS
   const releases = topGames.map(g => {
     const name = g.cleanName;
@@ -1525,9 +1588,12 @@ async function generateHotReleases() {
     if (g.prices?.TR?.editions) {
       for (const ed of g.prices.TR.editions) {
         let price = ed.baseClientPrice || ed.clientPrice || ed.clientSalePrice;
-        // If no client price calculated, calculate from base price
-        if (!price && ed.basePrice) {
-          try { price = pricing.calculatePrice(ed.basePrice, 'TR').clientPrice; } catch {}
+        // Fallback: calculate from raw price (basePrice or priceTRY from preorders)
+        if (!price) {
+          const rawPrice = ed.basePrice || ed.priceTRY;
+          if (rawPrice) {
+            try { price = pricing.calculatePrice(rawPrice, 'TR').clientPrice; } catch {}
+          }
         }
         if (price) {
           editionsTr.push({ name: ed.name || 'Standard', priceRUB: price });
@@ -1537,9 +1603,12 @@ async function generateHotReleases() {
     if (g.prices?.UA?.editions) {
       for (const ed of g.prices.UA.editions) {
         let price = ed.baseClientPrice || ed.clientPrice || ed.clientSalePrice;
-        // If no client price calculated, calculate from base price
-        if (!price && ed.basePrice) {
-          try { price = pricing.calculatePrice(ed.basePrice, 'UA').clientPrice; } catch {}
+        // Fallback: calculate from raw price (basePrice or priceUAH from preorders)
+        if (!price) {
+          const rawPrice = ed.basePrice || ed.priceUAH;
+          if (rawPrice) {
+            try { price = pricing.calculatePrice(rawPrice, 'UA').clientPrice; } catch {}
+          }
         }
         if (price) {
           editionsUa.push({ name: ed.name || 'Standard', priceRUB: price });
@@ -1564,6 +1633,15 @@ async function generateHotReleases() {
     // Фоллбэк: если один регион пуст — копируем из другого
     if (trFinal.length === 0 && uaFinal.length > 0) trFinal = uaFinal;
     if (uaFinal.length === 0 && trFinal.length > 0) uaFinal = trFinal;
+
+    // Фоллбэк: если нет цен — использовать из текущего hotReleases.ts
+    if (trFinal.length === 0 && uaFinal.length === 0 && existingPrices[slug]) {
+      trFinal = existingPrices[slug].tr || [];
+      uaFinal = existingPrices[slug].ua || [];
+      if (trFinal.length > 0 || uaFinal.length > 0) {
+        console.log(PREFIX + ' Цены из кеша для ' + name);
+      }
+    }
 
     // Нет цен вообще — пропускаем
     if (trFinal.length === 0 && uaFinal.length === 0) return null;
