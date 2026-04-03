@@ -241,6 +241,17 @@ export default function RootLayout({
             <img src="https://mc.yandex.ru/watch/108381188" style={{ position: 'absolute', left: '-9999px' }} alt="" />
           </div>
         </noscript>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-6K78910V6C" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-6K78910V6C');
+            `,
+          }}
+        />
         {/* TODO: VK Pixel — вставить код */}
         {/* TODO: цели на клик "Оформить за 5 мин", "Предзаказать", выбор мессенджера */}
       </head>
