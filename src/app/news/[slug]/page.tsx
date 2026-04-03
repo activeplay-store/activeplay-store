@@ -8,6 +8,7 @@ import { dealsData } from '@/data/deals';
 const newsData = newsJson as unknown as NewsItem[];
 import { notFound } from 'next/navigation';
 import NewsArticleContent from './NewsArticleContent';
+import NewsBuyBlock from './NewsBuyBlock';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -128,20 +129,7 @@ export default async function NewsArticlePage({ params }: Props) {
             )}
 
             {/* Product CTA blocks */}
-            {article.cta && (
-              <div className="bg-[#0d1f3c] border border-cyan-500/30 rounded-xl p-6 mt-8">
-                <h3 className="text-white text-lg font-bold">{article.cta.title}</h3>
-                {article.cta.description && <p className="text-gray-400 text-sm mt-1">{article.cta.description}</p>}
-                <div className="flex items-center gap-3 mt-3">
-                  {article.cta.price && <span className="text-cyan-400 text-2xl font-bold">{typeof article.cta.price === 'number' ? `${article.cta.price.toLocaleString('ru-RU')} ₽` : article.cta.price}</span>}
-                  {article.cta.oldPrice && <span className="text-gray-500 line-through text-lg">{typeof article.cta.oldPrice === 'number' ? `${article.cta.oldPrice.toLocaleString('ru-RU')} ₽` : article.cta.oldPrice}</span>}
-                  {article.cta.discount && article.cta.discount > 0 && <span className="bg-red-500/20 text-red-400 px-2 py-1 rounded text-sm font-bold">-{article.cta.discount}%</span>}
-                </div>
-                <a href={article.cta.url} className="inline-block bg-cyan-500 hover:bg-cyan-400 text-black font-bold rounded-lg px-6 py-3 mt-4 transition-colors">
-                  {article.cta.buttonText || `${article.cta.title} →`}
-                </a>
-              </div>
-            )}
+            {article.cta && <NewsBuyBlock cta={article.cta} />}
 
             {article.cta2 && (
               <div className="bg-[#1a1a2e] border border-orange-500/30 rounded-xl p-6 mt-4">
