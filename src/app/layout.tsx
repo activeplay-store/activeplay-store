@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
 import { Rajdhani, Inter } from 'next/font/google';
+import dynamic from 'next/dynamic';
 import './globals.css';
-import ChatWidget from '@/components/ChatWidget';
+
+const ChatWidget = dynamic(() => import('@/components/ChatWidget'), { ssr: false });
 
 const rajdhani = Rajdhani({
   subsets: ['latin', 'latin-ext'],
