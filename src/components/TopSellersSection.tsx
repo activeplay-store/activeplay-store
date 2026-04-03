@@ -103,7 +103,7 @@ export default function TopSellersSection() {
         {/* Header */}
         <div className="flex items-start gap-3 mb-4">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/icons/top.webp" alt="" width={64} height={64} className="w-16 h-16 object-contain flex-shrink-0 mt-1" />
+          <img src="/icons/top.webp" alt="" width={64} height={64} className="w-16 h-16 object-contain flex-shrink-0 mt-1" loading="lazy" decoding="async" />
           <div>
             <h2
               className="text-[26px] sm:text-[32px] md:text-[36px] font-bold"

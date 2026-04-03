@@ -62,6 +62,10 @@ export default function Footer() {
               src="/images/logo/AP_WHITE-sm.webp"
               alt="ActivePlay"
               style={{ height: '80px', width: 'auto' }}
+              loading="lazy"
+              decoding="async"
+              width={200}
+              height={80}
             />
             <p className="text-sm text-[var(--text-secondary)] mt-2 leading-relaxed">
               Игровой магазин подписок и цифровых товаров с 2022 года

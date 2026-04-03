@@ -170,6 +170,8 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://chat.activeplay.games" />
         <link rel="preconnect" href="https://image.api.playstation.com" />
         <link rel="dns-prefetch" href="https://image.api.playstation.com" />
+        <link rel="preconnect" href="https://media.rawg.io" />
+        <link rel="dns-prefetch" href="https://media.rawg.io" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(storeSchema) }}
@@ -185,19 +187,21 @@ export default function RootLayout({
         <script
           dangerouslySetInnerHTML={{
             __html: `
-      (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-      m[i].l=1*new Date();
-      for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-      k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-      (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+      setTimeout(function() {
+        (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+        (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
 
-      ym(108381188, "init", {
-        clickmap:true,
-        trackLinks:true,
-        accurateTrackBounce:true,
-        webvisor:true,
-        ecommerce:"dataLayer"
-      });
+        ym(108381188, "init", {
+          clickmap:true,
+          trackLinks:true,
+          accurateTrackBounce:true,
+          webvisor:true,
+          ecommerce:"dataLayer"
+        });
+      }, 3000);
     `,
           }}
         />
@@ -216,10 +220,12 @@ export default function RootLayout({
               gtag('js', new Date());
               gtag('config', 'G-63XZG2S0Y2');
 
-              var s = document.createElement('script');
-              s.async = true;
-              s.src = 'https://www.googletagmanager.com/gtag/js?id=G-63XZG2S0Y2';
-              document.head.appendChild(s);
+              setTimeout(function() {
+                var s = document.createElement('script');
+                s.async = true;
+                s.src = 'https://www.googletagmanager.com/gtag/js?id=G-63XZG2S0Y2';
+                document.head.appendChild(s);
+              }, 2000);
             `,
           }}
         />

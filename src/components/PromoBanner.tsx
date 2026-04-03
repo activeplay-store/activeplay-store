@@ -14,6 +14,10 @@ export default function PromoBanner() {
           src="/images/covers/gta-6.png"
           alt="GTA 6"
           className="absolute inset-0 w-full h-full object-cover"
+          loading="lazy"
+          decoding="async"
+          width={1280}
+          height={160}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-[rgba(6,13,24,0.92)] via-[rgba(6,13,24,0.7)] to-[rgba(6,13,24,0.4)]" />
       </div>

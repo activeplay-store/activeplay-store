@@ -44,8 +44,8 @@ export default function ChatWidget() {
     // Expose globally so MessengerPopup can trigger it
     window.loadChatwoot = loadChatwoot;
 
-    // Fallback: load after 15 seconds
-    const timer = setTimeout(loadChatwoot, 15000);
+    // Fallback: load after 5 seconds
+    const timer = setTimeout(loadChatwoot, 5000);
 
     // Load on scroll past 50%
     const handleScroll = () => {

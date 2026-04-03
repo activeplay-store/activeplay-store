@@ -752,7 +752,7 @@ export default function SubscriptionPage({ subscriptionId }: SubscriptionPagePro
                 <div key={i} className="group cursor-pointer">
                   <div className="relative rounded-xl overflow-hidden aspect-[3/4] transition-transform duration-300 group-hover:scale-105 group-hover:shadow-lg group-hover:shadow-black/40">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={game.image} alt={"Обложка " + game.title + " — PS Plus " + plan.name} className="w-full h-full object-cover" />
+                    <img src={game.image} alt={"Обложка " + game.title + " — PS Plus " + plan.name} className="w-full h-full object-cover" loading="lazy" decoding="async" width={300} height={400} />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
                     <div className="absolute bottom-3 left-3 right-3">
                       <p className="text-sm font-medium text-white">{game.title}</p>
@@ -775,7 +775,7 @@ export default function SubscriptionPage({ subscriptionId }: SubscriptionPagePro
                 <div key={i} className="flex-shrink-0 w-[200px] snap-start group cursor-pointer">
                   <div className="relative rounded-xl overflow-hidden aspect-[3/4] transition-transform duration-300 group-hover:scale-105">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={game.image} alt={"Обложка " + game.title + " — PS Plus " + plan.name} className="w-full h-full object-cover" />
+                    <img src={game.image} alt={"Обложка " + game.title + " — PS Plus " + plan.name} className="w-full h-full object-cover" loading="lazy" decoding="async" width={200} height={267} />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
                     <div className="absolute bottom-3 left-3 right-3">
                       <p className="text-sm font-medium text-white">{game.title}</p>
@@ -838,7 +838,7 @@ export default function SubscriptionPage({ subscriptionId }: SubscriptionPagePro
                 <div key={i} className="flex-shrink-0 w-[180px] sm:w-[200px] group cursor-pointer">
                   <div className="relative rounded-xl overflow-hidden aspect-[3/4] transition-transform duration-300 group-hover:scale-105">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={game.src} alt={"Обложка " + game.name + " — PS Plus " + plan.name} className="w-full h-full object-cover" />
+                    <img src={game.src} alt={"Обложка " + game.name + " — PS Plus " + plan.name} className="w-full h-full object-cover" loading="lazy" decoding="async" width={200} height={267} />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
                     <p className="absolute bottom-2 left-2 right-2 text-sm font-medium text-white">
                       {game.name}

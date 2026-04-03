@@ -35,7 +35,7 @@ export default function CurrencyCard({ name, game, nominal, gradient, accent, ic
         {icon ? (
           <div className="flex items-center justify-center" style={{ width: '70px', height: '70px' }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={icon} alt={name} className="block" style={{ maxWidth: '70px', maxHeight: '70px', objectFit: 'contain', filter: `drop-shadow(0 4px 12px ${accent}50)` }} />
+            <img src={icon} alt={name} className="block" style={{ maxWidth: '70px', maxHeight: '70px', objectFit: 'contain', filter: `drop-shadow(0 4px 12px ${accent}50)` }} loading="lazy" decoding="async" width={70} height={70} />
           </div>
         ) : (
           <div className="w-[60px] h-[60px] rounded-full flex items-center justify-center text-xl font-bold" style={{ background: `${accent}30`, color: accent, border: `2px solid ${accent}50` }}>

@@ -21,7 +21,7 @@ export default function PreordersSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-start gap-3 mb-6">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/images/platforms/preorders.png" alt="" width={40} height={40} className="w-10 h-10 object-contain mt-1" />
+          <img src="/images/platforms/preorders.png" alt="" width={40} height={40} className="w-10 h-10 object-contain mt-1" loading="lazy" decoding="async" />
           <div>
             <h2
               className="text-[26px] sm:text-[32px] md:text-[36px] font-bold"
