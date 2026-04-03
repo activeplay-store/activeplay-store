@@ -92,7 +92,7 @@ export default function Header() {
           <a href="/" className="flex items-center shrink-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/images/logo/AP_WHITE.png"
+              src="/images/logo/AP_WHITE-sm.webp"
               alt="ActivePlay"
               style={{ height: '90px', width: 'auto', objectFit: 'contain' }}
             />

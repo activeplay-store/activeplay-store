@@ -158,7 +158,7 @@ export default function EAPlayPage() {
           <div className="absolute inset-0 z-0" style={{ background: 'radial-gradient(ellipse 90% 70% at 50% 0%, rgba(255,71,71,0.2) 0%, transparent 65%), linear-gradient(180deg, #0A1628 0%, #060D18 100%)' }} />
           <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 text-center pb-16 pt-8 sm:pt-12">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/images/platforms/ea-play.png" alt="Логотип EA Play" className="h-16 w-auto mx-auto mb-5" />
+            <img src="/images/platforms/ea-play-sm.webp" alt="Логотип EA Play" className="h-16 w-auto mx-auto mb-5" />
             <h1 className="text-5xl lg:text-7xl font-bold font-display mb-3" style={{ color: '#FF4747', fontStyle: 'normal' }}>
               Подписка EA Play (ЕА Плей)
               <span className="block text-lg sm:text-xl font-normal text-gray-300 mt-2">
@@ -273,7 +273,7 @@ export default function EAPlayPage() {
           <div className="max-w-3xl mx-auto">
             <div className="inline-flex items-center gap-2 mb-4">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/images/platforms/ea-play.png" alt="EA Play Pro" className="w-12 h-12 object-contain rounded-xl" />
+              <img src="/images/platforms/ea-play-sm.webp" alt="EA Play Pro" className="w-12 h-12 object-contain rounded-xl" />
               <span className="text-xs font-bold uppercase px-2.5 py-1 rounded-full" style={{ background: 'rgba(255,107,0,0.15)', color: '#FF6B00' }}>PRO</span>
             </div>
             <h2 className="text-4xl sm:text-5xl font-bold font-display mb-2" style={{ fontStyle: 'normal', color: '#FF6B00' }}>Подписка EA Play Pro (ЕА Плей Про)</h2>

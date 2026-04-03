@@ -141,13 +141,13 @@ function CurrencySection({ id, title, subtitle, seoText, note, nominals, region,
             <div className="flex rounded-[14px] bg-[var(--bg-elevated)] border border-white/[0.06] overflow-hidden mb-3 w-fit">
               <button onClick={() => setEaPlay(true)} className={`px-2.5 py-1 text-[10px] font-medium transition-all cursor-pointer flex items-center gap-1.5 ${eaPlay ? '' : 'text-[var(--text-secondary)] hover:text-white'}`} style={eaPlay ? { background: '#00E676', color: '#000' } : undefined}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/images/platforms/ea-play.png" alt="" style={{ width: 14, height: 14, objectFit: 'contain', borderRadius: 3 }} />
+                <img src="/images/platforms/ea-play-sm.webp" alt="" style={{ width: 14, height: 14, objectFit: 'contain', borderRadius: 3 }} />
                 С EA Play
               </button>
               <button onClick={() => setEaPlay(false)} className={`px-2.5 py-1 text-[10px] font-medium transition-all cursor-pointer flex items-center gap-1.5 ${!eaPlay ? 'bg-[var(--brand)] text-white' : 'text-[var(--text-secondary)] hover:text-white'}`}>
                 <span className="relative" style={{ width: 14, height: 14 }}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/images/platforms/ea-play.png" alt="" style={{ width: 14, height: 14, objectFit: 'contain', borderRadius: 3, opacity: 0.4 }} />
+                  <img src="/images/platforms/ea-play-sm.webp" alt="" style={{ width: 14, height: 14, objectFit: 'contain', borderRadius: 3, opacity: 0.4 }} />
                 </span>
                 Без EA Play
               </button>
@@ -393,13 +393,13 @@ export default function GameCurrencyPage() {
                     <div className="flex rounded-[14px] bg-[var(--bg-elevated)] border border-white/[0.06] overflow-hidden mb-3 w-fit">
                       <button onClick={() => setFcEaPlay(true)} className={`px-2.5 py-1 text-[10px] font-medium transition-all cursor-pointer flex items-center gap-1.5 ${fcEaPlay ? '' : 'text-[var(--text-secondary)] hover:text-white'}`} style={fcEaPlay ? { background: '#00E676', color: '#000' } : undefined}>
                         {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src="/images/platforms/ea-play.png" alt="" style={{ width: 14, height: 14, objectFit: 'contain', borderRadius: 3 }} />
+                        <img src="/images/platforms/ea-play-sm.webp" alt="" style={{ width: 14, height: 14, objectFit: 'contain', borderRadius: 3 }} />
                         С EA Play
                       </button>
                       <button onClick={() => setFcEaPlay(false)} className={`px-2.5 py-1 text-[10px] font-medium transition-all cursor-pointer flex items-center gap-1.5 ${!fcEaPlay ? 'bg-[var(--brand)] text-white' : 'text-[var(--text-secondary)] hover:text-white'}`}>
                         <span className="relative" style={{ width: 14, height: 14 }}>
                           {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src="/images/platforms/ea-play.png" alt="" style={{ width: 14, height: 14, objectFit: 'contain', borderRadius: 3, opacity: 0.4 }} />
+                          <img src="/images/platforms/ea-play-sm.webp" alt="" style={{ width: 14, height: 14, objectFit: 'contain', borderRadius: 3, opacity: 0.4 }} />
                         </span>
                         Без EA Play
                       </button>

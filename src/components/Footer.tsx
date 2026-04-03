@@ -59,7 +59,7 @@ export default function Footer() {
           <div className="mb-8">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/images/logo/AP_WHITE.png"
+              src="/images/logo/AP_WHITE-sm.webp"
               alt="ActivePlay"
               style={{ height: '80px', width: 'auto' }}
             />

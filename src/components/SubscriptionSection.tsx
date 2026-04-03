@@ -241,7 +241,7 @@ export default function SubscriptionSection() {
                 <div className="flex flex-col items-center flex-1">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src="/images/platforms/ps-logo-white.png"
+                    src="/images/platforms/ps-logo-white-sm.webp"
                     alt="PlayStation"
                     style={{ width: '80px', height: 'auto', paddingTop: '14px' }}
                   />
@@ -408,7 +408,7 @@ export default function SubscriptionSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-14 mt-14">
         {/* Header */}
         <div className="flex items-center gap-3 mb-8">
-          <img src="/images/platforms/ea-play.png" alt="EA Play" className="rounded-lg" style={{ width: '32px', height: '32px', objectFit: 'contain' }} />
+          <img src="/images/platforms/ea-play-sm.webp" alt="EA Play" className="rounded-lg" style={{ width: '32px', height: '32px', objectFit: 'contain' }} />
           <div>
             <Link href="/ea-play" className="hover:opacity-80 transition-opacity"><h2 className="text-[26px] sm:text-[32px] md:text-[36px] font-bold gradient-text">Подписка EA Play (ЕА Плей)</h2></Link>
             <p className="text-[15px] text-[var(--text-secondary)]">Купить EA Play для PlayStation, Xbox и ПК — каталог игр EA Sports, Battlefield, The Sims</p>
@@ -723,13 +723,13 @@ export default function SubscriptionSection() {
                       <div className="flex rounded-[14px] bg-[var(--bg-elevated)] border border-white/[0.06] overflow-hidden mb-3 w-fit">
                         <button onClick={() => setFcEaPlay(true)} className={`px-2.5 py-1 text-[10px] font-medium transition-all cursor-pointer flex items-center gap-1.5 ${fcEaPlay ? '' : 'text-[var(--text-secondary)] hover:text-white'}`} style={fcEaPlay ? { background: '#00E676', color: '#000' } : undefined}>
                           {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src="/images/platforms/ea-play.png" alt="" style={{ width: 14, height: 14, objectFit: 'contain' as const, borderRadius: 3 }} />
+                          <img src="/images/platforms/ea-play-sm.webp" alt="" style={{ width: 14, height: 14, objectFit: 'contain' as const, borderRadius: 3 }} />
                           С EA Play
                         </button>
                         <button onClick={() => setFcEaPlay(false)} className={`px-2.5 py-1 text-[10px] font-medium transition-all cursor-pointer flex items-center gap-1.5 ${!fcEaPlay ? 'bg-[var(--brand)] text-white' : 'text-[var(--text-secondary)] hover:text-white'}`}>
                           <span className="relative" style={{ width: 14, height: 14 }}>
                             {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src="/images/platforms/ea-play.png" alt="" style={{ width: 14, height: 14, objectFit: 'contain' as const, borderRadius: 3, opacity: 0.4 }} />
+                            <img src="/images/platforms/ea-play-sm.webp" alt="" style={{ width: 14, height: 14, objectFit: 'contain' as const, borderRadius: 3, opacity: 0.4 }} />
                           </span>
                           Без EA Play
                         </button>
