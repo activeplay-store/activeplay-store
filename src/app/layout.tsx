@@ -1,8 +1,7 @@
 import type { Metadata } from 'next';
 import { Rajdhani, Inter } from 'next/font/google';
 import './globals.css';
-
-import ChatWidget from '@/components/ChatWidget';
+import ChatWidgetWrapper from '@/components/ChatWidgetWrapper';
 
 const rajdhani = Rajdhani({
   subsets: ['latin', 'latin-ext'],
@@ -39,7 +38,7 @@ export const metadata: Metadata = {
     url: 'https://activeplay.games',
     images: [
       {
-        url: '/images/logo/ActivePlay.png',
+        url: '/images/og-image.png',
         width: 1200,
         height: 630,
         alt: 'ActivePlay — игровой магазин подписок',
@@ -50,7 +49,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'ActivePlay — PS Plus и Xbox Game Pass для России',
     description: 'Подписки PlayStation и Xbox по лучшим ценам. Активация за 5 минут.',
-    images: ['/images/logo/ActivePlay.png'],
+    images: ['/images/og-image.png'],
   },
   icons: {
     icon: [
@@ -233,7 +232,7 @@ export default function RootLayout({
           <div className="atmosphere-blob atmosphere-blob--purple" />
         </div>
         {children}
-        <ChatWidget />
+        <ChatWidgetWrapper />
       </body>
     </html>
   );

@@ -28,10 +28,16 @@ const productSchema = {
   offers: { '@type': 'AggregateOffer', lowPrice: plan.prices.global[1], highPrice: plan.prices.global[12], priceCurrency: 'RUB', availability: 'https://schema.org/InStock', offerCount: 3 },
 };
 
+const generalFaq = [
+  { question: 'Это легально? Аккаунт не заблокируют?', answer: 'Да, полностью легально. Мы используем официальные подписки из турецкого и украинского PlayStation Store.' },
+  { question: 'Нужен ли VPN?', answer: 'Нет. После активации подписка работает без VPN.' },
+  { question: 'Как происходит оплата?', answer: 'Переводом по СБП или картой Сбер, Тинькофф, Альфа.' },
+];
+
 const faqSchema = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
-  mainEntity: plan.faq.map((item) => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer } })),
+  mainEntity: [...plan.faq, ...generalFaq].map((item) => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer } })),
 };
 
 const breadcrumbSchema = {

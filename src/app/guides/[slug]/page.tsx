@@ -65,7 +65,7 @@ export default async function GuideArticlePage({ params }: Props) {
       '@type': 'Organization',
       name: 'ActivePlay',
       url: 'https://activeplay.games',
-      logo: { '@type': 'ImageObject', url: 'https://activeplay.games/images/logo/AP_WHITE.png' },
+      logo: { '@type': 'ImageObject', url: 'https://activeplay.games/images/logo/ActivePlay.png' },
     },
     description: guide.excerpt,
   });

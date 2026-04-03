@@ -63,9 +63,9 @@ function GameCard({ game, onClick, isHero, region }: { game: TopSellerGame; onCl
 
       {/* Info — unified for all cards */}
       <div className="px-3 pt-2 pb-3 flex flex-col shrink-0">
-        <h4 className={`text-white font-display font-bold leading-tight line-clamp-1 ${isHero ? 'text-[20px]' : 'text-[14px]'}`} style={{ fontStyle: 'normal' }}>
+        <h3 className={`text-white font-display font-bold leading-tight line-clamp-1 ${isHero ? 'text-[20px]' : 'text-[14px]'}`} style={{ fontStyle: 'normal' }}>
           {game.title}
-        </h4>
+        </h3>
         <span className={`text-[#00D4FF] ${isHero ? 'text-xs' : 'text-[10px]'} mt-0.5`}>{game.genre}</span>
 
         <p className={`font-display font-bold mt-2 text-white ${isHero ? 'text-[24px]' : 'text-[22px]'}`} style={{ fontStyle: 'normal' }}>
