@@ -222,9 +222,9 @@ export const guidesData: GuideItem[] = [
         content: `<p>Microsoft предлагает несколько уровней Game Pass:</p>
 <table>
 <tr><th>Тариф</th><th>Платформа</th><th>Цена в ActivePlay</th></tr>
-<tr><td>Game Pass Essential</td><td>Консоль</td><td>от 990₽/мес</td></tr>
-<tr><td>Game Pass Premium</td><td>Консоль + PC</td><td>от 1490₽/мес</td></tr>
-<tr><td>Game Pass Ultimate</td><td>Консоль + PC + Cloud + EA Play</td><td>от 1590₽/мес</td></tr>
+<tr><td>Game Pass Essential</td><td>Консоль</td><td>от 1300₽/мес</td></tr>
+<tr><td>Game Pass Premium</td><td>Консоль + PC</td><td>от 1700₽/мес</td></tr>
+<tr><td>Game Pass Ultimate</td><td>Консоль + PC + Cloud + EA Play</td><td>от 2500₽/мес</td></tr>
 </table>
 <p><a href="/xbox-game-pass-ultimate">Game Pass Ultimate</a> — самый популярный вариант, включающий все возможности.</p>`,
       },

@@ -63,7 +63,7 @@ const storeSchema = {
     {
       '@type': 'Offer',
       name: 'Xbox Game Pass Ultimate 1 мес',
-      price: '1590',
+      price: '2500',
       priceCurrency: 'RUB',
       availability: 'https://schema.org/InStock',
     },

@@ -79,7 +79,7 @@ export const xboxPlans: PlanTier[] = [
       'Совместная игра с друзьями',
     ],
     prices: {
-      global: { 1: 690, 3: 1790, 12: 3490 },
+      global: { 1: 1300, 3: 2500, 12: 6950 },
     },
   },
   {
@@ -94,7 +94,7 @@ export const xboxPlans: PlanTier[] = [
       '+ всё из Essential',
     ],
     prices: {
-      global: { 1: 1190, 3: 2990, 12: 5790 },
+      global: { 1: 1700, 3: 4000, 12: 9900 },
     },
   },
   {
@@ -110,7 +110,7 @@ export const xboxPlans: PlanTier[] = [
       '+ всё из Premium',
     ],
     prices: {
-      global: { 1: 1590, 3: 3990, 12: 7690 },
+      global: { 1: 2500, 3: 5100, 12: 13500 },
     },
   },
 ];

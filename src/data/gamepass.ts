@@ -77,7 +77,7 @@ export const gamePass: Record<GamePassTier, GamePassPlan> = {
       'Бонусы в Free-to-Play играх',
     ],
     prices: {
-      global: { 1: 690, 3: 1790, 12: 3490 },
+      global: { 1: 1300, 3: 2500, 12: 6950 },
     },
     faq: [
       {
@@ -86,7 +86,7 @@ export const gamePass: Record<GamePassTier, GamePassPlan> = {
       },
       {
         question: 'Сколько стоит Game Pass Essential в России?',
-        answer: 'В ActivePlay: 690₽ за 1 месяц, 1 790₽ за 3 месяца, 3 490₽ за 12 месяцев. Essential — единственный тариф Game Pass с годовой подпиской. Оплата через СБП, карту МИР или ЮMoney.',
+        answer: 'В ActivePlay: 1 300₽ за 1 месяц, 2 500₽ за 3 месяца, 6 950₽ за 12 месяцев. Essential — единственный тариф Game Pass с годовой подпиской. Оплата через СБП, карту МИР или ЮMoney.',
       },
       {
         question: 'Какие игры входят в каталог Game Pass Essential?',
@@ -110,7 +110,7 @@ export const gamePass: Record<GamePassTier, GamePassPlan> = {
       },
       {
         question: 'Можно ли купить Game Pass Essential на год?',
-        answer: 'Да, Essential — единственный тариф Game Pass с официальной годовой подпиской. 12 месяцев за 3 490₽ — экономия 4 790₽ по сравнению с помесячной оплатой. Premium и Ultimate доступны только помесячно у Microsoft.',
+        answer: 'Да, Essential — единственный тариф Game Pass с официальной годовой подпиской. 12 месяцев за 6 950₽ — экономия 8 650₽ по сравнению с помесячной оплатой. Premium и Ultimate доступны только помесячно у Microsoft.',
       },
       {
         question: 'Как активировать Game Pass Essential после оплаты?',
@@ -130,8 +130,8 @@ export const gamePass: Record<GamePassTier, GamePassPlan> = {
       },
     ],
     seo: {
-      title: 'Купить Xbox Game Pass Essential в России — от 690₽/мес | ActivePlay',
-      description: 'Подписка Xbox Game Pass Essential для Xbox Series X|S, Xbox One и ПК. Онлайн-мультиплеер, 50+ игр, облачный гейминг. Оплата через СБП, активация за 5 минут. От 690₽/мес.',
+      title: 'Купить Xbox Game Pass Essential в России — от 1 300₽/мес | ActivePlay',
+      description: 'Подписка Xbox Game Pass Essential для Xbox Series X|S, Xbox One и ПК. Онлайн-мультиплеер, 50+ игр, облачный гейминг. Оплата через СБП, активация за 5 минут. От 1 300₽/мес.',
       keywords: ['game pass essential купить', 'xbox game pass essential', 'game pass core купить', 'xbox live gold купить', 'game pass essential цена', 'гейм пасс эссеншиал россия'],
     },
     showcaseGames: {
@@ -181,7 +181,7 @@ export const gamePass: Record<GamePassTier, GamePassPlan> = {
       'Совместная игра с друзьями',
     ],
     prices: {
-      global: { 1: 1190, 3: 2990, 12: 5790 },
+      global: { 1: 1700, 3: 4000, 12: 9900 },
     },
     faq: [
       {
@@ -194,7 +194,7 @@ export const gamePass: Record<GamePassTier, GamePassPlan> = {
       },
       {
         question: 'Сколько стоит Game Pass Premium?',
-        answer: 'В ActivePlay: 1 190₽ за 1 месяц, 2 990₽ за 3 месяца, 5 790₽ за 12 месяцев. Microsoft официально продаёт Premium только помесячно ($14.99/мес). ActivePlay предлагает выгодные варианты на 3 и 12 месяцев.',
+        answer: 'В ActivePlay: 1 700₽ за 1 месяц, 4 000₽ за 3 месяца, 9 900₽ за 12 месяцев. Microsoft официально продаёт Premium только помесячно ($14.99/мес). ActivePlay предлагает выгодные варианты на 3 и 12 месяцев.',
       },
       {
         question: 'Какие игры есть в каталоге Premium?',
@@ -230,7 +230,7 @@ export const gamePass: Record<GamePassTier, GamePassPlan> = {
       },
       {
         question: 'Стоит ли Premium или лучше сразу Ultimate?',
-        answer: 'Зависит от приоритетов. Premium (1 190₽/мес) — для тех, кто хочет большой каталог и готов ждать ~год до появления Xbox-эксклюзивов. Ultimate (1 590₽/мес) — для тех, кому важны Day One, Call of Duty, EA Play, Fortnite Crew и облачный гейминг 1440p. Разница — 400₽/мес, но Ultimate включает бонусов на ~$26/мес.',
+        answer: 'Зависит от приоритетов. Premium (1 700₽/мес) — для тех, кто хочет большой каталог и готов ждать ~год до появления Xbox-эксклюзивов. Ultimate (2 500₽/мес) — для тех, кому важны Day One, Call of Duty, EA Play, Fortnite Crew и облачный гейминг 1440p. Разница — 800₽/мес, но Ultimate включает бонусов на ~$26/мес.',
       },
       {
         question: 'Включён ли EA Play в Premium?',
@@ -238,7 +238,7 @@ export const gamePass: Record<GamePassTier, GamePassPlan> = {
       },
     ],
     seo: {
-      title: 'Купить Xbox Game Pass Premium в России — от 1 190₽/мес | ActivePlay',
+      title: 'Купить Xbox Game Pass Premium в России — от 1 700₽/мес | ActivePlay',
       description: 'Xbox Game Pass Premium (Гейм Пасс Премиум, бывш. Standard) — каталог 280+ игр для Xbox и ПК, Xbox-эксклюзивы, облачный гейминг. Оплата через СБП из России, активация за 5 минут.',
       keywords: ['game pass premium купить', 'xbox game pass premium', 'game pass standard купить', 'xbox game pass цена', 'game pass premium россия'],
     },
@@ -303,7 +303,7 @@ export const gamePass: Record<GamePassTier, GamePassPlan> = {
       'Эксклюзивные перки и награды',
     ],
     prices: {
-      global: { 1: 1590, 3: 3990, 12: 7690 },
+      global: { 1: 2500, 3: 5100, 12: 13500 },
     },
     faq: [
       {
@@ -312,7 +312,7 @@ export const gamePass: Record<GamePassTier, GamePassPlan> = {
       },
       {
         question: 'Сколько стоит Xbox Game Pass Ultimate в 2026 году?',
-        answer: 'В ActivePlay: 1 590₽ за 1 месяц, 3 990₽ за 3 месяца, 7 690₽ за 12 месяцев (экономия 11 390₽). Официальная цена Microsoft — $29.99/мес без возможности купить на год. ActivePlay — один из немногих способов оформить Ultimate на 12 месяцев с оплатой в рублях.',
+        answer: 'В ActivePlay: 2 500₽ за 1 месяц, 5 100₽ за 3 месяца, 13 500₽ за 12 месяцев (экономия 16 500₽). Официальная цена Microsoft — $29.99/мес без возможности купить на год. ActivePlay — один из немногих способов оформить Ultimate на 12 месяцев с оплатой в рублях.',
       },
       {
         question: 'Чем Ultimate отличается от Premium?',
@@ -340,7 +340,7 @@ export const gamePass: Record<GamePassTier, GamePassPlan> = {
       },
       {
         question: 'Стоит ли Ultimate своих денег по сравнению с Premium?',
-        answer: 'Считаем: Ultimate стоит 1 590₽/мес. В него входят EA Play (~500₽/мес), Ubisoft+ Classics (~700₽/мес), Fortnite Crew (~1 000₽/мес), PC Game Pass (~1 400₽/мес), облачный гейминг 1440p и Day One релизы. Суммарная ценность бонусов — около $56/мес (4 500₽+). Платите 1 590₽, получаете на 4 500₽. Если играете хотя бы в 2-3 из этих сервисов — Ultimate окупается с первого месяца.',
+        answer: 'Считаем: Ultimate стоит 2 500₽/мес. В него входят EA Play (~500₽/мес), Ubisoft+ Classics (~700₽/мес), Fortnite Crew (~1 000₽/мес), PC Game Pass (~1 400₽/мес), облачный гейминг 1440p и Day One релизы. Суммарная ценность бонусов — около $56/мес (4 500₽+). Платите 2 500₽, получаете на 4 500₽. Если играете хотя бы в 2-3 из этих сервисов — Ultimate окупается с первого месяца.',
       },
       {
         question: 'Можно ли апгрейдить Essential или Premium до Ultimate?',
@@ -356,7 +356,7 @@ export const gamePass: Record<GamePassTier, GamePassPlan> = {
       },
     ],
     seo: {
-      title: 'Купить Xbox Game Pass Ultimate в России — от 1 590₽/мес | ActivePlay',
+      title: 'Купить Xbox Game Pass Ultimate в России — от 2 500₽/мес | ActivePlay',
       description: 'Xbox Game Pass Ultimate (Гейм Пасс Ультимейт) — 500+ игр Day One, EA Play, Fortnite Crew, Ubisoft+ Classics, облачный гейминг 1440p. Оплата через СБП из России, активация за 5 минут.',
       keywords: ['game pass ultimate купить', 'xbox game pass ultimate', 'game pass ultimate цена', 'xbox game pass ultimate россия', 'купить гейм пасс ультимейт'],
     },
