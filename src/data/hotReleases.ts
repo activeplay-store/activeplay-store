@@ -1,5 +1,5 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-03-26T23:29:57.935Z
+// Обновлено: 2026-04-03T09:00:48.290Z
 // Горящих новинок: 4
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
@@ -37,37 +37,16 @@ export const hotReleases: HotRelease[] = [
     genre: "Экшен",
     platforms: ["PS5"],
     cover: "https://media.rawg.io/media/games/dac/dacfcdeaef957a36416f4e6d5ec76229.jpg",
-    hypeScore: 7,
-    totalScore: 6.6,
-    editions: {
-      tr: [
-        { name: "Standard", priceRUB: 7300 },
-        { name: "Deluxe", priceRUB: 8300 },
-      ],
-      ua: [
-        { name: "Standard", priceRUB: 6550 },
-        { name: "Deluxe", priceRUB: 7400 },
-      ],
-    },
-  },
-  {
-    id: "resident-evil-9-requiem",
-    title: "Resident Evil 9: Requiem",
-    slug: "resident-evil-9-requiem",
-    description: "Survival horror от Capcom. Два героя, MC 88",
-    releaseDate: "27 февраля 2026",
-    metacritic: 0,
-    genre: "Экшен",
-    platforms: ["PS5"],
-    cover: "https://image.api.playstation.com/vulcan/ap/rnd/202512/1205/e0364b3089bbbad7e0a04f87cab6c273172515a134efdf88.png",
-    hypeScore: 4,
+    hypeScore: 5,
     totalScore: 5.8,
     editions: {
       tr: [
-        { name: "Standard", priceRUB: 8300 },
+        { name: "Standard", priceRUB: 7250 },
+        { name: "Deluxe", priceRUB: 8250 },
       ],
       ua: [
-        { name: "Standard", priceRUB: 7400 },
+        { name: "Standard", priceRUB: 7250 },
+        { name: "Deluxe", priceRUB: 8250 },
       ],
     },
   },
@@ -80,17 +59,36 @@ export const hotReleases: HotRelease[] = [
     metacritic: 0,
     genre: "Шутер",
     platforms: ["PS5"],
-    cover: "https://image.api.playstation.com/vulcan/ap/rnd/202512/2621/48bbb6fcf773ee326ebf5cbceb47bd8dd26e2f27cd270736.jpg",
-    hypeScore: 4,
-    totalScore: 5.4,
+    cover: "https://media.rawg.io/media/games/cab/cabc7cd14f1d9829c37d3bd2bec16c4a.jpg",
+    hypeScore: 3,
+    totalScore: 5,
     editions: {
       tr: [
-        { name: "Standard", priceRUB: 4050 },
-        { name: "Deluxe", priceRUB: 5550 },
+        { name: "Standard", priceRUB: 1600 },
       ],
       ua: [
-        { name: "Standard", priceRUB: 3700 },
-        { name: "Deluxe", priceRUB: 4900 },
+        { name: "Standard", priceRUB: 1600 },
+      ],
+    },
+  },
+  {
+    id: "darwin-s-paradox",
+    title: "Darwin s Paradox",
+    slug: "darwin-s-paradox",
+    description: "",
+    releaseDate: "2 апреля 2026",
+    metacritic: 0,
+    genre: "Экшен",
+    platforms: ["PS5"],
+    cover: "https://image.api.playstation.com/vulcan/ap/rnd/202511/0718/8dc3bb026f8c0873ac11c58a584c3ee618dbfc9db4064514.png",
+    hypeScore: 2,
+    totalScore: 4.6,
+    editions: {
+      tr: [
+        { name: "Standard", priceRUB: 3150 },
+      ],
+      ua: [
+        { name: "Standard", priceRUB: 2950 },
       ],
     },
   },
@@ -103,9 +101,9 @@ export const hotReleases: HotRelease[] = [
     metacritic: 0,
     genre: "Экшен",
     platforms: ["PS5"],
-    cover: "https://image.api.playstation.com/vulcan/ap/rnd/202510/1005/a09a71be0ef59273817c8f816a71cbdd1a417e169ec87719.png",
-    hypeScore: 3,
-    totalScore: 5,
+    cover: "https://media.rawg.io/media/screenshots/c84/c842dbb0dcd7e2689ca2f587ef28f99f.jpg",
+    hypeScore: 2,
+    totalScore: 4.6,
     editions: {
       tr: [
         { name: "Standard", priceRUB: 5550 },
