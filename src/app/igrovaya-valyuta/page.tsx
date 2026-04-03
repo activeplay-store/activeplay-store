@@ -476,7 +476,7 @@ export default function GameCurrencyPage() {
         {/* JSON-LD: FAQPage */}
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
           '@context': 'https://schema.org', '@type': 'FAQPage',
-          mainEntity: currencyFaq.map(i => ({ '@type': 'Question', name: i.q, acceptedAnswer: { '@type': 'Answer', text: i.a } }))
+          mainEntity: [...currencyFaq.map(i => ({ '@type': 'Question', name: i.q, acceptedAnswer: { '@type': 'Answer', text: i.a } })), { '@type': 'Question', name: 'Это легально? Аккаунт не заблокируют?', acceptedAnswer: { '@type': 'Answer', text: 'Да, полностью легально. Мы используем официальные подписки из турецкого и украинского PlayStation Store.' } }, { '@type': 'Question', name: 'Нужен ли VPN?', acceptedAnswer: { '@type': 'Answer', text: 'Нет. После активации подписка работает без VPN.' } }, { '@type': 'Question', name: 'Как происходит оплата?', acceptedAnswer: { '@type': 'Answer', text: 'Переводом по СБП или картой Сбер, Тинькофф, Альфа.' } }]
         }) }} />
 
         {/* JSON-LD: BreadcrumbList */}

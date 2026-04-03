@@ -37,10 +37,16 @@ const productSchema = {
   },
 };
 
+const generalFaq = [
+  { question: 'Это легально? Аккаунт не заблокируют?', answer: 'Да, полностью легально. Мы используем официальные подписки из турецкого и украинского PlayStation Store.' },
+  { question: 'Нужен ли VPN?', answer: 'Нет. После активации подписка работает без VPN.' },
+  { question: 'Как происходит оплата?', answer: 'Переводом по СБП или картой Сбер, Тинькофф, Альфа.' },
+];
+
 const faqSchema = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
-  mainEntity: plan.faq.map((item) => ({
+  mainEntity: [...plan.faq, ...generalFaq].map((item) => ({
     '@type': 'Question',
     name: item.question,
     acceptedAnswer: {

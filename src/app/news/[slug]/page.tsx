@@ -55,12 +55,12 @@ export default async function NewsArticlePage({ params }: Props) {
     headline: article.title,
     image: article.coverUrl,
     datePublished: article.publishedAt,
-    author: { '@type': 'Organization', name: article.author || 'ActivePlay' },
+    dateModified: article.publishedAt,
+    author: { '@type': 'Organization', name: article.author || 'ActivePlay', url: 'https://activeplay.games' },
     publisher: {
       '@type': 'Organization',
       name: 'ActivePlay',
-      url: 'https://activeplay.games',
-      logo: { '@type': 'ImageObject', url: 'https://activeplay.games/images/logo/AP_WHITE.png' },
+      logo: { '@type': 'ImageObject', url: 'https://activeplay.games/images/logo/ActivePlay.png' },
     },
     description: article.metaDescription || article.content.substring(0, 160),
   };

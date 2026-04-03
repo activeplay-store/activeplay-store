@@ -37,10 +37,16 @@ const productSchema = {
   },
 };
 
+const generalFaq = [
+  { question: 'Это легально? Аккаунт не заблокируют?', answer: 'Да, полностью легально. Мы используем официальные подписки из турецкого и украинского PlayStation Store.' },
+  { question: 'Нужен ли VPN?', answer: 'Нет. После активации подписка работает без VPN.' },
+  { question: 'Как происходит оплата?', answer: 'Переводом по СБП или картой Сбер, Тинькофф, Альфа.' },
+];
+
 const faqSchema = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
-  mainEntity: plan.faq.map((item) => ({
+  mainEntity: [...plan.faq, ...generalFaq].map((item) => ({
     '@type': 'Question',
     name: item.question,
     acceptedAnswer: {
@@ -48,6 +54,15 @@ const faqSchema = {
       text: item.answer,
     },
   })),
+};
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Главная', item: 'https://activeplay.games' },
+    { '@type': 'ListItem', position: 2, name: 'PS Plus Extra', item: 'https://activeplay.games/ps-plus-extra' },
+  ],
 };
 
 export default function PsPlusExtraPage() {
@@ -60,6 +75,10 @@ export default function PsPlusExtraPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       <Header />
       <main className="relative z-10">

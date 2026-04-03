@@ -1,9 +1,7 @@
 import type { Metadata } from 'next';
 import { Rajdhani, Inter } from 'next/font/google';
-import dynamic from 'next/dynamic';
 import './globals.css';
-
-const ChatWidget = dynamic(() => import('@/components/ChatWidget'), { ssr: false });
+import ChatWidgetWrapper from '@/components/ChatWidgetWrapper';
 
 const rajdhani = Rajdhani({
   subsets: ['latin', 'latin-ext'],
@@ -40,7 +38,7 @@ export const metadata: Metadata = {
     url: 'https://activeplay.games',
     images: [
       {
-        url: '/images/logo/ActivePlay.png',
+        url: '/images/og-image.png',
         width: 1200,
         height: 630,
         alt: 'ActivePlay — игровой магазин подписок',
@@ -51,7 +49,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'ActivePlay — PS Plus и Xbox Game Pass для России',
     description: 'Подписки PlayStation и Xbox по лучшим ценам. Активация за 5 минут.',
-    images: ['/images/logo/ActivePlay.png'],
+    images: ['/images/og-image.png'],
   },
   icons: {
     icon: [
@@ -159,36 +157,6 @@ const orgSchema = {
   ],
 };
 
-const faqSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: [
-    {
-      '@type': 'Question',
-      name: 'Это легально? Аккаунт не заблокируют?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'Да, полностью легально. Мы используем официальные подписки из турецкого и украинского PlayStation Store.',
-      },
-    },
-    {
-      '@type': 'Question',
-      name: 'Нужен ли VPN?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'Нет. После активации подписка работает без VPN.',
-      },
-    },
-    {
-      '@type': 'Question',
-      name: 'Как происходит оплата?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'Переводом по СБП или картой Сбер, Тинькофф, Альфа.',
-      },
-    },
-  ],
-};
 
 export default function RootLayout({
   children,
@@ -213,10 +181,6 @@ export default function RootLayout({
         />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-        />
-        <script
-          type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteSchema) }}
         />
         {/* TODO: Яндекс.Метрика — вставить счётчик */}
@@ -231,7 +195,7 @@ export default function RootLayout({
           <div className="atmosphere-blob atmosphere-blob--purple" />
         </div>
         {children}
-        <ChatWidget />
+        <ChatWidgetWrapper />
       </body>
     </html>
   );
