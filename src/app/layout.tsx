@@ -199,6 +199,8 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://chat.activeplay.games" />
+        <link rel="preconnect" href="https://image.api.playstation.com" />
+        <link rel="dns-prefetch" href="https://image.api.playstation.com" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(storeSchema) }}
