@@ -20,16 +20,40 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://activeplay.games'),
   title: 'Купить PS Plus и Game Pass в России — ActivePlay | Подписки, карты PSN, игры PS5',
   description:
     'Купить PS Plus Essential, Extra, Deluxe, Xbox Game Pass Ultimate и EA Play из России. Карты пополнения PSN Турция. Оплата в рублях через СБП, активация за 5 минут. 52 000+ клиентов с 2022 года.',
   keywords:
     'купить PS Plus Россия, PlayStation Plus подписка, Xbox Game Pass купить, PS Plus Essential цена, PS Plus Extra цена, Game Pass Ultimate Россия, подписка PlayStation дешево',
+  alternates: {
+    canonical: 'https://activeplay.games',
+  },
   openGraph: {
     title: 'ActivePlay — PS Plus и Xbox Game Pass для России',
     description: 'Подписки PlayStation и Xbox по лучшим ценам. Активация за 5 минут.',
     type: 'website',
     locale: 'ru_RU',
+    siteName: 'ActivePlay',
+    url: 'https://activeplay.games',
+    images: [
+      {
+        url: '/images/logo/ActivePlay.png',
+        width: 1200,
+        height: 630,
+        alt: 'ActivePlay — игровой магазин подписок',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'ActivePlay — PS Plus и Xbox Game Pass для России',
+    description: 'Подписки PlayStation и Xbox по лучшим ценам. Активация за 5 минут.',
+    images: ['/images/logo/ActivePlay.png'],
+  },
+  icons: {
+    icon: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
   },
 };
 
@@ -38,7 +62,7 @@ const storeSchema = {
   '@type': 'Store',
   name: 'ActivePlay',
   description: 'Подписки PlayStation Plus и Xbox Game Pass для России',
-  url: 'https://activeplay-store.ru',
+  url: 'https://activeplay.games',
   foundingDate: '2022',
   aggregateRating: {
     '@type': 'AggregateRating',
@@ -48,22 +72,22 @@ const storeSchema = {
   offers: [
     {
       '@type': 'Offer',
-      name: 'PS Plus Essential 1 мес (Турция)',
-      price: '890',
+      name: 'PS Plus Essential 12 мес (Турция)',
+      price: '5800',
       priceCurrency: 'RUB',
       availability: 'https://schema.org/InStock',
     },
     {
       '@type': 'Offer',
-      name: 'PS Plus Extra 1 мес (Турция)',
-      price: '1490',
+      name: 'PS Plus Extra 12 мес (Турция)',
+      price: '9500',
       priceCurrency: 'RUB',
       availability: 'https://schema.org/InStock',
     },
     {
       '@type': 'Offer',
-      name: 'Xbox Game Pass Ultimate 1 мес',
-      price: '2500',
+      name: 'Xbox Game Pass Ultimate 12 мес',
+      price: '7690',
       priceCurrency: 'RUB',
       availability: 'https://schema.org/InStock',
     },
@@ -75,11 +99,6 @@ const webSiteSchema = {
   '@type': 'WebSite',
   name: 'ActivePlay',
   url: 'https://activeplay.games',
-  potentialAction: {
-    '@type': 'SearchAction',
-    target: 'https://activeplay.games/?q={search_term_string}',
-    'query-input': 'required name=search_term_string',
-  },
 };
 
 const orgSchema = {
