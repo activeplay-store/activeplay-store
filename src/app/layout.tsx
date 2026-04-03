@@ -255,7 +255,7 @@ export default function RootLayout({
         {children}
         <ChatWidget />
         <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-6K78910V6C"
+          src="https://www.googletagmanager.com/gtag/js?id=G-63XZG2S0Y2"
           strategy="afterInteractive"
         />
         <Script id="ga4-init" strategy="afterInteractive">
@@ -263,7 +263,7 @@ export default function RootLayout({
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'G-6K78910V6C');
+            gtag('config', 'G-63XZG2S0Y2');
           `}
         </Script>
       </body>
