@@ -1,8 +1,9 @@
 import type { Metadata } from 'next';
 import { Rajdhani, Inter } from 'next/font/google';
-import Script from 'next/script';
+import dynamic from 'next/dynamic';
 import './globals.css';
-import ChatWidget from '@/components/ChatWidget';
+
+const ChatWidget = dynamic(() => import('@/components/ChatWidget'), { ssr: false });
 
 const rajdhani = Rajdhani({
   subsets: ['latin', 'latin-ext'],
@@ -244,6 +245,21 @@ export default function RootLayout({
         </noscript>
         {/* TODO: VK Pixel — вставить код */}
         {/* TODO: цели на клик "Оформить за 5 мин", "Предзаказать", выбор мессенджера */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-63XZG2S0Y2');
+
+              var s = document.createElement('script');
+              s.async = true;
+              s.src = 'https://www.googletagmanager.com/gtag/js?id=G-63XZG2S0Y2';
+              document.head.appendChild(s);
+            `,
+          }}
+        />
       </head>
       <body className={`${rajdhani.variable} ${inter.variable} antialiased`}>
         {/* Atmosphere blobs */}
@@ -254,18 +270,6 @@ export default function RootLayout({
         </div>
         {children}
         <ChatWidget />
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-63XZG2S0Y2"
-          strategy="afterInteractive"
-        />
-        <Script id="ga4-init" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-63XZG2S0Y2');
-          `}
-        </Script>
       </body>
     </html>
   );
