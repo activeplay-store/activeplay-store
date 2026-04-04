@@ -147,5 +147,18 @@ export const guidesData: GuideItem[] = [
     readTime: '8 мин',
     tags: ['PS Plus', 'Essential', 'Extra', 'Deluxe', 'сравнение', 'какой выбрать'],
     sections: [],
+  },
+  {
+    id: 'g3',
+    slug: 'xbox-game-pass-kak-kupit-iz-rossii',
+    title: 'Xbox Game Pass — все тарифы и покупка из России',
+    excerpt: 'Как купить Xbox Game Pass из России в 2026 году. Тарифы Essential, Premium и Ultimate: что входит, цены, отличия. Конвертация, активация через подарочные карты.',
+    coverUrl: '/images/platforms/xbox-game-pass.png',
+    category: 'xbox',
+    date: '2026-04-04',
+    author: 'ActivePlay',
+    readTime: '8 мин',
+    tags: ['Game Pass', 'Xbox', 'подписка', 'гейм пасс'],
+    sections: [],
   }
 ];
