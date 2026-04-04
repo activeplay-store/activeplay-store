@@ -1,4 +1,4 @@
-export type GuideCategory = 'playstation' | 'xbox' | 'ea-fc' | 'payment' | 'general';
+export type GuideCategory = 'playstation' | 'xbox' | 'ea-fc' | 'pc' | 'payment' | 'general';
 
 export interface GuideSection {
   id: string;
@@ -28,9 +28,10 @@ export interface GuideItem {
 }
 
 export const GUIDE_CATEGORIES: Record<GuideCategory, { label: string; icon: string; color: string }> = {
-  playstation: { label: 'PlayStation', icon: '🎮', color: '#0070D1' },
+  playstation: { label: 'PlayStation', icon: '🔵', color: '#0070D1' },
   xbox:        { label: 'Xbox',        icon: '🟢', color: '#107C10' },
   'ea-fc':     { label: 'EA FC',        icon: '⚽', color: '#2ECC40' },
+  pc:          { label: 'ПК',          icon: '🟠', color: '#F97316' },
   payment:     { label: 'Оплата',      icon: '💳', color: '#F59E0B' },
   general:     { label: 'Общее',       icon: '📋', color: '#6B7280' },
 };
