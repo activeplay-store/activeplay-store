@@ -7,11 +7,14 @@ import { guidesData, GUIDE_CATEGORIES, type GuideCategory } from '@/data/guides'
 /* ── Constants ─────────────────────────────────────────────────────────── */
 
 const ITEMS_PER_PAGE = 6;
-const ALL_CATEGORIES: ('all' | GuideCategory)[] = ['all', 'playstation', 'xbox', 'payment', 'general'];
+const ALL_CATEGORIES: ('all' | GuideCategory)[] = ['all', 'playstation', 'xbox', 'ea', 'ea-fc', 'pc', 'payment', 'general'];
 const CATEGORY_LABELS: Record<string, string> = {
   all: 'Все',
   playstation: 'PlayStation',
   xbox: 'Xbox',
+  ea: 'EA',
+  'ea-fc': 'EA FC',
+  pc: 'ПК',
   payment: 'Оплата',
   general: 'Общее',
 };
