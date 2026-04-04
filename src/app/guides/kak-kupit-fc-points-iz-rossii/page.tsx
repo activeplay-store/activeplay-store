@@ -105,15 +105,20 @@ export default function GuideFCPoints() {
             В EA Sports FC 26 доступны восемь номиналов ФК Поинтс. Чем больше пакет &mdash; тем выгоднее цена за один поинт.
           </p>
 
-          <div className="grid grid-cols-4 gap-3 my-8">
-            {['100','500','1 050','1 600','2 800','5 900','12 000','18 500'].map((n, i) => (
-              <div key={n} className={`bg-white/[0.03] border rounded-xl p-4 text-center transition-all hover:-translate-y-0.5 ${i === 6 ? 'border-[#2ECC40]/30 bg-[#2ECC40]/[0.04]' : 'border-white/[0.06]'}`}>
-                <div className="font-rajdhani text-[18px] font-extrabold text-white">{n}</div>
-                <div className="text-[11px] text-[#5a6a7a] mt-1">Points</div>
-                {i === 6 && <div className="text-[9px] text-[#2ECC40] font-bold mt-1">ХИТ</div>}
-              </div>
-            ))}
-          </div>
+          <Link href="/igrovaya-valyuta" className="block">
+            <div className="grid grid-cols-4 gap-3 my-8">
+              {['100','500','1 050','1 600','2 800','5 900','12 000','18 500'].map((n, i) => (
+                <div key={n} className={`bg-white/[0.03] border rounded-xl p-4 text-center transition-all hover:-translate-y-0.5 ${i === 6 ? 'border-[#2ECC40]/30 bg-[#2ECC40]/[0.04]' : 'border-white/[0.06]'}`}>
+                  <div className="font-rajdhani text-[18px] font-extrabold text-white">{n}</div>
+                  <div className="text-[11px] text-[#5a6a7a] mt-1">Points</div>
+                  {i === 6 && <div className="text-[9px] text-[#2ECC40] font-bold mt-1">ХИТ</div>}
+                </div>
+              ))}
+            </div>
+            <div className="text-center mt-2">
+              <span className="text-[#2ECC40] text-[14px] font-semibold hover:underline">Все номиналы FC Points →</span>
+            </div>
+          </Link>
 
           <Callout type="danger" label="Несуществующие номиналы">
             Номиналы 250, 750 и 2 200 FC Points не существуют с FIFA 23. Если кто-то предлагает их купить &mdash; это мошенничество. Только 8 официальных пакетов.
@@ -194,7 +199,7 @@ export default function GuideFCPoints() {
           </div>
 
           <Callout type="info" label="Кроссплатформенность">
-            FC Points привязаны к платформе. Если купили на PlayStation &mdash; потратить на Xbox не получится. Прогресс Ultimate Team переносится между устройствами, но валюта остаётся на платформе покупки.
+            FC Points привязаны к платформе. Если купили на PlayStation &mdash; потратить на Xbox не получится.
           </Callout>
 
           <Divider />
@@ -224,13 +229,13 @@ export default function GuideFCPoints() {
           <Divider />
 
           {/* --- Амбассадор --- */}
-          <div className="bg-white/[0.03] border border-[#00D4FF]/15 rounded-2xl p-8 my-10">
-            <div className="flex flex-col md:flex-row gap-6 items-center">
-              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#00D4FF] to-[#0070D1] flex items-center justify-center text-white font-rajdhani text-2xl font-extrabold flex-shrink-0">A</div>
+          <div className="bg-gradient-to-r from-[#00D4FF]/[0.08] to-[#0070D1]/[0.05] border border-[#00D4FF]/20 rounded-2xl p-8 md:p-10 my-10">
+            <div className="flex flex-col md:flex-row gap-8 items-center md:items-start">
+              <img src="/images/abel.webp" alt="Даниил Abel Абельдяев — 5-кратный чемпион России по EA FC" className="w-24 h-24 rounded-2xl object-cover flex-shrink-0 border-2 border-[#00D4FF]/30" />
               <div>
-                <div className="font-rajdhani text-xl font-bold text-white mb-1">Даниил Abel Абельдяев</div>
-                <div className="text-[13px] text-[#00D4FF] mb-3">5-кратный чемпион России по EA FC {'\u00B7'} Амбассадор ActivePlay</div>
-                <p className="text-[15px] text-[#9aa8b8] leading-relaxed m-0 italic">
+                <div className="font-rajdhani text-2xl font-extrabold text-white mb-1">Даниил Abel Абельдяев</div>
+                <div className="text-[14px] text-[#00D4FF] mb-4">5-кратный чемпион России по EA FC · Стример · Амбассадор ActivePlay</div>
+                <p className="text-[17px] text-[#9aa8b8] leading-relaxed m-0 italic">
                   &laquo;Я пополняю баланс FC Points через ActivePlay и вам рекомендую &mdash; быстро, безопасно, дёшево&raquo;
                 </p>
               </div>
