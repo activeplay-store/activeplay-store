@@ -153,7 +153,7 @@ export const guidesData: GuideItem[] = [
     slug: 'xbox-game-pass-kak-kupit-iz-rossii',
     title: 'Xbox Game Pass — все тарифы и покупка из России',
     excerpt: 'Как купить Xbox Game Pass из России в 2026 году. Тарифы Essential, Premium и Ultimate: что входит, цены, отличия. Конвертация, активация через подарочные карты.',
-    coverUrl: '/images/platforms/xbox-game-pass.png',
+    coverUrl: '/images/guides/xbox-game-pass.png',
     category: 'xbox',
     date: '2026-04-04',
     author: 'ActivePlay',
