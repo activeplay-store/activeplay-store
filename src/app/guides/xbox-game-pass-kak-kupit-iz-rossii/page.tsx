@@ -77,7 +77,7 @@ export default function GuideXboxGamePass() {
 
           {/* Essential — кликабельный заголовок */}
           <Link href="/xbox-game-pass-essential" className="block hover:opacity-80 transition-opacity text-[#107C10] no-underline mt-10">
-            <h3 className="font-rajdhani text-[28px] font-extrabold text-inherit mb-2">Game Pass Essential &mdash; мультиплеер и 50+ игр</h3>
+            <h3 className="font-rajdhani text-[28px] font-extrabold !text-[#107C10] mb-2">Game Pass Essential &mdash; мультиплеер и 50+ игр</h3>
           </Link>
           <p className="text-[17px] text-[#9aa8b8] leading-relaxed">
             Бывший Game Pass Core. Базовый уровень &mdash; от 1 300 {'\u20BD'}/мес. Онлайн-мультиплеер на Xbox и ПК, библиотека из 50+ игр, облачный гейминг и программа лояльности Rewards. Годовая подписка &mdash; 6 950 {'\u20BD'}, экономия почти 9 000 {'\u20BD'}.
@@ -94,7 +94,7 @@ export default function GuideXboxGamePass() {
 
           {/* Premium — кликабельный заголовок */}
           <Link href="/xbox-game-pass-premium" className="block hover:opacity-80 transition-opacity text-[#0078D4] no-underline mt-10">
-            <h3 className="font-rajdhani text-[28px] font-extrabold text-inherit mb-2">Game Pass Premium &mdash; 280 игр на Xbox и ПК</h3>
+            <h3 className="font-rajdhani text-[28px] font-extrabold !text-[#0078D4] mb-2">Game Pass Premium &mdash; 280 игр на Xbox и ПК</h3>
           </Link>
           <p className="text-[17px] text-[#9aa8b8] leading-relaxed">
             Бывший Game Pass Standard. Средний тариф &mdash; от 1 700 {'\u20BD'}/мес. Каталог расширяется до 280 игр, впервые включая ПК-версии. Cyberpunk 2077, Hogwarts Legacy, Starfield &mdash; здесь. Xbox-эксклюзивы появляются в течение года после релиза. Годовая подписка &mdash; 9 900 {'\u20BD'}.
@@ -111,7 +111,7 @@ export default function GuideXboxGamePass() {
 
           {/* Ultimate — кликабельный заголовок */}
           <Link href="/xbox-game-pass-ultimate" className="block hover:opacity-80 transition-opacity text-[#7B2FA0] no-underline mt-10">
-            <h3 className="font-rajdhani text-[28px] font-extrabold text-inherit mb-2">Game Pass Ultimate &mdash; всё включено</h3>
+            <h3 className="font-rajdhani text-[28px] font-extrabold !text-[#7B2FA0] mb-2">Game Pass Ultimate &mdash; всё включено</h3>
           </Link>
           <p className="text-[17px] text-[#9aa8b8] leading-relaxed">
             Максимальный тариф &mdash; от 2 500 {'\u20BD'}/мес. Более 500 игр на Xbox, ПК и через облако. Новинки в день релиза: Call of Duty, Forza, Halo, все игры Activision Blizzard &mdash; в первый же день. Плюс Ubisoft+ Classics, Fortnite Crew, EA Play и приоритетный облачный гейминг в 1440p. Годовая подписка &mdash; 13 500 {'\u20BD'}.
