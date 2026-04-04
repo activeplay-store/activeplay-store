@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import GuideSchema from '@/components/GuideSchema';
+import RelatedGuides from '@/components/RelatedGuides';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
@@ -35,16 +37,8 @@ function Accent() { return <div className="w-16 h-[3px] bg-gradient-to-r from-[#
 export default function GuideXboxGamePass() {
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'Article',
-        headline: 'Xbox Game Pass в 2026 — отличия Core, Standard и Ultimate и как купить из России',
-        author: { '@type': 'Organization', name: 'ActivePlay' },
-        publisher: { '@type': 'Organization', name: 'ActivePlay', url: 'https://activeplay.games' },
-        datePublished: '2026-04-04',
-        dateModified: '2026-04-04',
-      }) }} />
       <Header />
+      <GuideSchema title="Xbox Game Pass — тарифы и покупка из России" slug="xbox-game-pass-kak-kupit-iz-rossii" date="2026-04-04" />
       <article className="min-h-screen bg-[#0A1628]">
 
         {/* ═══ HERO ═══ */}
@@ -333,6 +327,7 @@ export default function GuideXboxGamePass() {
             </a>
           </div>
 
+          <RelatedGuides currentSlug="xbox-game-pass-kak-kupit-iz-rossii" />
           <div className="flex flex-wrap gap-2 pt-8 border-t border-white/[0.05]">
             {['Xbox Game Pass','Game Pass','гейм пасс','геймпасс','Ultimate','гейм пасс ультимейт','Essential','Game Pass Core','Premium','Game Pass Standard','Xbox','подписка иксбокс','из России','купить','СБП','PC Game Pass','облачный гейминг','каталог игр game pass'].map((tag) => (
               <span key={tag} className="text-[12px] text-[#4a5a6a] bg-white/[0.03] border border-white/[0.06] px-4 py-1.5 rounded-full hover:border-[#107C10]/20 hover:text-[#107C10] transition-all cursor-default">{tag}</span>

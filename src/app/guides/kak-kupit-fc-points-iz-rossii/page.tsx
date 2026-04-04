@@ -4,6 +4,8 @@
 import type { Metadata } from 'next';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import GuideSchema from '@/components/GuideSchema';
+import RelatedGuides from '@/components/RelatedGuides';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
@@ -38,16 +40,8 @@ function Accent() { return <div className="w-16 h-[3px] bg-gradient-to-r from-[#
 export default function GuideFCPoints() {
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'Article',
-        headline: 'Как купить FC Points из России — донат Ultimate Team',
-        author: { '@type': 'Organization', name: 'ActivePlay' },
-        publisher: { '@type': 'Organization', name: 'ActivePlay', url: 'https://activeplay.games' },
-        datePublished: '2026-04-04',
-        dateModified: '2026-04-04',
-      }) }} />
       <Header />
+      <GuideSchema title="Как купить FC Points из России" slug="kak-kupit-fc-points-iz-rossii" date="2026-04-04" />
       <article className="min-h-screen bg-[#0A1628]">
 
         {/* ═══ HERO — зелёный EA FC градиент ═══ */}
@@ -299,6 +293,7 @@ export default function GuideFCPoints() {
             </a>
           </div>
 
+          <RelatedGuides currentSlug="kak-kupit-fc-points-iz-rossii" />
           <div className="flex flex-wrap gap-2 pt-8 border-t border-white/[0.05]">
             {['FC Points','фк поинтс','FIFA Points','фифа поинтс','EA FC 26','Ultimate Team','купить','из России','донат','СБП','PS5','Xbox','EA Play'].map((tag) => (
               <span key={tag} className="text-[12px] text-[#4a5a6a] bg-white/[0.03] border border-white/[0.06] px-4 py-1.5 rounded-full hover:border-[#2ECC40]/20 hover:text-[#2ECC40] transition-all cursor-default">{tag}</span>

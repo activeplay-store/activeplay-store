@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import GuideSchema from '@/components/GuideSchema';
+import RelatedGuides from '@/components/RelatedGuides';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
@@ -36,16 +38,8 @@ function Accent() { return <div className="w-16 h-[3px] bg-gradient-to-r from-[#
 export default function GuidePSPlusTiers() {
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'Article',
-        headline: 'PS Plus Essential, Extra и Deluxe — отличия, цены и какой уровень выбрать в 2026',
-        author: { '@type': 'Organization', name: 'ActivePlay' },
-        publisher: { '@type': 'Organization', name: 'ActivePlay', url: 'https://activeplay.games' },
-        datePublished: '2026-04-04',
-        dateModified: '2026-04-04',
-      }) }} />
       <Header />
+      <GuideSchema title="PS Plus Essential, Extra и Deluxe — отличия" slug="ps-plus-essential-extra-deluxe-otlichiya" date="2026-04-04" />
       <article className="min-h-screen bg-[#0A1628]">
 
         {/* ═══ HERO ═══ */}
@@ -392,6 +386,7 @@ export default function GuidePSPlusTiers() {
             </a>
           </div>
 
+          <RelatedGuides currentSlug="ps-plus-essential-extra-deluxe-otlichiya" />
           {/* Теги */}
           <div className="flex flex-wrap gap-2 pt-8 border-t border-white/[0.05]">
             {['PS Plus','Essential','Extra','Deluxe','Premium','отличия','сравнение','пс плюс','пс плюс премиум','какой выбрать','каталог игр','бесплатные игры ps plus','подписка','PlayStation','виды подписок','нужен ли ps plus'].map((tag) => (

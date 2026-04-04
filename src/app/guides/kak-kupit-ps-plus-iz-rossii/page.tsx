@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import GuideSchema from '@/components/GuideSchema';
+import RelatedGuides from '@/components/RelatedGuides';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
@@ -69,16 +71,8 @@ function Accent() { return <div className="w-16 h-[3px] bg-gradient-to-r from-[#
 export default function GuidePSPlus() {
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'Article',
-        headline: 'Как купить подписку PS Plus из России в 2026 году — пошаговая инструкция',
-        author: { '@type': 'Organization', name: 'ActivePlay' },
-        publisher: { '@type': 'Organization', name: 'ActivePlay', url: 'https://activeplay.games' },
-        datePublished: '2026-04-04',
-        dateModified: '2026-04-04',
-      }) }} />
       <Header />
+      <GuideSchema title="Как купить PS Plus из России" slug="kak-kupit-ps-plus-iz-rossii" date="2026-04-04" />
       <article className="min-h-screen bg-[#0A1628]">
 
         {/* ═══ HERO ═══ */}
@@ -454,6 +448,7 @@ export default function GuidePSPlus() {
             ))}
           </div>
 
+          <RelatedGuides currentSlug="kak-kupit-ps-plus-iz-rossii" />
           {/* Теги */}
           <div className="flex flex-wrap gap-2 pt-8 border-t border-white/[0.05]">
             {['PS Plus','PlayStation','подписка','Турция','Украина','Индия','из России','СБП','пс плюс','плейстейшен плюс','купить','активировать','пополнить ps store','карта psn','сколько стоит','подписка сони','ps plus 2026'].map((tag) => (

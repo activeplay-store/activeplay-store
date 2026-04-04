@@ -10,9 +10,20 @@ module.exports = {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/api/', '/_next/'],
+        disallow: ['/api/', '/_next/', '/admin/'],
       },
     ],
+    additionalSitemaps: [],
+    transformRobotsTxt: async (_, robotsTxt) => {
+      const yandexBlock = [
+        '',
+        'User-agent: Yandex',
+        'Host: activeplay.games',
+        'Crawl-delay: 0.5',
+        'Clean-param: utm_source&utm_medium&utm_campaign&utm_content',
+      ].join('\n');
+      return robotsTxt + yandexBlock + '\n';
+    },
   },
   additionalPaths: async () => [
     { loc: '/', changefreq: 'daily', priority: 1.0 },
