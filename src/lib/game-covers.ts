@@ -167,10 +167,11 @@ export const HARDCODED_COVERS: Record<string, string> = {
 
 const PLACEHOLDER = '/images/covers/discounts/baldurs-gate-3.jpg';
 
-/** Get vertical game cover (600x900) */
+/** Get vertical game cover (600x900) — prefers local file, falls back to Steam CDN */
 export function getGameCover(id: string): string {
   const appId = STEAM_APP_IDS[id];
-  if (appId && appId > 0) return `${STEAM_CDN}/${appId}/library_600x900.jpg`;
+  // Local cover downloaded from Steam CDN (works regardless of geo-blocks)
+  if (appId && appId > 0) return `/images/covers/ea/${id}.jpg`;
   const hc = HARDCODED_COVERS[id];
   if (hc) return hc;
   return PLACEHOLDER;
