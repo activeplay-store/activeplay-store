@@ -105,18 +105,38 @@ export default function GuideFCPoints() {
             В EA Sports FC 26 доступны восемь номиналов ФК Поинтс. Чем больше пакет &mdash; тем выгоднее цена за один поинт.
           </p>
 
-          <Link href="/igrovaya-valyuta" className="block">
+          <Link href="/igrovaya-valyuta" className="block group">
             <div className="grid grid-cols-4 gap-3 my-8">
               {['100','500','1 050','1 600','2 800','5 900','12 000','18 500'].map((n, i) => (
-                <div key={n} className={`bg-white/[0.03] border rounded-xl p-4 text-center transition-all hover:-translate-y-0.5 ${i === 6 ? 'border-[#2ECC40]/30 bg-[#2ECC40]/[0.04]' : 'border-white/[0.06]'}`}>
-                  <div className="font-rajdhani text-[18px] font-extrabold text-white">{n}</div>
-                  <div className="text-[11px] text-[#5a6a7a] mt-1">Points</div>
-                  {i === 6 && <div className="text-[9px] text-[#2ECC40] font-bold mt-1">ХИТ</div>}
+                <div
+                  key={n}
+                  className="flex flex-col items-center relative transition-transform duration-300 hover:scale-[1.03] overflow-hidden"
+                  style={{
+                    background: 'linear-gradient(180deg, #1A0D2E 0%, #0D0D1A 100%)',
+                    borderRadius: '12px',
+                    border: i === 6 ? '1px solid rgba(0,230,118,0.3)' : '1px solid rgba(0,230,118,0.15)',
+                    boxShadow: '0 4px 16px rgba(0,0,0,0.3)',
+                    height: '140px',
+                  }}
+                >
+                  <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(circle at 50% 45%, rgba(0,230,118,0.12), transparent 60%)' }} />
+                  {i === 6 && (
+                    <span className="absolute z-10" style={{ top: 26, right: 6, background: 'linear-gradient(135deg, #FF6B00, #FF3D00)', color: '#fff', fontSize: 6, fontWeight: 700, textTransform: 'uppercase', padding: '1px 5px', borderRadius: 4, letterSpacing: 1, boxShadow: '0 2px 6px rgba(255,61,0,0.25)' }}>Хит</span>
+                  )}
+                  <div className="w-full shrink-0 flex items-center justify-center relative z-10" style={{ height: '22px', background: 'linear-gradient(90deg, #00E676, #76FF03, #00E676)', borderRadius: '12px 12px 0 0', boxShadow: '0 2px 12px rgba(0,230,118,0.3)' }}>
+                    <span className="font-bold uppercase" style={{ fontSize: '8px', letterSpacing: '1px', color: '#000' }}>FC Points</span>
+                  </div>
+                  <div className="flex flex-col items-center justify-center flex-1 relative z-10">
+                    <img src="/images/covers/fc-points.webp" alt="FC Points" style={{ width: '40px', height: 'auto', objectFit: 'contain', filter: 'drop-shadow(0 4px 12px rgba(0,230,118,0.35))' }} />
+                    <div style={{ width: '30px', height: '1px', background: 'linear-gradient(90deg, transparent, rgba(0,230,118,0.4), transparent)', margin: '3px auto' }} />
+                    <span className="font-display" style={{ fontSize: '20px', fontWeight: 800, lineHeight: 1.1, background: 'linear-gradient(180deg, #FFFFFF 0%, #90CAF9 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{n}</span>
+                  </div>
+                  <span className="text-white uppercase shrink-0 relative z-10" style={{ fontSize: '6px', letterSpacing: '2px', opacity: 0.5, marginBottom: '6px' }}>EA Sports FC 26</span>
                 </div>
               ))}
             </div>
             <div className="text-center mt-2">
-              <span className="text-[#2ECC40] text-[14px] font-semibold hover:underline">Все номиналы FC Points →</span>
+              <span className="text-[#2ECC40] text-[14px] font-semibold group-hover:underline">Все номиналы FC Points →</span>
             </div>
           </Link>
 
@@ -229,11 +249,12 @@ export default function GuideFCPoints() {
           <Divider />
 
           {/* --- Амбассадор --- */}
-          <div className="bg-gradient-to-r from-[#00D4FF]/[0.08] to-[#0070D1]/[0.05] border border-[#00D4FF]/20 rounded-2xl p-8 md:p-10 my-10">
-            <div className="flex flex-col md:flex-row gap-8 items-center md:items-start">
-              <img src="/images/abel.webp" alt="Даниил Abel Абельдяев — 5-кратный чемпион России по EA FC" className="w-24 h-24 rounded-2xl object-cover flex-shrink-0 border-2 border-[#00D4FF]/30" />
-              <div>
-                <div className="font-rajdhani text-2xl font-extrabold text-white mb-1">Даниил Abel Абельдяев</div>
+          <div className="rounded-2xl overflow-hidden border border-[#00D4FF]/20 my-10">
+            <div className="relative h-[320px] md:h-[400px]">
+              <img src="/images/abel.webp" alt="Даниил Abel Абельдяев — 5-кратный чемпион России по EA FC" className="w-full h-full object-cover object-top" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0A1628] via-[#0A1628]/60 to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-8 md:p-10">
+                <div className="font-rajdhani text-[28px] md:text-[32px] font-extrabold text-white mb-1">Даниил Abel Абельдяев</div>
                 <div className="text-[14px] text-[#00D4FF] mb-4">5-кратный чемпион России по EA FC · Стример · Амбассадор ActivePlay</div>
                 <p className="text-[17px] text-[#9aa8b8] leading-relaxed m-0 italic">
                   &laquo;Я пополняю баланс FC Points через ActivePlay и вам рекомендую &mdash; быстро, безопасно, дёшево&raquo;
