@@ -1,5 +1,5 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-04-03T09:00:48.290Z
+// Обновлено: 2026-04-04T01:16:55.741Z
 // Горящих новинок: 4
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
@@ -60,8 +60,8 @@ export const hotReleases: HotRelease[] = [
     genre: "Шутер",
     platforms: ["PS5"],
     cover: "https://media.rawg.io/media/games/cab/cabc7cd14f1d9829c37d3bd2bec16c4a.jpg",
-    hypeScore: 3,
-    totalScore: 5,
+    hypeScore: 4,
+    totalScore: 5.4,
     editions: {
       tr: [
         { name: "Standard", priceRUB: 1600 },
@@ -73,16 +73,16 @@ export const hotReleases: HotRelease[] = [
   },
   {
     id: "darwin-s-paradox",
-    title: "Darwin s Paradox",
+    title: "Darwin's Paradox!",
     slug: "darwin-s-paradox",
-    description: "",
+    description: "Платформер от ZDT Studio. Стелс-осьминог",
     releaseDate: "2 апреля 2026",
     metacritic: 0,
-    genre: "Экшен",
+    genre: "Казуальная",
     platforms: ["PS5"],
     cover: "https://image.api.playstation.com/vulcan/ap/rnd/202511/0718/8dc3bb026f8c0873ac11c58a584c3ee618dbfc9db4064514.png",
-    hypeScore: 2,
-    totalScore: 4.6,
+    hypeScore: 3,
+    totalScore: 5,
     editions: {
       tr: [
         { name: "Standard", priceRUB: 3150 },
