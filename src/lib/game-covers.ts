@@ -6,7 +6,7 @@
  * No API key needed. URLs stable for years.
  */
 
-const STEAM_CDN = 'https://cdn.akamai.steamstatic.com/steam/apps';
+const STEAM_CDN = 'https://cdn.cloudflare.steamstatic.com/steam/apps';
 
 // Keys = game IDs from eaPlayGames.ts / eaPlayProGames.ts
 export const STEAM_APP_IDS: Record<string, number> = {
