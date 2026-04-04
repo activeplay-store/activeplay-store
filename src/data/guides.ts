@@ -167,7 +167,7 @@ export const guidesData: GuideItem[] = [
     slug: 'kak-kupit-fc-points-iz-rossii',
     title: 'Как купить FC Points из России — донат Ultimate Team',
     excerpt: 'Как купить ФК Поинтс для EA Sports FC 26 из России. Все номиналы, цены в рублях, оплата через СБП. Скидка 10% с EA Play.',
-    coverUrl: '/images/covers/fc-points.webp',
+    coverUrl: '/images/guides/fc-points-cover.webp',
     category: 'ea-fc',
     date: '2026-04-04',
     author: 'ActivePlay',
