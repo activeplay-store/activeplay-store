@@ -1,44 +1,44 @@
 {
-  "month": "февраль",
+  "month": "март",
   "year": 2026,
   "source": "PlayStation Blog",
-  "updatedAt": "2026-03-27T00:12:03.323Z",
+  "updatedAt": "2026-04-04T11:26:38.619Z",
   "games": [
     {
       "rank": 1,
-      "title": "Resident Evil Requiem",
-      "genre": "Survival Horror",
-      "image": "/images/covers/Resident-Evil-Requiem.jpg",
+      "title": "Crimson Desert",
+      "genre": "Экшен",
+      "image": "/images/covers/crimson-desert.jpg",
       "platform": "PS5",
-      "priceTR": 2300,
-      "priceUA": 2300
+      "priceTR": 7300,
+      "priceUA": 7300
     },
     {
       "rank": 2,
       "title": "EA SPORTS FC 26",
       "genre": "Спорт",
-      "image": "https://image.api.playstation.com/vulcan/ap/rnd/202507/1617/f0fe830f8f01600d13cce060680e0287374c58613a63c716.png",
+      "image": "/images/covers/ea-fc-26.jpg",
       "platform": "PS5",
-      "priceTR": 2750,
-      "priceUA": 2750
+      "priceTR": 2700,
+      "priceUA": 2700
     },
     {
       "rank": 3,
-      "title": "UFC 5",
-      "genre": "Файтинг",
-      "image": "https://image.api.playstation.com/vulcan/ap/rnd/202309/0421/0b3fe53ab2d54998602b41682ef1bd83e63e82d3f9ab8fff.png",
+      "title": "Resident Evil Requiem",
+      "genre": "Survival Horror",
+      "image": "/images/covers/Resident-Evil-Requiem.jpg",
       "platform": "PS5",
-      "priceTR": 1600,
-      "priceUA": 1650
+      "priceTR": 8300,
+      "priceUA": 7400
     },
     {
       "rank": 4,
       "title": "Grand Theft Auto V",
       "genre": "Экшен / Open World",
-      "image": "https://image.api.playstation.com/vulcan/ap/rnd/202202/2816/YHqWG89UegirLGRyNIn8tmnv.jpg",
+      "image": "/images/covers/gta-v.jpg",
       "platform": "PS5",
-      "priceTR": 1750,
-      "priceUA": 2450
+      "priceTR": 1700,
+      "priceUA": 3800
     },
     {
       "rank": 5,
@@ -51,48 +51,48 @@
     },
     {
       "rank": 6,
-      "title": "It Takes Two",
-      "genre": "Кооп-адвенчура",
-      "image": "https://image.api.playstation.com/vulcan/ap/rnd/202012/0815/IjqyQi0J2PL7GdEo3K8jKWMh.png",
+      "title": "WWE 2K26",
+      "genre": "Экшен",
+      "image": "/images/covers/wwe-2k26.jpg",
       "platform": "PS5",
-      "priceTR": 1250,
-      "priceUA": 1400
+      "priceTR": 5100,
+      "priceUA": 4500
     },
     {
       "rank": 7,
-      "title": "ARC Raiders",
-      "genre": "Шутер / Кооп",
-      "image": "https://image.api.playstation.com/vulcan/ap/rnd/202504/1515/99f254edff001a6a52d1d9f09af28959abfbaf1fe1a034b4.jpg",
+      "title": "UFC 5",
+      "genre": "Файтинг",
+      "image": "/images/covers/ufc-5.jpg",
       "platform": "PS5",
-      "priceTR": 3900,
-      "priceUA": 3650
+      "priceTR": 1550,
+      "priceUA": 1600
     },
     {
       "rank": 8,
-      "title": "REANIMAL",
-      "genre": "Хоррор-адвенчура",
-      "image": "/images/covers/reanimal.jpg",
+      "title": "Resident Evil 4",
+      "genre": "Приключения",
+      "image": "/images/covers/resident-evil-4.jpg",
       "platform": "PS5",
-      "priceTR": 4800,
-      "priceUA": 4000
+      "priceTR": 3500,
+      "priceUA": 3100
     },
     {
       "rank": 9,
-      "title": "Forza Horizon 5",
-      "genre": "Гонки / Open World",
-      "image": "https://image.api.playstation.com/vulcan/ap/rnd/202502/1221/1cdbb2177cc3c6302027f05796073b27ca7f7ccf091c3127.png",
+      "title": "Call of Duty: Black Ops 7",
+      "genre": "Шутер / FPS",
+      "image": "/images/covers/cod-blops-7.jpg",
       "platform": "PS5",
-      "priceTR": 4200,
-      "priceUA": 3850
+      "priceTR": 4500,
+      "priceUA": 4500
     },
     {
       "rank": 10,
-      "title": "Call of Duty: Black Ops 7",
-      "genre": "Шутер / FPS",
-      "image": "https://image.api.playstation.com/vulcan/ap/rnd/202508/2119/b22bad2858eeaac332a5889000900fc1e090b81cb0a40a1f.png",
+      "title": "ARC Raiders",
+      "genre": "Шутер / Кооп",
+      "image": "/images/covers/arc-raiders.jpg",
       "platform": "PS5",
-      "priceTR": 8850,
-      "priceUA": 8850
+      "priceTR": 3850,
+      "priceUA": 3600
     }
   ]
 }

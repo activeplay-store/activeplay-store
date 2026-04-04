@@ -1994,12 +1994,13 @@ async function generateTopSellers(gameList) {
     'monster-hunter-stories-3-twisted-reflection': { priceTR: 5550, priceUA: 4900 },
     'wwe-2k26': { priceTR: 5100, priceUA: 4500 },
     'arc-raiders': { priceTR: 3250, priceUA: 2950 },
+    'crimson-desert': { priceTR: 7300, priceUA: 7300, platform: 'PS5' },
     'resident-evil-4': { priceTR: 3500, priceUA: 3100 },
   };
 
   // Known cover overrides for games with non-standard filenames
   const COVER_OVERRIDES = {
-    'resident-evil-requiem': '/images/covers/Resident-Evil-Requiem.jpg',
+    'resident-evil-requiem': '/images/covers/resident-evil-requiem.jpg',
     'call-of-duty-black-ops-7': '/images/covers/cod-blops-7.jpg',
     'grand-theft-auto-v': '/images/covers/gta-v.jpg',
     'ea-sports-fc-26': '/images/covers/ea-fc-26.jpg',
@@ -2142,6 +2143,53 @@ async function generateTopSellers(gameList) {
     if (priceFb) {
       if (priceTR === 0) priceTR = priceFb.priceTR;
       if (priceUA === 0) priceUA = priceFb.priceUA;
+    }
+
+    // Fallback: read prices from hotReleases.ts if still 0
+    if (priceTR === 0 && priceUA === 0) {
+      try {
+        const hrPath = path.join(REPO_ROOT, HOT_RELEASES_FILE);
+        const hrContent = fs.readFileSync(hrPath, 'utf8');
+        const hrSlug = slug;
+        // Find the game block by slug or title
+        const hrBlocks = hrContent.split(/\n  \{/);
+        for (const block of hrBlocks) {
+          const idMatch = block.match(/id:\s*"([^"]+)"/);
+          const titleMatch = block.match(/title:\s*"([^"]+)"/);
+          const blockSlug = idMatch ? idMatch[1] : '';
+          const blockTitle = titleMatch ? titleMatch[1] : '';
+          if (blockSlug === hrSlug || slugify(blockTitle) === hrSlug) {
+            // Extract TR editions prices
+            const trEdBlock = block.match(/tr:\s*\[([\s\S]*?)\]/);
+            if (trEdBlock) {
+              const priceMatches = trEdBlock[1].match(/priceRUB:\s*(\d+)/g);
+              if (priceMatches) {
+                for (const pm of priceMatches) {
+                  const val = parseInt(pm.replace(/priceRUB:\s*/, ''));
+                  if (val > 0 && (priceTR === 0 || val < priceTR)) priceTR = val;
+                }
+              }
+            }
+            // Extract UA editions prices
+            const uaEdBlock = block.match(/ua:\s*\[([\s\S]*?)\]/);
+            if (uaEdBlock) {
+              const priceMatches = uaEdBlock[1].match(/priceRUB:\s*(\d+)/g);
+              if (priceMatches) {
+                for (const pm of priceMatches) {
+                  const val = parseInt(pm.replace(/priceRUB:\s*/, ''));
+                  if (val > 0 && (priceUA === 0 || val < priceUA)) priceUA = val;
+                }
+              }
+            }
+            if (priceTR > 0 || priceUA > 0) {
+              console.log(PREFIX + '   hotReleases fallback: ' + name + ' → TR=' + priceTR + ', UA=' + priceUA);
+            }
+            break;
+          }
+        }
+      } catch (hrErr) {
+        // Ignore — hotReleases.ts may not exist
+      }
     }
 
     resolved.push({
