@@ -385,15 +385,9 @@ async function main() {
     const { setupRepublishHandlers } = require('./modules/news/approval');
     setupRepublishHandlers(bot);
 
-    bot.launch().then(() => {
-      console.log('[Bot] Telegram bot started');
-    }).catch(err => {
-      console.error('[Bot] Failed to start:', err.message);
-    });
-
-    // Graceful stop
-    process.once('SIGINT', () => bot.stop('SIGINT'));
-    process.once('SIGTERM', () => bot.stop('SIGTERM'));
+    // Bot polling disabled — ap-agent-bot handles all Telegram updates
+    // This process only uses bot.telegram.* for sending messages
+    console.log('[Bot] Telegram bot ready (API-only mode, no polling)');
 
     // Проверка очереди отложенных публикаций — каждую минуту
     setInterval(() => processQueue(bot).catch(err => {
