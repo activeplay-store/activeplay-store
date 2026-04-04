@@ -1,4 +1,4 @@
-export type GuideCategory = 'playstation' | 'xbox' | 'ea-fc' | 'pc' | 'payment' | 'general';
+export type GuideCategory = 'playstation' | 'xbox' | 'ea-fc' | 'ea' | 'pc' | 'payment' | 'general';
 
 export interface GuideSection {
   id: string;
@@ -31,6 +31,7 @@ export const GUIDE_CATEGORIES: Record<GuideCategory, { label: string; icon: stri
   playstation: { label: 'PlayStation', icon: '🔵', color: '#0070D1' },
   xbox:        { label: 'Xbox',        icon: '🟢', color: '#107C10' },
   'ea-fc':     { label: 'EA FC',        icon: '⚽', color: '#2ECC40' },
+  ea:          { label: 'EA',          icon: '🟠', color: '#FF6B00' },
   pc:          { label: 'ПК',          icon: '🟠', color: '#F97316' },
   payment:     { label: 'Оплата',      icon: '💳', color: '#F59E0B' },
   general:     { label: 'Общее',       icon: '📋', color: '#6B7280' },
@@ -174,6 +175,19 @@ export const guidesData: GuideItem[] = [
     author: 'ActivePlay',
     readTime: '6 мин',
     tags: ['FC Points', 'EA FC', 'Ultimate Team', 'донат', 'из России'],
+    sections: [],
+  },
+  {
+    id: 'g5',
+    slug: 'ea-play-podpiska-kak-kupit',
+    title: 'EA Play — подписка Electronic Arts: каталог, скидки, покупка',
+    excerpt: 'Что входит в EA Play: каталог 64 игр, скидка 10% на FC Points и Apex Coins, ранний доступ к новинкам EA. Как купить ЕА Плей из России, цены от 900₽.',
+    coverUrl: '/images/platforms/ea-play.png',
+    category: 'ea',
+    date: '2026-04-04',
+    author: 'ActivePlay',
+    readTime: '6 мин',
+    tags: ['EA Play', 'подписка', 'Electronic Arts', 'каталог', 'скидка 10%'],
     sections: [],
   }
 ];
