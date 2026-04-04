@@ -1,5 +1,5 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-04-03T01:14:23.324Z
+// Обновлено: 2026-04-04T01:15:50.039Z
 // Предзаказов: 24
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
@@ -160,7 +160,25 @@ export const preorderData: PreorderGame[] = [
       UA: [
         { name: "Standard", clientPrice: 4800 },
         { name: "Deluxe", clientPrice: 6650 },
-        { name: "Ultimate", clientPrice: 9400 },
+        { name: "Ultimate", clientPrice: 9500 },
+      ],
+    },
+  },
+  {
+    id: "saros",
+    name: "SAROS",
+    platforms: ["PS5"],
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202512/0216/559cda0aac5db568f4d5ab40f73ad0c45416c58ee852e673.jpg",
+    releaseDate: "2026-04-27",
+    genre: "Экшен",
+    description: "Рогалик-шутер от Housemarque. Щит из пуль",
+    editions: {
+      TR: [
+        { name: "Standard", clientPrice: 8250 },
+        { name: "Digital Deluxe", clientPrice: 9150 },
+      ],
+      UA: [
+        { name: "Standard", clientPrice: 5950 },
       ],
     },
   },
@@ -194,25 +212,7 @@ export const preorderData: PreorderGame[] = [
         { name: "Standard", clientPrice: 4050 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 3550 },
-      ],
-    },
-  },
-  {
-    id: "saros",
-    name: "SAROS",
-    platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202509/2318/89c3538003fb34870e745493412408eeeed5f02b32c55d23.png",
-    releaseDate: "2026-04-29",
-    genre: "Экшен",
-    description: "Рогалик-шутер от Housemarque. Щит из пуль",
-    editions: {
-      TR: [
-        { name: "Standard", clientPrice: 8250 },
-        { name: "Digital Deluxe", clientPrice: 9150 },
-      ],
-      UA: [
-        { name: "Standard", clientPrice: 5900 },
+        { name: "Standard", clientPrice: 3600 },
       ],
     },
   },
@@ -229,7 +229,7 @@ export const preorderData: PreorderGame[] = [
         { name: "Standard", clientPrice: 2650 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 2450 },
+        { name: "Standard", clientPrice: 2500 },
       ],
     },
   },
@@ -345,7 +345,7 @@ export const preorderData: PreorderGame[] = [
       ],
       UA: [
         { name: "Standard", clientPrice: 3450 },
-        { name: "Deluxe", clientPrice: 4050 },
+        { name: "Deluxe", clientPrice: 4100 },
       ],
     },
   },
@@ -364,7 +364,7 @@ export const preorderData: PreorderGame[] = [
       ],
       UA: [
         { name: "Standard", clientPrice: 5450 },
-        { name: "Digital Deluxe", clientPrice: 5900 },
+        { name: "Digital Deluxe", clientPrice: 5950 },
       ],
     },
   },
@@ -383,7 +383,7 @@ export const preorderData: PreorderGame[] = [
       ],
       UA: [
         { name: "Standard", clientPrice: 4200 },
-        { name: "Deluxe", clientPrice: 6150 },
+        { name: "Deluxe", clientPrice: 6200 },
       ],
     },
   },
@@ -403,7 +403,7 @@ export const preorderData: PreorderGame[] = [
       ],
       UA: [
         { name: "Standard", clientPrice: 5450 },
-        { name: "Deluxe", clientPrice: 6400 },
+        { name: "Deluxe", clientPrice: 6450 },
         { name: "Ultimate", clientPrice: 7350 },
       ],
     },
@@ -412,7 +412,7 @@ export const preorderData: PreorderGame[] = [
     id: "marvel-t-kon-fighting-souls",
     name: "MARVEL Tōkon: Fighting Souls",
     platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202602/0512/c6c3c4e932208ec7edc7a53dee1b11555c3d7be56e60ad18.jpg",
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202602/0512/7ba3a1fac3bdcf6df6ffd10662d2a7833abe9743529782fb.jpg",
     releaseDate: "2026-08-06",
     genre: "Файтинг",
     description: "Файтинг от Arc System Works. 4v4 Marvel",
