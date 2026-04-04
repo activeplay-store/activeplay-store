@@ -182,7 +182,7 @@ export const guidesData: GuideItem[] = [
     slug: 'ea-play-podpiska-kak-kupit',
     title: 'EA Play в 2026 — все игры, цены и как купить подписку из России',
     excerpt: 'Что входит в EA Play: каталог 64 игр, скидка 10% на FC Points и Apex Coins, ранний доступ к новинкам EA. Как купить ЕА Плей из России, цены от 900₽.',
-    coverUrl: '/images/platforms/ea-play.png',
+    coverUrl: '/images/guides/ea-play-cover.webp',
     category: 'ea',
     date: '2026-04-04',
     author: 'ActivePlay',
