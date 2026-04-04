@@ -53,7 +53,7 @@ export default function GuideEAPlay() {
             </nav>
             <span className="inline-block bg-[#FF6B00] text-white text-[11px] font-bold tracking-wider uppercase px-4 py-1.5 rounded-md mb-5">Electronic Arts</span>
             <h1 className="font-rajdhani text-[44px] md:text-[52px] font-extrabold text-white leading-[1.08] mb-5 tracking-tight">
-              <span className="text-[#FF6B00]">EA Play</span> &mdash; подписка Electronic Arts
+              <span className="text-[#FF6B00]">EA Play</span> в 2026 &mdash; все игры, цены и как купить подписку из России
             </h1>
             <p className="text-lg text-white/50 leading-relaxed max-w-xl">64 игры, скидка 10% на FC Points и Apex Coins, ранний доступ к новинкам EA. Как купить ЕА Плей из России.</p>
             <div className="flex gap-6 mt-6 text-[13px] text-white/25"><span>6 мин чтения</span><span>EA Play, подписка, Electronic Arts</span></div>

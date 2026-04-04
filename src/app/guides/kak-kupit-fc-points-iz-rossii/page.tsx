@@ -53,7 +53,7 @@ export default function GuideFCPoints() {
             </nav>
             <span className="inline-block bg-[#2ECC40] text-[#0A1628] text-[11px] font-bold tracking-wider uppercase px-4 py-1.5 rounded-md mb-5">EA Sports FC</span>
             <h1 className="font-rajdhani text-[44px] md:text-[52px] font-extrabold text-white leading-[1.08] mb-5 tracking-tight">
-              Как купить <span className="text-[#2ECC40]">FC Points</span> из России
+              Как купить <span className="text-[#2ECC40]">FC Points</span> в России в 2026 году &mdash; все способы для EA FC 26
             </h1>
             <p className="text-lg text-white/50 leading-relaxed max-w-xl">Донат Ultimate Team для EA Sports FC 26. Все номиналы, цены в рублях, скидка 10% с EA Play. PS5, Xbox и ПК.</p>
             <div className="flex gap-6 mt-6 text-[13px] text-white/25"><span>6 мин чтения</span><span>FC Points, Ultimate Team, EA FC</span></div>

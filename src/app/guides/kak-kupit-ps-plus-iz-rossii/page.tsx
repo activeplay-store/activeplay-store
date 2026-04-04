@@ -83,8 +83,8 @@ export default function GuidePSPlus() {
               <span className="text-white/50">PS Plus</span>
             </nav>
             <span className="inline-block bg-[#0070D1] text-white text-[11px] font-bold tracking-wider uppercase px-4 py-1.5 rounded-md mb-5">PlayStation</span>
-            <h1 className="font-rajdhani text-[48px] md:text-[56px] font-extrabold text-white leading-[1.08] mb-5 tracking-tight">
-              Как купить <span className="text-[#00D4FF]">PS Plus</span> из&nbsp;России
+            <h1 className="font-rajdhani text-[44px] md:text-[52px] font-extrabold text-white leading-[1.08] mb-5 tracking-tight">
+              Как купить подписку <span className="text-[#00D4FF]">PS Plus</span> из России в 2026 году &mdash; пошаговая инструкция
             </h1>
             <p className="text-lg text-white/50 leading-relaxed max-w-xl">Полный гайд по покупке и активации подписки PlayStation&nbsp;Plus. Выбор региона, создание аккаунта, оплата через&nbsp;СБП.</p>
             <div className="flex gap-6 mt-6 text-[13px] text-white/25"><span>7 мин чтения</span><span>PS Plus, подписка, СБП</span></div>

@@ -51,7 +51,7 @@ export default function GuidePSPlusTiers() {
             </nav>
             <span className="inline-block bg-[#0070D1] text-white text-[11px] font-bold tracking-wider uppercase px-4 py-1.5 rounded-md mb-5">PlayStation</span>
             <h1 className="font-rajdhani text-[44px] md:text-[52px] font-extrabold text-white leading-[1.08] mb-5 tracking-tight">
-              PS Plus Essential, Extra и Deluxe &mdash; <span className="text-[#00D4FF]">чем отличаются</span>
+              <span className="text-[#00D4FF]">PS Plus</span> Essential, Extra и Deluxe &mdash; отличия, цены и какой уровень выбрать в 2026
             </h1>
             <p className="text-lg text-white/50 leading-relaxed max-w-xl">Какой уровень подписки ПС Плюс выбрать. Что входит в каждый тариф, в чём разница и за что стоит переплачивать.</p>
             <div className="flex gap-6 mt-6 text-[13px] text-white/25"><span>8 мин чтения</span><span>PS Plus, Essential, Extra, Deluxe</span></div>

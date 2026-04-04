@@ -50,7 +50,7 @@ export default function GuideXboxGamePass() {
             </nav>
             <span className="inline-block bg-[#107C10] text-white text-[11px] font-bold tracking-wider uppercase px-4 py-1.5 rounded-md mb-5">Xbox</span>
             <h1 className="font-rajdhani text-[44px] md:text-[52px] font-extrabold text-white leading-[1.08] mb-5 tracking-tight">
-              Xbox Game Pass &mdash; <span className="text-[#107C10]">все тарифы</span> и покупка из России
+              <span className="text-[#107C10]">Xbox Game Pass</span> в 2026 &mdash; отличия Core, Standard и Ultimate и как купить из России
             </h1>
             <p className="text-lg text-white/50 leading-relaxed max-w-xl">Полный гайд по подписке Гейм Пасс: Essential, Premium, Ultimate. Как купить из России, чем отличаются тарифы и на чём сэкономить.</p>
             <div className="flex gap-6 mt-6 text-[13px] text-white/25"><span>8 мин чтения</span><span>Game Pass, Xbox, подписка</span></div>
