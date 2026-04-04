@@ -134,5 +134,18 @@ export const guidesData: GuideItem[] = [
         tip: 'Подпишитесь на наш <a href="https://t.me/PS_PLUS_RUS" target="_blank" rel="noopener">Telegram-канал @PS_PLUS_RUS</a> — мы публикуем список игр месяца, скидки и акции.',
       },
     ],
+  },
+  {
+    id: 'g2',
+    slug: 'ps-plus-essential-extra-deluxe-otlichiya',
+    title: 'PS Plus Essential, Extra и Deluxe — чем отличаются и какой выбрать',
+    excerpt: 'Сравнение всех уровней подписки PlayStation Plus: что входит в каждый тариф, в чём разница между Essential, Extra и Deluxe, и какой выбрать в 2026 году.',
+    coverUrl: 'https://images.unsplash.com/photo-1592155931584-901ac15763e3?w=800&h=450&fit=crop',
+    category: 'playstation',
+    date: '2026-04-04',
+    author: 'ActivePlay',
+    readTime: '8 мин',
+    tags: ['PS Plus', 'Essential', 'Extra', 'Deluxe', 'сравнение', 'какой выбрать'],
+    sections: [],
   }
 ];
