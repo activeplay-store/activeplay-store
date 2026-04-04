@@ -76,13 +76,27 @@ export default function GuideFCPoints() {
 
           {/* --- Амбассадор --- */}
           <div className="rounded-2xl overflow-hidden border border-[#00D4FF]/20 my-10">
-            <div className="relative h-[320px] md:h-[400px]">
+            {/* Desktop: overlay text on image */}
+            <div className="hidden md:block relative h-[400px]">
               <img src="/images/abel.webp" alt="Даниил Abel Абельдяев — 5-кратный чемпион России по EA FC" className="w-full h-full object-cover object-top" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#0A1628] via-[#0A1628]/60 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-8 md:p-10">
-                <div className="font-rajdhani text-[28px] md:text-[32px] font-extrabold text-white mb-1">Даниил Abel Абельдяев</div>
+              <div className="absolute bottom-0 left-0 right-0 p-10">
+                <div className="font-rajdhani text-[32px] font-extrabold text-white mb-1">Даниил Abel Абельдяев</div>
                 <div className="text-[14px] text-[#00D4FF] mb-4">5-кратный чемпион России по EA FC · Стример · Амбассадор ActivePlay</div>
                 <p className="text-[17px] text-[#9aa8b8] leading-relaxed m-0 italic">
+                  &laquo;Я пополняю баланс FC Points через ActivePlay и вам рекомендую &mdash; быстро, безопасно, дёшево&raquo;
+                </p>
+              </div>
+            </div>
+            {/* Mobile: vertical layout — photo then text */}
+            <div className="md:hidden">
+              <div className="h-[220px] overflow-hidden">
+                <img src="/images/abel.webp" alt="Даниил Abel Абельдяев — 5-кратный чемпион России по EA FC" className="w-full h-full object-cover object-top" />
+              </div>
+              <div className="p-6 bg-[#0A1628]">
+                <div className="font-rajdhani text-[24px] font-extrabold text-white mb-1">Даниил Abel Абельдяев</div>
+                <div className="text-[13px] text-[#00D4FF] mb-3">5-кратный чемпион России по EA FC · Стример · Амбассадор ActivePlay</div>
+                <p className="text-[15px] text-[#9aa8b8] leading-relaxed m-0 italic">
                   &laquo;Я пополняю баланс FC Points через ActivePlay и вам рекомендую &mdash; быстро, безопасно, дёшево&raquo;
                 </p>
               </div>
@@ -125,32 +139,31 @@ export default function GuideFCPoints() {
           </p>
 
           <Link href="/igrovaya-valyuta" className="block group">
-            <div className="grid grid-cols-4 gap-3 my-8">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3 my-8">
               {['100','500','1 050','1 600','2 800','5 900','12 000','18 500'].map((n, i) => (
                 <div
                   key={n}
-                  className="flex flex-col items-center relative transition-transform duration-300 hover:scale-[1.03] overflow-hidden"
+                  className="flex flex-col items-center relative transition-transform duration-300 hover:scale-[1.03] overflow-hidden h-[110px] md:h-[140px]"
                   style={{
                     background: 'linear-gradient(180deg, #1A0D2E 0%, #0D0D1A 100%)',
                     borderRadius: '12px',
                     border: i === 6 ? '1px solid rgba(0,230,118,0.3)' : '1px solid rgba(0,230,118,0.15)',
                     boxShadow: '0 4px 16px rgba(0,0,0,0.3)',
-                    height: '140px',
                   }}
                 >
                   <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(circle at 50% 45%, rgba(0,230,118,0.12), transparent 60%)' }} />
                   {i === 6 && (
-                    <span className="absolute z-10" style={{ top: 26, right: 6, background: 'linear-gradient(135deg, #FF6B00, #FF3D00)', color: '#fff', fontSize: 6, fontWeight: 700, textTransform: 'uppercase', padding: '1px 5px', borderRadius: 4, letterSpacing: 1, boxShadow: '0 2px 6px rgba(255,61,0,0.25)' }}>Хит</span>
+                    <span className="absolute z-10" style={{ top: 22, right: 4, background: 'linear-gradient(135deg, #FF6B00, #FF3D00)', color: '#fff', fontSize: 6, fontWeight: 700, textTransform: 'uppercase', padding: '1px 5px', borderRadius: 4, letterSpacing: 1, boxShadow: '0 2px 6px rgba(255,61,0,0.25)' }}>Хит</span>
                   )}
-                  <div className="w-full shrink-0 flex items-center justify-center relative z-10" style={{ height: '22px', background: 'linear-gradient(90deg, #00E676, #76FF03, #00E676)', borderRadius: '12px 12px 0 0', boxShadow: '0 2px 12px rgba(0,230,118,0.3)' }}>
-                    <span className="font-bold uppercase" style={{ fontSize: '8px', letterSpacing: '1px', color: '#000' }}>FC Points</span>
+                  <div className="w-full shrink-0 flex items-center justify-center relative z-10" style={{ height: '20px', background: 'linear-gradient(90deg, #00E676, #76FF03, #00E676)', borderRadius: '12px 12px 0 0', boxShadow: '0 2px 12px rgba(0,230,118,0.3)' }}>
+                    <span className="font-bold uppercase" style={{ fontSize: '7px', letterSpacing: '1px', color: '#000' }}>FC Points</span>
                   </div>
                   <div className="flex flex-col items-center justify-center flex-1 relative z-10">
-                    <img src="/images/covers/fc-points.webp" alt="FC Points" style={{ width: '40px', height: 'auto', objectFit: 'contain', filter: 'drop-shadow(0 4px 12px rgba(0,230,118,0.35))' }} />
-                    <div style={{ width: '30px', height: '1px', background: 'linear-gradient(90deg, transparent, rgba(0,230,118,0.4), transparent)', margin: '3px auto' }} />
-                    <span className="font-display" style={{ fontSize: '20px', fontWeight: 800, lineHeight: 1.1, background: 'linear-gradient(180deg, #FFFFFF 0%, #90CAF9 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{n}</span>
+                    <img src="/images/covers/fc-points.webp" alt="FC Points" className="w-[30px] md:w-[40px] h-auto" style={{ objectFit: 'contain', filter: 'drop-shadow(0 4px 12px rgba(0,230,118,0.35))' }} />
+                    <div style={{ width: '30px', height: '1px', background: 'linear-gradient(90deg, transparent, rgba(0,230,118,0.4), transparent)', margin: '2px auto' }} />
+                    <span className="font-display text-[16px] md:text-[20px]" style={{ fontWeight: 800, lineHeight: 1.1, background: 'linear-gradient(180deg, #FFFFFF 0%, #90CAF9 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{n}</span>
                   </div>
-                  <span className="text-white uppercase shrink-0 relative z-10" style={{ fontSize: '6px', letterSpacing: '2px', opacity: 0.5, marginBottom: '6px' }}>EA Sports FC 26</span>
+                  <span className="text-white uppercase shrink-0 relative z-10" style={{ fontSize: '5px', letterSpacing: '2px', opacity: 0.5, marginBottom: '4px' }}>EA Sports FC 26</span>
                 </div>
               ))}
             </div>

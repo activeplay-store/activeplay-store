@@ -116,6 +116,7 @@ export default function SaleContent({ faqItems }: SaleContentProps) {
   const [priceRange, setPriceRange] = useState<PriceRange>('all');
   const [search, setSearch] = useState('');
   const [popup, setPopup] = useState({ open: false, name: '', price: 0 });
+  const [showPriceFilter, setShowPriceFilter] = useState(false);
   const [faqOpen, setFaqOpen] = useState<number | null>(null);
 
   const filtered = useMemo(() => {
@@ -161,7 +162,7 @@ export default function SaleContent({ faqItems }: SaleContentProps) {
 
   function Pill({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }) {
     return (
-      <button onClick={onClick} className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-all ${active ? 'bg-[#00D4FF] text-black' : 'border border-white/20 text-white/70 hover:border-white/40'}`}>
+      <button onClick={onClick} className={`px-3 py-1.5 rounded-lg text-xs md:text-sm font-medium transition-all ${active ? 'bg-[#00D4FF] text-black' : 'border border-white/20 text-white/70 hover:border-white/40'}`}>
         {children}
       </button>
     );
@@ -405,20 +406,48 @@ export default function SaleContent({ faqItems }: SaleContentProps) {
       </div>
 
       {/* 4. Sticky filters */}
-      <div className="sticky top-[100px] z-30 bg-[#060D18]/90 backdrop-blur-xl border-b border-white/5 py-3">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap gap-3 items-center">
-          <Pill active={platform === 'all'} onClick={() => setPlatform('all')}>Все</Pill>
-          <Pill active={platform === 'PS5'} onClick={() => setPlatform('PS5')}>PS5</Pill>
-          <Pill active={platform === 'PS4'} onClick={() => setPlatform('PS4')}>PS4</Pill>
-          <span className="w-px h-6 bg-white/10 hidden sm:block" />
-          <Pill active={priceRange === 'all'} onClick={() => setPriceRange('all')}>Любая цена</Pill>
-          <Pill active={priceRange === 'low'} onClick={() => setPriceRange('low')}>До 1 000 руб.</Pill>
-          <Pill active={priceRange === 'mid'} onClick={() => setPriceRange('mid')}>1 000 - 3 000 руб.</Pill>
-          <Pill active={priceRange === 'high'} onClick={() => setPriceRange('high')}>От 3 000 руб.</Pill>
-          <span className="w-px h-6 bg-white/10 hidden sm:block" />
-          <input type="text" placeholder="Поиск по названию..." value={search} onChange={(e) => setSearch(e.target.value)}
-            className="px-4 py-1.5 rounded-lg bg-white/5 border border-white/10 text-white text-sm placeholder:text-white/30 focus:outline-none focus:border-[#00D4FF]/50 w-48" />
-          <span className="text-sm text-white/50 ml-auto">Найдено: {totalCount} игр</span>
+      <div className="sticky top-[100px] z-30 bg-[#060D18]/95 backdrop-blur-xl border-b border-white/5 py-2 md:py-3">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Desktop: all in one row */}
+          <div className="hidden md:flex flex-wrap gap-3 items-center">
+            <Pill active={platform === 'all'} onClick={() => setPlatform('all')}>Все</Pill>
+            <Pill active={platform === 'PS5'} onClick={() => setPlatform('PS5')}>PS5</Pill>
+            <Pill active={platform === 'PS4'} onClick={() => setPlatform('PS4')}>PS4</Pill>
+            <span className="w-px h-6 bg-white/10" />
+            <Pill active={priceRange === 'all'} onClick={() => setPriceRange('all')}>Любая цена</Pill>
+            <Pill active={priceRange === 'low'} onClick={() => setPriceRange('low')}>До 1 000 руб.</Pill>
+            <Pill active={priceRange === 'mid'} onClick={() => setPriceRange('mid')}>1 000 - 3 000 руб.</Pill>
+            <Pill active={priceRange === 'high'} onClick={() => setPriceRange('high')}>От 3 000 руб.</Pill>
+            <span className="w-px h-6 bg-white/10" />
+            <input type="text" placeholder="Поиск по названию..." value={search} onChange={(e) => setSearch(e.target.value)}
+              className="px-4 py-1.5 rounded-lg bg-white/5 border border-white/10 text-white text-sm placeholder:text-white/30 focus:outline-none focus:border-[#00D4FF]/50 w-48" />
+            <span className="text-sm text-white/50 ml-auto">Найдено: {totalCount} игр</span>
+          </div>
+          {/* Mobile: compact layout */}
+          <div className="md:hidden flex flex-col gap-2">
+            <div className="flex items-center gap-1.5">
+              <Pill active={platform === 'all'} onClick={() => setPlatform('all')}>Все</Pill>
+              <Pill active={platform === 'PS5'} onClick={() => setPlatform('PS5')}>PS5</Pill>
+              <Pill active={platform === 'PS4'} onClick={() => setPlatform('PS4')}>PS4</Pill>
+              <button
+                onClick={() => setShowPriceFilter(!showPriceFilter)}
+                className={`ml-auto px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${priceRange !== 'all' ? 'bg-[#00D4FF] text-black' : 'border border-white/20 text-white/70'}`}
+              >
+                {priceRange === 'all' ? 'Цена ▾' : priceRange === 'low' ? '< 1000₽ ✕' : priceRange === 'mid' ? '1-3K₽ ✕' : '> 3000₽ ✕'}
+              </button>
+              <span className="text-xs text-white/40">{totalCount}</span>
+            </div>
+            {showPriceFilter && (
+              <div className="flex gap-1.5">
+                <Pill active={priceRange === 'all'} onClick={() => { setPriceRange('all'); setShowPriceFilter(false); }}>Любая</Pill>
+                <Pill active={priceRange === 'low'} onClick={() => { setPriceRange('low'); setShowPriceFilter(false); }}>{'< 1 000'}</Pill>
+                <Pill active={priceRange === 'mid'} onClick={() => { setPriceRange('mid'); setShowPriceFilter(false); }}>1-3 000</Pill>
+                <Pill active={priceRange === 'high'} onClick={() => { setPriceRange('high'); setShowPriceFilter(false); }}>{'>'}  3 000</Pill>
+              </div>
+            )}
+            <input type="text" placeholder="Поиск по названию..." value={search} onChange={(e) => setSearch(e.target.value)}
+              className="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-white text-xs placeholder:text-white/30 focus:outline-none focus:border-[#00D4FF]/50 w-full" />
+          </div>
         </div>
       </div>
 

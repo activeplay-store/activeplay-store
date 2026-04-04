@@ -347,7 +347,7 @@ export default function GamePassSubscriptionPage({ subscriptionId }: GamePassSub
         </h2>
         <p className="text-sm text-center mb-8" style={{ color: 'rgba(255,255,255,0.6)' }}>Xbox &bull; Глобальная подписка — цены в рублях</p>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-5">
           {([1, 3, 12] as const).map((period) => {
             const price = plan.prices.global[period];
             const periodLabel = period === 1 ? '1 мес' : period === 3 ? '3 мес' : '12 мес';

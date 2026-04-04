@@ -603,7 +603,7 @@ export default function SubscriptionPage({ subscriptionId }: SubscriptionPagePro
 
         {region === 'turkey' ? (
           <>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-5">
               {([1, 3, 12] as const).map((period) => {
                 const price = plan.prices.turkey[period];
                 const isMonthly = period === 1;

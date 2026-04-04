@@ -30,7 +30,16 @@ function GameCarousel({ games, label }: { games: ShowcaseGame[]; label?: string 
         <div key={i} className="flex-shrink-0 w-[180px] sm:w-[200px] group cursor-pointer">
           <div className="relative rounded-xl overflow-hidden aspect-[3/4] transition-transform duration-300 group-hover:scale-105 group-hover:shadow-lg group-hover:shadow-black/40">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={game.image} alt={`${game.title} — EA Play${label ? ' ' + label : ''}`} loading="lazy" className="w-full h-full object-cover" />
+            <img
+              src={game.image}
+              alt={`${game.title} — EA Play${label ? ' ' + label : ''}`}
+              loading="lazy"
+              className="w-full h-full object-cover"
+              onError={(e) => { const t = e.currentTarget; t.style.display = 'none'; const fb = t.nextElementSibling as HTMLElement | null; if (fb) fb.style.display = 'flex'; }}
+            />
+            <div className="hidden w-full h-full bg-gradient-to-br from-[#1a1a3e] to-[#0a0a2e] items-center justify-center p-3" style={{ display: 'none' }}>
+              <span className="text-white/80 text-sm font-medium text-center leading-tight">{game.title}</span>
+            </div>
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
             <p className="absolute bottom-2 left-2 right-2 text-sm font-medium text-white">{game.title}</p>
           </div>

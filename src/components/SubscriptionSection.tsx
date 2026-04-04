@@ -172,7 +172,7 @@ export default function SubscriptionSection() {
         {/* Cards — mobile: horizontal swipe carousel; desktop: grid */}
         <div
           ref={psScrollRef}
-          className="flex gap-5 overflow-x-auto scrollbar-hide pb-4 pl-1 snap-x snap-mandatory sm:grid sm:grid-cols-3 sm:overflow-visible sm:snap-none sm:pl-0"
+          className="flex gap-5 overflow-x-auto scrollbar-hide pt-5 pb-4 pl-1 snap-x snap-mandatory sm:grid sm:grid-cols-3 sm:overflow-visible sm:snap-none sm:pl-0"
         >
           {psPlans.map((plan) => (
             <PlanCard
@@ -387,7 +387,7 @@ export default function SubscriptionSection() {
         {/* Cards */}
         <div
           ref={xboxScrollRef}
-          className="flex gap-5 overflow-x-auto scrollbar-hide pb-4 pl-1 snap-x snap-mandatory sm:grid sm:grid-cols-3 sm:overflow-visible sm:snap-none sm:pl-0"
+          className="flex gap-5 overflow-x-auto scrollbar-hide pt-5 pb-4 pl-1 snap-x snap-mandatory sm:grid sm:grid-cols-3 sm:overflow-visible sm:snap-none sm:pl-0"
         >
           {xboxPlans.map((plan) => (
             <PlanCard
