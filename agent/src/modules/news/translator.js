@@ -17,14 +17,14 @@ const SYSTEM_PROMPT = `Ты редактор игрового новостног
 
 КАТЕГОРИИ:
 - "Новость" — официальный блог (PlayStation Blog, Xbox Wire, студия)
-- "Хайп" — реакция игроков, комьюнити, Steam-отзывы, Reddit ("игроки разносят", "комьюнити обсуждает", "в Steam бомбят отзывами")
+- "Хайп" — реакция игроков, комьюнити, Steam-отзывы, Reddit
 - "Инсайд" — инсайдеры (Dealabs, Schreier, Bloomberg, Jeff Grubb)
 - "Слух" — слух без подтверждения, неизвестный источник
 - "Анонс" — официальный анонс новой игры или контента
 - "Обзор" — рецензия, обзор от журналиста
 
 - Текст пиши связными абзацами по 2-3 предложения. НЕ разбивай каждое предложение на отдельную строку
-- Разделяй абзацы двойным переносом строки (\n\n)
+- Разделяй абзацы двойным переносом строки (\\n\\n)
 - Максимум 3 абзаца для telegram, максимум 4 для site
 
 КАЧЕСТВО ЯЗЫКА:
@@ -34,30 +34,13 @@ const SYSTEM_PROMPT = `Ты редактор игрового новостног
 - Короткие предложения с прилагательными. Не больше 12-15 слов
 - Без причастных и деепричастных оборотов. Без сложноподчинённых конструкций
 - Без канцелярита: "осуществить", "данный", "является", "в рамках", "на сегодняшний день"
-- Без тавтологии типа "игра... игра... игроков... игровой"
 - Каждое предложение должно нести новую мысль или факт
-
-ПРИМЕР ПЛОХОГО ТЕКСТА:
-"Утечка раскрыла одну из игр, которая появится в PS Plus Essential в апреле. По информации от Dealabs, главной игрой станет Lords of the Fallen."
-(тавтология: "игр" + "игрой", вялое начало)
-
-ПРИМЕР ХОРОШЕГО ТЕКСТА:
-"Dealabs слил апрельскую раздачу PS Plus Essential. Главный тайтл месяца: Lords of the Fallen в версии 2023 года. Не путать с оригиналом 2014-го: здесь другая студия, другой движок и совершенно другой уровень."
-(без повторов, каждое предложение = новый факт)
 
 ЗАГОЛОВОК:
 - 5-10 слов, по ключам, SEO-дружелюбный
 - Называй игру/продукт + что произошло
 - Без двоеточий и тире в заголовке
-- НЕ добавляй категорию в заголовок (Инсайд/Слух/Новость/Анонс и т.д.) — категория передаётся отдельным полем
-
-ПРИМЕР ХОРОШЕГО ПЕРЕВОДА:
-
-Исходник: "PS Plus Essential Announcement Next Week, Big Game for April 2026 Leaks"
-Плохо: "Похоже, слили главную игру PS Plus Essential на апрель 2026. Стоит отметить, что Dealabs часто публикует точные утечки. Так что вероятность правды довольно высока."
-Хорошо:
-Заголовок: "Lords of the Fallen будет в списке бесплатных игр PS Plus Essential"
-Текст: "Инсайдер Dealabs выложил апрельскую раздачу PS Plus Essential. Если коротко: подписчиков ждёт Lords of the Fallen 2023 года. Не путать с оригиналом 2014-го: здесь совсем другая игра, другая студия и совершенно другой уровень. Для тех, кто не играл: мрачное фэнтези в духе Dark Souls с параллельными мирами и жёсткими боссами. На Metacritic 76 баллов, после патчей игру серьёзно подтянули."
+- НЕ добавляй категорию в заголовок
 
 ОТВЕТ СТРОГО JSON (без backticks):
 {
@@ -91,7 +74,6 @@ async function translateAndRewrite(article) {
 
     const text = response.data?.choices?.[0]?.message?.content || '';
 
-    // Парсинг JSON из ответа
     const jsonMatch = text.match(/\{[\s\S]*\}/);
     if (!jsonMatch) {
       console.error('[NEWS] Translator: no JSON in response');
@@ -100,13 +82,12 @@ async function translateAndRewrite(article) {
 
     const parsed = JSON.parse(jsonMatch[0]);
 
-    // Валидация обязательных полей
     if (!parsed.telegram || !parsed.site) {
       console.error('[NEWS] Translator: missing required fields');
       return null;
     }
 
-    // Обрезка по лимитам
+    // Лимиты
     if (parsed.telegram.text && parsed.telegram.text.length > 600) {
       parsed.telegram.text = parsed.telegram.text.substring(0, 597) + '...';
     }
@@ -131,9 +112,9 @@ async function translateAndRewrite(article) {
 
 const GEMINI_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
 
-const FULL_ARTICLE_PROMPT = `Ты — главный редактор новостного канала ActivePlay о видеоиграх. Аудитория — русскоязычные геймеры.
+const FULL_ARTICLE_PROMPT = `Ты — главный редактор ActivePlay, крупнейшего российского магазина игровых подписок (PS Plus, Xbox Game Pass, EA Play). 52 000+ клиентов с 2022 года.
 
-ЗАДАЧА: Написать новость на русский язык в трёх форматах (сайт, Telegram, VK).
+ЗАДАЧА: переведи и перепиши новость для сайта activeplay.games. Каждая новость = воронка в продажу.
 
 ИСХОДНИК:
 Заголовок: {title}
@@ -144,42 +125,80 @@ const FULL_ARTICLE_PROMPT = `Ты — главный редактор новос
 {enrichedContext}
 
 ═══════════════════════════════════════
+СТРУКТУРА ТЕКСТА ДЛЯ САЙТА (строго 4 абзаца, разделённые двойным переводом строки):
+═══════════════════════════════════════
+
+Абзац 1 — ФАКТ: что произошло, кто сообщил, когда. Конкретика, цифры, даты. Без воды.
+
+Абзац 2 — ДЕТАЛИ: подробности новости. Жанр, геймплей, особенности. Если анонс — что известно о проекте. Если скидки — какие игры, какие %, до какого числа.
+
+Абзац 3 — КОНТЕКСТ: почему это важно. Отсылки к предыдущим играм разработчика, сравнение с конкурентами, что говорят критики/игроки. Живой анализ, не пересказ пресс-релиза.
+
+Абзац 4 — ВОРОНКА: плавный переход к продукту ActivePlay. Если Xbox — «оформить Xbox Game Pass можно через ActivePlay». Если PlayStation — «подписка PS Plus доступна в ActivePlay от 1 250 рублей в месяц». Если мультиплатформа — предложить оба варианта. Конкретная цена, конкретный продукт.
+
+ОБЩИЙ ОБЪЁМ текста для сайта: минимум 1000 знаков, оптимально 1500-2000. Абзацы разделяй двойным переносом строки.
+
+═══════════════════════════════════════
 ПРАВИЛА ЯЗЫКА (ОБЯЗАТЕЛЬНЫЕ):
 ═══════════════════════════════════════
 
-1. Живой русский. Пишешь как рассказываешь другу, который тоже геймер.
-2. Короткие предложения. Максимум 15 слов в предложении.
-3. Без канцелярита. Запрещено: «стоит отметить», «данная информация», «важно подчеркнуть», «следует обратить внимание», «в рамках», «является», «осуществлять».
-4. Без причастных и деепричастных оборотов. Вместо «вышедшая на прошлой неделе игра» — «игра вышла на прошлой неделе».
-5. Без длинных тире в начале предложений.
-6. Без риторических вопросов.
-7. Конкретика. Если в патче 5 маунтов — назови их. Если продали 3 млн — напиши 3 млн.
-
-═══════════════════════════════════════
-СТРУКТУРА ТЕКСТА ДЛЯ САЙТА (3 блока):
-═══════════════════════════════════════
-
-БЛОК 1 — НОВОСТЬ ПОДРОБНО (60% текста)
-Что случилось. Все детали из исходника и дополнительных фактов. Конкретные названия, цифры, механики, даты. Не пересказывай одним предложением — раскрывай.
-
-БЛОК 2 — ОБЩИЙ КОНТЕКСТ (30% текста)
-Что это за игра/консоль/подписка. Кто разработчик. Когда вышла. Сколько продали. На каких платформах. Почему это интересно. Для тех кто НЕ в теме — чтобы поняли зачем читать.
-
-БЛОК 3 — ВОРОНКА (10% текста)
-Если игра продаётся на ActivePlay — плавный переход: «{Название} доступна в магазине ActivePlay от {цена} рублей.» Если это подписка — упомянуть подписку. Если продукт не продаётся — пропустить этот блок.
-
-ОБЩИЙ ОБЪЁМ текста для сайта: минимум 1000 знаков, оптимально 1500-2000. Абзацы разделяй двойным переносом строки.
+- Живой русский, как компетентный человек рассказывает новость
+- Короткие предложения: 12-15 слов максимум
+- БЕЗ канцеляризмов: НЕ «данная информация свидетельствует», НЕ «стоит отметить что», НЕ «представляет собой»
+- БЕЗ длинных тире в середине предложений
+- БЕЗ риторических вопросов
+- БЕЗ слов: «геймеры», «проект обещает», «порадовать игроков», «не оставит равнодушным»
+- Конкретика вместо общих слов: не «много игр», а «4 игры»; не «скоро», а «6 апреля»
+- Без причастных и деепричастных оборотов
+- Каждое предложение = новая мысль или факт
 
 ═══════════════════════════════════════
 ЗАГОЛОВОК ДЛЯ САЙТА:
 ═══════════════════════════════════════
 
-- Включи название игры/продукта
-- Включи самый яркий факт из новости
-- Включи SEO-ключевики (патч, обновление, скидка, PS Plus, дата выхода — что подходит)
-- Максимум 80 символов
-- Без кликбейта, но с зацепкой
+- SEO-формат с конкретикой, 60-80 символов
+- НЕ кликбейт, НЕ вопрос
+- Хорошо: «Borderlands 4 получит DLC Mad Ellie — первые подробности»
+- Плохо: «Новая игра скоро выйдет — вот что известно»
 - НЕ добавляй категорию в заголовок
+
+═══════════════════════════════════════
+ОПРЕДЕЛИ ПЛАТФОРМУ:
+═══════════════════════════════════════
+
+- Если в тексте Xbox, Game Pass, Microsoft → platform: "xbox"
+- Если PlayStation, PS5, PS4, PS Plus, Sony → platform: "playstation"
+- Если Nintendo, Switch → platform: "nintendo"
+- Если Steam, PC, Epic → platform: "pc"
+- Если несколько платформ → platform: "multi"
+- Если невозможно определить → platform: "general"
+
+═══════════════════════════════════════
+ОПРЕДЕЛИ CTA:
+═══════════════════════════════════════
+
+- xbox → ctaType: "gamepass", ctaText: "Xbox Game Pass", ctaLink: "/subscriptions"
+- playstation (скидка/конкретная игра) → ctaType: "deals", ctaText: "Скидки PS Store", ctaLink: "/sale"
+- playstation (подписка/каталог) → ctaType: "psplus", ctaText: "PS Plus от 1 250 руб/мес", ctaLink: "/subscriptions"
+- nintendo → ctaType: "general", ctaText: "Подписки и игры", ctaLink: "/subscriptions"
+- pc → ctaType: "general", ctaText: "Xbox Game Pass PC", ctaLink: "/subscriptions"
+- multi → ctaType: "general", ctaText: "Подписки от 1 250 руб/мес", ctaLink: "/subscriptions"
+- general → ctaType: "deals", ctaText: "Скидки на игры", ctaLink: "/sale"
+
+═══════════════════════════════════════
+ПРИМЕР ЭТАЛОННОГО ТЕКСТА:
+═══════════════════════════════════════
+
+Заголовок: "ARC Raiders Flashpoint выходит в ранний доступ — кооперативный шутер от бывших разработчиков Battlefield"
+
+Текст:
+"Студия Embark Studios объявила дату раннего доступа ARC Raiders Flashpoint. Кооперативный шутер на троих появится в Steam 5 июня 2026 года. Ценник — 299 шведских крон (около 2 500 рублей).
+
+Embark Studios основали бывшие разработчики DICE, работавшие над серией Battlefield. ARC Raiders Flashpoint предлагает PvE-миссии против армии роботов. Игроки исследуют полуоткрытые локации, собирают лут и прокачивают персонажей.
+
+Первый трейлер ARC Raiders показали ещё в 2021 году. Тогда проект выглядел как PvPvE-экстракшн. За пять лет концепция изменилась — теперь это чистый PvE-кооператив. Критики отмечают сходство с Deep Rock Galactic и Helldivers 2.
+
+ARC Raiders Flashpoint выйдет на PS5, Xbox Series и PC. Оформить подписку PS Plus или Xbox Game Pass можно в ActivePlay — от 1 250 рублей в месяц. Игра входит в каталог Game Pass с первого дня."
 
 ═══════════════════════════════════════
 ФОРМАТ ОТВЕТА — СТРОГО JSON:
@@ -189,23 +208,65 @@ const FULL_ARTICLE_PROMPT = `Ты — главный редактор новос
 
 {
   "category": "Новость|Анонс|Инсайд|Слух|Хайп",
+  "platform": "xbox|playstation|nintendo|pc|multi|general",
+  "ctaType": "gamepass|psplus|deals|general",
+  "ctaText": "Текст кнопки CTA",
+  "ctaLink": "/subscriptions или /sale",
   "site": {
     "title": "SEO-заголовок 60-80 символов",
-    "text": "Полный текст, минимум 1000 знаков, абзацы через \\n\\n",
+    "text": "Полный текст, минимум 1000 знаков, 4 абзаца через \\n\\n",
     "metaDescription": "Мета-описание 140-160 символов",
     "tags": ["тег1", "тег2", "тег3", "тег4", "тег5"]
   },
   "telegram": {
     "title": "Заголовок для TG (короче, ярче)",
-    "text": "3-5 предложений, суть + зацепка. Макс 600 символов. Хэштеги в конце."
+    "text": "3-5 предложений, суть + зацепка. Макс 800 символов. Хэштеги в конце."
   },
   "vk": {
     "title": "Заголовок для VK",
-    "text": "5-8 предложений, подробнее чем TG. Макс 1500 символов. Хэштеги в конце."
+    "text": "5-8 предложений, подробнее чем TG. Макс 2000 символов. Хэштеги в конце."
   },
   "gameSlug": "slug-игры-если-есть-на-сайте-или-null",
   "relatedProduct": "ps-plus-extra|ps-plus-essential|xbox-game-pass|ea-play|fc-points|null"
 }`;
+
+// ═══ Пост-обработка текста: чистка канцеляризмов и литеральных \n\n ═══
+function postProcessText(text) {
+  if (!text) return text;
+  let processed = text;
+
+  // 1. Фикс литеральных \n\n → реальные переводы строк
+  processed = processed.replace(/\\n\\n/g, '\n\n');
+  processed = processed.replace(/\\n/g, '\n');
+
+  // 2. Удалить канцеляризмы (авторемонт типичных паттернов Gemini)
+  const replacements = [
+    [/стоит отметить,?\s*что/gi, ''],
+    [/нельзя не отметить,?\s*что/gi, ''],
+    [/представляет собой/gi, '\u2014'],
+    [/является/gi, '\u2014'],
+    [/данн(ый|ая|ое|ые)\s/gi, 'этот '],
+    [/осуществлять/gi, 'делать'],
+    [/в настоящее время/gi, 'сейчас'],
+    [/на сегодняшний день/gi, 'сейчас'],
+    [/в рамках/gi, 'в'],
+    [/не оставит равнодушн\S*/gi, 'заинтересует'],
+    [/порадует геймеров/gi, ''],
+    [/порадовать игроков/gi, ''],
+  ];
+
+  for (const [pattern, replacement] of replacements) {
+    processed = processed.replace(pattern, replacement);
+  }
+
+  // 3. Убрать двойные пробелы после замен
+  processed = processed.replace(/  +/g, ' ').trim();
+
+  // 4. Убрать пустые предложения (. . или  .)
+  processed = processed.replace(/\.\s*\./g, '.').trim();
+
+  return processed;
+}
 
 async function callGemini(prompt, maxTokens = 4000) {
   const key = process.env.GEMINI_API_KEY;
@@ -240,40 +301,65 @@ async function generateFullArticle(article, enrichedContext) {
     .replace('{sourceName}', source)
     .replace('{enrichedContext}', enrichedContext || 'Нет дополнительных фактов.');
 
-  try {
-    const text = await callGemini(prompt);
+  const MIN_CHARS = 800;
+  const MAX_ATTEMPTS = 2;
 
-    const jsonMatch = text.match(/\{[\s\S]*\}/);
-    if (!jsonMatch) {
-      console.error('[NEWS] generateFullArticle: no JSON in response');
-      return null;
-    }
+  for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+    try {
+      const retryHint = attempt > 1
+        ? '\n\nВНИМАНИЕ: предыдущий текст был слишком коротким. Нужно минимум 1000 символов для site.text. Раскрой тему подробнее, добавь контекст и детали.'
+        : '';
 
-    const parsed = JSON.parse(jsonMatch[0]);
+      const text = await callGemini(prompt + retryHint);
 
-    if (!parsed.site?.text || !parsed.site?.title) {
-      console.error('[NEWS] generateFullArticle: missing required fields');
-      return null;
-    }
+      const jsonMatch = text.match(/\{[\s\S]*\}/);
+      if (!jsonMatch) {
+        console.error('[NEWS] generateFullArticle: no JSON in response');
+        if (attempt < MAX_ATTEMPTS) continue;
+        return null;
+      }
 
-    // Лимиты
-    if (parsed.telegram?.text?.length > 600) {
-      parsed.telegram.text = parsed.telegram.text.substring(0, 597) + '...';
-    }
-    if (parsed.vk?.text?.length > 1500) {
-      parsed.vk.text = parsed.vk.text.substring(0, 1497) + '...';
-    }
-    if (parsed.site.metaDescription?.length > 160) {
-      parsed.site.metaDescription = parsed.site.metaDescription.substring(0, 157) + '...';
-    }
+      const parsed = JSON.parse(jsonMatch[0]);
 
-    console.log(`[NEWS] Full article: ${parsed.site.title} (${parsed.site.text.length} chars)`);
-    return parsed;
-  } catch (err) {
-    const msg = err.response?.data?.error?.message || err.message;
-    console.error(`[NEWS] generateFullArticle error: ${msg}`);
-    return null;
+      if (!parsed.site?.text || !parsed.site?.title) {
+        console.error('[NEWS] generateFullArticle: missing required fields');
+        if (attempt < MAX_ATTEMPTS) continue;
+        return null;
+      }
+
+      // Пост-обработка текстов
+      parsed.site.text = postProcessText(parsed.site.text);
+      if (parsed.telegram?.text) parsed.telegram.text = postProcessText(parsed.telegram.text);
+      if (parsed.vk?.text) parsed.vk.text = postProcessText(parsed.vk.text);
+
+      // Валидация длины
+      if (parsed.site.text.length < MIN_CHARS) {
+        console.log(`[NEWS] Text too short (${parsed.site.text.length} chars, need ${MIN_CHARS}), attempt ${attempt}/${MAX_ATTEMPTS}`);
+        if (attempt < MAX_ATTEMPTS) continue;
+        console.warn(`[NEWS] Accepting short text (${parsed.site.text.length} chars) after ${MAX_ATTEMPTS} attempts`);
+      }
+
+      // Лимиты
+      if (parsed.telegram?.text?.length > 800) {
+        parsed.telegram.text = parsed.telegram.text.substring(0, 797) + '...';
+      }
+      if (parsed.vk?.text?.length > 2000) {
+        parsed.vk.text = parsed.vk.text.substring(0, 1997) + '...';
+      }
+      if (parsed.site.metaDescription?.length > 160) {
+        parsed.site.metaDescription = parsed.site.metaDescription.substring(0, 157) + '...';
+      }
+
+      console.log(`[NEWS] Full article: ${parsed.site.title} (${parsed.site.text.length} chars, platform: ${parsed.platform || 'unknown'}, cta: ${parsed.ctaType || 'none'})`);
+      return parsed;
+    } catch (err) {
+      const msg = err.response?.data?.error?.message || err.message;
+      console.error(`[NEWS] generateFullArticle error (attempt ${attempt}): ${msg}`);
+      if (attempt >= MAX_ATTEMPTS) return null;
+    }
   }
+
+  return null;
 }
 
 // Проверка и улучшение заголовка (отдельный вызов)
@@ -299,7 +385,7 @@ async function checkHeadline(title, summary) {
     const result = await callGemini(prompt, 200);
     const cleaned = result.trim().replace(/^["']|["']$/g, '');
     if (cleaned && cleaned.length >= 20 && cleaned.length <= 120) {
-      console.log(`[NEWS] Headline: "${title}" → "${cleaned}"`);
+      console.log(`[NEWS] Headline: "${title}" \u2192 "${cleaned}"`);
       return cleaned;
     }
     return title;
@@ -309,4 +395,4 @@ async function checkHeadline(title, summary) {
   }
 }
 
-module.exports = { translateAndRewrite, generateFullArticle, checkHeadline };
+module.exports = { translateAndRewrite, generateFullArticle, checkHeadline, postProcessText };

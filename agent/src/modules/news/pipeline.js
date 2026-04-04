@@ -57,6 +57,12 @@ async function runPipeline(article, targets, bot) {
       if (fullArticle.relatedProduct && fullArticle.relatedProduct !== 'null') {
         article.relatedProduct = fullArticle.relatedProduct;
       }
+
+      // Propagate platform and CTA fields from Gemini
+      if (fullArticle.platform) article.platform = fullArticle.platform;
+      if (fullArticle.ctaType) article.ctaType = fullArticle.ctaType;
+      if (fullArticle.ctaText) article.ctaText = fullArticle.ctaText;
+      if (fullArticle.ctaLink) article.ctaLink = fullArticle.ctaLink;
     } else {
       console.warn('[PIPELINE] Full article generation failed, using initial translation');
       // Проверяем минимальную длину текста из начального перевода

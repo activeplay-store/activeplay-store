@@ -29,6 +29,10 @@ export interface NewsItem {
   relatedProduct?: string | null;
   cta?: NewsCta | null;
   cta2?: NewsCta | null;
+  platform?: string;
+  ctaType?: string;
+  ctaText?: string;
+  ctaLink?: string;
   youtubeUrl?: string;
   duration?: string;
   hot?: boolean;

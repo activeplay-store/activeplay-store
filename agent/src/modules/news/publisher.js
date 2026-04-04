@@ -277,6 +277,10 @@ function writeToSite(newArticles) {
       publishedAt: new Date().toISOString(),
       gameId: a.gameSlug || a.gameId || null,
       relatedProduct: a.relatedProduct || null,
+      platform: a.platform || 'general',
+      ctaType: a.ctaType || 'deals',
+      ctaText: a.ctaText || 'Скидки на игры',
+      ctaLink: a.ctaLink || '/sale',
       cta: cta,
       cta2: cta2,
     };
