@@ -70,6 +70,21 @@ export default function GuideFCPoints() {
             Купить FC Points из России напрямую нельзя &mdash; EA заблокировала платежи с 2022 года. Но через ActivePlay пополнение занимает 5 минут: оплачиваете в рублях через СБП, мы зачисляем поинтс на ваш аккаунт.
           </p>
 
+          {/* --- Амбассадор --- */}
+          <div className="rounded-2xl overflow-hidden border border-[#00D4FF]/20 my-10">
+            <div className="relative h-[320px] md:h-[400px]">
+              <img src="/images/abel.webp" alt="Даниил Abel Абельдяев — 5-кратный чемпион России по EA FC" className="w-full h-full object-cover object-top" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0A1628] via-[#0A1628]/60 to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-8 md:p-10">
+                <div className="font-rajdhani text-[28px] md:text-[32px] font-extrabold text-white mb-1">Даниил Abel Абельдяев</div>
+                <div className="text-[14px] text-[#00D4FF] mb-4">5-кратный чемпион России по EA FC · Стример · Амбассадор ActivePlay</div>
+                <p className="text-[17px] text-[#9aa8b8] leading-relaxed m-0 italic">
+                  &laquo;Я пополняю баланс FC Points через ActivePlay и вам рекомендую &mdash; быстро, безопасно, дёшево&raquo;
+                </p>
+              </div>
+            </div>
+          </div>
+
           <Divider />
 
           {/* --- Что такое FC Points --- */}
@@ -244,23 +259,6 @@ export default function GuideFCPoints() {
                 {t}
               </div>
             ))}
-          </div>
-
-          <Divider />
-
-          {/* --- Амбассадор --- */}
-          <div className="rounded-2xl overflow-hidden border border-[#00D4FF]/20 my-10">
-            <div className="relative h-[320px] md:h-[400px]">
-              <img src="/images/abel.webp" alt="Даниил Abel Абельдяев — 5-кратный чемпион России по EA FC" className="w-full h-full object-cover object-top" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0A1628] via-[#0A1628]/60 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-8 md:p-10">
-                <div className="font-rajdhani text-[28px] md:text-[32px] font-extrabold text-white mb-1">Даниил Abel Абельдяев</div>
-                <div className="text-[14px] text-[#00D4FF] mb-4">5-кратный чемпион России по EA FC · Стример · Амбассадор ActivePlay</div>
-                <p className="text-[17px] text-[#9aa8b8] leading-relaxed m-0 italic">
-                  &laquo;Я пополняю баланс FC Points через ActivePlay и вам рекомендую &mdash; быстро, безопасно, дёшево&raquo;
-                </p>
-              </div>
-            </div>
           </div>
 
           <Divider />
