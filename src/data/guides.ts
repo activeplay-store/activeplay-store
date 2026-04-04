@@ -189,5 +189,18 @@ export const guidesData: GuideItem[] = [
     readTime: '6 мин',
     tags: ['EA Play', 'подписка', 'Electronic Arts', 'каталог', 'скидка 10%'],
     sections: [],
+  },
+  {
+    id: 'g6',
+    slug: 'gta-6-data-vyhoda-cena-kak-kupit',
+    title: 'GTA 6 — дата выхода, цена, предзаказ и как купить из России',
+    excerpt: 'Всё о GTA 6: дата выхода 19 ноября 2026, цена, предзаказ, платформы PS5 и Xbox, выход на ПК, карта Вайс-Сити, сюжет. Как купить ГТА 6 из России через турецкий аккаунт.',
+    coverUrl: '/images/covers/gta-6.png',
+    category: 'general',
+    date: '2026-04-04',
+    author: 'ActivePlay',
+    readTime: '12 мин',
+    tags: ['GTA 6', 'Rockstar Games', 'дата выхода', 'предзаказ', 'купить из России', 'PS5', 'Xbox'],
+    sections: [],
   }
 ];
