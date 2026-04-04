@@ -1,5 +1,5 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-04-04T01:17:11.663Z
+// Обновлено: 2026-04-04T09:56:36.271Z
 // Топ-продаж: 10 игр
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
@@ -25,15 +25,15 @@ export const topSellers: TopSellers = {
   region: "Европа",
   source: "PlayStation Blog",
   games: [
-    { rank: 1, title: "document.documentElement.classList.remove(\"no-js\");", genre: "Приключения", image: "/images/covers/document-documentelement-classlist-remove-no-js.jpg", platform: "PS5", priceTR: 0, priceUA: 0 },
-    { rank: 2, title: "PS5", genre: "Экшен", image: "/images/covers/ps5.jpg", platform: "PS5", priceTR: 0, priceUA: 0 },
-    { rank: 3, title: "PS VR2", genre: "Гонки", image: "/images/covers/ps-vr2.jpg", platform: "PS5", priceTR: 0, priceUA: 0 },
-    { rank: 4, title: "PS4", genre: "Экшен", image: "/images/covers/ps4.jpg", platform: "PS5", priceTR: 0, priceUA: 0 },
-    { rank: 5, title: "PS Store", genre: "Гонки", image: "/images/covers/ps-store.jpg", platform: "PS5", priceTR: 0, priceUA: 0 },
-    { rank: 6, title: "PS Plus", genre: "Экшен", image: "/images/covers/ps-plus.jpg", platform: "PS5", priceTR: 0, priceUA: 0 },
-    { rank: 7, title: "French", genre: "Экшен", image: "/images/covers/french.jpg", platform: "PS5", priceTR: 0, priceUA: 0 },
-    { rank: 8, title: "German", genre: "Шутер", image: "/images/covers/german.jpg", platform: "PS5", priceTR: 0, priceUA: 0 },
-    { rank: 9, title: "Italian", genre: "Экшен", image: "/images/covers/italian.jpg", platform: "PS5", priceTR: 0, priceUA: 0 },
-    { rank: 10, title: "Japanese", genre: "Экшен", image: "/images/covers/japanese.jpg", platform: "PS5", priceTR: 0, priceUA: 0 },
+    { rank: 1, title: "Crimson Desert", genre: "Экшен", image: "/images/covers/crimson-desert.jpg", platform: "PS5", priceTR: 0, priceUA: 0 },
+    { rank: 2, title: "EA SPORTS FC 26", genre: "Спорт", image: "/images/covers/ea-fc-26.jpg", platform: "PS5", priceTR: 2700, priceUA: 2700 },
+    { rank: 3, title: "Resident Evil Requiem", genre: "Survival Horror", image: "/images/covers/Resident-Evil-Requiem.jpg", platform: "PS5", priceTR: 8300, priceUA: 7400 },
+    { rank: 4, title: "Grand Theft Auto V", genre: "Экшен / Open World", image: "/images/covers/gta-v.jpg", platform: "PS5", priceTR: 1700, priceUA: 3800 },
+    { rank: 5, title: "Minecraft", genre: "Песочница", image: "/images/covers/minecraft.jpg", platform: "PS5", priceTR: 2460, priceUA: 2100 },
+    { rank: 6, title: "WWE 2K26", genre: "Экшен", image: "/images/covers/wwe-2k26.jpg", platform: "PS5", priceTR: 5100, priceUA: 4500 },
+    { rank: 7, title: "UFC 5", genre: "Файтинг", image: "/images/covers/ufc-5.jpg", platform: "PS5", priceTR: 1550, priceUA: 1600 },
+    { rank: 8, title: "Resident Evil 4", genre: "Приключения", image: "/images/covers/resident-evil-4.jpg", platform: "PS5", priceTR: 3500, priceUA: 3100 },
+    { rank: 9, title: "Call of Duty: Black Ops 7", genre: "Шутер / FPS", image: "/images/covers/cod-blops-7.jpg", platform: "PS5", priceTR: 4500, priceUA: 4500 },
+    { rank: 10, title: "ARC Raiders", genre: "Шутер / Кооп", image: "/images/covers/arc-raiders.jpg", platform: "PS5", priceTR: 3850, priceUA: 3600 },
   ],
 };
