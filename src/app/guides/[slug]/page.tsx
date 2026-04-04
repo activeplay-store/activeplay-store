@@ -156,7 +156,7 @@ export default async function GuideArticlePage({ params }: Props) {
             </div>
 
             {/* Cover */}
-            <div className="aspect-video rounded-xl overflow-hidden mb-8">
+            <div className="aspect-[3/2] rounded-xl overflow-hidden mb-8">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={guide.coverUrl}
