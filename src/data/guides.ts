@@ -140,7 +140,7 @@ export const guidesData: GuideItem[] = [
     slug: 'ps-plus-essential-extra-deluxe-otlichiya',
     title: 'PS Plus Essential, Extra и Deluxe — чем отличаются и какой выбрать',
     excerpt: 'Сравнение всех уровней подписки PlayStation Plus: что входит в каждый тариф, в чём разница между Essential, Extra и Deluxe, и какой выбрать в 2026 году.',
-    coverUrl: 'https://images.unsplash.com/photo-1592155931584-901ac15763e3?w=800&h=450&fit=crop',
+    coverUrl: '/images/guides/ps-plus-essential-extra-deluxe.png',
     category: 'playstation',
     date: '2026-04-04',
     author: 'ActivePlay',
