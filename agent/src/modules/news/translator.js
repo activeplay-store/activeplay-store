@@ -332,6 +332,21 @@ async function generateFullArticle(article, enrichedContext) {
       if (parsed.telegram?.text) parsed.telegram.text = postProcessText(parsed.telegram.text);
       if (parsed.vk?.text) parsed.vk.text = postProcessText(parsed.vk.text);
 
+      // Гарантия воронки: если текст не содержит "ActivePlay" — дописать
+      if (!parsed.site.text.includes('ActivePlay')) {
+        const defaultFunnels = {
+          playstation: '\n\nОформить подписку PS Plus для доступа к сотням игр можно в ActivePlay. Цены от 1 250 \u20BD/мес, активация за 10 минут.',
+          xbox: '\n\nXbox Game Pass открывает доступ к сотням игр по подписке. Оформить можно в ActivePlay \u2014 быстро, из России, оплата в рублях.',
+          multi: '\n\nПодписки PS Plus и Xbox Game Pass доступны в ActivePlay от 1 250 \u20BD/мес. Более 52 000 клиентов с 2022 года.',
+          pc: '\n\nXbox Game Pass PC доступен в ActivePlay. Сотни игр по подписке, оформление из России за 10 минут.',
+          general: '\n\nПодписки PS Plus и Xbox Game Pass доступны в ActivePlay от 1 250 \u20BD/мес. 52 000+ клиентов с 2022 года.',
+        };
+        const plat = parsed.platform || 'general';
+        const funnel = defaultFunnels[plat] || defaultFunnels.general;
+        parsed.site.text += funnel;
+        console.log(`[NEWS] Funnel appended (platform: ${plat})`);
+      }
+
       // Валидация длины
       if (parsed.site.text.length < MIN_CHARS) {
         console.log(`[NEWS] Text too short (${parsed.site.text.length} chars, need ${MIN_CHARS}), attempt ${attempt}/${MAX_ATTEMPTS}`);

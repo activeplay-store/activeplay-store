@@ -170,15 +170,52 @@ export default async function NewsArticlePage({ params }: Props) {
               </div>
             )}
 
-            {/* Always show PS Store block */}
-            <div className="bg-[#111827] border border-gray-600/30 rounded-xl p-6 mt-4">
-              <h3 className="text-white text-lg font-bold">Скидки PS Store</h3>
-              <p className="text-gray-400 text-sm mt-1">Весенняя распродажа — скидки до 92%</p>
-              <a href="/sale" className="inline-block bg-gray-700 hover:bg-gray-600 text-white font-bold rounded-lg px-6 py-3 mt-4 transition-colors">
-                Смотреть скидки →
-              </a>
-            </div>
-
+            {/* Dynamic CTA based on article platform */}
+                        {(() => {
+                          const ctaConfigs: Record<string, { title: string; description: string; buttonText: string; link: string; gradient: string }> = {
+                            gamepass: {
+                              title: 'Xbox Game Pass',
+                              description: 'Сотни игр по подписке. Новинки с первого дня.',
+                              buttonText: 'Оформить Game Pass →',
+                              link: '/subscriptions',
+                              gradient: 'from-[#107C10] to-[#1DB954]',
+                            },
+                            psplus: {
+                              title: 'PS Plus от 1 250 ₽/мес',
+                              description: 'Essential, Extra, Deluxe — оформляем из России за 10 минут.',
+                              buttonText: 'Оформить PS Plus →',
+                              link: '/subscriptions',
+                              gradient: 'from-[#0070D1] to-[#00D4FF]',
+                            },
+                            deals: {
+                              title: 'Скидки PS Store',
+                              description: 'Весенняя распродажа — скидки до 92%',
+                              buttonText: 'Смотреть скидки →',
+                              link: '/sale',
+                              gradient: 'from-[#0070D1] to-[#00D4FF]',
+                            },
+                            general: {
+                              title: 'Подписки от 1 250 ₽/мес',
+                              description: 'PS Plus, Xbox Game Pass, EA Play — оформляем из России.',
+                              buttonText: 'Выбрать подписку →',
+                              link: '/subscriptions',
+                              gradient: 'from-[#6366F1] to-[#8B5CF6]',
+                            },
+                          };
+                          const ctaType = article.ctaType || 'deals';
+                          const config = ctaConfigs[ctaType] || ctaConfigs.general;
+                          return (
+                            <div className={`bg-gradient-to-br ${config.gradient} rounded-2xl p-6 mt-8`}>
+                              <h3 className="font-[family-name:var(--font-display)] text-xl font-bold text-white mb-2">{config.title}</h3>
+                              <p className="text-white/70 text-sm mb-4">{config.description}</p>
+                              <a href={config.link} className="inline-block bg-white text-gray-900 font-bold text-sm px-6 py-3 rounded-xl hover:bg-white/90 transition-colors">
+                                {config.buttonText}
+                              </a>
+                            </div>
+                          );
+                        })()}
+            
+                        
             {/* Tags */}
             {article.tags && article.tags.length > 0 && (
               <div className="flex flex-wrap gap-2 mt-8 pt-6 border-t border-white/10">
