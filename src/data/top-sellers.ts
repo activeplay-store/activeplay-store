@@ -1,5 +1,5 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-04-04T09:56:36.271Z
+// Обновлено: 2026-04-04T11:26:38.620Z
 // Топ-продаж: 10 игр
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
@@ -25,7 +25,7 @@ export const topSellers: TopSellers = {
   region: "Европа",
   source: "PlayStation Blog",
   games: [
-    { rank: 1, title: "Crimson Desert", genre: "Экшен", image: "/images/covers/crimson-desert.jpg", platform: "PS5", priceTR: 0, priceUA: 0 },
+    { rank: 1, title: "Crimson Desert", genre: "Экшен", image: "/images/covers/crimson-desert.jpg", platform: "PS5", priceTR: 7300, priceUA: 7300 },
     { rank: 2, title: "EA SPORTS FC 26", genre: "Спорт", image: "/images/covers/ea-fc-26.jpg", platform: "PS5", priceTR: 2700, priceUA: 2700 },
     { rank: 3, title: "Resident Evil Requiem", genre: "Survival Horror", image: "/images/covers/Resident-Evil-Requiem.jpg", platform: "PS5", priceTR: 8300, priceUA: 7400 },
     { rank: 4, title: "Grand Theft Auto V", genre: "Экшен / Open World", image: "/images/covers/gta-v.jpg", platform: "PS5", priceTR: 1700, priceUA: 3800 },
