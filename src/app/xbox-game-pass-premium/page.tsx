@@ -16,6 +16,14 @@ export const metadata: Metadata = {
     url: 'https://activeplay.games/xbox-game-pass-premium',
     type: 'website',
     siteName: 'ActivePlay',
+    locale: 'ru_RU',
+    images: [{ url: '/images/platforms/xbox.png', width: 1200, height: 630, alt: 'Xbox Game Pass Premium — купить в России' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: plan.seo.title,
+    description: plan.seo.description,
+    images: ['/images/platforms/xbox.png'],
   },
   alternates: { canonical: 'https://activeplay.games/xbox-game-pass-premium' },
 };

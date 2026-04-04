@@ -27,11 +27,28 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${article.title} | ActivePlay`,
     description: desc,
+    alternates: { canonical: `https://activeplay.games/news/${slug}` },
     openGraph: {
       title: article.title,
       description: desc,
-      images: [article.coverUrl],
+      url: `https://activeplay.games/news/${slug}`,
+      siteName: 'ActivePlay',
+      locale: 'ru_RU',
       type: 'article',
+      publishedTime: article.publishedAt,
+      authors: ['ActivePlay'],
+      images: [{
+        url: article.coverUrl,
+        width: 1200,
+        height: 630,
+        alt: article.title,
+      }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: article.title,
+      description: desc,
+      images: [article.coverUrl],
     },
   };
 }

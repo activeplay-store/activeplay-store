@@ -12,7 +12,16 @@ export const metadata: Metadata = {
     title: 'Гайды — ActivePlay',
     description: 'Пошаговые руководства по покупке подписок и игр из России.',
     url: 'https://activeplay.games/guides',
+    siteName: 'ActivePlay',
+    locale: 'ru_RU',
     type: 'website',
+    images: [{ url: '/images/og-image.png', width: 1200, height: 630, alt: 'Гайды — ActivePlay' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Гайды — ActivePlay',
+    description: 'Пошаговые руководства по покупке подписок и игр из России.',
+    images: ['/images/og-image.png'],
   },
 };
 

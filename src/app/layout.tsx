@@ -103,6 +103,13 @@ const webSiteSchema = {
   '@type': 'WebSite',
   name: 'ActivePlay',
   url: 'https://activeplay.games',
+  description: 'Магазин подписок PS Plus и Xbox Game Pass для России',
+  inLanguage: 'ru',
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: 'https://activeplay.games/sale?q={search_term_string}',
+    'query-input': 'required name=search_term_string',
+  },
 };
 
 const orgSchema = {

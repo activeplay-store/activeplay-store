@@ -119,6 +119,24 @@ export default function Footer() {
                   </a>
                 </li>
               </ul>
+              <h4 className="text-sm font-semibold text-white mt-5 mb-3 font-display" style={{ fontStyle: 'normal' }}>Гайды</h4>
+              <ul className="space-y-2">
+                <li>
+                  <a href="/guides/kak-kupit-ps-plus-iz-rossii" className="text-[14px] leading-relaxed text-[var(--text-secondary)] hover:text-[var(--brand)] transition-colors">
+                    Как купить PS Plus из России
+                  </a>
+                </li>
+                <li>
+                  <a href="/guides/xbox-game-pass-kak-kupit-iz-rossii" className="text-[14px] leading-relaxed text-[var(--text-secondary)] hover:text-[var(--brand)] transition-colors">
+                    Как купить Game Pass из России
+                  </a>
+                </li>
+                <li>
+                  <a href="/guides/ps-plus-essential-extra-deluxe-otlichiya" className="text-[14px] leading-relaxed text-[var(--text-secondary)] hover:text-[var(--brand)] transition-colors">
+                    PS Plus: отличия тарифов
+                  </a>
+                </li>
+              </ul>
             </div>
 
             {/* Связаться с нами */}

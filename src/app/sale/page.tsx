@@ -12,7 +12,16 @@ export const metadata: Metadata = {
     title: 'Скидки PS Store — купить дешево из России | ActivePlay',
     description: 'Актуальные распродажи PlayStation Store. Цены Турции и Украины в рублях.',
     url: 'https://activeplay.games/sale',
+    siteName: 'ActivePlay',
+    locale: 'ru_RU',
     type: 'website',
+    images: [{ url: '/images/og-image.png', width: 1200, height: 630, alt: 'Скидки PS Store — распродажа игр PS5' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Скидки PS Store — купить дешево из России | ActivePlay',
+    description: 'Актуальные распродажи PlayStation Store. Цены Турции и Украины в рублях.',
+    images: ['/images/og-image.png'],
   },
 };
 

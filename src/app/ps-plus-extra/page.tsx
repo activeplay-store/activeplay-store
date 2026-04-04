@@ -16,6 +16,14 @@ export const metadata: Metadata = {
     url: 'https://activeplay.games/ps-plus-extra',
     type: 'website',
     siteName: 'ActivePlay',
+    locale: 'ru_RU',
+    images: [{ url: '/images/platforms/ps-logo-white-sm.webp', width: 1200, height: 630, alt: 'PS Plus Extra — купить в России' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: plan.seo.title,
+    description: plan.seo.description,
+    images: ['/images/platforms/ps-logo-white-sm.webp'],
   },
   alternates: {
     canonical: 'https://activeplay.games/ps-plus-extra',

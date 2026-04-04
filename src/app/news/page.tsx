@@ -12,7 +12,16 @@ export const metadata: Metadata = {
     title: 'Игровые новости — ActivePlay',
     description: 'Свежие новости мира PlayStation, Xbox и PC.',
     url: 'https://activeplay.games/news',
+    siteName: 'ActivePlay',
+    locale: 'ru_RU',
     type: 'website',
+    images: [{ url: '/images/og-image.png', width: 1200, height: 630, alt: 'Игровые новости — ActivePlay' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Игровые новости — ActivePlay',
+    description: 'Свежие новости мира PlayStation, Xbox и PC.',
+    images: ['/images/og-image.png'],
   },
 };
 

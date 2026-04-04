@@ -24,8 +24,25 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: guide.title,
       description: guide.excerpt,
-      images: [guide.coverUrl],
+      url: `https://activeplay.games/guides/${slug}`,
+      siteName: 'ActivePlay',
+      locale: 'ru_RU',
       type: 'article',
+      publishedTime: guide.date,
+      modifiedTime: guide.updatedDate || guide.date,
+      authors: ['ActivePlay'],
+      images: [{
+        url: guide.coverUrl,
+        width: 1200,
+        height: 630,
+        alt: guide.title,
+      }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: guide.title,
+      description: guide.excerpt,
+      images: [guide.coverUrl],
     },
   };
 }
