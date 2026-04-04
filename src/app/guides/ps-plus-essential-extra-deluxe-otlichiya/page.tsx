@@ -72,9 +72,11 @@ export default function GuidePSPlusTiers() {
           <Divider />
 
           {/* --- Essential --- */}
-          <h2 className="font-rajdhani text-[38px] font-extrabold text-white leading-tight tracking-tight">
-            <span className="text-[#F5C518]">Essential</span> &mdash; база для онлайн-игры
-          </h2>
+          <Link href="/ps-plus-essential" className="hover:opacity-80 transition-opacity">
+            <h2 className="font-rajdhani text-[38px] font-extrabold text-white leading-tight tracking-tight">
+              <span className="text-[#F5C518]">Essential</span> {'\u2014'} база для онлайн-игры
+            </h2>
+          </Link>
           <Accent />
 
           <p className="text-[17px] text-[#9aa8b8] leading-relaxed">
@@ -107,9 +109,11 @@ export default function GuidePSPlusTiers() {
           <Divider />
 
           {/* --- Extra --- */}
-          <h2 className="font-rajdhani text-[38px] font-extrabold text-white leading-tight tracking-tight">
-            <span className="text-[#00D4FF]">Extra</span> &mdash; каталог из 400+ игр
-          </h2>
+          <Link href="/ps-plus-extra" className="hover:opacity-80 transition-opacity">
+            <h2 className="font-rajdhani text-[38px] font-extrabold text-white leading-tight tracking-tight">
+              <span className="text-[#00D4FF]">Extra</span> {'\u2014'} каталог из 400+ игр
+            </h2>
+          </Link>
           <Accent />
 
           <p className="text-[17px] text-[#9aa8b8] leading-relaxed">
@@ -146,9 +150,11 @@ export default function GuidePSPlusTiers() {
           <Divider />
 
           {/* --- Deluxe --- */}
-          <h2 className="font-rajdhani text-[38px] font-extrabold text-white leading-tight tracking-tight">
-            <span className="text-[#B46AFF]">Deluxe</span> &mdash; классика и пробные версии
-          </h2>
+          <Link href="/ps-plus-deluxe" className="hover:opacity-80 transition-opacity">
+            <h2 className="font-rajdhani text-[38px] font-extrabold text-white leading-tight tracking-tight">
+              <span className="text-[#B46AFF]">Deluxe</span> {'\u2014'} классика и пробные версии
+            </h2>
+          </Link>
           <Accent />
 
           <p className="text-[17px] text-[#9aa8b8] leading-relaxed">
@@ -232,8 +238,8 @@ export default function GuidePSPlusTiers() {
             Понизить уровень сложнее. Автоматического даунгрейда нет. Нужно дождаться окончания текущей подписки, отключить автопродление и оформить новый уровень заново. Игры из каталога Extra при переходе на Essential станут недоступны &mdash; но вернутся, если снова подключите Extra.
           </p>
 
-          <Callout type="info" label="Лайфхак с апгрейдом">
-            Если хотите попробовать Extra, но не уверены &mdash; возьмите Essential на год и апгрейдните на Extra на месяц. Доплата будет минимальной. Если не понравится &mdash; через месяц вернётесь на Essential автоматически.
+          <Callout type="info" label="Про апгрейд">
+            Повысить уровень можно в любой момент. Система посчитает разницу пропорционально оставшимся дням. Понизить уровень автоматически нельзя {'\u2014'} нужно дождаться окончания текущей подписки.
           </Callout>
 
           <Divider />
@@ -258,6 +264,10 @@ export default function GuidePSPlusTiers() {
               <p className="text-[14px] text-[#7a8a9a] leading-relaxed m-0">Ностальгия по PS1/PS2, интерес к пробным версиям новинок. Разница с Extra &mdash; всего 150 {'\u20BD'}/мес. Если бюджет позволяет &mdash; берите Deluxe и не думайте.</p>
             </div>
           </div>
+
+          <p className="text-[17px] text-[#9aa8b8] leading-relaxed mt-8">
+            Разница между уровнями подписки PlayStation Plus — в количестве контента. Стоимость пс плюс растёт пропорционально: за каждые 150 {'\u20BD'} сверху вы получаете ощутимый прирост. Что входит в PS Plus Essential — мультиплеер и три игры. Что входит в Extra — четыреста игр каталога. В Deluxe добавляется классика и пробные версии. Продлить подписку любого уровня или оформить новую можно через ActivePlay — список игр пс плюс экстра и каталог постоянно обновляются, бесплатные игры PS Plus меняются каждый месяц.
+          </p>
 
           <Divider />
 
