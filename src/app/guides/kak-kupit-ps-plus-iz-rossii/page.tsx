@@ -15,7 +15,39 @@ export const metadata: Metadata = {
   },
 };
 
-/* ---------- helpers ---------- */
+/* --- SVG флаги --- */
+function FlagTR({ size = 48 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="48" height="48" rx="12" fill="#E30A17"/>
+      <circle cx="21" cy="24" r="8" fill="white"/>
+      <circle cx="23.5" cy="24" r="6.5" fill="#E30A17"/>
+      <polygon points="28,24 30.5,21.5 29,24.5 32,23 29.5,25 32,27 29,26 30.5,28.5 28,26 29.5,29 27.5,26.5 27.5,29.5 27,26.5 25,29 26.5,26 24,27.5 26.5,25.5 24,24 26.5,24" fill="white" transform="translate(1,0) scale(0.8)" style={{transformOrigin:'28px 24px'}}/>
+    </svg>
+  );
+}
+function FlagUA({ size = 48 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="48" height="48" rx="12" fill="#005BBB"/>
+      <rect y="24" width="48" height="24" rx="0" fill="#FFD500"/>
+      <rect x="0" y="36" width="48" height="12" rx="12" ry="12" fill="#FFD500"/>
+    </svg>
+  );
+}
+function FlagIN({ size = 48 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="48" height="48" rx="12" fill="white"/>
+      <rect width="48" height="16" rx="12" ry="12" fill="#FF9933"/>
+      <rect y="32" width="48" height="16" rx="12" ry="12" fill="#138808"/>
+      <circle cx="24" cy="24" r="5" fill="none" stroke="#000088" strokeWidth="1"/>
+      <circle cx="24" cy="24" r="1" fill="#000088"/>
+    </svg>
+  );
+}
+
+/* --- helpers --- */
 function Callout({ type, label, children }: { type: 'warn' | 'info' | 'danger'; label: string; children: React.ReactNode }) {
   const s = {
     warn:   { wrap: 'bg-[#EF9F27]/[0.06] border-[#EF9F27]/20 border-l-[#EF9F27]', lbl: 'text-[#EF9F27]', txt: 'text-[#d4a44a]', ico: '\u26A0\uFE0F' },
@@ -32,7 +64,7 @@ function Callout({ type, label, children }: { type: 'warn' | 'info' | 'danger'; 
 function Divider() { return <><div className="h-20" /><div className="h-px bg-gradient-to-r from-transparent via-[#00D4FF]/15 to-transparent" /><div className="h-20" /></>; }
 function Accent() { return <div className="w-16 h-[3px] bg-gradient-to-r from-[#00D4FF] to-[#0070D1] rounded-full mb-6" />; }
 
-/* ---------- page ---------- */
+/* --- page --- */
 export default function GuidePSPlus() {
   return (
     <>
@@ -76,7 +108,7 @@ export default function GuidePSPlus() {
 
           <Divider />
 
-          {/* --- Регионы (БЕЗ ЦЕН) --- */}
+          {/* --- Регионы (без цен, без выделения, с SVG-флагами) --- */}
           <h2 className="font-rajdhani text-[38px] font-extrabold text-white leading-tight tracking-tight">
             Какой регион <span className="text-[#00D4FF]">выбрать</span>
           </h2>
@@ -85,38 +117,37 @@ export default function GuidePSPlus() {
           <div className="grid md:grid-cols-3 gap-4">
             {/* Турция */}
             <div className="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-7 hover:border-white/[0.12] transition-all duration-300 hover:-translate-y-0.5">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#E24B4A] to-[#c03030] flex items-center justify-center text-white text-[13px] font-extrabold mb-5">TR</div>
+              <div className="mb-5"><FlagTR /></div>
               <div className="font-rajdhani text-[22px] font-extrabold text-white mb-4">Турция</div>
-              <div className="space-y-1.5 text-[13px]">
+              <div className="space-y-2 text-[13px] leading-relaxed">
                 <div className="text-[#5DCAA5]">{'\u2713'} Одни из самых низких цен в мире</div>
-                <div className="text-[#5DCAA5]">{'\u2713'} Распродажи со скидками до 80%</div>
-                <div className="text-[#E07070]">{'\u2717'} Нужен VPN для регистрации</div>
-                <div className="text-[#E07070]">{'\u2717'} Турецкий IP для активации подписки</div>
+                <div className="text-[#5DCAA5]">{'\u2713'} Широкое распространение среди российских пользователей</div>
+                <div className="text-[#E07070]">{'\u2717'} Нужен VPN для регистрации и турецкий IP для активации подписки</div>
               </div>
             </div>
 
-            {/* Украина */}
-            <div className="bg-white/[0.03] border border-[#00D4FF]/30 rounded-2xl p-7 transition-all duration-300 hover:-translate-y-0.5 relative overflow-hidden bg-gradient-to-b from-[#00D4FF]/[0.04] to-transparent">
-              <div className="absolute top-4 right-4 bg-[#00D4FF] text-[#0A1628] text-[9px] font-extrabold tracking-wider px-3 py-1 rounded-md">ЛУЧШИЙ ВЫБОР</div>
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#0070D1] to-[#00D4FF] flex items-center justify-center text-white text-[13px] font-extrabold mb-5">UA</div>
+            {/* Украина — без выделения, как все */}
+            <div className="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-7 hover:border-white/[0.12] transition-all duration-300 hover:-translate-y-0.5">
+              <div className="mb-5"><FlagUA /></div>
               <div className="font-rajdhani text-[22px] font-extrabold text-white mb-4">Украина</div>
-              <div className="space-y-1.5 text-[13px]">
+              <div className="space-y-2 text-[13px] leading-relaxed">
                 <div className="text-[#5DCAA5]">{'\u2713'} Самый дешёвый регион</div>
-                <div className="text-[#5DCAA5]">{'\u2713'} Русский язык и озвучка</div>
-                <div className="text-[#5DCAA5]">{'\u2713'} Цены не повышались с запуска</div>
-                <div className="text-[#E07070]">{'\u2717'} Украинский IP для активации</div>
+                <div className="text-[#5DCAA5]">{'\u2713'} Русский язык в меню и озвучка во многих играх</div>
+                <div className="text-[#5DCAA5]">{'\u2713'} Цены не поднимались с момента запуска</div>
+                <div className="text-[#E07070]">{'\u2717'} Сложная активация: нужен украинский IP, физическое нахождение или SIM-карта оператора</div>
               </div>
             </div>
 
             {/* Индия */}
             <div className="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-7 hover:border-white/[0.12] transition-all duration-300 hover:-translate-y-0.5">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#EF9F27] to-[#d48020] flex items-center justify-center text-white text-[13px] font-extrabold mb-5">IN</div>
+              <div className="mb-5"><FlagIN /></div>
               <div className="font-rajdhani text-[22px] font-extrabold text-white mb-4">Индия</div>
-              <div className="space-y-1.5 text-[13px]">
+              <div className="space-y-2 text-[13px] leading-relaxed">
                 <div className="text-[#5DCAA5]">{'\u2713'} Регистрация без VPN</div>
-                <div className="text-[#E07070]">{'\u2717'} Перебои с картами пополнения</div>
-                <div className="text-[#E07070]">{'\u2717'} Только английский язык</div>
-                <div className="text-[#E07070]">{'\u2717'} Цены не всегда ниже турецких</div>
+                <div className="text-[#E07070]">{'\u2717'} Только английский язык в играх и в меню</div>
+                <div className="text-[#E07070]">{'\u2717'} Частые перебои с картами пополнения</div>
+                <div className="text-[#E07070]">{'\u2717'} Невозможно работать с индийскими банками напрямую</div>
+                <div className="text-[#E07070]">{'\u2717'} Цены на игры не всегда ниже, чем в других регионах</div>
               </div>
             </div>
           </div>
@@ -139,14 +170,14 @@ export default function GuidePSPlus() {
           <div className="grid md:grid-cols-2 gap-4 my-10">
             <div className="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-6 hover:border-white/[0.1] transition-colors">
               <div className="flex items-center gap-3 mb-3">
-                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#E24B4A] to-[#c03030] flex items-center justify-center text-white text-[11px] font-extrabold">TR</div>
+                <FlagTR size={32} />
                 <span className="font-rajdhani text-lg font-bold text-white">Турция</span>
               </div>
               <p className="text-[14px] text-[#6b7a8d] leading-relaxed m-0">Нужен турецкий IP на консоли. Без него подписка не оформляется. Игры покупаются нормально &mdash; ограничение только на PS Plus.</p>
             </div>
             <div className="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-6 hover:border-white/[0.1] transition-colors">
               <div className="flex items-center gap-3 mb-3">
-                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#0070D1] to-[#00D4FF] flex items-center justify-center text-white text-[11px] font-extrabold">UA</div>
+                <FlagUA size={32} />
                 <span className="font-rajdhani text-lg font-bold text-white">Украина</span>
               </div>
               <p className="text-[14px] text-[#6b7a8d] leading-relaxed m-0">Та же история. Нужен украинский VPN или SIM-карта оператора. Без украинского интернета активация не проходит.</p>
@@ -170,7 +201,7 @@ export default function GuidePSPlus() {
               { t: 'Режим инкогнито', d: 'Откройте браузер. Для турецкого аккаунта включите VPN с турецким сервером. Для индийского VPN не нужен.' },
               { t: 'Регистрация на PSN', d: 'store.playstation.com \u2192 \u00ABСоздать аккаунт\u00BB. Выберите регион: Turkey, India или Ukraine. Регион фиксируется навсегда.' },
               { t: 'Адрес в стране', d: 'Любой отель с Google Maps. Турция: Istanbul, Kadik\u00F6y, 34710. Индия: Mumbai, Maharashtra, 400001.' },
-              { t: 'Почта и пароль', d: 'Gmail или Outlook. Домен .ru \u2014 фактор риска при проверках Sony. Запишите дату рождения.' },
+              { t: 'Почта и пароль', d: 'Gmail, Outlook или любой другой зарубежный почтовый сервис. Sony блокирует российские почтовые адреса \u2014 mail.ru, yandex.ru и другие .ru-домены не подходят.' },
               { t: 'Двухфакторная аутентификация', d: 'Настройки \u2192 Безопасность \u2192 2FA. Включите и сохраните резервные коды.' },
             ].map((s, i) => (
               <div key={i} className="flex gap-5 p-6 bg-white/[0.02] border border-white/[0.05] rounded-2xl hover:border-[#00D4FF]/15 hover:bg-[#00D4FF]/[0.01] transition-all duration-300">
@@ -207,15 +238,9 @@ export default function GuidePSPlus() {
             Как продлить <span className="text-[#00D4FF]">подписку PS Plus</span>
           </h2>
           <Accent />
-          <p className="text-[17px] text-[#9aa8b8] leading-relaxed">
-            Продление ПС Плюс работает по тем же правилам. Подписка продлевается с даты окончания текущей. Купили год, пока два месяца остаётся &mdash; год добавится сверху.
-          </p>
-          <p className="text-[17px] text-[#9aa8b8] leading-relaxed">
-            Автопродление лучше отключить сразу. Оно требует карты региона, а её у вас нет. Без карты подписка просто закончится. Продлевайте заранее.
-          </p>
-          <p className="text-[17px] text-[#9aa8b8] leading-relaxed">
-            Те же ограничения по IP. Из России самостоятельно не продлить. Напишите в ActivePlay &mdash; продлим за 10 минут.
-          </p>
+          <p className="text-[17px] text-[#9aa8b8] leading-relaxed">Продление ПС Плюс работает по тем же правилам. Подписка продлевается с даты окончания текущей. Купили год, пока два месяца остаётся &mdash; год добавится сверху.</p>
+          <p className="text-[17px] text-[#9aa8b8] leading-relaxed">Автопродление лучше отключить сразу. Оно требует карты региона, а её у вас нет. Без карты подписка просто закончится. Продлевайте заранее.</p>
+          <p className="text-[17px] text-[#9aa8b8] leading-relaxed">Те же ограничения по IP. Из России самостоятельно не продлить. Напишите в ActivePlay &mdash; продлим за 10 минут.</p>
 
           <Divider />
 
@@ -224,12 +249,8 @@ export default function GuidePSPlus() {
             Оплата через <span className="text-[#00D4FF]">СБП и карту &laquo;Мир&raquo;</span>
           </h2>
           <Accent />
-          <p className="text-[17px] text-[#9aa8b8] leading-relaxed">
-            Напрямую с PlayStation Store ни СБП, ни &laquo;Мир&raquo; не работают. Sony не поддерживает российскую платёжную инфраструктуру.
-          </p>
-          <p className="text-[17px] text-[#9aa8b8] leading-relaxed">
-            Зато оба способа работают для оплаты подписок через российских продавцов. В ActivePlay вы платите в рублях через СБП &mdash; быстро, без комиссии, из любого банка. Вся работа с регионами, IP и активацией &mdash; на нашей стороне.
-          </p>
+          <p className="text-[17px] text-[#9aa8b8] leading-relaxed">Напрямую с PlayStation Store ни СБП, ни &laquo;Мир&raquo; не работают. Sony не поддерживает российскую платёжную инфраструктуру.</p>
+          <p className="text-[17px] text-[#9aa8b8] leading-relaxed">Зато оба способа работают для оплаты подписок через российских продавцов. В ActivePlay вы платите в рублях через СБП &mdash; быстро, без комиссии, из любого банка. Вся работа с регионами, IP и активацией &mdash; на нашей стороне.</p>
 
           <Divider />
 
@@ -238,12 +259,8 @@ export default function GuidePSPlus() {
             Баны аккаунтов &mdash; <span className="text-[#00D4FF]">мифы и реальность</span>
           </h2>
           <Accent />
-          <p className="text-[17px] text-[#9aa8b8] leading-relaxed">
-            PlayStation &mdash; мультирегиональная платформа. Аккаунты из Бельгии, Аргентины и Турции на одной консоли &mdash; норма. Сам по себе иностранный регион не нарушает правил.
-          </p>
-          <p className="text-[17px] text-[#9aa8b8] leading-relaxed">
-            Волна банов в мае 2025 затронула аккаунты перекупщиков. Сотни аккаунтов с одного IP, одна карта на всех, продажа пачками. Sony засекла паттерн. Самостоятельно созданные аккаунты с нормальной историей &mdash; работают.
-          </p>
+          <p className="text-[17px] text-[#9aa8b8] leading-relaxed">PlayStation &mdash; мультирегиональная платформа. Аккаунты из Бельгии, Аргентины и Турции на одной консоли &mdash; норма. Сам по себе иностранный регион не нарушает правил.</p>
+          <p className="text-[17px] text-[#9aa8b8] leading-relaxed">Волна банов в мае 2025 затронула аккаунты перекупщиков. Сотни аккаунтов с одного IP, одна карта на всех, продажа пачками. Sony засекла паттерн. Самостоятельно созданные аккаунты с нормальной историей &mdash; работают.</p>
 
           <Callout type="danger" label="Никогда не делайте чарджбэк">
             Возврат платежа через банк = моментальный перманентный бан аккаунта и консоли. Проблема с покупкой? Пишите в поддержку PlayStation, не в банк.
@@ -251,7 +268,7 @@ export default function GuidePSPlus() {
 
           <h3 className="font-rajdhani text-2xl font-bold text-[#00D4FF] mt-10 mb-5">Как защитить аккаунт</h3>
           <div className="space-y-3 mb-10">
-            {['Создавайте аккаунт сами \u2014 не покупайте готовые у перекупщиков','Используйте Gmail или Outlook, не mail.ru','Включите двухфакторную аутентификацию','Не используйте VPN при обычной игре','Подождите 5\u20137 дней после регистрации перед первой покупкой','Периодически играйте на иностранном аккаунте \u2014 зарабатывайте трофеи'].map((t) => (
+            {['Создавайте аккаунт сами \u2014 не покупайте готовые у перекупщиков','Используйте Gmail, Outlook или любой зарубежный почтовый сервис','Включите двухфакторную аутентификацию','Не используйте VPN при обычной игре','Подождите 5\u20137 дней после регистрации перед первой покупкой','Периодически играйте на иностранном аккаунте \u2014 зарабатывайте трофеи'].map((t) => (
               <div key={t} className="flex items-start gap-3 text-[15px] text-[#8896a5]">
                 <div className="w-5 h-5 rounded-full bg-[#5DCAA5]/15 border-[1.5px] border-[#5DCAA5] flex items-center justify-center flex-shrink-0 mt-0.5"><div className="w-2 h-2 rounded-full bg-[#5DCAA5]" /></div>
                 {t}
@@ -261,7 +278,30 @@ export default function GuidePSPlus() {
 
           <Divider />
 
-          {/* --- ФИНАЛ: CTA + цены (перенесены сюда) --- */}
+          {/* --- Ошибки --- */}
+          <h2 className="font-rajdhani text-[38px] font-extrabold text-white leading-tight tracking-tight">
+            Частые <span className="text-[#00D4FF]">ошибки</span> и решения
+          </h2>
+          <Accent />
+          <div className="h-4" />
+          <div className="space-y-3">
+            {[
+              { c: 'E-8210604A', d: '\u00ABПроизошла ошибка\u00BB при оплате картой', f: 'Используйте PSN-карты пополнения вместо прямой оплаты' },
+              { c: 'E-82000134', d: 'Код не подходит \u2014 регион карты \u2260 регион аккаунта', f: 'Проверьте валюту: TRY для Турции, INR для Индии, UAH для Украины' },
+              { c: 'E-82000138', d: 'Кошелёк не пополняется', f: 'Лимит: максимум 5 000 TRY. Перезагрузите консоль' },
+              { c: 'WS-116367-4', d: 'Аккаунт полностью заблокирован', f: 'Причины: чарджбэк, купленный аккаунт. Пишите в поддержку региона' },
+            ].map((e) => (
+              <div key={e.c} className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5 hover:border-[#E24B4A]/20 transition-colors">
+                <div className="font-mono text-[15px] font-bold text-[#E24B4A]">{e.c}</div>
+                <div className="text-[14px] text-[#6b7a8d] mt-1">{e.d}</div>
+                <div className="text-[14px] text-[#5DCAA5] mt-2">{'\u2192'} {e.f}</div>
+              </div>
+            ))}
+          </div>
+
+          <Divider />
+
+          {/* --- ФИНАЛ: CTA + цены --- */}
           <h2 className="font-rajdhani text-[38px] font-extrabold text-white leading-tight tracking-tight">
             Как купить (продлить) <span className="text-[#00D4FF]">ПС Плюс</span> в ActivePlay
           </h2>
@@ -274,7 +314,7 @@ export default function GuidePSPlus() {
             Чтобы активировать ПС Плюс, не нужно разбираться с VPN и региональными блокировками. Наши менеджеры четыре года подряд работают с десятками тысяч клиентов. Знают каждый регион &mdash; Турцию, Украину, Индию.
           </p>
           <p className="text-[18px] text-[#9aa8b8] leading-relaxed">
-            У нас три уровня подписки. <Link href="/ps-plus-essential" className="text-[#00D4FF] hover:underline">PS Plus Essential</Link> &mdash; сетевой мультиплеер и 3 игры каждый месяц. <Link href="/ps-plus-extra" className="text-[#00D4FF] hover:underline">PS Plus Extra</Link> &mdash; каталог из 400+ игр, включая God of War, Spider-Man и Hogwarts Legacy. <Link href="/ps-plus-deluxe" className="text-[#00D4FF] hover:underline">PS Plus Deluxe</Link> &mdash; всё из Extra плюс классика PS1/PS2/PSP и пробные версии новинок.
+            У нас три уровня подписки: <Link href="/ps-plus-essential" className="text-[#00D4FF] hover:underline">PS Plus Essential</Link> &mdash; сетевой мультиплеер и 3 игры каждый месяц. <Link href="/ps-plus-extra" className="text-[#00D4FF] hover:underline">PS Plus Extra</Link> &mdash; каталог из 400+ игр, включая God of War, Spider-Man и Hogwarts Legacy. <Link href="/ps-plus-deluxe" className="text-[#00D4FF] hover:underline">PS Plus Deluxe</Link> &mdash; всё из Extra плюс классика PS1/PS2/PSP и пробные версии новинок.
           </p>
           <p className="text-[18px] text-[#9aa8b8] leading-relaxed">
             Оформить или продлить подписку Плейстейшен Плюс Эссеншиал, Экстра или Делюкс &mdash; десять минут. Платите через СБП или карту &laquo;Мир&raquo;. Никаких рисков.
