@@ -1,4 +1,4 @@
-export type GuideCategory = 'playstation' | 'xbox' | 'payment' | 'general';
+export type GuideCategory = 'playstation' | 'xbox' | 'ea-fc' | 'payment' | 'general';
 
 export interface GuideSection {
   id: string;
@@ -30,6 +30,7 @@ export interface GuideItem {
 export const GUIDE_CATEGORIES: Record<GuideCategory, { label: string; icon: string; color: string }> = {
   playstation: { label: 'PlayStation', icon: '🎮', color: '#0070D1' },
   xbox:        { label: 'Xbox',        icon: '🟢', color: '#107C10' },
+  'ea-fc':     { label: 'EA FC',        icon: '⚽', color: '#2ECC40' },
   payment:     { label: 'Оплата',      icon: '💳', color: '#F59E0B' },
   general:     { label: 'Общее',       icon: '📋', color: '#6B7280' },
 };
@@ -159,6 +160,19 @@ export const guidesData: GuideItem[] = [
     author: 'ActivePlay',
     readTime: '8 мин',
     tags: ['Game Pass', 'Xbox', 'подписка', 'гейм пасс'],
+    sections: [],
+  },
+  {
+    id: 'g4',
+    slug: 'kak-kupit-fc-points-iz-rossii',
+    title: 'Как купить FC Points из России — донат Ultimate Team',
+    excerpt: 'Как купить ФК Поинтс для EA Sports FC 26 из России. Все номиналы, цены в рублях, оплата через СБП. Скидка 10% с EA Play.',
+    coverUrl: '/images/covers/fc-points.webp',
+    category: 'ea-fc',
+    date: '2026-04-04',
+    author: 'ActivePlay',
+    readTime: '6 мин',
+    tags: ['FC Points', 'EA FC', 'Ultimate Team', 'донат', 'из России'],
     sections: [],
   }
 ];
