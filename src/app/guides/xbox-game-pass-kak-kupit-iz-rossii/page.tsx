@@ -5,17 +5,16 @@ import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Xbox Game Pass из России — все тарифы и как купить | ActivePlay',
-  description: 'Как купить Xbox Game Pass из России в 2026 году. Тарифы Essential, Premium и Ultimate: что входит, цены, отличия. Активация через подарочные карты, оплата СБП.',
+  description: 'Как купить Xbox Game Pass из России. Тарифы Essential, Premium и Ultimate: что входит, цены в рублях. Активация через подарочные карты, оплата СБП.',
   openGraph: {
     title: 'Xbox Game Pass из России — все тарифы и как купить',
-    description: 'Полный гайд по Xbox Game Pass: Essential, Premium, Ultimate. Покупка из России, активация, цены.',
+    description: 'Полный гайд по Xbox Game Pass: Essential, Premium, Ultimate. Покупка из России, активация, цены в рублях.',
     type: 'article',
     url: 'https://activeplay.games/guides/xbox-game-pass-kak-kupit-iz-rossii',
     siteName: 'ActivePlay',
   },
 };
 
-/* --- helpers --- */
 function Callout({ type, label, children }: { type: 'warn' | 'info' | 'danger'; label: string; children: React.ReactNode }) {
   const s = {
     warn:   { wrap: 'bg-[#EF9F27]/[0.06] border-[#EF9F27]/20 border-l-[#EF9F27]', lbl: 'text-[#EF9F27]', txt: 'text-[#d4a44a]', ico: '\u26A0\uFE0F' },
@@ -38,7 +37,7 @@ export default function GuideXboxGamePass() {
       <Header />
       <article className="min-h-screen bg-[#0A1628]">
 
-        {/* ═══ HERO — зелёный Xbox-градиент ═══ */}
+        {/* ═══ HERO ═══ */}
         <section className="relative overflow-hidden min-h-[480px] flex items-end">
           <div className="absolute inset-0 bg-gradient-to-br from-[#0A1628] via-[#0a2a18] via-50% to-[#107C10]" />
           <div className="absolute top-[-100px] right-[-80px] w-[500px] h-[500px] bg-[radial-gradient(circle,rgba(16,124,16,0.2)_0%,transparent_60%)] animate-pulse" />
@@ -53,7 +52,7 @@ export default function GuideXboxGamePass() {
             <h1 className="font-rajdhani text-[44px] md:text-[52px] font-extrabold text-white leading-[1.08] mb-5 tracking-tight">
               Xbox Game Pass &mdash; <span className="text-[#107C10]">все тарифы</span> и покупка из России
             </h1>
-            <p className="text-lg text-white/50 leading-relaxed max-w-xl">Полный гайд по подписке Гейм Пасс: Essential, Premium, Ultimate. Как купить из России, чем отличаются тарифы и на чём можно сэкономить.</p>
+            <p className="text-lg text-white/50 leading-relaxed max-w-xl">Полный гайд по подписке Гейм Пасс: Essential, Premium, Ultimate. Как купить из России, чем отличаются тарифы и на чём сэкономить.</p>
             <div className="flex gap-6 mt-6 text-[13px] text-white/25"><span>8 мин чтения</span><span>Game Pass, Xbox, подписка</span></div>
           </div>
         </section>
@@ -61,15 +60,11 @@ export default function GuideXboxGamePass() {
         {/* ═══ CONTENT ═══ */}
         <div className="max-w-3xl mx-auto px-8 pt-20 pb-20">
 
-          {/* --- Вступление --- */}
           <p className="text-[19px] text-[#9aa8b8] leading-relaxed">
             Xbox Game Pass &mdash; это &laquo;Netflix от мира игр&raquo;. Фиксированная ежемесячная плата, каталог из 500+ игр, новинки Microsoft в день релиза. Call of Duty, Starfield, Forza, Halo, Diablo IV &mdash; всё входит в подписку.
           </p>
           <p className="text-[19px] text-[#9aa8b8] leading-relaxed">
             Microsoft приостановила работу в России, и напрямую оплатить Гейм Пасс российской картой нельзя. Но подписка работает через подарочные карты Xbox. Активация занимает 5 минут, VPN для игры не нужен.
-          </p>
-          <p className="text-[19px] text-[#9aa8b8] leading-relaxed">
-            В октябре 2025 года Microsoft провела масштабный ребрендинг: переименовала тарифы, изменила цены и добавила новые функции. Разберём, что и сколько стоит в 2026 году.
           </p>
 
           <Divider />
@@ -78,19 +73,18 @@ export default function GuideXboxGamePass() {
           <h2 className="font-rajdhani text-[38px] font-extrabold text-white leading-tight tracking-tight">
             Три тарифа <span className="text-[#107C10]">Game Pass</span>
           </h2>
-          <p className="text-[#6b7a8d] text-base mt-3 mb-10">С октября 2025 года Game Pass Core стал Essential, Standard &mdash; Premium, а Ultimate подорожал до $30.</p>
+          <p className="text-[#6b7a8d] text-base mt-3 mb-10">С октября 2025 года Game Pass Core стал Essential, Standard &mdash; Premium. Все цены &mdash; в рублях ActivePlay.</p>
 
-          {/* Essential */}
-          <Link href="/xbox-game-pass" className="block hover:opacity-90 transition-opacity">
-            <h3 className="font-rajdhani text-[28px] font-extrabold text-[#107C10] mb-2 mt-10">Essential &mdash; мультиплеер и 50 игр</h3>
+          {/* Essential — кликабельный заголовок */}
+          <Link href="/xbox-game-pass-essential" className="block hover:opacity-80 transition-opacity">
+            <h3 className="font-rajdhani text-[28px] font-extrabold text-[#107C10] mb-2 mt-10">Essential &mdash; мультиплеер и 50+ игр</h3>
           </Link>
           <p className="text-[17px] text-[#9aa8b8] leading-relaxed">
-            Бывший Game Pass Core. Базовый уровень за $10 в месяц. Онлайн-мультиплеер на Xbox, библиотека из 50+ игр, облачный гейминг и программа лояльности Rewards. Если вам нужен только онлайн с друзьями и небольшой каталог &mdash; этого достаточно.
+            Бывший Game Pass Core. Базовый уровень &mdash; от 1 300 {'\u20BD'}/мес. Онлайн-мультиплеер на Xbox и ПК, библиотека из 50+ игр, облачный гейминг и программа лояльности Rewards. Годовая подписка &mdash; 6 950 {'\u20BD'}, экономия почти 9 000 {'\u20BD'}.
           </p>
-
           <div className="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-7 my-6">
             <div className="space-y-2 text-[15px]">
-              {['Онлайн-мультиплеер на Xbox','50+ игр в каталоге','Облачный гейминг (избранные игры)','Скидки для подписчиков','Rewards \u2014 до $25/год бонусов'].map((f) => (
+              {['Онлайн-мультиплеер на Xbox и ПК','50+ игр в каталоге','Облачный гейминг (избранные игры)','Скидки для подписчиков в Microsoft Store','Rewards \u2014 бонусы и награды'].map((f) => (
                 <div key={f} className="flex items-center gap-3 text-[#9aa8b8]">
                   <div className="w-2 h-2 rounded-full bg-[#107C10]/50 flex-shrink-0" />{f}
                 </div>
@@ -98,17 +92,16 @@ export default function GuideXboxGamePass() {
             </div>
           </div>
 
-          {/* Premium */}
-          <Link href="/xbox-game-pass" className="block hover:opacity-90 transition-opacity">
-            <h3 className="font-rajdhani text-[28px] font-extrabold text-[#00D4FF] mb-2 mt-10">Premium &mdash; 200+ игр на Xbox и ПК</h3>
+          {/* Premium — кликабельный заголовок */}
+          <Link href="/xbox-game-pass-premium" className="block hover:opacity-80 transition-opacity">
+            <h3 className="font-rajdhani text-[28px] font-extrabold text-[#00D4FF] mb-2 mt-10">Premium &mdash; 280 игр на Xbox и ПК</h3>
           </Link>
           <p className="text-[17px] text-[#9aa8b8] leading-relaxed">
-            Бывший Game Pass Standard. Средний тариф за $15 в месяц. Каталог расширяется до 200+ игр, впервые включая ПК-версии. Diablo IV, Hogwarts Legacy, Starfield &mdash; здесь. Игры первого дня от Microsoft выходят в Premium в течение года после релиза. Для большинства игроков &mdash; золотая середина.
+            Бывший Game Pass Standard. Средний тариф &mdash; от 1 700 {'\u20BD'}/мес. Каталог расширяется до 280 игр, впервые включая ПК-версии. Cyberpunk 2077, Hogwarts Legacy, Starfield &mdash; здесь. Xbox-эксклюзивы появляются в течение года после релиза. Годовая подписка &mdash; 9 900 {'\u20BD'}.
           </p>
-
           <div className="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-7 my-6">
             <div className="space-y-2 text-[15px]">
-              {['200+ игр на Xbox и ПК','Онлайн-мультиплеер','Облачный гейминг','Новинки Microsoft \u2014 в течение года после релиза','Скидки и Rewards'].map((f) => (
+              {['280 игр на Xbox и ПК','Онлайн-мультиплеер','Улучшенный облачный гейминг','Xbox-эксклюзивы \u2014 в течение года после релиза','Скидки до 20% в Microsoft Store'].map((f) => (
                 <div key={f} className="flex items-center gap-3 text-[#9aa8b8]">
                   <div className="w-2 h-2 rounded-full bg-[#00D4FF]/40 flex-shrink-0" />{f}
                 </div>
@@ -116,27 +109,22 @@ export default function GuideXboxGamePass() {
             </div>
           </div>
 
-          {/* Ultimate */}
-          <Link href="/xbox-game-pass" className="block hover:opacity-90 transition-opacity">
+          {/* Ultimate — кликабельный заголовок */}
+          <Link href="/xbox-game-pass-ultimate" className="block hover:opacity-80 transition-opacity">
             <h3 className="font-rajdhani text-[28px] font-extrabold text-[#F5C518] mb-2 mt-10">Ultimate &mdash; всё включено</h3>
           </Link>
           <p className="text-[17px] text-[#9aa8b8] leading-relaxed">
-            Максимальный тариф &mdash; $30 в месяц. 400+ игр на Xbox, ПК и через облако. Новинки в день релиза. Call of Duty, Forza, Halo, все игры Activision Blizzard &mdash; в первый же день. Плюс Ubisoft+ Classics, Fortnite Crew, EA Play и приоритетный облачный гейминг в 1440p.
+            Максимальный тариф &mdash; от 2 500 {'\u20BD'}/мес. Более 500 игр на Xbox, ПК и через облако. Новинки в день релиза: Call of Duty, Forza, Halo, все игры Activision Blizzard &mdash; в первый же день. Плюс Ubisoft+ Classics, Fortnite Crew, EA Play и приоритетный облачный гейминг в 1440p. Годовая подписка &mdash; 13 500 {'\u20BD'}.
           </p>
-
           <div className="bg-white/[0.03] border border-[#F5C518]/20 rounded-2xl p-7 my-6 bg-gradient-to-b from-[#F5C518]/[0.03] to-transparent">
             <div className="space-y-2 text-[15px]">
-              {['400+ игр: Xbox + ПК + облако','Новинки Microsoft/Activision Blizzard в день релиза','EA Play \u2014 каталог Electronic Arts (FIFA, Battlefield, NFS)','Ubisoft+ Classics (Assassin\u2019s Creed, Far Cry, Watch Dogs)','Fortnite Crew + 1000 V-Bucks ежемесячно','Облачный гейминг 1440p без бета-ограничений','Расширенные Rewards'].map((f) => (
+              {['500+ игр: Xbox + ПК + облако','Новинки Microsoft/Activision Blizzard в день релиза','EA Play \u2014 каталог Electronic Arts','Ubisoft+ Classics (Assassin\u2019s Creed, Far Cry, Watch Dogs)','Fortnite Crew + 1000 V-Bucks ежемесячно','Облачный гейминг 1440p на Xbox, ПК, Smart TV и телефоне','PC Game Pass включён'].map((f) => (
                 <div key={f} className="flex items-center gap-3 text-[#9aa8b8]">
                   <div className="w-2 h-2 rounded-full bg-[#F5C518]/40 flex-shrink-0" />{f}
                 </div>
               ))}
             </div>
           </div>
-
-          <p className="text-[17px] text-[#9aa8b8] leading-relaxed">
-            70% пользователей Гейм Пасс в 2026 году выбирают Ultimate. Если играете на нескольких устройствах или хотите новинки в день выхода &mdash; альтернатив нет.
-          </p>
 
           <Divider />
 
@@ -147,29 +135,28 @@ export default function GuideXboxGamePass() {
           <Accent />
 
           <div className="overflow-hidden rounded-2xl border border-white/[0.06] my-8">
-            <div className="grid grid-cols-5 bg-white/[0.04]">
+            <div className="grid grid-cols-4 bg-white/[0.04]">
               <div className="p-4 text-[12px] text-[#6b7a8d] font-semibold border-r border-white/[0.06]">Функция</div>
-              <div className="p-4 text-[12px] font-bold text-center text-[#107C10]">Essential<br/><span className="font-normal text-[#4a5a6a]">$10/мес</span></div>
-              <div className="p-4 text-[12px] font-bold text-center text-[#00D4FF] border-x border-white/[0.06]">Premium<br/><span className="font-normal text-[#4a5a6a]">$15/мес</span></div>
-              <div className="p-4 text-[12px] font-bold text-center text-[#F5C518] border-r border-white/[0.06]">Ultimate<br/><span className="font-normal text-[#4a5a6a]">$30/мес</span></div>
-              <div className="p-4 text-[12px] font-bold text-center text-[#9aa8b8]">PC Game Pass<br/><span className="font-normal text-[#4a5a6a]">$16.5/мес</span></div>
+              <div className="p-4 text-[12px] font-bold text-center text-[#107C10]">Essential<br/><span className="font-normal text-[#4a5a6a]">от 1 300 {'\u20BD'}</span></div>
+              <div className="p-4 text-[12px] font-bold text-center text-[#00D4FF] border-x border-white/[0.06]">Premium<br/><span className="font-normal text-[#4a5a6a]">от 1 700 {'\u20BD'}</span></div>
+              <div className="p-4 text-[12px] font-bold text-center text-[#F5C518]">Ultimate<br/><span className="font-normal text-[#4a5a6a]">от 2 500 {'\u20BD'}</span></div>
             </div>
             {[
-              { f: 'Каталог игр', e: '50+', p: '200+', u: '400+', pc: '400+' },
-              { f: 'Платформы', e: 'Xbox', p: 'Xbox + ПК', u: 'Xbox + ПК + облако', pc: 'Только ПК' },
-              { f: 'Онлайн-мультиплеер', e: '\u2713', p: '\u2713', u: '\u2713', pc: '\u2014' },
-              { f: 'Новинки день-в-день', e: '\u2014', p: 'В течение года', u: '\u2713', pc: '\u2713' },
-              { f: 'EA Play', e: '\u2014', p: '\u2014', u: '\u2713', pc: '\u2713' },
-              { f: 'Ubisoft+ Classics', e: '\u2014', p: '\u2014', u: '\u2713', pc: '\u2014' },
-              { f: 'Fortnite Crew', e: '\u2014', p: '\u2014', u: '\u2713', pc: '\u2014' },
-              { f: 'Облачный гейминг', e: 'Избранные', p: '\u2713', u: '1440p приоритет', pc: '\u2014' },
+              { f: 'Каталог игр', e: '50+', p: '280+', u: '500+' },
+              { f: 'Платформы', e: 'Xbox + ПК', p: 'Xbox + ПК', u: 'Xbox + ПК + облако' },
+              { f: 'Онлайн-мультиплеер', e: '\u2713', p: '\u2713', u: '\u2713' },
+              { f: 'Новинки день-в-день', e: '\u2014', p: 'Через ~12 мес', u: '\u2713' },
+              { f: 'EA Play', e: '\u2014', p: '\u2014', u: '\u2713' },
+              { f: 'Ubisoft+ Classics', e: '\u2014', p: '\u2014', u: '\u2713' },
+              { f: 'Fortnite Crew', e: '\u2014', p: '\u2014', u: '\u2713' },
+              { f: 'Облачный гейминг', e: 'Избранные', p: '\u2713', u: '1440p приоритет' },
+              { f: 'Годовая подписка', e: '6 950 \u20BD', p: '9 900 \u20BD', u: '13 500 \u20BD' },
             ].map((row, i) => (
-              <div key={i} className={`grid grid-cols-5 ${i % 2 === 0 ? 'bg-white/[0.01]' : 'bg-white/[0.03]'}`}>
+              <div key={i} className={`grid grid-cols-4 ${i % 2 === 0 ? 'bg-white/[0.01]' : 'bg-white/[0.03]'}`}>
                 <div className="p-3 text-[12px] text-[#8896a5] border-r border-white/[0.06]">{row.f}</div>
                 <div className="p-3 text-center text-[12px] text-[#9aa8b8]">{row.e}</div>
                 <div className="p-3 text-center text-[12px] text-[#9aa8b8] border-x border-white/[0.06]">{row.p}</div>
-                <div className="p-3 text-center text-[12px] text-[#9aa8b8] border-r border-white/[0.06]">{row.u}</div>
-                <div className="p-3 text-center text-[12px] text-[#9aa8b8]">{row.pc}</div>
+                <div className="p-3 text-center text-[12px] text-[#9aa8b8]">{row.u}</div>
               </div>
             ))}
           </div>
@@ -204,7 +191,7 @@ export default function GuideXboxGamePass() {
           </div>
 
           <Callout type="info" label="Главное отличие от PlayStation">
-            У Xbox регион аккаунта можно менять. Зашли в настройки account.microsoft.com, поменяли страну &mdash; готово. Не нужно создавать отдельный аккаунт, как в случае с PSN. И VPN для активации не требуется &mdash; коды вводятся через сайт.
+            У Xbox регион аккаунта можно менять. Зашли в настройки account.microsoft.com, поменяли страну &mdash; готово. Не нужно создавать отдельный аккаунт, как в случае с PSN. И VPN для активации не требуется.
           </Callout>
 
           <Divider />
@@ -216,10 +203,10 @@ export default function GuideXboxGamePass() {
           <Accent />
 
           <p className="text-[17px] text-[#9aa8b8] leading-relaxed">
-            Классический способ сэкономить на Гейм Пасс Ультимейт. Суть: покупаете подписку Essential (или карты Xbox Live Gold, если ещё остались), а затем поверх активируете Ultimate. Оставшийся срок Essential конвертируется в Ultimate по определённому коэффициенту.
+            Способ сэкономить на Гейм Пасс Ультимейт. Покупаете подписку Essential, а затем поверх активируете Ultimate. Оставшийся срок Essential конвертируется в Ultimate по определённому коэффициенту.
           </p>
           <p className="text-[17px] text-[#9aa8b8] leading-relaxed">
-            Точный коэффициент зависит от условий на момент конвертации. Обычно 3 месяца Essential превращаются в 2 месяца Ultimate. Итоговая стоимость &mdash; заметно ниже, чем прямая покупка Ultimate.
+            Обычно 3 месяца Essential превращаются в 2 месяца Ultimate. Итоговая стоимость получается заметно ниже, чем прямая покупка Ultimate.
           </p>
 
           <Callout type="warn" label="Условия меняются">
@@ -228,25 +215,7 @@ export default function GuideXboxGamePass() {
 
           <Divider />
 
-          {/* --- Xbox vs PS Plus --- */}
-          <h2 className="font-rajdhani text-[38px] font-extrabold text-white leading-tight tracking-tight">
-            Game Pass или <span className="text-[#00D4FF]">PS Plus</span> &mdash; что выбрать
-          </h2>
-          <Accent />
-
-          <p className="text-[17px] text-[#9aa8b8] leading-relaxed">
-            Вопрос платформы, а не подписки. Если у вас Xbox &mdash; Game Pass без вариантов. Если PS5 &mdash; PS Plus. Если играете на ПК &mdash; Game Pass PC или Ultimate.
-          </p>
-          <p className="text-[17px] text-[#9aa8b8] leading-relaxed">
-            Ключевое преимущество Game Pass &mdash; новинки в день релиза. Sony добавляет хиты в каталог PS Plus Extra через год{'\u2013'}два после выхода. Microsoft даёт доступ с первого дня. Call of Duty, Starfield, Indiana Jones &mdash; всё было в Game Pass в день релиза.
-          </p>
-          <p className="text-[17px] text-[#9aa8b8] leading-relaxed">
-            Преимущество PS Plus &mdash; каталог эксклюзивов Sony. God of War, Spider-Man, The Last of Us, Horizon &mdash; этого в Game Pass не будет никогда.
-          </p>
-
-          <Divider />
-
-          {/* --- Какой тариф --- */}
+          {/* --- Какой тариф выбрать --- */}
           <h2 className="font-rajdhani text-[38px] font-extrabold text-white leading-tight tracking-tight">
             Какой тариф <span className="text-[#107C10]">выбрать</span>
           </h2>
@@ -255,21 +224,21 @@ export default function GuideXboxGamePass() {
           <div className="space-y-4 my-8">
             <div className="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-6">
               <h3 className="font-rajdhani text-lg font-bold text-[#107C10] mb-2">Essential &mdash; онлайн с друзьями</h3>
-              <p className="text-[14px] text-[#7a8a9a] leading-relaxed m-0">Играете в пару онлайн-игр, покупаете новинки отдельно. Нужен мультиплеер и небольшой каталог. Самый бюджетный вариант.</p>
+              <p className="text-[14px] text-[#7a8a9a] leading-relaxed m-0">Играете в пару онлайн-игр, покупаете новинки отдельно. Нужен мультиплеер и небольшой каталог. Самый бюджетный вариант &mdash; от 1 300 {'\u20BD'}/мес.</p>
             </div>
             <div className="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-6">
               <h3 className="font-rajdhani text-lg font-bold text-[#00D4FF] mb-2">Premium &mdash; большой каталог без переплаты</h3>
-              <p className="text-[14px] text-[#7a8a9a] leading-relaxed m-0">Хотите каталог из 200+ игр и на Xbox, и на ПК. Не критично получать новинки в первый день. Золотая середина.</p>
+              <p className="text-[14px] text-[#7a8a9a] leading-relaxed m-0">Хотите каталог из 280 игр и на Xbox, и на ПК. Не критично получать новинки в первый день. Золотая середина &mdash; от 1 700 {'\u20BD'}/мес.</p>
             </div>
             <div className="bg-white/[0.03] border border-[#F5C518]/20 rounded-2xl p-6">
               <h3 className="font-rajdhani text-lg font-bold text-[#F5C518] mb-2">Ultimate &mdash; максимум без компромиссов</h3>
-              <p className="text-[14px] text-[#7a8a9a] leading-relaxed m-0">Новинки в день выхода, все платформы, EA Play, облачный гейминг. Играете на Xbox, ПК и хотите стриминг на телефон. 70% подписчиков выбирают его.</p>
-            </div>
-            <div className="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-6">
-              <h3 className="font-rajdhani text-lg font-bold text-[#9aa8b8] mb-2">PC Game Pass &mdash; только компьютер</h3>
-              <p className="text-[14px] text-[#7a8a9a] leading-relaxed m-0">Консоли нет, играете только на ПК. Тот же каталог и новинки первого дня, но без консольных функций и облачного гейминга.</p>
+              <p className="text-[14px] text-[#7a8a9a] leading-relaxed m-0">Новинки в день выхода, все платформы, EA Play, облачный гейминг. Играете на Xbox, ПК и стримите на телефон. 70% подписчиков выбирают его &mdash; от 2 500 {'\u20BD'}/мес.</p>
             </div>
           </div>
+
+          <p className="text-[17px] text-[#9aa8b8] leading-relaxed mt-8">
+            Стоимость подписки гейм пасс зависит от уровня и срока. Годовая подписка всегда выгоднее &mdash; экономия до 50% по сравнению с помесячной оплатой. Купить Xbox Game Pass дёшево можно через ActivePlay: мы предлагаем лучшие цены на все тарифы, включая Гейм Пасс Ультимейт, Премиум и Эссеншиал. Оплата в рублях, активация за 5 минут.
+          </p>
 
           <Divider />
 
@@ -280,10 +249,10 @@ export default function GuideXboxGamePass() {
           <Accent />
 
           <p className="text-[18px] text-[#9aa8b8] leading-relaxed">
-            Купить Гейм Пасс из России дёшево и быстро &mdash; к нам. Оплата в рублях через СБП или карту &laquo;Мир&raquo;. Код приходит мгновенно. Активация &mdash; 5 минут.
+            Купить Гейм Пасс из России &mdash; к нам. Оплата в рублях через СБП или карту &laquo;Мир&raquo;. Код приходит мгновенно. Активация &mdash; 5 минут.
           </p>
           <p className="text-[18px] text-[#9aa8b8] leading-relaxed">
-            ActivePlay работает с 2022 года. Более 52 000 клиентов. Наши менеджеры помогут выбрать оптимальный тариф, подскажут по конвертации и активируют подписку Xbox Game Pass Ультимейт, Премиум или Эссеншиал на ваш аккаунт.
+            ActivePlay работает с 2022 года. Более 52 000 клиентов. Наши менеджеры помогут выбрать тариф, подскажут по конвертации и активируют подписку Xbox Game Pass на ваш аккаунт.
           </p>
 
           <div className="bg-gradient-to-br from-[#0a3a0a] via-[#107C10] to-[#00D4FF] rounded-3xl p-12 md:p-14 text-center mt-12 mb-16 relative overflow-hidden">
@@ -291,27 +260,26 @@ export default function GuideXboxGamePass() {
             <h3 className="font-rajdhani text-[28px] md:text-[32px] font-extrabold text-white mb-4 relative">Xbox Game Pass</h3>
             <p className="text-white/60 text-[15px] mb-8 relative">52 000+ клиентов. Мгновенная выдача. Оплата СБП.</p>
             <div className="flex justify-center gap-6 md:gap-10 mb-8 relative flex-wrap">
-              <div className="text-center">
+              <Link href="/xbox-game-pass-essential" className="text-center group">
                 <div className="text-[12px] text-white/45 mb-1">Essential</div>
-                <div className="text-[24px] md:text-[28px] font-extrabold text-white">$10</div>
-              </div>
-              <div className="text-center">
+                <div className="text-[24px] md:text-[28px] font-extrabold text-white group-hover:text-[#107C10] transition-colors">от 1 300 {'\u20BD'}</div>
+              </Link>
+              <Link href="/xbox-game-pass-premium" className="text-center group">
                 <div className="text-[12px] text-white/45 mb-1">Premium</div>
-                <div className="text-[24px] md:text-[28px] font-extrabold text-white">$15</div>
-              </div>
-              <div className="text-center">
+                <div className="text-[24px] md:text-[28px] font-extrabold text-white group-hover:text-[#00D4FF] transition-colors">от 1 700 {'\u20BD'}</div>
+              </Link>
+              <Link href="/xbox-game-pass-ultimate" className="text-center group">
                 <div className="text-[12px] text-white/45 mb-1">Ultimate</div>
-                <div className="text-[24px] md:text-[28px] font-extrabold text-white">$30</div>
-              </div>
+                <div className="text-[24px] md:text-[28px] font-extrabold text-white group-hover:text-[#F5C518] transition-colors">от 2 500 {'\u20BD'}</div>
+              </Link>
             </div>
             <a href="https://t.me/activeplay1" className="inline-block bg-white text-[#107C10] font-bold text-base px-12 py-4 rounded-2xl hover:shadow-[0_8px_32px_rgba(16,124,16,0.3)] hover:-translate-y-0.5 transition-all duration-200 relative">
               Написать менеджеру
             </a>
           </div>
 
-          {/* Теги */}
           <div className="flex flex-wrap gap-2 pt-8 border-t border-white/[0.05]">
-            {['Xbox Game Pass','Game Pass','гейм пасс','Ultimate','гейм пасс ультимейт','Essential','Premium','Xbox','подписка','из России','купить','СБП','PC Game Pass'].map((tag) => (
+            {['Xbox Game Pass','Game Pass','гейм пасс','Ultimate','гейм пасс ультимейт','Essential','Premium','Xbox','подписка','из России','купить','СБП','PC Game Pass','активировать'].map((tag) => (
               <span key={tag} className="text-[12px] text-[#4a5a6a] bg-white/[0.03] border border-white/[0.06] px-4 py-1.5 rounded-full hover:border-[#107C10]/20 hover:text-[#107C10] transition-all cursor-default">{tag}</span>
             ))}
           </div>
