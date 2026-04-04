@@ -59,7 +59,7 @@ export const hotReleases: HotRelease[] = [
     metacritic: 0,
     genre: "Шутер",
     platforms: ["PS5"],
-    cover: "https://media.rawg.io/media/games/cab/cabc7cd14f1d9829c37d3bd2bec16c4a.jpg",
+    cover: "/images/covers/marathon.jpg",
     hypeScore: 3,
     totalScore: 5,
     editions: {
