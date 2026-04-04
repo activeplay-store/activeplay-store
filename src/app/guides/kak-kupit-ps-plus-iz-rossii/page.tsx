@@ -260,7 +260,7 @@ export default function GuidePSPlus() {
             </div>
           </div>
 
-          <Callout type="warn" label={`Карта пополнения \u2260 подписка`}>
+          <Callout type="warn" label="Карта пополнения ≠ подписка">
             Подарочная карта PlayStation пополняет кошелёк, но не активирует подписку. Для покупки PS Plus нужен IP-адрес региона. Пополнили кошелёк, а подписку оформить не можете? Это нормально &mdash; напишите в ActivePlay, мы активируем.
           </Callout>
 
