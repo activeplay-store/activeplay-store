@@ -27,7 +27,11 @@ export default function GuidesContent() {
 
   const filtered = useMemo(() => {
     const items = activeCategory === 'all' ? guidesData : guidesData.filter((g) => g.category === activeCategory);
-    return [...items].sort((a, b) => new Date(b.updatedDate || b.date).getTime() - new Date(a.updatedDate || a.date).getTime());
+    return [...items].sort((a, b) => {
+      const diff = new Date(b.updatedDate || b.date).getTime() - new Date(a.updatedDate || a.date).getTime();
+      if (diff !== 0) return diff;
+      return Number(b.id.replace('g', '')) - Number(a.id.replace('g', ''));
+    });
   }, [activeCategory]);
 
   const visible = filtered.slice(0, visibleCount);
