@@ -99,6 +99,73 @@ function cleanGameName(name) {
 }
 
 /**
+ * Find a game in a list by name, preferring Full Game (not DLC/addon).
+ * Strategy: 1) exact slug match → prefer Full Game, 2) fuzzy includes → prefer Full Game with higher basePrice.
+ */
+function findGameByName(gamesList, searchName) {
+  const searchSlug = slugify(searchName);
+  const searchLower = searchName.toLowerCase();
+
+  // 1) Exact slug or name match — collect all matches
+  const exactMatches = gamesList.filter(g => {
+    const gSlug = slugify(cleanGameName(cleanName(g.name)));
+    const gNameLower = cleanGameName(cleanName(g.name)).toLowerCase();
+    return gSlug === searchSlug || gNameLower === searchLower;
+  });
+
+  if (exactMatches.length > 0) {
+    // Prefer Full Game (by gameContentType or by not being DLC/addon/bundle)
+    const fullGame = exactMatches.find(g =>
+      g.gameContentType === 'Full Game' || g.type === 'FULL_GAME'
+    );
+    if (fullGame) return fullGame;
+    // Prefer one with highest basePrice (likely the main edition, not a cheap DLC)
+    return pickBestEdition(exactMatches);
+  }
+
+  // 2) Fuzzy: game name includes search name or vice versa
+  const fuzzyMatches = gamesList.filter(g => {
+    const gNameLower = cleanGameName(cleanName(g.name)).toLowerCase();
+    return gNameLower.includes(searchLower) || searchLower.includes(gNameLower);
+  });
+
+  if (fuzzyMatches.length > 0) {
+    // Prefer Full Game
+    const fullGame = fuzzyMatches.find(g =>
+      g.gameContentType === 'Full Game' || g.type === 'FULL_GAME'
+    );
+    if (fullGame) return fullGame;
+    return pickBestEdition(fuzzyMatches);
+  }
+
+  return null;
+}
+
+/**
+ * Among multiple game entries, pick the one most likely to be the main/full game.
+ * Prefers entries with higher base price in TR region (DLC is cheaper).
+ */
+function pickBestEdition(matches) {
+  if (matches.length === 1) return matches[0];
+
+  let best = matches[0];
+  let bestPrice = 0;
+
+  for (const g of matches) {
+    const trEditions = g.prices?.TR?.editions || [];
+    for (const ed of trEditions) {
+      const bp = ed.basePrice || 0;
+      if (bp >= 1000 && bp > bestPrice) {
+        bestPrice = bp;
+        best = g;
+      }
+    }
+  }
+
+  return best;
+}
+
+/**
  * Normalize a game name for deduplication — strip edition suffixes to find the "base" game.
  */
 function normalizeForDedup(name) {
@@ -1395,22 +1462,37 @@ async function generateHotReleases() {
           const searchData = await searchRes.json();
           const gameNameLower = game.name.toLowerCase();
           const gameSlugSearch = slugify(game.name);
-          const productIds = (searchData.links || [])
+          // Sort results: prefer Full Game, then exact slug match
+          const scored = (searchData.links || [])
             .filter(l => {
               if (!l.name) return false;
               const linkSlug = slugify(l.name);
-              // Prefer exact slug match or very close match
+              // Exact slug match
               if (linkSlug === gameSlugSearch) return true;
-              // Accept if link name contains the full game name (not just first word)
+              // Link name contains full game name (not just first word)
               if (l.name.toLowerCase().includes(gameNameLower)) return true;
-              // Accept if game name contains the full link name
-              if (gameNameLower.includes(l.name.toLowerCase())) return true;
+              // Only accept reverse match if link name is long enough (avoid matching DLC/currency)
+              if (gameNameLower.includes(l.name.toLowerCase()) && l.name.length > 10) return true;
               return false;
             })
+            .map(l => {
+              const linkSlug = slugify(l.name);
+              // Score: prefer exact match + Full Game type + higher base price
+              let score = 0;
+              if (linkSlug === gameSlugSearch) score += 100;
+              if (l.game_contentType === 'Full Game' || l.game_contentType === 'FULL_GAME') score += 50;
+              // Penalize DLC, Add-On, Currency
+              const nameLower = l.name.toLowerCase();
+              if (nameLower.includes('dlc') || nameLower.includes('add-on') || nameLower.includes('currency') || nameLower.includes('coins') || nameLower.includes('points') || nameLower.includes('pack')) score -= 30;
+              if (l.default_sku?.price) score += 10; // Has a price = good
+              return { id: l.id, score, name: l.name };
+            })
+            .sort((a, b) => b.score - a.score);
+          const productIds = scored
             .map(l => l.id)
             .filter((v, i, a) => a.indexOf(v) === i);
 
-          for (const pid of productIds.slice(0, 2)) {
+          for (const pid of productIds.slice(0, 3)) {
             await new Promise(r => setTimeout(r, 500));
             const priceData = await sony.fetchGamePrice('TR', pid);
             if (priceData?.prices?.TR?.editions?.length) {
@@ -1420,6 +1502,12 @@ async function generateHotReleases() {
                 if (price) {
                   try { ed.clientPrice = pricing.calculatePrice(price, 'TR').clientPrice; } catch {}
                 }
+              }
+              // Skip suspiciously cheap products (likely DLC/currency, not Full Game)
+              const maxBase = Math.max(...priceData.prices.TR.editions.map(e => e.basePrice || 0));
+              if (maxBase > 0 && maxBase < 1000) {
+                console.log(PREFIX + ' Пропуск дешёвого продукта (' + maxBase + ' TRY) для ' + game.name);
+                continue;
               }
               game.prices = game.prices || {};
               game.prices.TR = priceData.prices.TR;
@@ -1443,19 +1531,31 @@ async function generateHotReleases() {
             const searchDataUa = await searchResUa.json();
             const gameNameLowerUa = game.name.toLowerCase();
             const gameSlugSearchUa = slugify(game.name);
-            const productIdsUa = (searchDataUa.links || [])
+            const scoredUa = (searchDataUa.links || [])
               .filter(l => {
                 if (!l.name) return false;
                 const linkSlug = slugify(l.name);
                 if (linkSlug === gameSlugSearchUa) return true;
                 if (l.name.toLowerCase().includes(gameNameLowerUa)) return true;
-                if (gameNameLowerUa.includes(l.name.toLowerCase())) return true;
+                if (gameNameLowerUa.includes(l.name.toLowerCase()) && l.name.length > 10) return true;
                 return false;
               })
+              .map(l => {
+                const linkSlug = slugify(l.name);
+                let score = 0;
+                if (linkSlug === gameSlugSearchUa) score += 100;
+                if (l.game_contentType === 'Full Game' || l.game_contentType === 'FULL_GAME') score += 50;
+                const nameLower = l.name.toLowerCase();
+                if (nameLower.includes('dlc') || nameLower.includes('add-on') || nameLower.includes('currency') || nameLower.includes('coins') || nameLower.includes('points') || nameLower.includes('pack')) score -= 30;
+                if (l.default_sku?.price) score += 10;
+                return { id: l.id, score, name: l.name };
+              })
+              .sort((a, b) => b.score - a.score);
+            const productIdsUa = scoredUa
               .map(l => l.id)
               .filter((v, i, a) => a.indexOf(v) === i);
 
-            for (const pid of productIdsUa.slice(0, 2)) {
+            for (const pid of productIdsUa.slice(0, 3)) {
               await new Promise(r => setTimeout(r, 500));
               const priceData = await sony.fetchGamePrice('UA', pid);
               if (priceData?.prices?.UA?.editions?.length) {
@@ -1464,6 +1564,11 @@ async function generateHotReleases() {
                   if (price) {
                     try { ed.clientPrice = pricing.calculatePrice(price, 'UA').clientPrice; } catch {}
                   }
+                }
+                // Skip suspiciously cheap products (likely DLC/currency)
+                const maxBase = Math.max(...priceData.prices.UA.editions.map(e => e.basePrice || 0));
+                if (maxBase > 0 && maxBase < 500) {
+                  continue;
                 }
                 game.prices = game.prices || {};
                 game.prices.UA = priceData.prices.UA;
@@ -1887,6 +1992,9 @@ async function generateTopSellers(gameList) {
     'minecraft': { priceTR: 2460, priceUA: 2100 },
     'monster-hunter-stories-3': { priceTR: 5550, priceUA: 4900 },
     'monster-hunter-stories-3-twisted-reflection': { priceTR: 5550, priceUA: 4900 },
+    'wwe-2k26': { priceTR: 5100, priceUA: 4500 },
+    'arc-raiders': { priceTR: 3250, priceUA: 2950 },
+    'resident-evil-4': { priceTR: 3500, priceUA: 3100 },
   };
 
   // Known cover overrides for games with non-standard filenames
@@ -1904,18 +2012,12 @@ async function generateTopSellers(gameList) {
     const rank = entry.rank;
     const slug = slugify(name);
 
-    // Search in games.json
-    let found = allGames.find(g =>
-      slugify(cleanGameName(cleanName(g.name))) === slug ||
-      cleanGameName(cleanName(g.name)).toLowerCase() === name.toLowerCase()
-    );
+    // Search in games.json — prefer Full Game by conceptId, then fuzzy
+    let found = findGameByName(allGames, name);
 
     // Search in preorders
     if (!found) {
-      const po = allPreorders.find(p =>
-        slugify(cleanGameName(cleanName(p.name))) === slug ||
-        cleanGameName(cleanName(p.name)).toLowerCase() === name.toLowerCase()
-      );
+      const po = findGameByName(allPreorders, name);
       if (po) {
         found = {
           name: po.name,

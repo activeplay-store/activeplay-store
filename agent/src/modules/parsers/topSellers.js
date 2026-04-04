@@ -159,17 +159,87 @@ function extractMonthYear(title, dateStr) {
 }
 
 /**
+ * Strip <script>, <style>, and HTML comments from HTML.
+ */
+function stripScriptsAndStyles(html) {
+  return html
+    .replace(/<script[\s\S]*?<\/script>/gi, '')
+    .replace(/<style[\s\S]*?<\/style>/gi, '')
+    .replace(/<!--[\s\S]*?-->/g, '');
+}
+
+/**
+ * Extract plain text from HTML fragment (strip all tags).
+ */
+function htmlToText(html) {
+  return html
+    .replace(/<br\s*\/?>/gi, ' ')
+    .replace(/<[^>]+>/g, '')
+    .replace(/&amp;/g, '&')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&#\d+;/g, '')
+    .replace(/\s{2,}/g, ' ')
+    .trim();
+}
+
+/**
  * Extract game names from HTML content.
- * PS Blog typically uses <ol> or <h3> numbered lists.
+ * PS Blog uses various formats: tables with US/EU columns, <ol> lists, or numbered headings.
+ * We strip <script>/<style> tags first to avoid capturing JS code.
  */
 function extractGamesFromHtml(html) {
+  // CRITICAL: strip scripts and styles before any parsing
+  const clean = stripScriptsAndStyles(html);
   const games = [];
 
+  // Strategy 0: Table with US/EU columns (current PS Blog format)
+  // PS Blog uses <table> with header row containing "US/Canada" and "EU" (or similar),
+  // then data rows with game names in <td> cells (often wrapped in <strong>)
+  const tableMatch = clean.match(/<table[\s\S]*?<\/table>/gi);
+  if (tableMatch) {
+    for (const table of tableMatch) {
+      // Find which column is EU — look at header row
+      const headerMatch = table.match(/<tr[^>]*>([\s\S]*?)<\/tr>/i);
+      if (!headerMatch) continue;
+
+      const headerCells = [...headerMatch[1].matchAll(/<t[hd][^>]*>([\s\S]*?)<\/t[hd]>/gi)];
+      let euColIndex = -1;
+      for (let i = 0; i < headerCells.length; i++) {
+        const text = htmlToText(headerCells[i][1]).toLowerCase();
+        if (text.includes('eu') || text.includes('europe') || text.includes('emea')) {
+          euColIndex = i;
+          break;
+        }
+      }
+
+      // If no EU column found, try the second column (index 1) as default
+      if (euColIndex === -1 && headerCells.length >= 2) {
+        euColIndex = 1;
+      }
+      if (euColIndex === -1) continue;
+
+      // Parse data rows (skip header)
+      const rows = [...table.matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/gi)];
+      for (let r = 1; r < rows.length; r++) {
+        const cells = [...rows[r][1].matchAll(/<td[^>]*>([\s\S]*?)<\/td>/gi)];
+        if (cells.length <= euColIndex) continue;
+
+        const cellHtml = cells[euColIndex][1];
+        const name = htmlToText(cellHtml).replace(/^\d+[\.\)\s]*/, '').trim();
+        if (name.length > 2 && name.length < 100 && !name.includes('http') && !name.includes('document.')) {
+          games.push(name);
+        }
+      }
+
+      if (games.length >= 5) return games.slice(0, 20);
+    }
+  }
+
   // Strategy 1: Ordered list items <li>
-  const liMatches = html.matchAll(/<li[^>]*>\s*(?:<[^>]+>)*\s*([^<]+)/gi);
+  const liMatches = clean.matchAll(/<li[^>]*>\s*(?:<[^>]+>)*\s*([^<]+)/gi);
   for (const m of liMatches) {
     const name = m[1].trim().replace(/^\d+[\.\)]\s*/, '');
-    if (name.length > 2 && name.length < 100 && !name.includes('http')) {
+    if (name.length > 2 && name.length < 100 && !name.includes('http') && !name.includes('document.')) {
       games.push(name);
     }
   }
@@ -177,11 +247,11 @@ function extractGamesFromHtml(html) {
   if (games.length >= 5) return games.slice(0, 20);
 
   // Strategy 2: Numbered paragraphs or headings
-  const numberedMatches = html.matchAll(/(?:<p|<h[234])[^>]*>\s*(?:<[^>]+>)*\s*(\d{1,2})[\.\)]\s*(?:<[^>]+>)*\s*([^<]+)/gi);
+  const numberedMatches = clean.matchAll(/(?:<p|<h[234])[^>]*>\s*(?:<[^>]+>)*\s*(\d{1,2})[\.\)]\s*(?:<[^>]+>)*\s*([^<]+)/gi);
   const numbered = [];
   for (const m of numberedMatches) {
     const name = m[2].trim();
-    if (name.length > 2 && name.length < 100) {
+    if (name.length > 2 && name.length < 100 && !name.includes('document.')) {
       numbered.push(name);
     }
   }
@@ -189,11 +259,11 @@ function extractGamesFromHtml(html) {
   if (numbered.length >= 5) return numbered.slice(0, 20);
 
   // Strategy 3: Bold items in paragraphs
-  const boldMatches = html.matchAll(/<(?:strong|b)>([^<]+)<\/(?:strong|b)>/gi);
+  const boldMatches = clean.matchAll(/<(?:strong|b)>([^<]+)<\/(?:strong|b)>/gi);
   const bold = [];
   for (const m of boldMatches) {
     const name = m[1].trim();
-    if (name.length > 3 && name.length < 80 && !/^\d+$/.test(name)) {
+    if (name.length > 3 && name.length < 80 && !/^\d+$/.test(name) && !name.includes('document.')) {
       bold.push(name);
     }
   }
