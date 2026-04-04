@@ -1,5 +1,5 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-04-04T09:01:03.599Z
+// Обновлено: 2026-04-04T09:41:17.085Z
 // Горящих новинок: 4
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
@@ -64,10 +64,12 @@ export const hotReleases: HotRelease[] = [
     totalScore: 5,
     editions: {
       tr: [
-        { name: "Standard", priceRUB: 1600 },
+        { name: "Standard", priceRUB: 4050 },
+        { name: "Deluxe", priceRUB: 5600 },
       ],
       ua: [
-        { name: "Standard", priceRUB: 1600 },
+        { name: "Standard", priceRUB: 4050 },
+        { name: "Deluxe", priceRUB: 5600 },
       ],
     },
   },
