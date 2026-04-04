@@ -6,6 +6,7 @@ import Link from 'next/link';
 export const metadata: Metadata = {
   title: 'PS Plus Essential, Extra и Deluxe — отличия и какой выбрать | ActivePlay',
   description: 'Чем отличается PS Plus Essential от Extra и Deluxe. Сравнение всех уровней подписки ПС Плюс: что входит, какие игры, цены в 2026 году и какой тариф выбрать.',
+  alternates: { canonical: 'https://activeplay.games/guides/ps-plus-essential-extra-deluxe-otlichiya' },
   openGraph: {
     title: 'PS Plus Essential, Extra и Deluxe — отличия и какой выбрать',
     description: 'Разница между PS Plus Essential, Extra и Deluxe. Подробное сравнение тарифов PlayStation Plus.',
@@ -35,6 +36,15 @@ function Accent() { return <div className="w-16 h-[3px] bg-gradient-to-r from-[#
 export default function GuidePSPlusTiers() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Article',
+        headline: 'PS Plus Essential, Extra и Deluxe — отличия, цены и какой уровень выбрать в 2026',
+        author: { '@type': 'Organization', name: 'ActivePlay' },
+        publisher: { '@type': 'Organization', name: 'ActivePlay', url: 'https://activeplay.games' },
+        datePublished: '2026-04-04',
+        dateModified: '2026-04-04',
+      }) }} />
       <Header />
       <article className="min-h-screen bg-[#0A1628]">
 

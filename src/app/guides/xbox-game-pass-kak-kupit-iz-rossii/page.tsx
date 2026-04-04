@@ -6,6 +6,7 @@ import Link from 'next/link';
 export const metadata: Metadata = {
   title: 'Xbox Game Pass из России — все тарифы и как купить | ActivePlay',
   description: 'Как купить Xbox Game Pass из России. Тарифы Essential, Premium и Ultimate: что входит, цены в рублях. Активация через подарочные карты, оплата СБП.',
+  alternates: { canonical: 'https://activeplay.games/guides/xbox-game-pass-kak-kupit-iz-rossii' },
   openGraph: {
     title: 'Xbox Game Pass из России — все тарифы и как купить',
     description: 'Полный гайд по Xbox Game Pass: Essential, Premium, Ultimate. Покупка из России, активация, цены в рублях.',
@@ -34,6 +35,15 @@ function Accent() { return <div className="w-16 h-[3px] bg-gradient-to-r from-[#
 export default function GuideXboxGamePass() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Article',
+        headline: 'Xbox Game Pass в 2026 — отличия Core, Standard и Ultimate и как купить из России',
+        author: { '@type': 'Organization', name: 'ActivePlay' },
+        publisher: { '@type': 'Organization', name: 'ActivePlay', url: 'https://activeplay.games' },
+        datePublished: '2026-04-04',
+        dateModified: '2026-04-04',
+      }) }} />
       <Header />
       <article className="min-h-screen bg-[#0A1628]">
 

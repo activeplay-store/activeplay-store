@@ -9,6 +9,7 @@ import Link from 'next/link';
 export const metadata: Metadata = {
   title: 'Как купить FC Points из России — донат Ultimate Team | ActivePlay',
   description: 'Как купить ФК Поинтс (FC Points) для EA Sports FC 26 из России. Все номиналы, цены в рублях, оплата через СБП. Скидка 10% с EA Play. PS5, Xbox, ПК.',
+  alternates: { canonical: 'https://activeplay.games/guides/kak-kupit-fc-points-iz-rossii' },
   openGraph: {
     title: 'Как купить FC Points из России — донат EA FC 26',
     description: 'FC Points для Ultimate Team: все номиналы, цены, покупка из России через СБП. Скидка с EA Play.',
@@ -37,6 +38,15 @@ function Accent() { return <div className="w-16 h-[3px] bg-gradient-to-r from-[#
 export default function GuideFCPoints() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Article',
+        headline: 'Как купить FC Points из России — донат Ultimate Team',
+        author: { '@type': 'Organization', name: 'ActivePlay' },
+        publisher: { '@type': 'Organization', name: 'ActivePlay', url: 'https://activeplay.games' },
+        datePublished: '2026-04-04',
+        dateModified: '2026-04-04',
+      }) }} />
       <Header />
       <article className="min-h-screen bg-[#0A1628]">
 

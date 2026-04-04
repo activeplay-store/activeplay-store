@@ -6,6 +6,7 @@ import Link from 'next/link';
 export const metadata: Metadata = {
   title: 'Как купить PS Plus из России — пошаговая инструкция | ActivePlay',
   description: 'Как купить и активировать подписку ПС Плюс из России через турецкий или украинский аккаунт. Оплата через СБП, карту Мир. Пошаговая инструкция.',
+  alternates: { canonical: 'https://activeplay.games/guides/kak-kupit-ps-plus-iz-rossii' },
   openGraph: {
     title: 'Как купить PS Plus из России — пошаговая инструкция',
     description: 'Полный гайд по покупке PlayStation Plus из России. Выбор региона, создание аккаунта, активация подписки.',
@@ -68,6 +69,15 @@ function Accent() { return <div className="w-16 h-[3px] bg-gradient-to-r from-[#
 export default function GuidePSPlus() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Article',
+        headline: 'Как купить подписку PS Plus из России в 2026 году — пошаговая инструкция',
+        author: { '@type': 'Organization', name: 'ActivePlay' },
+        publisher: { '@type': 'Organization', name: 'ActivePlay', url: 'https://activeplay.games' },
+        datePublished: '2026-04-04',
+        dateModified: '2026-04-04',
+      }) }} />
       <Header />
       <article className="min-h-screen bg-[#0A1628]">
 

@@ -20,6 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: guide.metaTitle || `${guide.title} | ActivePlay`,
     description: guide.metaDescription || guide.excerpt,
+    alternates: { canonical: `https://activeplay.games/guides/${slug}` },
     openGraph: {
       title: guide.title,
       description: guide.excerpt,

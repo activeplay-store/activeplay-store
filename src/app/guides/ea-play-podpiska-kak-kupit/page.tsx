@@ -9,6 +9,7 @@ import Link from 'next/link';
 export const metadata: Metadata = {
   title: 'EA Play — что входит в подписку и как купить из России | ActivePlay',
   description: 'Что входит в подписку EA Play (ЕА Плей): каталог 64 игр, скидка 10% на FC Points и Apex Coins, ранний доступ к новинкам. Как купить из России, цены от 900₽.',
+  alternates: { canonical: 'https://activeplay.games/guides/ea-play-podpiska-kak-kupit' },
   openGraph: {
     title: 'EA Play — подписка Electronic Arts: каталог, скидки, покупка',
     description: 'Полный гайд по EA Play: 64 игры, скидка 10%, ранний доступ. Покупка из России через СБП.',
@@ -37,6 +38,15 @@ function Accent() { return <div className="w-16 h-[3px] bg-gradient-to-r from-[#
 export default function GuideEAPlay() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Article',
+        headline: 'EA Play — что входит в подписку и как купить из России',
+        author: { '@type': 'Organization', name: 'ActivePlay' },
+        publisher: { '@type': 'Organization', name: 'ActivePlay', url: 'https://activeplay.games' },
+        datePublished: '2026-04-04',
+        dateModified: '2026-04-04',
+      }) }} />
       <Header />
       <article className="min-h-screen bg-[#0A1628]">
 
