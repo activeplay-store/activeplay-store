@@ -1,164 +1,132 @@
 [
   {
-    "sourceId": "pushsquare",
-    "sourceName": "Push Square",
-    "sourceWeight": 9,
-    "category": "Слухи",
-    "title": "'$1,000+ Consoles Could Become the Norm': PS6's Price Touted to Touch Four Figures",
-    "link": "https://www.pushsquare.com/news/2026/03/usd1000plus-consoles-could-become-the-norm-ps6s-price-touted-to-touch-four-figures",
-    "description": "\"I'd really hate to see that\".\nWith the PS5 Pro to hit $899.99 next week, we’re within touching distance of four figure consoles, a price point previously thought unthinkable.\nWhile you don’t necessarily need Sony’s supercharged system to enjoy the PS5, the cheapest model will cost $599.99 – a $200 increase compared to its launch price.\nRead the full article on pushsquare.com",
-    "image": "",
-    "pubDate": "Sat, 28 Mar 2026 12:00:00 GMT",
-    "score": 48,
-    "telegram": {
-      "title": "Цена PS6 может превысить 1000 долларов",
-      "text": "Стоимость PS6 может перевалить за 1000 долларов. Об этом говорят аналитики Push Square. PS5 Pro стартует с 900 долларов, поэтому PS6 вполне может перешагнуть отметку в 1000."
-    },
-    "vk": {
-      "title": "PS6 может стать самой дорогой консолью в истории",
-      "text": "По данным Push Square, PS6 может стоить больше 1000 долларов. PS5 Pro обойдётся в 900 долларов. Аналитики полагают, что новое поколение приставок Sony может достигнуть четырёхзначной суммы. Базовая PS5 сейчас стоит 600 долларов, что на 200 долларов дороже, чем на старте."
-    },
-    "site": {
-      "title": "Аналитики предрекают PS6 цену свыше 1000 долларов",
-      "text": "Стоимость PS6 может превысить 1000 долларов. Об этом заявили аналитики Push Square. Они отмечают, что PS5 Pro будет продаваться за 900 долларов. Это делает вполне вероятным четырёхзначный ценник для следующей консоли Sony.\n\nБазовая PS5 сейчас стоит 600 долларов. На старте продаж она была на 200 долларов дешевле. Ранее подобный рост цен казался немыслимым.\n\nМногие геймеры выражают опасения. Они не хотят видеть консоли за такие деньги.",
-      "metaDescription": "Аналитики считают, что PS6 может стать самой дорогой консолью в истории. Цена может превысить 1000 долларов.",
-      "tags": [
-        "PS6",
-        "PlayStation",
-        "Sony",
-        "консоли",
-        "цены"
-      ]
-    },
-    "id": "news-1774741813721-yrhw"
-  },
-  {
-    "sourceId": "pushsquare",
-    "sourceName": "Push Square",
+    "sourceId": "reddit-games",
+    "sourceName": "r/Games",
     "sourceWeight": 9,
     "category": "Слух",
-    "title": "PS Plus Essential Announcement Next Week, Big Game for April 2026 Leaks",
-    "link": "https://www.pushsquare.com/news/2026/03/ps-plus-essential-announcement-next-week-big-game-for-april-2026-leaks",
-    "description": "Oh lords.\nAhead of the official announcement, a game from April 2026's PS Plus Essential lineup has been leaked.\nAs per usual, the leak comes from the incredibly reliable Dealabs, who claim that Lords of the Fallen — the second Lords of the Fallen, not the first one with the bearded guy on the cover — will headline April's selection.\nRead the full article on pushsquare.com",
+    "title": "PlayStation Studios Removes Nearly All PC References From Websites",
+    "link": "https://gameobserver.com/playstation-studios-removes-nearly-all-pc-references-from-websites/",
+    "description": "Recently, there have been reports that Sony is pulling back from its aggressive PC porting push for big-budget single-player games, with claims that PC versions of major titles such as Ghost of Yotei and Housemarque’s SAROS may have been dropped. That speculation has gained even more attention after PlayStation Studios quietly updated its official website. The company has refreshed its main banner, now featuring Ghost of Yotei and Intergalactic: The Heretic Prophet, while removing Demon’s Souls Remake from the lineup. Another noticeable change is that Bluepoint Games and Dark Outlaw Games are no longer listed on the site, following the closure of both studios. In their place, Sony now includes teamLFG, a new first-party studio comprised of former Bungie developers. The biggest change, however, is the removal of nearly all mentions of PC from the descriptions of PlayStation’s Studios. Only Nixxes Software, which focuses on PC ports, still includes the platform in its profile. Sony is reportedly scaling back its strategy of bringing major single-player PlayStation titles to PC. As spotted by user Zuby_Tech on X (formerly Twitter), Sony has updated these descriptions compared to the earlier versions. For example, PlayStation XDev previously said it was “collaborating with ambitious external studios across the globe,” while the new description now reads, “partnering with talented independent studios to publish exciting, exclusive titles for PlayStation players worldwide”, more ex",
     "image": "",
-    "pubDate": "Sat, 28 Mar 2026 09:00:00 GMT",
-    "score": 46,
+    "pubDate": "2026-04-03T16:09:47.000Z",
+    "redditScore": 2472,
+    "score": 72,
     "telegram": {
-      "title": "Lords of the Fallen станет бесплатной в PS Plus?",
-      "text": "Инсайдеры слили возможную раздачу PS Plus Essential в апреле 2026. Главным тайтлом может стать Lords of the Fallen (2023). Ждём официального анонса на следующей неделе."
+      "title": "Sony намекает на отказ от PC-портов?",
+      "text": "PlayStation Studios убрала упоминания PC со своего сайта. Слухи об отмене PC-версий Ghost of Tsushima 2 и SAROS усилились. Sony, похоже, пересматривает свою стратегию."
     },
     "vk": {
-      "title": "Слух: Lords of the Fallen возглавит PS Plus в апреле",
-      "text": "Утечка от Dealabs раскрыла возможную игру для PS Plus Essential в апреле 2026 года. Предположительно, подписчиков ждёт Lords of the Fallen (2023). Важно: это не первая часть с бородатым мужиком на обложке. Официальный анонс от Sony ожидается на следующей неделе."
+      "title": "Sony удаляет упоминания PC со страниц PlayStation Studios",
+      "text": "Sony удалила почти все упоминания PC с сайта PlayStation Studios. Из списка пропали Bluepoint Games и Dark Outlaw Games (студии закрыты). Обновился главный баннер: теперь там Ghost of Yotei и Intergalactic: The Heretic Prophet. Слухи об отмене портов Ghost of Tsushima 2 и SAROS набирают обороты."
     },
     "site": {
-      "title": "Lords of the Fallen (2023) может появиться в PS Plus Essential в апреле",
-      "text": "Инсайдер Dealabs сообщил о возможной раздаче в PS Plus Essential. В апреле подписчиков может ждать Lords of the Fallen (2023). Важно не путать тайтл с первой частью 2014 года. Это совершенно другая игра, разработанная другой студией. Релиз Lords of the Fallen состоялся в октябре 2023 года. Игра представляет собой souls-like экшен с мрачной атмосферой. Официальное подтверждение от Sony ожидается на следующей неделе.",
-      "metaDescription": "Утечка: Lords of the Fallen может стать бесплатной игрой PS Plus в апреле 2026. Подробности и сравнение с первой частью.",
+      "title": "PlayStation Studios отказывается от PC-игр: что известно",
+      "text": "Sony убрала упоминания PC со страниц PlayStation Studios. Это породило разговоры об отказе от портирования крупных эксклюзивов. Слухи об отмене PC-версий Ghost of Tsushima 2 и SAROS становятся всё громче. Обновился главный баннер: теперь там Ghost of Yotei и Intergalactic: The Heretic Prophet. \n\nИз списка студий пропали Bluepoint Games и Dark Outlaw Games. Обе компании прекратили существование. Sony добавила teamLFG: новую студию из бывших разработчиков Bungie. \n\nПохоже, Sony пересматривает стратегию по выпуску одиночных игр PlayStation на PC. Пока что платформа упоминается только в профиле Nixxes Software, которая занимается портами.",
+      "metaDescription": "Sony, по слухам, отказывается от выпуска эксклюзивов на PC. Компания убрала упоминания платформы со страниц PlayStation Studios. Что это значит для геймеров?",
       "tags": [
-        "PS Plus",
-        "Lords of the Fallen",
-        "Слухи",
-        "Игры"
+        "PlayStation",
+        "PC",
+        "порты",
+        "слухи"
       ]
     },
-    "id": "news-1774741819511-04o0"
+    "id": "news-1775293247876-s0lb"
   },
   {
-    "sourceId": "reddit-ps5",
-    "sourceName": "r/PS5",
-    "sourceWeight": 8,
-    "category": "Новость",
-    "title": "Update Login Display Name",
-    "link": "https://www.reddit.com/r/PS5/comments/1s6ffc0/update_login_display_name/",
-    "description": "Go to PS5 r/PS5 • FeudalFavorableness Update Login Display Name For a child’s account is there a way to update the login display name? Not the psn name BUT the name that appears when you first turn on the console and select a user who will be playing. Read more Share",
+    "sourceId": "reddit-games",
+    "sourceName": "r/Games",
+    "sourceWeight": 9,
+    "category": "Хайп",
+    "title": "Marathon has been out almost a month, what are your thoughts?",
+    "link": "https://www.reddit.com/r/Games/comments/1sbr9b3/marathon_has_been_out_almost_a_month_what_are/",
+    "description": "**Game Information**\n\nGame: Marathon\n\nTrailer: [Reveal Trailer](https://youtu.be/fvbEnWLRo1s), [Gameplay Launch Trailer](https://youtu.be/MXhQbF7TlbA), [Launch Cinematic](https://youtu.be/KF24WS4MMC0)\n\nPlatforms: Xbox Series X/S, PC, PS5\n\nRelease Date: March 5, 2026\n\nDevelopers: Bungie\n\nPublisher: Bungie\n\n**Game Discussion**\n\n• For those of you playing, does this game live up to or fall short of your expectations?\n\n• What are your thoughts on the environment and world design?\n\n• Do you enjoy the",
     "image": "",
-    "pubDate": "2026-03-28T23:30:16.000Z",
-    "redditScore": 1,
-    "score": 46,
+    "pubDate": "2026-04-03T22:02:13.000Z",
+    "redditScore": 289,
+    "score": 66,
     "telegram": {
-      "title": "На PS5 нельзя изменить имя пользователя при входе?",
-      "text": "На Reddit пользователи PS5 обсуждают смену имени пользователя. Речь об имени, которое отображается при включении консоли. Оказывается, для детских аккаунтов эта функция недоступна."
+      "title": "Игроки обсуждают Marathon спустя месяц после релиза",
+      "text": "Релиз Marathon состоялся почти месяц назад. Игроки делятся впечатлениями о шутере от Bungie: оправдались ли ожидания, нравится ли дизайн мира и геймплей?"
     },
     "vk": {
-      "title": "Имя пользователя на PS5: проблема со сменой для детских аккаунтов",
-      "text": "Пользователи Reddit подняли вопрос о смене имени пользователя на PlayStation 5. Проблема касается имени, которое видно при включении консоли и выборе профиля. Обсуждается невозможность изменить это имя для детских учетных записей. Sony пока не давала комментариев по этому поводу."
+      "title": "Первые впечатления от Marathon: игроки делятся мнением",
+      "text": "С момента релиза Marathon прошел почти месяц. Игроки активно обсуждают шутер от Bungie. Главные вопросы: оправдались ли ожидания? Как вам дизайн мира и геймплей? Многие сравнивают новинку с другими проектами студии."
     },
     "site": {
-      "title": "Как изменить имя пользователя при входе на PS5: решение проблемы",
-      "text": "На Reddit пользователи PS5 активно обсуждают вопрос смены имени пользователя. Речь идет не о PSN ID, а об имени, отображаемом при включении консоли и выборе профиля. Оказалось, что для детских аккаунтов изменение этого имени штатными средствами невозможно.\n\nМногие родители столкнулись с ситуацией, когда при создании детской учетной записи указали некорректное имя. Теперь они не могут его изменить, что вызывает неудобства.  В обсуждениях предлагаются различные обходные пути, но ни один из них не является идеальным решением.\n\nОфициальных комментариев от Sony пока не поступало. Возможно, в будущих обновлениях системы появится возможность редактировать имя пользователя для детских аккаунтов.",
-      "metaDescription": "Невозможность сменить имя пользователя при входе в PS5 для детских аккаунтов вызывает вопросы. Обсуждение проблемы на Reddit.",
+      "title": "Месяц с Marathon: игроки делятся впечатлениями о шутере Bungie",
+      "text": "С релиза Marathon прошел почти месяц, и игроки делятся первыми впечатлениями. Мнения о шутере от Bungie разделились. Многие хвалят динамичный геймплей и графику. Другие жалуются на проблемы с балансом и оптимизацией.\n\nГлавные вопросы для обсуждения: оправдались ли ожидания? Как вам дизайн мира? Что думаете о нововведениях в геймплее? Marathon доступен на Xbox Series X/S, PC и PS5.\n\nРазработчик и издатель игры: сама Bungie. Дата выхода: 5 марта 2026 года. Игроки активно делятся мнениями и сравнивают Marathon с другими проектами студии.",
+      "metaDescription": "Игроки делятся впечатлениями о Marathon спустя месяц после релиза. Обсуждаем геймплей, графику и дизайн мира в новом шутере от Bungie.",
       "tags": [
-        "PS5",
-        "PlayStation 5",
-        "имя пользователя",
-        "детский аккаунт"
+        "Marathon",
+        "Bungie",
+        "шутер",
+        "мнения игроков"
       ]
     },
-    "id": "news-1774741825554-mlvl"
+    "id": "news-1775293257855-nf5e"
   },
   {
     "sourceId": "destructoid",
     "sourceName": "Destructoid",
     "sourceWeight": 7,
-    "category": "Новость",
-    "title": "ARC Raiders Flashpoint update release countdown: Exact date and time",
-    "link": "https://www.destructoid.com/arc-raiders-flashpoint-update-release-countdown-exact-date-and-time/?utm_source=rss&utm_medium=rss&utm_campaign=arc-raiders-flashpoint-update-release-countdown-exact-date-and-time",
-    "description": "The Flashpoint update is coming as the next major content release in ARC Raiders, and it will feature plenty of new things for you to try out. While there won't be a new map in this update, Flashpoint will have fresh quests, enemies, and projects.\n\n\nBut first, let's look at when the update will go live across all platforms.\n\n\nTable of contents\nARC Raiders Flashpoint update release countdown\nWhat to expect from the ARC Raiders Flashpoint update\n\n\nARC Raiders Flashpoint update release countdown\n\n\nThe Flashpoint update will be released worldwide on Tuesday, March 31. Embark has chosen the last Tuesday of the month for the major update, and the following countdown will expire when it goes live.\n\n\n\n\nThe countdown is based on the following timings.\n\n\n\n3am PT\n\n\n5am CT\n\n\n6am ET\n\n\n10am UTC\n\n\n11am CET\n\n\n\nThe timings are based on the usual update schedule that's followed by Embark. Any changes to the timings before launch will be duly updated on this guide.\n\n\nWhat to expect from the ARC Raiders Flashpoint update\n\n\nThe Flashpoint update, just like all major content drops in the past, will feature several gameplay changes and QoL features. Here are the highlights of all the major content in the update.\n\n\n\n\n\nA new ARC enemy: Rumors suggest that it will be an enemy named Bishop, but we have yet to have a confirmation.\n\n\nNew map condition: Again, it's currently up for speculation, but we might finally have the Toxic Swamp that has been in the database for a long time.\n\n\nNew player project with exclusive rewards.\n\n\nNew quests to complete.\n\n\nFresh cosmetics from the shop.\n\n\n\nAfter months of highs, the player count of ARC Raiders has declined as far as Steam is concerned. It will be interesting to find out if the new update will manage to recover some of the players who haven't played in recent times.\n\nThe post ARC Raiders Flashpoint update release countdown: Exact date and time appeared first on Destructoid.",
-    "image": "https://www.destructoid.com/wp-content/uploads/2026/01/Arc-Raiders-Update-1-13-0-Patch-Notes-e1770917002343.jpg",
-    "pubDate": "Sat, 28 Mar 2026 18:44:25 +0000",
-    "score": 45,
+    "category": "Слух",
+    "title": "When does ARC Raiders’ Riven Tides update release? Speculated dates and more",
+    "link": "https://www.destructoid.com/arc-raiders-riven-tides-date/?utm_source=rss&utm_medium=rss&utm_campaign=arc-raiders-riven-tides-date",
+    "description": "Riven Tides will be the next major update in ARC Raiders as per the released roadmap, and it could be the biggest one we have had. Coming after the Flashpoint update that released on the last day of March, Riven Tides will have something that the community has been asking for - a new map.\n\n\nBut first, let's look at when the update will possibly go live.\n\n\nTable of contents\nWhen will ARC Raiders Riven Tides release\nWhat to expect from Riven Tides in ARC Raiders\n\n\nWhen will ARC Raiders Riven Tides release\n\n\nAs of writing, Embark has been tight-lipped about the release date of Riven Tides. However, certain predictions can be made based on the routine that the developers follow. All major updates until now have been dropped on Tuesdays.\n\n\nTypically, Embark has also chosen the last Tuesday of a month to drop the updates. The Flashpoint update followed the same pattern when it dropped on March 31. If the same pattern is followed once again, April 28 seems the likeliest date.\n\n\nImage via Embark\n\n\nOnce again, I expect Embark to announce the dates at least a week before it drops. Once we have confirmation, we will update the date on this guide.\n\n\nWhat to expect from Riven Tides in ARC Raiders\n\n\nOnce again, we will need to wait before the update's launch to know all the details. However, Embark has confirmed some of the key features of the update. We will finally get a new map since ARC Raiders was released on Oct. 30.\n\n\nIf I have to guess from its name, Riven Tides will have something to do with water bodies. While a coastal map seems far-fetched, we could end up with rivers for a change. We already have mountains, plains, industrial, and desert maps. Something with ridges and rivers seems to be on the menu.\n\n\nImage via Embark\n\n\nThe new map will also come with a fresh event to check out. Riven Tides will also mark the beginning of the fourth expedition. While you're likely going to lose plenty of things, there will be rewards as well. We have previously received inventory sl",
+    "image": "https://www.destructoid.com/wp-content/uploads/2026/03/MixCollage-31-Mar-2026-03-30-PM-3821.jpg",
+    "pubDate": "Fri, 03 Apr 2026 23:11:08 +0000",
+    "score": 55,
     "telegram": {
-      "title": "Обновление Flashpoint для ARC Raiders: дата выхода",
-      "text": "К ARC Raiders приближается крупное обновление Flashpoint. Релиз состоится 31 марта. Игроков ждут новые квесты, враги и проекты."
+      "title": "Когда выйдет обновление Riven Tides для ARC Raiders: дата",
+      "text": "Riven Tides станет следующим крупным обновлением для ARC Raiders. Разработчики из Embark пока молчат о дате выхода. Но есть предположения, основанные на предыдущих паттернах."
     },
     "vk": {
-      "title": "ARC Raiders получит крупное обновление Flashpoint",
-      "text": "Обновление Flashpoint для ARC Raiders выйдет 31 марта. Разработчики обещают много нового контента. Игроков ждут свежие квесты, враги и проекты. По слухам, появится новый ARC-противник по имени Bishop и локация Toxic Swamp."
+      "title": "Когда выйдет обновление Riven Tides для ARC Raiders: возможная дата",
+      "text": "Riven Tides — грядущее крупное обновление для ARC Raiders. Embark пока не называла дату выхода. Однако можно сделать предположения, основываясь на графике прошлых релизов. Все крупные апдейты обычно выходили по вторникам, часто в последний вторник месяца. Если Embark продолжит эту традицию, Riven Tides стоит ждать 28 апреля."
     },
     "site": {
-      "title": "Дата выхода обновления Flashpoint для ARC Raiders: точное время",
-      "text": "Для ARC Raiders готовится крупное обновление Flashpoint. Релиз намечен на 31 марта. Игроков ждут новые квесты, враги и проекты. Новой карты не будет.\n\nВремя выхода обновления:\n\n*   3am PT\n*   5am CT\n*   6am ET\n*   10am UTC\n*   11am CET\n\nРазработчики обещают изменения геймплея и улучшения QoL. По слухам, стоит ждать нового ARC-противника Bishop и локацию Toxic Swamp. Также появятся новые проекты с эксклюзивными наградами и свежая косметика в магазине. Обновление должно вернуть интерес игроков к проекту.",
-      "metaDescription": "Обновление Flashpoint для ARC Raiders выйдет 31 марта. Разработчики обещают новые квесты, врагов и проекты.",
+      "title": "ARC Raiders: когда ждать обновление Riven Tides, что нового",
+      "text": "Riven Tides станет следующим крупным обновлением для ARC Raiders. Embark пока не сообщает дату релиза. Но можно строить предположения, исходя из предыдущих обновлений. Разработчики обычно выпускают крупные патчи по вторникам, часто в последний день месяца. Если эта схема сохранится, апдейт выйдет 28 апреля.\n\nГлавная особенность Riven Tides — новая карта. Игроки давно просили добавить свежую локацию. Судя по названию, карта будет связана с водой. Возможно, игроков ждут реки. Сейчас в игре есть горы, равнины, пустыни и промышленные зоны.\n\nС новой картой появится и новое событие. Riven Tides также откроет четвертую экспедицию с ценными наградами.",
+      "metaDescription": "Когда выйдет Riven Tides для ARC Raiders? Обновление принесёт новую карту и событие. Возможная дата выхода и детали.",
       "tags": [
         "ARC Raiders",
-        "Flashpoint",
-        "обновление",
-        "дата выхода"
+        "Riven Tides",
+        "Обновление",
+        "Дата выхода",
+        "Слухи"
       ]
     },
-    "id": "news-1774741831846-1qud"
+    "id": "news-1775293263366-xjj0"
   },
   {
-    "sourceId": "eurogamer",
-    "sourceName": "Eurogamer",
-    "sourceWeight": 9,
+    "sourceId": "xboxwire",
+    "sourceName": "Xbox Wire",
+    "sourceWeight": 8,
     "category": "Новость",
-    "title": "Wanderstop studio Ivy Road to close after funding for second game \"didn't come to fruition\"",
-    "link": "https://www.eurogamer.net/wanderstop-studio-ivy-road-to-close-after-funding-for-second-game-didnt-come-to-fruition",
-    "description": "Ivy Road, the studio formed by talent behind games like The Stanley Parable, Gone Home, and Minecraft, is closing down. The indie studio's only release, Wanderstop, dropped this time last year and is currently sitting on an 80 Metacritic score, but \"funding didn't come to fruition\" for its next game, Engine Angel, and the studio \"had to shut down\". Wanderstop - Official Reveal Trailer Wanderstop - Official Reveal Trailer.Watch on YouTube \"It’s hard to put into words how thankful we are to have been able to work together on Wanderstop – this is an incredible group of people! And while we had a new project, Engine Angel, that we were excited about, unfortunately the funding didn’t come to fruition and the studio had to shut down,\" the team said. \"While we tried to shop the concept around and find a publishing partner, unfortunately we weren't able to land a deal. It's a particularly tough time for raising game funds, so while we weren't necessarily surprised, we are disappointed that we won't be able to bring Engine Angel to life together as a team. Liz's concept is incredible, and we hope it may someday come to fruition!\" Looking ahead, the team has thoughtfully provided a Chapter Select cheat to help players of Wanderstop if they happen to get stuck in an area, but teased: \"There's still one last surprise brewing, one we've been working on for the last year to help find a way for Wanderstop to reach new players. The great folks at Annapurna Interactive will be sharing more ne",
-    "image": "https://assetsio.gnwcdn.com/wanderstop-review-3.jpg?width=690&quality=85&format=jpg&auto=webp",
-    "pubDate": "Sat, 28 Mar 2026 17:53:24 +0000",
-    "score": 44,
+    "title": "Next Week on Xbox: New Games for April 6 to 10",
+    "link": "https://news.xbox.com/en-us/2026/04/03/next-week-on-xbox-new-games-for-april-6-to-10/",
+    "description": "Welcome to Next Week on Xbox! In this weekly feature we cover all the games coming soon to Xbox Series X|S, Xbox One, Xbox on PC, and Game Pass! Get more details on these upcoming games below and click their profiles for further info (release dates subject to change). Let’s jump in! People of Note Annapurna Interactive ☆☆☆☆☆ ★★★★★ Get it now People of Note – April 7Optimized for Xbox Series X|S / Xbox Play Anywhere In this turn-based RPG musical, join Cadence as she recruits an ensemble of musicians on her quest for stardom. Experience turn-based combat like never before, where each battle is a musical performance with evolving combat conditions and genre-bending mashup attacks! Beyond Words PQube Ltd ☆☆☆☆☆ ★★★★★ Get it now Beyond Words – April 9Optimized for Xbox Series X|S From the creators of GoldenEye & TimeSplitters comes Beyond Words the genre-defining fusion of roguelike strategy and word-crafting. Build powerful combos, unlock upgrades, and master a challenge where victory is spelled one letter at a time. Build powerful word combos, unlock game-changing upgrades and journey through a living puzzle shaped by your decisions. Every choice, every letter, every placement matters. Bytebond: Deluxe Edition Anshar Publishing ☆☆☆☆☆ ★★★★★ Get it now Bytebond: Deluxe Edition – April 9 Split Fiction meets Portal! Bytebond is an electrifying online & couch co-op puzzle game that challenges you to regain control over an infected CPU. Dive into the heart of a PC with your friend and",
+    "image": "",
+    "pubDate": "Fri, 03 Apr 2026 14:00:00 +0000",
+    "score": 55,
     "telegram": {
-      "title": "Студия Ivy Road закрывается после Wanderstop",
-      "text": "Ivy Road, создатели Wanderstop, объявили о закрытии. Причина: не нашли денег на новую игру Engine Angel. Команда поблагодарила фанатов за поддержку."
+      "title": "Xbox: во что поиграть с 6 по 10 апреля",
+      "text": "На Xbox выходит несколько интересных игр. Среди них: People of Note, Beyond Words и Bytebond: Deluxe Edition. Разные жанры, от RPG до головоломок."
     },
     "vk": {
-      "title": "Ivy Road закрывается: не будет ни сиквела, ни новой игры",
-      "text": "Студия Ivy Road, известная по Wanderstop, прекращает существование. Разработчики не смогли найти финансирование для Engine Angel. Команда поблагодарила поклонников за поддержку Wanderstop, у которой 80 баллов на Metacritic. Разработчики также пообещали сюрприз для фанатов."
+      "title": "Новые игры на Xbox с 6 по 10 апреля",
+      "text": "Microsoft анонсировала список новинок для Xbox. Нас ждут People of Note, Beyond Words и Bytebond: Deluxe Edition. People of Note — RPG с пошаговыми боями и музыкой. Beyond Words — смесь стратегии и головоломки. Bytebond: Deluxe Edition — кооперативная головоломка про зараженный CPU."
     },
     "site": {
-      "title": "Студия Wanderstop Ivy Road закрыта из-за проблем с финансированием",
-      "text": "Ivy Road, создатели Wanderstop, объявили о закрытии студии. Причина: не смогли найти финансирование для Engine Angel. Команда поблагодарила фанатов и друг друга за работу над Wanderstop. Эта игра получила 80 баллов на Metacritic и запомнилась многим игрокам.\n\nК сожалению, поиски издателя для нового проекта не увенчались успехом. Сейчас сложное время для привлечения инвестиций в игровые проекты. Разработчики надеются, что Engine Angel всё-таки увидит свет в будущем.\n\nIvy Road приготовила сюрприз для фанатов Wanderstop. Annapurna Interactive расскажет детали позже.",
-      "metaDescription": "Студия Ivy Road, создатели Wanderstop, закрывается из-за проблем с финансированием Engine Angel. Разработчики благодарят фанатов и обещают сюрприз.",
+      "title": "Игровые новинки Xbox: во что поиграть на этой неделе",
+      "text": "Microsoft представила список игр, которые появятся на Xbox с 6 по 10 апреля. Игроков ждут проекты разных жанров: RPG, головоломки и другие. \n\nPeople of Note — музыкальная RPG с пошаговыми сражениями. Игрокам предстоит собрать группу музыкантов и добиться славы. Уникальная боевая система: каждое сражение — музыкальное представление.\n\nBeyond Words — необычная смесь стратегии и головоломки. От создателей GoldenEye и TimeSplitters. Игрокам предстоит составлять слова, открывать улучшения и решать головоломки.\n\nBytebond: Deluxe Edition — кооперативная головоломка для двоих. Разделенный экран и элементы Portal прилагаются. Цель: вернуть контроль над зараженным процессором.",
+      "metaDescription": "Новые игры для Xbox Series X|S, Xbox One и PC с 6 по 10 апреля. People of Note, Beyond Words, Bytebond: Deluxe Edition",
       "tags": [
-        "Ivy Road",
-        "Wanderstop",
-        "Engine Angel",
-        "Annapurna Interactive"
+        "Xbox",
+        "новые игры",
+        "анонс"
       ]
     },
-    "id": "news-1774741838083-eo7m"
+    "id": "news-1775293268808-xy2z"
   }
 ]

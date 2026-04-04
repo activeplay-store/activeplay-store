@@ -1,10 +1,11 @@
+# *
 User-agent: *
 Allow: /
-Sitemap: https://activeplay.games/sitemap.xml
+Disallow: /api/
+Disallow: /_next/
 
-User-agent: Googlebot
-Allow: /
-
-User-agent: Yandex
-Allow: /
+# Host
 Host: https://activeplay.games
+
+# Sitemaps
+Sitemap: https://activeplay.games/sitemap.xml

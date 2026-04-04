@@ -1,12 +1,12 @@
 {
   "crimson desert": {
-    "timestamp": 1774558709724,
+    "timestamp": 1775293257375,
     "data": {
-      "twitchViewers": 78784,
-      "twitchScore": 10,
-      "youtubeViews": 782867,
-      "youtubeScore": 4,
-      "hypeScore": 7
+      "twitchViewers": 13196,
+      "twitchScore": 6,
+      "youtubeViews": 441814,
+      "youtubeScore": 2,
+      "hypeScore": 4
     }
   },
   "resident evil requiem": {
@@ -60,71 +60,71 @@
     }
   },
   "screamer 2026": {
-    "timestamp": 1774561395414,
+    "timestamp": 1775293256466,
     "data": {
       "twitchViewers": 0,
       "twitchScore": 1,
-      "youtubeViews": 343031,
-      "youtubeScore": 2,
-      "hypeScore": 2
+      "youtubeViews": 67674,
+      "youtubeScore": 1,
+      "hypeScore": 1
     }
   },
   "monster hunter stories 3: twisted reflection": {
-    "timestamp": 1774561396425,
+    "timestamp": 1775293258404,
     "data": {
-      "twitchViewers": 2190,
-      "twitchScore": 4,
-      "youtubeViews": 5279,
+      "twitchViewers": 510,
+      "twitchScore": 2,
+      "youtubeViews": 14643,
       "youtubeScore": 1,
-      "hypeScore": 3
+      "hypeScore": 2
     }
   },
   "toxic commando": {
-    "timestamp": 1774561397358,
+    "timestamp": 1775293259393,
     "data": {
       "twitchViewers": 0,
       "twitchScore": 1,
-      "youtubeViews": 13599,
+      "youtubeViews": 180,
       "youtubeScore": 1,
       "hypeScore": 1
     }
   },
   "fatal frame ii: crimson butterfly remake": {
-    "timestamp": 1774561398324,
+    "timestamp": 1775293260292,
     "data": {
-      "twitchViewers": 528,
+      "twitchViewers": 583,
       "twitchScore": 2,
-      "youtubeViews": 8196,
+      "youtubeViews": 11601,
       "youtubeScore": 1,
       "hypeScore": 2
     }
   },
   "1348 ex voto": {
-    "timestamp": 1774561399240,
+    "timestamp": 1775293261209,
     "data": {
       "twitchViewers": 0,
       "twitchScore": 1,
-      "youtubeViews": 431435,
-      "youtubeScore": 2,
-      "hypeScore": 2
+      "youtubeViews": 8237,
+      "youtubeScore": 1,
+      "hypeScore": 1
     }
   },
   "marathon": {
-    "timestamp": 1774561400209,
+    "timestamp": 1775293262124,
     "data": {
-      "twitchViewers": 13446,
-      "twitchScore": 6,
-      "youtubeViews": 78387,
+      "twitchViewers": 2723,
+      "twitchScore": 4,
+      "youtubeViews": 95518,
       "youtubeScore": 1,
-      "hypeScore": 4
+      "hypeScore": 3
     }
   },
   "planet of lana 2 children of the leaf": {
-    "timestamp": 1774561401133,
+    "timestamp": 1775293263099,
     "data": {
       "twitchViewers": 0,
       "twitchScore": 1,
-      "youtubeViews": 4274,
+      "youtubeViews": 3031,
       "youtubeScore": 1,
       "hypeScore": 1
     }
@@ -147,6 +147,16 @@
       "youtubeViews": 2781417,
       "youtubeScore": 6,
       "hypeScore": 4
+    }
+  },
+  "darwin's paradox!": {
+    "timestamp": 1775293255496,
+    "data": {
+      "twitchViewers": 76,
+      "twitchScore": 1,
+      "youtubeViews": 111585,
+      "youtubeScore": 2,
+      "hypeScore": 2
     }
   }
 }
