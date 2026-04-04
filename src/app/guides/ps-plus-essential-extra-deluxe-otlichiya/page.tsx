@@ -74,7 +74,7 @@ export default function GuidePSPlusTiers() {
           {/* --- Essential --- */}
           <Link href="/ps-plus-essential" className="hover:opacity-80 transition-opacity">
             <h2 className="font-rajdhani text-[38px] font-extrabold text-white leading-tight tracking-tight">
-              <span className="text-[#F5C518]">Essential</span> {'\u2014'} база для онлайн-игры
+              PS Plus <span className="text-[#F5C518]">Essential</span> {'\u2014'} база для онлайн-игры
             </h2>
           </Link>
           <Accent />
@@ -155,7 +155,7 @@ export default function GuidePSPlusTiers() {
           {/* --- Extra --- */}
           <Link href="/ps-plus-extra" className="hover:opacity-80 transition-opacity">
             <h2 className="font-rajdhani text-[38px] font-extrabold text-white leading-tight tracking-tight">
-              <span className="text-[#00D4FF]">Extra</span> {'\u2014'} каталог из 400+ игр
+              PS Plus <span className="text-[#00D4FF]">Extra</span> {'\u2014'} каталог из 400+ игр
             </h2>
           </Link>
           <Accent />
@@ -213,7 +213,7 @@ export default function GuidePSPlusTiers() {
           {/* --- Deluxe --- */}
           <Link href="/ps-plus-deluxe" className="hover:opacity-80 transition-opacity">
             <h2 className="font-rajdhani text-[38px] font-extrabold text-white leading-tight tracking-tight">
-              <span className="text-[#B46AFF]">Deluxe</span> {'\u2014'} классика и пробные версии
+              PS Plus <span className="text-[#B46AFF]">Deluxe</span> {'\u2014'} классика и пробные версии
             </h2>
           </Link>
           <Accent />
@@ -301,7 +301,7 @@ export default function GuidePSPlusTiers() {
 
           {/* --- Апгрейд/даунгрейд --- */}
           <h2 className="font-rajdhani text-[38px] font-extrabold text-white leading-tight tracking-tight">
-            Как <span className="text-[#00D4FF]">перейти</span> между уровнями
+            Как <span className="text-[#00D4FF]">перейти</span> между уровнями PS Plus
           </h2>
           <Accent />
 
@@ -320,7 +320,7 @@ export default function GuidePSPlusTiers() {
 
           {/* --- Какой тариф выбрать --- */}
           <h2 className="font-rajdhani text-[38px] font-extrabold text-white leading-tight tracking-tight">
-            Какой <span className="text-[#00D4FF]">тариф выбрать</span>
+            Какой <span className="text-[#00D4FF]">тариф PS Plus</span> выбрать
           </h2>
           <Accent />
 
