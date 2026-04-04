@@ -106,6 +106,50 @@ export default function GuidePSPlusTiers() {
             Подробнее о PS Plus Essential {'\u2192'}
           </Link>
 
+          <div className="h-12" />
+
+          <h3 className="font-rajdhani text-[28px] font-extrabold text-white leading-tight tracking-tight">
+            Бесплатные игры <span className="text-[#F5C518]">PS Plus Essential</span> &mdash; как это работает
+          </h3>
+          <div className="w-12 h-[3px] bg-gradient-to-r from-[#F5C518] to-[#00D4FF] rounded-full mb-6 mt-3" />
+
+          <p className="text-[17px] text-[#9aa8b8] leading-relaxed">
+            Каждый месяц Sony раздаёт бесплатные игры PS Plus &mdash; обычно три штуки, иногда четыре. Обновление происходит в первый вторник месяца. Игры нужно &laquo;забрать&raquo; (добавить в библиотеку) в течение месяца &mdash; после этого они остаются у вас, пока подписка активна.
+          </p>
+          <p className="text-[17px] text-[#9aa8b8] leading-relaxed">
+            Раздавали God of War, Horizon Zero Dawn, Death Stranding, Sackboy, Hot Wheels Unleashed, Lego Star Wars. Иногда попадаются AAA-хиты, иногда &mdash; инди. За год набирается 36+ игр, и среди них всегда найдётся что-то стоящее.
+          </p>
+          <p className="text-[17px] text-[#9aa8b8] leading-relaxed">
+            Если не забрали игру вовремя &mdash; она уходит. Вернуть нельзя. Если подписка закончилась &mdash; бесплатные игры блокируются, но возвращаются при возобновлении PS Plus.
+          </p>
+
+          <Callout type="info" label="Бесплатные игры \u2260 каталог">
+            Бесплатные игры PS Plus Essential и каталог PS Plus Extra &mdash; разные вещи. Бесплатные игры забрал &mdash; твои навсегда (пока подписка). Каталог Extra &mdash; играешь, пока игра в каталоге. Уйдёт из каталога &mdash; доступ пропадёт.
+          </Callout>
+
+          <div className="h-10" />
+
+          <h3 className="font-rajdhani text-[28px] font-extrabold text-white leading-tight tracking-tight">
+            Для каких игр <span className="text-[#00D4FF]">PS Plus не нужен</span>
+          </h3>
+          <div className="w-12 h-[3px] bg-gradient-to-r from-[#00D4FF] to-[#0070D1] rounded-full mb-6 mt-3" />
+
+          <p className="text-[17px] text-[#9aa8b8] leading-relaxed">
+            Не все онлайн-игры требуют подписки. Free-to-play проекты на PlayStation работают без PS Plus:
+          </p>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 my-6">
+            {['Fortnite','Apex Legends','Genshin Impact','Rocket League','Call of Duty: Warzone','Destiny 2','Brawlhalla','Rogue Company','GTA Online (PS5)','Fall Guys'].map((g) => (
+              <div key={g} className="flex items-center gap-2 text-[14px] text-[#9aa8b8] bg-white/[0.02] border border-white/[0.05] rounded-xl px-4 py-3">
+                <div className="w-2 h-2 rounded-full bg-[#5DCAA5]/40 flex-shrink-0" />{g}
+              </div>
+            ))}
+          </div>
+
+          <p className="text-[17px] text-[#9aa8b8] leading-relaxed">
+            Если вы играете только в бесплатные онлайн-игры &mdash; PS Plus можно не покупать. Подписка нужна для платных игр с мультиплеером: EA FC, Call of Duty (не Warzone), Gran Turismo, Helldivers 2 и других.
+          </p>
+
           <Divider />
 
           {/* --- Extra --- */}
@@ -147,6 +191,23 @@ export default function GuidePSPlusTiers() {
             Подробнее о PS Plus Extra {'\u2192'}
           </Link>
 
+          <div className="h-12" />
+
+          <h3 className="font-rajdhani text-[28px] font-extrabold text-white leading-tight tracking-tight">
+            Какие игры <span className="text-[#00D4FF]">уходят из каталога</span> PS Plus Extra
+          </h3>
+          <div className="w-12 h-[3px] bg-gradient-to-r from-[#00D4FF] to-[#0070D1] rounded-full mb-6 mt-3" />
+
+          <p className="text-[17px] text-[#9aa8b8] leading-relaxed">
+            Каталог PS Plus Extra &mdash; не навсегда. Игры добавляются и уходят каждый месяц. Sony предупреждает об уходе за две недели. Если начали проходить игру &mdash; не откладывайте.
+          </p>
+          <p className="text-[17px] text-[#9aa8b8] leading-relaxed">
+            Полный актуальный каталог игр PS Plus Extra со всеми изменениями &mdash; на <Link href="/ps-plus-extra" className="text-[#00D4FF] hover:underline">странице PS Plus Extra</Link>. Каталог Deluxe с классикой PS1/PS2/PSP &mdash; на <Link href="/ps-plus-deluxe" className="text-[#00D4FF] hover:underline">странице PS Plus Deluxe</Link>. Оба каталога обновляются каждый месяц.
+          </p>
+          <p className="text-[17px] text-[#9aa8b8] leading-relaxed">
+            Обычно Sony добавляет 10{'\u2013'}15 новых игр в Extra и 3{'\u2013'}5 классических в Deluxe. Уходят примерно столько же. Ротация &mdash; причина, по которой Extra не заменяет покупку игр: если хотите гарантированный доступ, покупайте отдельно со скидкой.
+          </p>
+
           <Divider />
 
           {/* --- Deluxe --- */}
@@ -173,9 +234,22 @@ export default function GuidePSPlusTiers() {
             </div>
           </div>
 
-          <Callout type="info" label="Deluxe и Premium — в чём разница">
-            В США и Европе вместо Deluxe есть Premium. Отличие одно: Premium включает облачный стриминг PS3-игр. В Турции, Украине и Индии стриминг недоступен, поэтому тариф называется Deluxe и стоит дешевле. Набор классических игр и пробные версии &mdash; одинаковые.
-          </Callout>
+          <div className="h-12" />
+
+          <h3 className="font-rajdhani text-[28px] font-extrabold text-white leading-tight tracking-tight">
+            PS Plus Premium и Deluxe &mdash; <span className="text-[#B46AFF]">это одно и то же?</span>
+          </h3>
+          <div className="w-12 h-[3px] bg-gradient-to-r from-[#B46AFF] to-[#00D4FF] rounded-full mb-6 mt-3" />
+
+          <p className="text-[17px] text-[#9aa8b8] leading-relaxed">
+            Чем отличается PS Plus Premium от Deluxe? По сути &mdash; ничем, кроме названия и одной функции. В США, Европе и Японии верхний тариф называется Premium. В Турции, Украине и Индии &mdash; Deluxe.
+          </p>
+          <p className="text-[17px] text-[#9aa8b8] leading-relaxed">
+            Единственная разница: Premium включает облачный стриминг PS3-игр через интернет. В регионах без стриминга этой функции нет, поэтому тариф называется Deluxe и стоит дешевле. Каталог классических игр PS1/PS2/PSP и пробные версии новинок &mdash; абсолютно одинаковые.
+          </p>
+          <p className="text-[17px] text-[#9aa8b8] leading-relaxed">
+            Если видите в интернете &laquo;пс плюс премиум&raquo; &mdash; это тот же Deluxe для другого региона. Для турецкого и украинского аккаунтов всегда покупайте Deluxe.
+          </p>
 
           <p className="text-[17px] text-[#9aa8b8] leading-relaxed">
             Кому подходит: ностальгирующим по PS1/PS2 и тем, кто хочет пробовать новинки перед покупкой. Разница с Extra &mdash; 150 {'\u20BD'} в месяц. За эти деньги вы получаете доступ к нескольким десяткам классических игр и возможность протестировать новинки AAA-класса.
@@ -310,7 +384,7 @@ export default function GuidePSPlusTiers() {
 
           {/* Теги */}
           <div className="flex flex-wrap gap-2 pt-8 border-t border-white/[0.05]">
-            {['PS Plus','Essential','Extra','Deluxe','Premium','отличия','сравнение','пс плюс','какой выбрать','каталог игр','подписка','PlayStation'].map((tag) => (
+            {['PS Plus','Essential','Extra','Deluxe','Premium','отличия','сравнение','пс плюс','пс плюс премиум','какой выбрать','каталог игр','бесплатные игры ps plus','подписка','PlayStation','виды подписок','нужен ли ps plus'].map((tag) => (
               <span key={tag} className="text-[12px] text-[#4a5a6a] bg-white/[0.03] border border-white/[0.06] px-4 py-1.5 rounded-full hover:border-[#00D4FF]/20 hover:text-[#00D4FF] transition-all cursor-default">{tag}</span>
             ))}
           </div>

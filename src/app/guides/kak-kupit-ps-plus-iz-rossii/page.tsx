@@ -96,10 +96,10 @@ export default function GuidePSPlus() {
 
           {/* --- Вступление --- */}
           <p className="text-[19px] text-[#9aa8b8] leading-relaxed">
-            PS Store в России заморожен с марта 2022 года. Sony ушла, ликвидировала юрлицо, убрала страну из списка. Ни Visa, ни Mastercard, ни &laquo;Мир&raquo; &mdash; ничего не работает.
+            PS Store в России заморожен с марта 2022 года. Sony ушла, ликвидировала юрлицо, убрала страну из списка. Пополнить ПС Стор (PS Store) российской картой нельзя — пополнение заблокировано. Ни Visa, ни Mastercard, ни &laquo;Мир&raquo; не работают.
           </p>
           <p className="text-[19px] text-[#9aa8b8] leading-relaxed">
-            Подписка ПС Плюс по-прежнему доступна. Нужен аккаунт в другом регионе и специалисты, которые возьмут на себя активацию. Карта пополнения кошелька сама по себе ничего не решает &mdash; об этом ниже.
+            Подписка ПС Плюс (Плейстейшен Плюс, PlayStation Plus) по-прежнему доступна. Нужен аккаунт в другом регионе и специалисты, которые возьмут на себя активацию. Карта пополнения кошелька сама по себе ничего не решает &mdash; об этом ниже.
           </p>
 
           <Callout type="warn" label="Главное заблуждение">
@@ -233,6 +233,39 @@ export default function GuidePSPlus() {
 
           <Divider />
 
+          {/* --- Как пополнить PS Store --- */}
+          <h2 className="font-rajdhani text-[38px] font-extrabold text-white leading-tight tracking-tight">
+            Как пополнить <span className="text-[#00D4FF]">PS Store</span> из России
+          </h2>
+          <Accent />
+
+          <p className="text-[17px] text-[#9aa8b8] leading-relaxed">
+            Пополнить пс стор напрямую из России невозможно. Российские карты заблокированы, СБП не подключён к PlayStation. Единственный рабочий способ &mdash; карта пополнения PSN (подарочная карта PlayStation).
+          </p>
+          <p className="text-[17px] text-[#9aa8b8] leading-relaxed">
+            Карта пополнения PSN &mdash; это 12-значный код, который привязан к конкретному региону. Турецкая карта работает только на турецком аккаунте, украинская &mdash; на украинском. Перепутать регион нельзя &mdash; код просто не активируется.
+          </p>
+          <p className="text-[17px] text-[#9aa8b8] leading-relaxed">
+            После ввода кода деньги зачисляются на кошелёк PS Store. Дальше можно покупать игры, DLC, внутриигровую валюту. Но не подписку &mdash; для покупки PS Plus нужен IP региона. Об этом &mdash; в следующей секции.
+          </p>
+
+          <div className="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-7 my-8">
+            <h3 className="font-rajdhani text-xl font-bold text-[#00D4FF] mb-4">Как использовать карту пополнения</h3>
+            <div className="space-y-2 text-[15px]">
+              {['Купите карту PSN нужного региона (Турция \u2014 в TRY, Украина \u2014 в UAH, Индия \u2014 в INR)','На консоли или сайте store.playstation.com войдите в иностранный аккаунт','PS Store \u2192 \u00ABПогашение кодов\u00BB (Redeem Codes)','Введите 12-значный код \u2014 деньги мгновенно на кошельке','Покупайте игры, DLC, валюту. Для подписки PS Plus \u2014 нужна помощь специалиста'].map((f) => (
+                <div key={f} className="flex items-center gap-3 text-[#9aa8b8]">
+                  <div className="w-2 h-2 rounded-full bg-[#00D4FF]/40 flex-shrink-0" />{f}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <Callout type="warn" label="Карта пополнения \u2260 подписка">
+            Подарочная карта PlayStation пополняет кошелёк, но не активирует подписку. Для покупки PS Plus нужен IP-адрес региона. Пополнили кошелёк, а подписку оформить не можете? Это нормально &mdash; напишите в ActivePlay, мы активируем.
+          </Callout>
+
+          <Divider />
+
           {/* --- Продление --- */}
           <h2 className="font-rajdhani text-[38px] font-extrabold text-white leading-tight tracking-tight">
             Как продлить <span className="text-[#00D4FF]">подписку PS Plus</span>
@@ -251,6 +284,46 @@ export default function GuidePSPlus() {
           <Accent />
           <p className="text-[17px] text-[#9aa8b8] leading-relaxed">Напрямую с PlayStation Store ни СБП, ни &laquo;Мир&raquo; не работают. Sony не поддерживает российскую платёжную инфраструктуру.</p>
           <p className="text-[17px] text-[#9aa8b8] leading-relaxed">Зато оба способа работают для оплаты подписок через российских продавцов. В ActivePlay вы платите в рублях через СБП &mdash; быстро, без комиссии, из любого банка. Вся работа с регионами, IP и активацией &mdash; на нашей стороне.</p>
+
+          <Divider />
+
+          {/* --- Сколько стоит PS Plus --- */}
+          <h2 className="font-rajdhani text-[38px] font-extrabold text-white leading-tight tracking-tight">
+            Сколько стоит <span className="text-[#00D4FF]">PS Plus</span> в 2026 году
+          </h2>
+          <Accent />
+
+          <p className="text-[17px] text-[#9aa8b8] leading-relaxed">
+            Цена ПС Плюс зависит от уровня подписки и региона аккаунта. Турция и Украина &mdash; самые дешёвые регионы. Вот актуальные цены ActivePlay в рублях.
+          </p>
+
+          <div className="overflow-hidden rounded-2xl border border-white/[0.06] my-8">
+            <div className="grid grid-cols-4 bg-white/[0.04]">
+              <div className="p-4 text-[12px] text-[#6b7a8d] font-semibold border-r border-white/[0.06]">Тариф</div>
+              <div className="p-4 text-[12px] font-bold text-center text-[#F5C518]">1 мес</div>
+              <div className="p-4 text-[12px] font-bold text-center text-[#00D4FF] border-x border-white/[0.06]">3 мес</div>
+              <div className="p-4 text-[12px] font-bold text-center text-[#5DCAA5]">12 мес</div>
+            </div>
+            {[
+              { t: 'Essential (\u0422\u0443\u0440\u0446\u0438\u044f)', a: '1 250 \u20BD', b: '2 150 \u20BD', c: '5 800 \u20BD' },
+              { t: 'Extra (\u0422\u0443\u0440\u0446\u0438\u044f)', a: '1 400 \u20BD', b: '3 250 \u20BD', c: '9 500 \u20BD' },
+              { t: 'Deluxe (\u0422\u0443\u0440\u0446\u0438\u044f)', a: '1 550 \u20BD', b: '3 750 \u20BD', c: '10 750 \u20BD' },
+              { t: 'Essential (\u0423\u043a\u0440\u0430\u0438\u043d\u0430)', a: '\u2014', b: '\u2014', c: '5 000 \u20BD' },
+              { t: 'Extra (\u0423\u043a\u0440\u0430\u0438\u043d\u0430)', a: '\u2014', b: '\u2014', c: '7 000 \u20BD' },
+              { t: 'Deluxe (\u0423\u043a\u0440\u0430\u0438\u043d\u0430)', a: '\u2014', b: '\u2014', c: '8 000 \u20BD' },
+            ].map((row, i) => (
+              <div key={i} className={`grid grid-cols-4 ${i % 2 === 0 ? 'bg-white/[0.01]' : 'bg-white/[0.03]'}`}>
+                <div className="p-3 text-[13px] text-[#8896a5] border-r border-white/[0.06]">{row.t}</div>
+                <div className="p-3 text-center text-[13px] text-[#9aa8b8]">{row.a}</div>
+                <div className="p-3 text-center text-[13px] text-[#9aa8b8] border-x border-white/[0.06]">{row.b}</div>
+                <div className="p-3 text-center text-[13px] text-[#9aa8b8]">{row.c}</div>
+              </div>
+            ))}
+          </div>
+
+          <p className="text-[17px] text-[#9aa8b8] leading-relaxed">
+            Стоимость пс плюс на год &mdash; самый выгодный вариант. Essential 12 месяцев в украинском регионе &mdash; всего 5 000 {'\u20BD'}. Это дешевле, чем один месяц Extra в турецком. Годовая подписка экономит до 50% по сравнению с помесячной.
+          </p>
 
           <Divider />
 
@@ -344,9 +417,36 @@ export default function GuidePSPlus() {
             </a>
           </div>
 
+          <Divider />
+
+          <h2 className="font-rajdhani text-[38px] font-extrabold text-white leading-tight tracking-tight">
+            Частые <span className="text-[#00D4FF]">вопросы</span> о PS Plus
+          </h2>
+          <Accent />
+
+          <div className="space-y-3 my-8">
+            {[
+              { q: 'Можно ли купить PS Plus в России?', a: 'Напрямую через PS Store \u2014 нет. Sony заблокировала Россию. Через ActivePlay подписка оформляется за 10 минут: оплата в рублях через СБП, активация на турецкий или украинский аккаунт.' },
+              { q: 'Работает ли PS Plus в России?', a: 'Да. Подписка PlayStation Plus полностью работает на территории России. Заблокирована покупка, не использование. Играть онлайн, скачивать игры, получать ежемесячные раздачи \u2014 всё работает.' },
+              { q: 'Что даёт подписка PS Plus?', a: 'Зависит от уровня. Essential \u2014 мультиплеер, 3 игры в месяц, облачные сохранения. Extra \u2014 каталог 400+ игр. Deluxe \u2014 классика PS1/PS2 и пробные версии новинок.' },
+              { q: 'Нужен ли VPN для PS Plus?', a: 'Для обычной игры \u2014 нет. VPN нужен только для регистрации турецкого аккаунта и для активации подписки. После активации играйте без VPN.' },
+              { q: 'Как пополнить ПС Стор из России?', a: 'Через карту пополнения PSN нужного региона. В ActivePlay карты продаются за рубли \u2014 код приходит мгновенно. Но для покупки подписки одного пополнения недостаточно \u2014 нужен IP региона.' },
+              { q: 'PS Plus Турция или Индия \u2014 что выбрать?', a: 'Украина \u2014 самый дешёвый регион с русским языком. Турция \u2014 широко распространена, есть распродажи. Индия \u2014 регистрация без VPN, но только английский язык и перебои с картами.' },
+              { q: 'Безопасно ли покупать PS Plus через посредника?', a: 'Если посредник активирует подписку на ваш аккаунт \u2014 да. ActivePlay работает с 2022 года, более 52 000 клиентов. Мы не продаём готовые аккаунты \u2014 активируем подписку на ваш.' },
+            ].map((faq) => (
+              <details key={faq.q} className="bg-white/[0.02] border border-white/[0.06] rounded-2xl overflow-hidden group">
+                <summary className="p-6 cursor-pointer text-white font-semibold text-[16px] flex items-center justify-between hover:bg-white/[0.02] transition-colors">
+                  {faq.q}
+                  <span className="text-[#00D4FF] text-xl ml-4 flex-shrink-0 group-open:rotate-45 transition-transform">+</span>
+                </summary>
+                <div className="px-6 pb-6 text-[15px] text-[#8896a5] leading-relaxed">{faq.a}</div>
+              </details>
+            ))}
+          </div>
+
           {/* Теги */}
           <div className="flex flex-wrap gap-2 pt-8 border-t border-white/[0.05]">
-            {['PS Plus','PlayStation','подписка','Турция','Украина','из России','СБП','пс плюс','купить','активировать'].map((tag) => (
+            {['PS Plus','PlayStation','подписка','Турция','Украина','Индия','из России','СБП','пс плюс','плейстейшен плюс','купить','активировать','пополнить ps store','карта psn','сколько стоит','подписка сони','ps plus 2026'].map((tag) => (
               <span key={tag} className="text-[12px] text-[#4a5a6a] bg-white/[0.03] border border-white/[0.06] px-4 py-1.5 rounded-full hover:border-[#00D4FF]/20 hover:text-[#00D4FF] transition-all cursor-default">{tag}</span>
             ))}
           </div>

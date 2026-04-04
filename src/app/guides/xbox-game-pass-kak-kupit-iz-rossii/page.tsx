@@ -77,10 +77,10 @@ export default function GuideXboxGamePass() {
 
           {/* Essential — кликабельный заголовок */}
           <Link href="/xbox-game-pass-essential" className="block hover:opacity-80 transition-opacity text-[#107C10] no-underline mt-10">
-            <h3 className="font-rajdhani text-[28px] font-extrabold !text-[#107C10] mb-2">Game Pass Essential &mdash; мультиплеер и 50+ игр</h3>
+            <h3 className="font-rajdhani text-[28px] font-extrabold !text-[#107C10] mb-2">Game Pass Essential (бывш. Core) &mdash; мультиплеер и 50+ игр</h3>
           </Link>
           <p className="text-[17px] text-[#9aa8b8] leading-relaxed">
-            Бывший Game Pass Core. Базовый уровень &mdash; от 1 300 {'\u20BD'}/мес. Онлайн-мультиплеер на Xbox и ПК, библиотека из 50+ игр, облачный гейминг и программа лояльности Rewards. Годовая подписка &mdash; 6 950 {'\u20BD'}, экономия почти 9 000 {'\u20BD'}.
+            Бывший Game Pass Core. В интернете часто ищут Xbox Game Pass Core или гейм пасс кор — это тот же тариф, переименованный в октябре 2025. Базовый уровень &mdash; от 1 300 {'\u20BD'}/мес. Онлайн-мультиплеер на Xbox и ПК, библиотека из 50+ игр, облачный гейминг и программа лояльности Rewards. Годовая подписка &mdash; 6 950 {'\u20BD'}, экономия почти 9 000 {'\u20BD'}.
           </p>
           <div className="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-7 my-6">
             <div className="space-y-2 text-[15px]">
@@ -94,10 +94,10 @@ export default function GuideXboxGamePass() {
 
           {/* Premium — кликабельный заголовок */}
           <Link href="/xbox-game-pass-premium" className="block hover:opacity-80 transition-opacity text-[#0078D4] no-underline mt-10">
-            <h3 className="font-rajdhani text-[28px] font-extrabold !text-[#0078D4] mb-2">Game Pass Premium &mdash; 280 игр на Xbox и ПК</h3>
+            <h3 className="font-rajdhani text-[28px] font-extrabold !text-[#0078D4] mb-2">Game Pass Premium (бывш. Standard) &mdash; 280 игр на Xbox и ПК</h3>
           </Link>
           <p className="text-[17px] text-[#9aa8b8] leading-relaxed">
-            Бывший Game Pass Standard. Средний тариф &mdash; от 1 700 {'\u20BD'}/мес. Каталог расширяется до 280 игр, впервые включая ПК-версии. Cyberpunk 2077, Hogwarts Legacy, Starfield &mdash; здесь. Xbox-эксклюзивы появляются в течение года после релиза. Годовая подписка &mdash; 9 900 {'\u20BD'}.
+            Бывший Game Pass Standard. Также известен как Game Pass Standard или гейм пасс стандарт — старые названия до октября 2025. Средний тариф &mdash; от 1 700 {'\u20BD'}/мес. Каталог расширяется до 280 игр, впервые включая ПК-версии. Cyberpunk 2077, Hogwarts Legacy, Starfield &mdash; здесь. Xbox-эксклюзивы появляются в течение года после релиза. Годовая подписка &mdash; 9 900 {'\u20BD'}.
           </p>
           <div className="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-7 my-6">
             <div className="space-y-2 text-[15px]">
@@ -163,6 +163,30 @@ export default function GuideXboxGamePass() {
 
           <Divider />
 
+          {/* --- Какие игры входят --- */}
+          <h2 className="font-rajdhani text-[38px] font-extrabold text-white leading-tight tracking-tight">
+            Какие игры входят в <span className="text-[#107C10]">Game Pass</span>
+          </h2>
+          <Accent />
+
+          <p className="text-[17px] text-[#9aa8b8] leading-relaxed">
+            Каталог Xbox Game Pass &mdash; более 500 игр. Новинки Microsoft, Activision Blizzard и Bethesda появляются в день релиза. Вот что играют прямо сейчас:
+          </p>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 my-8">
+            {['Call of Duty: Black Ops','Starfield','Forza Horizon 5','Halo Infinite','Diablo IV','S.T.A.L.K.E.R. 2','Minecraft','Sea of Thieves','Age of Empires IV','Fallout 4','Gears 5','Hogwarts Legacy','Cyberpunk 2077','Ori and the Will of the Wisps','Hollow Knight'].map((g) => (
+              <div key={g} className="flex items-center gap-2 text-[14px] text-[#9aa8b8] bg-white/[0.02] border border-white/[0.05] rounded-xl px-4 py-3">
+                <div className="w-2 h-2 rounded-full bg-[#107C10]/40 flex-shrink-0" />{g}
+              </div>
+            ))}
+          </div>
+
+          <p className="text-[17px] text-[#9aa8b8] leading-relaxed">
+            Список игр Game Pass обновляется дважды в месяц. Новые игры добавляются, старые уходят &mdash; Microsoft предупреждает за две недели. Каталог Game Pass &mdash; это не покупка игр навсегда, а доступ на время подписки. Зато можно купить понравившуюся игру со скидкой 20% для подписчиков.
+          </p>
+
+          <Divider />
+
           {/* --- Покупка из России --- */}
           <h2 className="font-rajdhani text-[38px] font-extrabold text-white leading-tight tracking-tight">
             Как купить <span className="text-[#107C10]">Game Pass</span> из России
@@ -193,6 +217,24 @@ export default function GuideXboxGamePass() {
           <Callout type="info" label="Главное отличие от PlayStation">
             У Xbox регион аккаунта можно менять. Зашли в настройки account.microsoft.com, поменяли страну &mdash; готово. Не нужно создавать отдельный аккаунт, как в случае с PSN. И VPN для активации не требуется.
           </Callout>
+
+          <Divider />
+
+          {/* --- Облачный гейминг --- */}
+          <h2 className="font-rajdhani text-[38px] font-extrabold text-white leading-tight tracking-tight">
+            Облачный гейминг <span className="text-[#107C10]">Xbox</span> &mdash; как играть без консоли
+          </h2>
+          <Accent />
+
+          <p className="text-[17px] text-[#9aa8b8] leading-relaxed">
+            Xbox Cloud Gaming &mdash; стриминг игр через интернет. Не нужна консоль, не нужен мощный ПК. Играете через браузер на любом устройстве: ноутбук, планшет, телефон, Smart TV. Нужен только стабильный интернет от 10 Мбит/с и контроллер.
+          </p>
+          <p className="text-[17px] text-[#9aa8b8] leading-relaxed">
+            Облачный гейминг доступен на всех тарифах Game Pass, но с разным качеством. На Essential &mdash; избранные игры. На Premium &mdash; полный каталог. На Ultimate &mdash; приоритетный доступ к серверам, разрешение 1440p и улучшенный битрейт. Для серьёзной игры через облако &mdash; нужен Ultimate.
+          </p>
+          <p className="text-[17px] text-[#9aa8b8] leading-relaxed">
+            Из России облачный гейминг Xbox работает. VPN не требуется для стриминга. Задержка зависит от расстояния до серверов Microsoft &mdash; ближайшие в Европе. Для казуальных игр и RPG &mdash; вполне комфортно. Для шутеров и файтингов &mdash; лучше локальная консоль или ПК.
+          </p>
 
           <Divider />
 
@@ -254,6 +296,9 @@ export default function GuideXboxGamePass() {
           <p className="text-[18px] text-[#9aa8b8] leading-relaxed">
             ActivePlay работает с 2022 года. Более 52 000 клиентов. Наши менеджеры помогут выбрать тариф, подскажут по конвертации и активируют подписку Xbox Game Pass на ваш аккаунт.
           </p>
+          <p className="text-[18px] text-[#9aa8b8] leading-relaxed">
+            Подписка иксбокс геймпасс, гейм пасс ультимейт, гейм пас эссеншиал или премиум &mdash; всё доступно в ActivePlay за рубли. Мгновенная выдача кода, активация за 5 минут, поддержка по любым вопросам.
+          </p>
 
           <div className="bg-gradient-to-br from-[#0a3a0a] via-[#107C10] to-[#7B2FA0] rounded-3xl p-12 md:p-14 text-center mt-12 mb-16 relative overflow-hidden">
             <div className="absolute top-[-50%] right-[-20%] w-[400px] h-[400px] bg-[radial-gradient(circle,rgba(255,255,255,0.06)_0%,transparent_60%)]" />
@@ -279,7 +324,7 @@ export default function GuideXboxGamePass() {
           </div>
 
           <div className="flex flex-wrap gap-2 pt-8 border-t border-white/[0.05]">
-            {['Xbox Game Pass','Game Pass','гейм пасс','Ultimate','гейм пасс ультимейт','Essential','Premium','Xbox','подписка','из России','купить','СБП','PC Game Pass','активировать'].map((tag) => (
+            {['Xbox Game Pass','Game Pass','гейм пасс','геймпасс','Ultimate','гейм пасс ультимейт','Essential','Game Pass Core','Premium','Game Pass Standard','Xbox','подписка иксбокс','из России','купить','СБП','PC Game Pass','облачный гейминг','каталог игр game pass'].map((tag) => (
               <span key={tag} className="text-[12px] text-[#4a5a6a] bg-white/[0.03] border border-white/[0.06] px-4 py-1.5 rounded-full hover:border-[#107C10]/20 hover:text-[#107C10] transition-all cursor-default">{tag}</span>
             ))}
           </div>
