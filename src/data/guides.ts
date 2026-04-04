@@ -41,7 +41,7 @@ export const guidesData: GuideItem[] = [
   {
     id: 'g1',
     slug: 'kak-kupit-ps-plus-iz-rossii',
-    title: 'Как купить PS Plus из России — пошаговая инструкция',
+    title: 'Как купить подписку PS Plus из России в 2026 году — пошаговая инструкция',
     excerpt: 'Полный гайд по покупке и активации PS Plus из России. Выбор региона, создание аккаунта, оплата через СБП.',
     coverUrl: '/images/guides/ps-plus-cover.webp',
     category: 'playstation',
@@ -141,7 +141,7 @@ export const guidesData: GuideItem[] = [
   {
     id: 'g2',
     slug: 'ps-plus-essential-extra-deluxe-otlichiya',
-    title: 'PS Plus Essential, Extra и Deluxe — чем отличаются и какой выбрать',
+    title: 'PS Plus Essential, Extra и Deluxe — отличия, цены и какой уровень выбрать в 2026',
     excerpt: 'Сравнение всех уровней подписки PlayStation Plus: что входит в каждый тариф, в чём разница между Essential, Extra и Deluxe, и какой выбрать в 2026 году.',
     coverUrl: '/images/guides/ps-plus-essential-extra-deluxe.webp',
     category: 'playstation',
@@ -154,7 +154,7 @@ export const guidesData: GuideItem[] = [
   {
     id: 'g3',
     slug: 'xbox-game-pass-kak-kupit-iz-rossii',
-    title: 'Xbox Game Pass — все тарифы и покупка из России',
+    title: 'Xbox Game Pass в 2026 — отличия Core, Standard и Ultimate и как купить из России',
     excerpt: 'Как купить Xbox Game Pass из России в 2026 году. Тарифы Essential, Premium и Ultimate: что входит, цены, отличия. Конвертация, активация через подарочные карты.',
     coverUrl: '/images/guides/xbox-game-pass.webp',
     category: 'xbox',
@@ -167,7 +167,7 @@ export const guidesData: GuideItem[] = [
   {
     id: 'g4',
     slug: 'kak-kupit-fc-points-iz-rossii',
-    title: 'Как купить FC Points из России — донат Ultimate Team',
+    title: 'Как купить FC Points в России в 2026 году — все способы для EA FC 26',
     excerpt: 'Как купить ФК Поинтс для EA Sports FC 26 из России. Все номиналы, цены в рублях, оплата через СБП. Скидка 10% с EA Play.',
     coverUrl: '/images/guides/fc-points-cover.webp',
     category: 'ea-fc',
@@ -180,7 +180,7 @@ export const guidesData: GuideItem[] = [
   {
     id: 'g5',
     slug: 'ea-play-podpiska-kak-kupit',
-    title: 'EA Play — подписка Electronic Arts: каталог, скидки, покупка',
+    title: 'EA Play в 2026 — все игры, цены и как купить подписку из России',
     excerpt: 'Что входит в EA Play: каталог 64 игр, скидка 10% на FC Points и Apex Coins, ранний доступ к новинкам EA. Как купить ЕА Плей из России, цены от 900₽.',
     coverUrl: '/images/platforms/ea-play.png',
     category: 'ea',
