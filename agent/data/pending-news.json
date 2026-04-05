@@ -1,132 +1,108 @@
 [
   {
-    "sourceId": "reddit-games",
-    "sourceName": "r/Games",
-    "sourceWeight": 9,
-    "category": "Слух",
-    "title": "PlayStation Studios Removes Nearly All PC References From Websites",
-    "link": "https://gameobserver.com/playstation-studios-removes-nearly-all-pc-references-from-websites/",
-    "description": "Recently, there have been reports that Sony is pulling back from its aggressive PC porting push for big-budget single-player games, with claims that PC versions of major titles such as Ghost of Yotei and Housemarque’s SAROS may have been dropped. That speculation has gained even more attention after PlayStation Studios quietly updated its official website. The company has refreshed its main banner, now featuring Ghost of Yotei and Intergalactic: The Heretic Prophet, while removing Demon’s Souls Remake from the lineup. Another noticeable change is that Bluepoint Games and Dark Outlaw Games are no longer listed on the site, following the closure of both studios. In their place, Sony now includes teamLFG, a new first-party studio comprised of former Bungie developers. The biggest change, however, is the removal of nearly all mentions of PC from the descriptions of PlayStation’s Studios. Only Nixxes Software, which focuses on PC ports, still includes the platform in its profile. Sony is reportedly scaling back its strategy of bringing major single-player PlayStation titles to PC. As spotted by user Zuby_Tech on X (formerly Twitter), Sony has updated these descriptions compared to the earlier versions. For example, PlayStation XDev previously said it was “collaborating with ambitious external studios across the globe,” while the new description now reads, “partnering with talented independent studios to publish exciting, exclusive titles for PlayStation players worldwide”, more ex",
+    "sourceId": "reddit-ps5",
+    "sourceName": "r/PS5",
+    "sourceWeight": 8,
+    "category": "Новость",
+    "title": "Crimson Desert on PS5 Pro: 30fps Quality Mode Gets A Big Image Quality Upgrade",
+    "link": "https://www.digitalfoundry.net/news/2026/04/crimson-desert-on-ps5-pro-30fps-quality-mode-gets-a-big-image-quality-upgrade",
+    "description": "Developer Pearl Abyss's work on Crimson Abyss is ongoing, with a rapid-fire of updates hitting the game every week since it launched. Now, as of April 4th, a brand new patch tackles a string of bugs, with PS5 Pro in particular receiving an especially big win. The upgraded PSSR's sharpen feature is added, but more crucially, a native AA mode is added to the 30fps quality mode, essentially running the game at native 4K, using PSSR for anti-aliasing alone - and the boost to the overall look of the image is significant. For those familiar with our Crimson Desert PS5 review, you'll be aware that the Pro's balanced and quality modes had an unusually soft image. Despite rendering at 1440p on balanced, and a native 4K on quality (with no PSSR applied in that case), it still appeared softer somehow compared to the performance option. Switching to the new patch, all of that is solved, and engaging the native AA feature of PSSR on Pro's quality mode makes a huge difference. The bottom line is that Pro now pushes a pin-sharp image, compared to the launch build. Arguably it's over-sharpened with that stated 'sharpen feature', with a crisp, high contrast look to all that fine grass detail ahead. A toggle to adjust this would surely be appreciated, since it does appear to have a 'deep-fried' look. Still, it's a move in the right direction overall for sheer clarity across the frame while running at 30fps - and we'll certainly take it. As ever, it's rare that an upgrade comes for free in GPU ",
     "image": "",
-    "pubDate": "2026-04-03T16:09:47.000Z",
-    "redditScore": 2472,
-    "score": 72,
+    "pubDate": "2026-04-04T11:48:26.000Z",
+    "redditScore": 406,
+    "score": 59,
     "telegram": {
-      "title": "Sony намекает на отказ от PC-портов?",
-      "text": "PlayStation Studios убрала упоминания PC со своего сайта. Слухи об отмене PC-версий Ghost of Tsushima 2 и SAROS усилились. Sony, похоже, пересматривает свою стратегию."
+      "title": "Crimson Desert: апгрейд графики на PS5 Pro",
+      "text": "Разработчики улучшили качество изображения в Crimson Desert на PS5 Pro. В режиме 30 FPS появился AA. Картинка стала заметно чётче."
     },
     "vk": {
-      "title": "Sony удаляет упоминания PC со страниц PlayStation Studios",
-      "text": "Sony удалила почти все упоминания PC с сайта PlayStation Studios. Из списка пропали Bluepoint Games и Dark Outlaw Games (студии закрыты). Обновился главный баннер: теперь там Ghost of Yotei и Intergalactic: The Heretic Prophet. Слухи об отмене портов Ghost of Tsushima 2 и SAROS набирают обороты."
+      "title": "В Crimson Desert улучшили графику на PS5 Pro",
+      "text": "В Crimson Desert завезли патч. Разработчики из Pearl Abyss улучшили графику на PS5 Pro. В режиме качества с 30 FPS появился сглаживающий фильтр AA. \n\nИзображение стало заметно чётче. Правда, появилась излишняя резкость. Возможно, добавят регулировку."
     },
     "site": {
-      "title": "PlayStation Studios отказывается от PC-игр: что известно",
-      "text": "Sony убрала упоминания PC со страниц PlayStation Studios. Это породило разговоры об отказе от портирования крупных эксклюзивов. Слухи об отмене PC-версий Ghost of Tsushima 2 и SAROS становятся всё громче. Обновился главный баннер: теперь там Ghost of Yotei и Intergalactic: The Heretic Prophet. \n\nИз списка студий пропали Bluepoint Games и Dark Outlaw Games. Обе компании прекратили существование. Sony добавила teamLFG: новую студию из бывших разработчиков Bungie. \n\nПохоже, Sony пересматривает стратегию по выпуску одиночных игр PlayStation на PC. Пока что платформа упоминается только в профиле Nixxes Software, которая занимается портами.",
-      "metaDescription": "Sony, по слухам, отказывается от выпуска эксклюзивов на PC. Компания убрала упоминания платформы со страниц PlayStation Studios. Что это значит для геймеров?",
+      "title": "Crimson Desert: графоний подтянули на PS5 Pro",
+      "text": "Разработчики из Pearl Abyss продолжают улучшать Crimson Desert. Свежий патч принёс улучшения графики на PS5 Pro. Теперь в режиме качества с 30 кадрами в секунду используется AA. \n\nКартинка в Crimson Desert стала намного чётче. Ранее она была излишне мягкой. Всё благодаря новой опции PSSR, отвечающей за сглаживание.\n\nИзображение стало излишне резким. Возможно, в будущем добавят регулировку этого параметра. В целом, это большой шаг вперёд.",
+      "metaDescription": "В Crimson Desert улучшили графику на PS5 Pro. Разработчики добавили AA в режим 30 FPS. Картинка стала намного чётче.",
       "tags": [
-        "PlayStation",
-        "PC",
-        "порты",
+        "Crimson Desert",
+        "PS5 Pro",
+        "графика",
+        "патч"
+      ]
+    },
+    "id": "news-1775389526355-0lhw"
+  },
+  {
+    "sourceId": "reddit-ps5",
+    "sourceName": "r/PS5",
+    "sourceWeight": 8,
+    "category": "Слух",
+    "title": "Resident Evil 4 - PS5 vs PS5 Pro PSSR 2.0 Visual Comparison",
+    "link": "https://youtu.be/MQwtitqiZKQ?si=JdNq-RLcaY_tnJ1X",
+    "description": "О сервисеПрессеАвторские праваСвязаться с намиАвторамРекламодателямРазработчикамУсловия использованияКонфиденциальностьПравила и безопасностьКак работает YouTubeТестирование новых функций© 2026 Google LLC",
+    "image": "",
+    "pubDate": "2026-04-04T15:08:13.000Z",
+    "redditScore": 163,
+    "score": 44,
+    "telegram": {
+      "title": "Resident Evil 4: сравнение графики на PS5 и PS5 Pro",
+      "text": "В сети появилось сравнение Resident Evil 4 на PS5 и потенциальной PS5 Pro. Предполагается, что в Pro-версии используют PSSR 2.0 для улучшения графики."
+    },
+    "vk": {
+      "title": "Resident Evil 4: сравнение версий для PS5 и PS5 Pro",
+      "text": "В интернете появилось сравнение графики Resident Evil 4 на PS5 и, возможно, улучшенной PS5 Pro. В ролике демонстрируют отличия, благодаря технологии PSSR 2.0. Пока это лишь слухи, официально Sony не анонсировала PS5 Pro.",
+      "tags": [
+        "Resident Evil 4",
+        "PS5 Pro",
+        "графика",
         "слухи"
       ]
     },
-    "id": "news-1775293247876-s0lb"
+    "site": {
+      "title": "Resident Evil 4: сравнение графики на PS5 и PS5 Pro – первые детали",
+      "text": "В сети появилось видео со сравнением графики Resident Evil 4 на PS5 и, как предполагается, PS5 Pro. Ролик демонстрирует возможные улучшения в Pro-версии за счёт технологии PSSR 2.0.\n\nПока Sony официально не анонсировала PS5 Pro, поэтому относиться к этим данным стоит с осторожностью. Инсайдеры сообщали о разработке улучшенной версии консоли.\n\nResident Evil 4 – это ремейк культовой игры в жанре survival horror от Capcom. Оригинальный тайтл вышел в 2005 году.",
+      "metaDescription": "Сравнение графики Resident Evil 4 на PS5 и PS5 Pro. Улучшения благодаря PSSR 2.0? Все детали в статье.",
+      "tags": [
+        "Resident Evil 4",
+        "PS5 Pro",
+        "графика",
+        "слухи",
+        "Capcom"
+      ]
+    },
+    "id": "news-1775389573033-p5l8"
   },
   {
-    "sourceId": "reddit-games",
-    "sourceName": "r/Games",
+    "sourceId": "eurogamer",
+    "sourceName": "Eurogamer",
     "sourceWeight": 9,
-    "category": "Хайп",
-    "title": "Marathon has been out almost a month, what are your thoughts?",
-    "link": "https://www.reddit.com/r/Games/comments/1sbr9b3/marathon_has_been_out_almost_a_month_what_are/",
-    "description": "**Game Information**\n\nGame: Marathon\n\nTrailer: [Reveal Trailer](https://youtu.be/fvbEnWLRo1s), [Gameplay Launch Trailer](https://youtu.be/MXhQbF7TlbA), [Launch Cinematic](https://youtu.be/KF24WS4MMC0)\n\nPlatforms: Xbox Series X/S, PC, PS5\n\nRelease Date: March 5, 2026\n\nDevelopers: Bungie\n\nPublisher: Bungie\n\n**Game Discussion**\n\n• For those of you playing, does this game live up to or fall short of your expectations?\n\n• What are your thoughts on the environment and world design?\n\n• Do you enjoy the",
-    "image": "",
-    "pubDate": "2026-04-03T22:02:13.000Z",
-    "redditScore": 289,
-    "score": 66,
+    "category": "Инсайд",
+    "title": "Astonishing never-before-seen Elden Ring deleted cutscene discovered",
+    "link": "https://www.eurogamer.net/astonishing-never-before-seen-elden-ring-deleted-cutscene-discovered",
+    "description": "A new, never-before-seen map file has revealed more secrets about content cut from the final version of Elden Ring. Please note that what follows may be spoilery for some! Notable dataminer Lance McDonald uploaded his discovery earlier today, revealing what he claims is a deleted scene of Miquella planting the Haligtree. Elden Ring - Official The Journey So Far Trailer Elden Ring - Official The Journey So Far Trailer.Watch on YouTube \"This is a look at a never-before-seen map file where a cutscene was filmed for Elden Ring, which showed Miquella planting the Haligtree, as well as the process through which, during earlier development and testing, this cutscene was intended to have been played,\" McDonald explained. \"Finally, the similarly never-before-seen cutscene itself is shown.\" The idea of Miquella using his blood to nurture Haligtree isn't new, exactly, as the flavour text describing Haligtree Knight Armour says: \"Armour worn by knights sworn the Haligtree. Its left breast is emblazoned with the crest of the Haligtree. Though watered with Miquella's own blood since it was a sapling, the Haligtree ultimately failed to grow into an Erdtree\". Amazingly, though, McDonald has found a deleted cut-scene that pertains to this, including a \"number of unused lines of spoken dialogue\", although he cautions that \"without the intermediate cutscene file to connect these together, it's difficult to know for sure which of these are intended for playback during this specific video\". He wa",
+    "image": "https://assetsio.gnwcdn.com/elden-ring-player-facing-a-lesser-leonine-misebetton-on-the-right-in-miquella",
+    "pubDate": "Sat, 04 Apr 2026 17:23:51 +0000",
+    "score": 43,
     "telegram": {
-      "title": "Игроки обсуждают Marathon спустя месяц после релиза",
-      "text": "Релиз Marathon состоялся почти месяц назад. Игроки делятся впечатлениями о шутере от Bungie: оправдались ли ожидания, нравится ли дизайн мира и геймплей?"
+      "title": "Удалённую катсцену Elden Ring показали игрокам",
+      "text": "Инсайдеры нашли вырезанную сцену из Elden Ring. Микелла сажает Древо Святых. В файлах обнаружили неиспользованные реплики персонажей."
     },
     "vk": {
-      "title": "Первые впечатления от Marathon: игроки делятся мнением",
-      "text": "С момента релиза Marathon прошел почти месяц. Игроки активно обсуждают шутер от Bungie. Главные вопросы: оправдались ли ожидания? Как вам дизайн мира и геймплей? Многие сравнивают новинку с другими проектами студии."
+      "title": "В Elden Ring нашли вырезанную катсцену с Микеллой",
+      "text": "Датамайнер Lance McDonald обнаружил вырезанную катсцену из Elden Ring. На видео Микелла сажает Древо Святых. Инсайдер также нашёл неиспользованные реплики персонажей. \n\nПо словам McDonald, ролик раскрывает процесс создания Древа Святых. Из описания брони рыцаря Древа Святых известно: Микелла поливал древо собственной кровью, но оно не стало Великим древом."
     },
     "site": {
-      "title": "Месяц с Marathon: игроки делятся впечатлениями о шутере Bungie",
-      "text": "С релиза Marathon прошел почти месяц, и игроки делятся первыми впечатлениями. Мнения о шутере от Bungie разделились. Многие хвалят динамичный геймплей и графику. Другие жалуются на проблемы с балансом и оптимизацией.\n\nГлавные вопросы для обсуждения: оправдались ли ожидания? Как вам дизайн мира? Что думаете о нововведениях в геймплее? Marathon доступен на Xbox Series X/S, PC и PS5.\n\nРазработчик и издатель игры: сама Bungie. Дата выхода: 5 марта 2026 года. Игроки активно делятся мнениями и сравнивают Marathon с другими проектами студии.",
-      "metaDescription": "Игроки делятся впечатлениями о Marathon спустя месяц после релиза. Обсуждаем геймплей, графику и дизайн мира в новом шутере от Bungie.",
+      "title": "В Elden Ring нашли удалённую катсцену с Микеллой",
+      "text": "Инсайдеры нашли вырезанную сцену из Elden Ring. Датамайнер Lance McDonald обнаружил катсцену, где Микелла сажает Древо Святых. В файлах также нашли реплики персонажей, которые не вошли в финальную версию игры.\n\nMcDonald рассказал, что ролик показывает процесс создания Древа Святых. Из описания брони рыцаря Древа Святых известно: Микелла поливал древо кровью, но чуда не случилось. Оно так и не стало Великим древом.\n\nElden Ring вышла в феврале 2022 года. Игра получила высокие оценки критиков и игроков, её рейтинг на Metacritic — 89 баллов.",
+      "metaDescription": "Инсайдеры показали вырезанную катсцену из Elden Ring. В ролике Микелла сажает Древо Святых. Подробности и детали.",
       "tags": [
-        "Marathon",
-        "Bungie",
-        "шутер",
-        "мнения игроков"
+        "Elden Ring",
+        "Микелла",
+        "катсцена",
+        "инсайд",
+        "новости игр"
       ]
     },
-    "id": "news-1775293257855-nf5e"
-  },
-  {
-    "sourceId": "destructoid",
-    "sourceName": "Destructoid",
-    "sourceWeight": 7,
-    "category": "Слух",
-    "title": "When does ARC Raiders’ Riven Tides update release? Speculated dates and more",
-    "link": "https://www.destructoid.com/arc-raiders-riven-tides-date/?utm_source=rss&utm_medium=rss&utm_campaign=arc-raiders-riven-tides-date",
-    "description": "Riven Tides will be the next major update in ARC Raiders as per the released roadmap, and it could be the biggest one we have had. Coming after the Flashpoint update that released on the last day of March, Riven Tides will have something that the community has been asking for - a new map.\n\n\nBut first, let's look at when the update will possibly go live.\n\n\nTable of contents\nWhen will ARC Raiders Riven Tides release\nWhat to expect from Riven Tides in ARC Raiders\n\n\nWhen will ARC Raiders Riven Tides release\n\n\nAs of writing, Embark has been tight-lipped about the release date of Riven Tides. However, certain predictions can be made based on the routine that the developers follow. All major updates until now have been dropped on Tuesdays.\n\n\nTypically, Embark has also chosen the last Tuesday of a month to drop the updates. The Flashpoint update followed the same pattern when it dropped on March 31. If the same pattern is followed once again, April 28 seems the likeliest date.\n\n\nImage via Embark\n\n\nOnce again, I expect Embark to announce the dates at least a week before it drops. Once we have confirmation, we will update the date on this guide.\n\n\nWhat to expect from Riven Tides in ARC Raiders\n\n\nOnce again, we will need to wait before the update's launch to know all the details. However, Embark has confirmed some of the key features of the update. We will finally get a new map since ARC Raiders was released on Oct. 30.\n\n\nIf I have to guess from its name, Riven Tides will have something to do with water bodies. While a coastal map seems far-fetched, we could end up with rivers for a change. We already have mountains, plains, industrial, and desert maps. Something with ridges and rivers seems to be on the menu.\n\n\nImage via Embark\n\n\nThe new map will also come with a fresh event to check out. Riven Tides will also mark the beginning of the fourth expedition. While you're likely going to lose plenty of things, there will be rewards as well. We have previously received inventory sl",
-    "image": "https://www.destructoid.com/wp-content/uploads/2026/03/MixCollage-31-Mar-2026-03-30-PM-3821.jpg",
-    "pubDate": "Fri, 03 Apr 2026 23:11:08 +0000",
-    "score": 55,
-    "telegram": {
-      "title": "Когда выйдет обновление Riven Tides для ARC Raiders: дата",
-      "text": "Riven Tides станет следующим крупным обновлением для ARC Raiders. Разработчики из Embark пока молчат о дате выхода. Но есть предположения, основанные на предыдущих паттернах."
-    },
-    "vk": {
-      "title": "Когда выйдет обновление Riven Tides для ARC Raiders: возможная дата",
-      "text": "Riven Tides — грядущее крупное обновление для ARC Raiders. Embark пока не называла дату выхода. Однако можно сделать предположения, основываясь на графике прошлых релизов. Все крупные апдейты обычно выходили по вторникам, часто в последний вторник месяца. Если Embark продолжит эту традицию, Riven Tides стоит ждать 28 апреля."
-    },
-    "site": {
-      "title": "ARC Raiders: когда ждать обновление Riven Tides, что нового",
-      "text": "Riven Tides станет следующим крупным обновлением для ARC Raiders. Embark пока не сообщает дату релиза. Но можно строить предположения, исходя из предыдущих обновлений. Разработчики обычно выпускают крупные патчи по вторникам, часто в последний день месяца. Если эта схема сохранится, апдейт выйдет 28 апреля.\n\nГлавная особенность Riven Tides — новая карта. Игроки давно просили добавить свежую локацию. Судя по названию, карта будет связана с водой. Возможно, игроков ждут реки. Сейчас в игре есть горы, равнины, пустыни и промышленные зоны.\n\nС новой картой появится и новое событие. Riven Tides также откроет четвертую экспедицию с ценными наградами.",
-      "metaDescription": "Когда выйдет Riven Tides для ARC Raiders? Обновление принесёт новую карту и событие. Возможная дата выхода и детали.",
-      "tags": [
-        "ARC Raiders",
-        "Riven Tides",
-        "Обновление",
-        "Дата выхода",
-        "Слухи"
-      ]
-    },
-    "id": "news-1775293263366-xjj0"
-  },
-  {
-    "sourceId": "xboxwire",
-    "sourceName": "Xbox Wire",
-    "sourceWeight": 8,
-    "category": "Новость",
-    "title": "Next Week on Xbox: New Games for April 6 to 10",
-    "link": "https://news.xbox.com/en-us/2026/04/03/next-week-on-xbox-new-games-for-april-6-to-10/",
-    "description": "Welcome to Next Week on Xbox! In this weekly feature we cover all the games coming soon to Xbox Series X|S, Xbox One, Xbox on PC, and Game Pass! Get more details on these upcoming games below and click their profiles for further info (release dates subject to change). Let’s jump in! People of Note Annapurna Interactive ☆☆☆☆☆ ★★★★★ Get it now People of Note – April 7Optimized for Xbox Series X|S / Xbox Play Anywhere In this turn-based RPG musical, join Cadence as she recruits an ensemble of musicians on her quest for stardom. Experience turn-based combat like never before, where each battle is a musical performance with evolving combat conditions and genre-bending mashup attacks! Beyond Words PQube Ltd ☆☆☆☆☆ ★★★★★ Get it now Beyond Words – April 9Optimized for Xbox Series X|S From the creators of GoldenEye & TimeSplitters comes Beyond Words the genre-defining fusion of roguelike strategy and word-crafting. Build powerful combos, unlock upgrades, and master a challenge where victory is spelled one letter at a time. Build powerful word combos, unlock game-changing upgrades and journey through a living puzzle shaped by your decisions. Every choice, every letter, every placement matters. Bytebond: Deluxe Edition Anshar Publishing ☆☆☆☆☆ ★★★★★ Get it now Bytebond: Deluxe Edition – April 9 Split Fiction meets Portal! Bytebond is an electrifying online & couch co-op puzzle game that challenges you to regain control over an infected CPU. Dive into the heart of a PC with your friend and",
-    "image": "",
-    "pubDate": "Fri, 03 Apr 2026 14:00:00 +0000",
-    "score": 55,
-    "telegram": {
-      "title": "Xbox: во что поиграть с 6 по 10 апреля",
-      "text": "На Xbox выходит несколько интересных игр. Среди них: People of Note, Beyond Words и Bytebond: Deluxe Edition. Разные жанры, от RPG до головоломок."
-    },
-    "vk": {
-      "title": "Новые игры на Xbox с 6 по 10 апреля",
-      "text": "Microsoft анонсировала список новинок для Xbox. Нас ждут People of Note, Beyond Words и Bytebond: Deluxe Edition. People of Note — RPG с пошаговыми боями и музыкой. Beyond Words — смесь стратегии и головоломки. Bytebond: Deluxe Edition — кооперативная головоломка про зараженный CPU."
-    },
-    "site": {
-      "title": "Игровые новинки Xbox: во что поиграть на этой неделе",
-      "text": "Microsoft представила список игр, которые появятся на Xbox с 6 по 10 апреля. Игроков ждут проекты разных жанров: RPG, головоломки и другие. \n\nPeople of Note — музыкальная RPG с пошаговыми сражениями. Игрокам предстоит собрать группу музыкантов и добиться славы. Уникальная боевая система: каждое сражение — музыкальное представление.\n\nBeyond Words — необычная смесь стратегии и головоломки. От создателей GoldenEye и TimeSplitters. Игрокам предстоит составлять слова, открывать улучшения и решать головоломки.\n\nBytebond: Deluxe Edition — кооперативная головоломка для двоих. Разделенный экран и элементы Portal прилагаются. Цель: вернуть контроль над зараженным процессором.",
-      "metaDescription": "Новые игры для Xbox Series X|S, Xbox One и PC с 6 по 10 апреля. People of Note, Beyond Words, Bytebond: Deluxe Edition",
-      "tags": [
-        "Xbox",
-        "новые игры",
-        "анонс"
-      ]
-    },
-    "id": "news-1775293268808-xy2z"
+    "id": "news-1775389579074-o2s3"
   }
 ]

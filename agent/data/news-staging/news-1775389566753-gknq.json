@@ -1,0 +1,48 @@
+{
+  "sourceId": "tg-psprices",
+  "sourceName": "PSPrices RU",
+  "sourceWeight": 8,
+  "category": "Новость",
+  "title": "на PlayStation состоялся релиз «Симулятора Иисуса»Sony удалила «Симулятор Иисуса» из PlayStation Sto",
+  "link": "https://t.me/psprices_ru_ps4/40332",
+  "description": "на PlayStation состоялся релиз «Симулятора Иисуса»Sony удалила «Симулятор Иисуса» из PlayStation Store прямо перед Пасхой — игра вышла два месяца назад.🔵Это связано с масштабной чисткой магазина от низкокачественного контента. На этот раз с продажи сняли десятки игр сомнительного качества от издателей Welding Byte, GOGAME Console Publisher и VRCFORGE Studios.🔵В список удалённых проектов, помимо Jesus Simulator, вошли такие игры, как Six Seven Nights, Cat Life Simulator, MFC: Midnight Fight Clu",
+  "image": "",
+  "pubDate": "2026-04-05T11:12:40+00:00",
+  "isTelegram": true,
+  "score": 46,
+  "telegram": {
+    "title": "Jesus Simulator изгнали из PS Store!",
+    "text": "Sony удалила Jesus Simulator из PlayStation Store из-за низкого качества. Вместе с ним под раздачу попали и другие сомнительные проекты. Хорошая новость: в PS Plus есть во что поиграть! Подписки от 1250 ₽/мес в ActivePlay. #ps5 #playstation #psplus"
+  },
+  "vk": {
+    "title": "Jesus Simulator больше не спасает в PS Store",
+    "text": "Sony провела чистку в PlayStation Store, и Jesus Simulator оказался среди удаленных игр. Причина – низкое качество и разгромные отзывы. Вместе с симулятором Иисуса исчезли и другие проекты от Welding Byte и GOGAME Console Publisher. Не расстраивайтесь из-за потери: в PS Plus вас ждут сотни отличных игр. Оформляйте подписку в ActivePlay от 1250 ₽/мес и наслаждайтесь качественным геймингом! #ps5 #playstation #psplus"
+  },
+  "site": {
+    "title": "Jesus Simulator убрали из PS Store! Причина – низкое качество?",
+    "text": "Игра Jesus Simulator пропала из цифрового магазина PlayStation Store незадолго до Пасхи. Sony убрала тайтл, разработанный студией SimulaM, в масштабной чистки. Рейтинг Jesus Simulator на Metacritic составлял всего 29 баллов, что явно не способствовало его дальнейшему пребыванию в магазине. Об этом сообщил портал PSPrices RU.\n\nJesus Simulator – это симулятор, вышедший 10 января 2022 года на PC, macOS и Linux. Игрокам предлагалось примерить на себя роль Иисуса Христа, выполняя различные задания и чудеса. Отзывы об игре были крайне негативными: пользователи жаловались на плохую графику, скучный геймплей и многочисленные баги. В Steam у игры также крайне низкий рейтинг, что неудивительно.\n\nУдаление Jesus Simulator из PlayStation Store – часть общей тенденции Sony по борьбе с низкокачественным контентом. Вместе с симулятором Иисуса были удалены и другие проекты, такие как Six Seven Nights, Cat Life Simulator и MFC: Midnight Fight Club. Все эти игры издавались компаниями Welding Byte, GOGAME Console Publisher и VRCFORGE Studios, известными своим подходом к выпуску большого количества малобюджетных проектов. Похожие чистки регулярно проводит и Valve в Steam, чтобы поддерживать качество контента.\n\nОставаться в курсе качественных игровых новинок и иметь доступ к сотням отличных игр поможет подписка PS Plus. В каталоге Extra и Premium собраны лучшие проекты для PS4 и PS5. Оформить подписку PS Plus можно в ActivePlay по цене от 1 250 ₽/мес. Начните играть уже сегодня!",
+    "metaDescription": "Jesus Simulator удалили из PS Store! Sony продолжает чистку магазина от низкокачественных игр. Подробности и альтернативы для PS5.",
+    "tags": [
+      "PS5",
+      "Sony",
+      "PS Store"
+    ]
+  },
+  "id": "news-1775389566753-gknq",
+  "targets": [
+    "site"
+  ],
+  "relatedProduct": "ps-plus-extra",
+  "platform": "playstation",
+  "ctaType": "psplus",
+  "ctaText": "PS Plus от 1 250 ₽/мес",
+  "ctaLink": "/subscriptions",
+  "imageUrl": "/images/news/news-1775389566753-gknq.jpg",
+  "cta2": {
+    "title": "PS Plus Extra",
+    "description": "Каталог из 400+ игр",
+    "url": "/ps-plus-extra",
+    "buttonText": "Подробнее →"
+  },
+  "slug": "jesus-simulator-ubrali-iz-ps-store-prichina-nizkoe-kachestvo"
+}

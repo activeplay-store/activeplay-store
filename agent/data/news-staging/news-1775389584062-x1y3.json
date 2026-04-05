@@ -1,0 +1,48 @@
+{
+  "sourceId": "pushsquare",
+  "sourceName": "Push Square",
+  "sourceWeight": 9,
+  "category": "Новость",
+  "title": "Remember Those PC Icons on PS5? Sony Removed Them",
+  "link": "https://www.pushsquare.com/news/2026/04/remember-those-pc-icons-on-ps5-sony-removed-them",
+  "description": "Going through changes.\nDo you remember last November one industrious PlayStation fan fuelled speculation by uncovering unused icons in the PS5’s operating system?\nThe symbols prompted discussion about a potential PC launcher, as they alluded to things like ‘Cross-Buy’ and ‘PS5/PC’.\nRead the full article on pushsquare.com",
+  "image": "",
+  "pubDate": "Sat, 04 Apr 2026 13:00:00 GMT",
+  "score": 42,
+  "telegram": {
+    "title": "PC-лаунчер на PS5 отменяется?",
+    "text": "Sony удалила загадочные PC-иконки из системы PS5. Надежды на PC-лаунчер рухнули? 😱 Обсуждаем перспективы и ждем официальных комментариев. #PS5 #Sony #PCлаунчер"
+  },
+  "vk": {
+    "title": "PC-иконки пропали из PlayStation 5: что это значит?",
+    "text": "В ноябре прошлого года внимательные пользователи обнаружили в PS5 скрытые иконки, намекающие на PC-лаунчер. Но недавно Sony удалила эти символы из системы. Означает ли это отказ от планов по запуску PC-игр на консоли? 🤔 Обсуждаем возможные причины и последствия этого решения. А пока наслаждайтесь сотнями игр по подписке PS Plus! #PS5 #Sony #PCлаунчер #PSPlus"
+  },
+  "site": {
+    "title": "PS5 намекала на PC-лаунчер? Что случилось с таинственными иконками",
+    "text": "В ноябре 2023 года внимательные пользователи обнаружили в операционной системе PlayStation 5 скрытые иконки. Речь шла о символах Cross-Buy и PS5/PC, намекающих на возможный PC-лаунчер. Эта находка вызвала волну обсуждений и предположений о планах Sony. Однако, как стало известно из публикации Push Square, компания удалила эти иконки из системы.\n\nЭти иконки породили надежды на расширение функциональности PlayStation 5. Игроки ожидали возможности запускать PC-игры напрямую на консоли. Подобная интеграция могла бы привлечь новую аудиторию и увеличить продажи. Например, на PC доступна Demeo: PC Edition, пошаговая RPG с элементами настольной игры, вышедшая 7 апреля 2022 года. Она сочетает жанры Indie, Strategy, Adventure и RPG.\n\nПоявление и последующее удаление иконок может говорить о смене стратегии Sony. Компания активно переносит свои эксклюзивы на PC, но полноценный лаунчер на PS5 мог бы изменить расстановку сил на рынке. Microsoft, например, предлагает Xbox Game Pass PC, открывающий доступ к библиотеке игр на компьютерах. Sony пока не комментирует ситуацию, оставляя фанатов в неведении.\n\nСудьба PC-лаунчера для PS5 остается неясной, но доступ к играм на PlayStation всегда можно получить с подпиской PS Plus. Каталог Extra предлагает сотни тайтлов для PS4 и PS5. Оформите подписку PS Plus в ActivePlay от 1 250 ₽/мес и наслаждайтесь любимыми играми уже сегодня!",
+    "metaDescription": "Sony удалила PC-иконки из PS5. Что это значит для возможного запуска PC-игр на консоли? Подробности и обсуждение.",
+    "tags": [
+      "PS5",
+      "Sony",
+      "PC-лаунчер",
+      "PS Plus"
+    ]
+  },
+  "id": "news-1775389584062-x1y3",
+  "targets": [
+    "site"
+  ],
+  "relatedProduct": "ps-plus-extra",
+  "platform": "playstation",
+  "ctaType": "psplus",
+  "ctaText": "PS Plus от 1 250 ₽/мес",
+  "ctaLink": "/subscriptions",
+  "imageUrl": "/images/news/news-1775389584062-x1y3.jpg",
+  "cta2": {
+    "title": "PS Plus Extra",
+    "description": "Каталог из 400+ игр",
+    "url": "/ps-plus-extra",
+    "buttonText": "Подробнее →"
+  },
+  "slug": "ps5-namekala-na-pc-launcher-chto-sluchilos-s-tainstvennymi-ikonkami"
+}

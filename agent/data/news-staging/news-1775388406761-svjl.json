@@ -1,0 +1,52 @@
+{
+  "sourceId": "reddit-ps5",
+  "sourceName": "r/PS5",
+  "sourceWeight": 8,
+  "category": "Слух",
+  "title": "Resident Evil 4 - PS5 vs PS5 Pro PSSR 2.0 Visual Comparison",
+  "link": "https://youtu.be/MQwtitqiZKQ?si=JdNq-RLcaY_tnJ1X",
+  "description": "О сервисеПрессеАвторские праваСвязаться с намиАвторамРекламодателямРазработчикамУсловия использованияКонфиденциальностьПравила и безопасностьКак работает YouTubeТестирование новых функций© 2026 Google LLC",
+  "image": "",
+  "pubDate": "2026-04-04T15:08:13.000Z",
+  "redditScore": 161,
+  "score": 44,
+  "telegram": {
+    "title": "Resident Evil 4: сравнили графику на PS5 и PS5 Pro",
+    "text": "В сети появилось сравнение Resident Evil 4 на PS5 и возможной PS5 Pro. Разница заметна благодаря PSSR 2.0, но это пока только слухи."
+  },
+  "vk": {
+    "title": "Resident Evil 4: сравнение графики PS5 и PS5 Pro",
+    "text": "В интернете появилось видео со сравнением графики Resident Evil 4. Ролик показывает версии игры для PS5 и якобы для PS5 Pro. Улучшения заметны благодаря технологии PSSR 2.0, делают картинку чётче. Подтверждений существования PS5 Pro пока нет, это слухи."
+  },
+  "site": {
+    "title": "Resident Evil 4: Графика PS5 Pro vs PS5 - полный разбор!",
+    "text": "В сети появилось интересное сравнение графики Resident Evil 4. Энтузиасты сравнили версии игры, запущенные на PS5 и, предположительно, на PS5 Pro.\n\nРазница заметна благодаря технологии PSSR 2.0. Она делает изображение более четким и детализированным. Важно помнить: существование PS5 Pro официально не подтверждено. \n\nПоэтому относиться к этой информации стоит как к слуху. Resident Evil 4 – это ремейк культового хоррора от Capcom. Игра получила высокие оценки за графику и геймплей.\n\nОформить PS Plus можно в ActivePlay от 1 250 ₽/мес. Активация за 10 минут, оплата в рублях.",
+    "metaDescription": "Сравнение графики Resident Evil 4 на PS5 и PS5 Pro. Улучшения с технологией PSSR 2.0. Подробности и анализ.",
+    "tags": [
+      "Resident Evil 4",
+      "PS5 Pro",
+      "графика",
+      "PSSR 2.0",
+      "слухи"
+    ]
+  },
+  "id": "news-1775388406761-svjl",
+  "targets": [
+    "site"
+  ],
+  "platform": "playstation",
+  "ctaType": "psplus",
+  "ctaText": "PS Plus от 1 250 ₽/мес",
+  "ctaLink": "/subscriptions",
+  "imageUrl": "/images/news/news-1775388406761-svjl.jpg",
+  "cta": {
+    "gameId": "resident-evil",
+    "title": "Купить Resident Evil",
+    "description": "Активация за 5 минут. Турецкий PS Store.",
+    "price": 950,
+    "oldPrice": 2350,
+    "url": "/sale",
+    "buttonText": "Купить за 950 ₽ →"
+  },
+  "slug": "resident-evil-4-grafika-ps5-pro-vs-ps5-polnyy-razbor"
+}

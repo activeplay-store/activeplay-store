@@ -1,0 +1,43 @@
+{
+  "sourceId": "reddit-ps5",
+  "sourceName": "r/PS5",
+  "sourceWeight": 8,
+  "category": "Новость",
+  "title": "Latest Firmware 69 makes Neutron HiFi DAC V1 compatible with Sony PlayStation (PS4/PS5)",
+  "link": "https://www.reddit.com/r/PS5/comments/1scyqa7/latest_firmware_69_makes_neutron_hifi_dac_v1/",
+  "description": "If you’ve ever tried using a high-end USB DAC with a game console, you know the struggle: Sony (PS4/5) and Nintendo (NSW1/2) usually stick to the older UAC1 standard leaving many modern DACs silent or unrecognized. Additionally, PS4/5 sets connected USB DAC to a very low unusable volume level.\n\nLatest [Firmware 69](https://forum.neutroncode.com/viewtopic.php?f=10&amp;t=7507) update for Neutron HiFi DAC V1 officially bridges that gap, adding dedicated support for PlayStation 4/5 (PS4, PS5) and Ni",
+  "image": "",
+  "pubDate": "2026-04-05T08:54:41.000Z",
+  "redditScore": 0,
+  "score": 57,
+  "telegram": {
+    "title": "Neutron HiFi DAC V1 теперь работает с PS5",
+    "text": "Вышло обновление прошивки 69 для Neutron HiFi DAC V1. Теперь ЦАП совместим с PlayStation 4 и PlayStation 5. Раньше консоли Sony не поддерживали современные ЦАПы."
+  },
+  "vk": {
+    "title": "Neutron HiFi DAC V1 получил поддержку PlayStation 5",
+    "text": "Neutron HiFi DAC V1 теперь официально работает с PS4 и PS5. Обновление прошивки 69 добавляет поддержку консолей Sony. Раньше консоли использовали старый стандарт UAC1. Многие современные ЦАПы оставались без звука или не распознавались.\n\nНовая прошивка решает проблему низкой громкости. Подключение USB DAC к PS4/PS5 теперь будет комфортным."
+  },
+  "site": {
+    "title": "Neutron HiFi DAC V1: поддержка PlayStation 5 с новой прошивкой",
+    "text": "Neutron HiFi DAC V1 получил долгожданную поддержку PlayStation 4 и PlayStation 5. Ранее консоли Sony использовали устаревший стандарт UAC1. Многие современные ЦАПы попросту не работали или выдавали звук на неприемлемо низкой громкости.\n\nОбновление Firmware 69 решает эти проблемы. Теперь Neutron HiFi DAC V1 полноценно функционирует с PS4 и PS5.\n\nЧтобы воспользоваться улучшением, необходимо установить последнюю версию прошивки. Скачать её можно на официальном форуме Neutron.\n\nОформить PS Plus можно в ActivePlay от 1 250 ₽/мес. Активация за 10 минут, оплата в рублях.",
+    "metaDescription": "Neutron HiFi DAC V1 теперь совместим с PlayStation 5 благодаря новой прошивке. Узнайте, как обновить устройство и наслаждаться качественным звуком.",
+    "tags": [
+      "PS5",
+      "Neutron HiFi DAC V1",
+      "ЦАП",
+      "звук",
+      "обновление"
+    ]
+  },
+  "id": "news-1775379649302-w95z",
+  "targets": [
+    "site"
+  ],
+  "platform": "playstation",
+  "ctaType": "psplus",
+  "ctaText": "PS Plus от 1 250 ₽/мес",
+  "ctaLink": "/subscriptions",
+  "imageUrl": "/images/news/news-1775379649302-w95z.jpg",
+  "slug": "neutron-hifi-dac-v1-podderzhka-playstation-5-s-novoy-proshivkoy"
+}

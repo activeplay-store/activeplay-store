@@ -1,0 +1,334 @@
+const fs = require('fs');
+const path = require('path');
+const { execSync } = require('child_process');
+
+const SITE_ROOT = process.env.SITE_ROOT || '/var/www/activeplay-store';
+const NEWS_JSON = path.join(SITE_ROOT, 'src/data/news.json');
+const NEWS_ARCHIVE = path.join(__dirname, '../../../data/news-archive.json');
+const CHANNEL_ID = '@PS_PLUS_RUS';
+
+async function publishToTelegram(bot, article) {
+  const tg = article.telegram || {};
+  const text = `📰 *${tg.title || article.title}*\n\n${tg.text || article.text}`;
+
+  try {
+    if (article.imageUrl && article.imageUrl.startsWith('http')) {
+      await bot.telegram.sendPhoto(CHANNEL_ID, article.imageUrl, {
+        caption: text, parse_mode: 'Markdown',
+      });
+    } else if (article.imageUrl) {
+      // Локальный файл — отправить как Buffer
+      const imgPath = path.join(SITE_ROOT, 'public', article.imageUrl);
+      if (fs.existsSync(imgPath)) {
+        await bot.telegram.sendPhoto(CHANNEL_ID, { source: imgPath }, {
+          caption: text, parse_mode: 'Markdown',
+        });
+      } else {
+        await bot.telegram.sendMessage(CHANNEL_ID, text, { parse_mode: 'Markdown' });
+      }
+    } else {
+      await bot.telegram.sendMessage(CHANNEL_ID, text, { parse_mode: 'Markdown' });
+    }
+    console.log(`[NEWS] Published to TG: ${tg.title || article.title}`);
+  } catch (err) {
+    console.error(`[NEWS] TG error: ${err.message}`);
+  }
+}
+
+async function publishToVK(article) {
+  const VK_TOKEN = process.env.VK_ACCESS_TOKEN;
+  const VK_GROUP_ID = process.env.VK_GROUP_ID; // числовой ID группы (без минуса)
+  if (!VK_TOKEN || !VK_GROUP_ID) {
+    console.error('[NEWS] VK publish skipped: VK_ACCESS_TOKEN or VK_GROUP_ID not set');
+    return;
+  }
+
+  const vk = article.vk || {};
+  const title = vk.title || article.site?.title || article.title || '';
+  const rawText = vk.text || article.site?.text || article.text || '';
+  // Clean text for VK: convert unicode escapes to actual symbols
+  const text = rawText.replace(/\\u20BD/g, '\u20BD');
+  const tags = (article.site?.tags || article.tags || []).map(t => `#${t.replace(/\s+/g, '_')}`).join(' ');
+  const articleUrl = article.slug ? `https://activeplay.games/news/${article.slug}` : 'https://activeplay.games';
+  const message = `📰 ${title}\n\n${text}\n\n${tags}\n\n🔗 Читать на сайте: ${articleUrl}`;
+
+  try {
+    const params = new URLSearchParams({
+      owner_id: `-${VK_GROUP_ID}`,
+      from_group: '1',
+      message,
+      v: '5.199',
+      access_token: VK_TOKEN,
+    });
+
+    const res = await fetch(`https://api.vk.com/method/wall.post?${params.toString()}`, {
+      method: 'POST',
+    });
+    const data = await res.json();
+
+    if (data.error) {
+      console.error(`[NEWS] VK error: ${data.error.error_msg}`);
+    } else {
+      console.log(`[NEWS] Published to VK: post_id=${data.response?.post_id}, title="${title}"`);
+    }
+  } catch (err) {
+    console.error(`[NEWS] VK error: ${err.message}`);
+  }
+}
+
+// Маппинг категорий переводчика → NewsCategory для сайта
+const CATEGORY_MAP = {
+  'Новость': 'news', 'Анонс': 'announcement', 'Обзор': 'review',
+  'Слух': 'rumor', 'Скидки': 'news', 'Гайд': 'guide',
+  'Видео': 'video', 'Интервью': 'interview',
+  'Хайп': 'hype', 'Инсайд': 'insider',
+};
+
+// Убрать категорию из начала заголовка (например "Инсайд: Title" → "Title")
+const CATEGORY_PREFIX_RE = /^(Новость|Анонс|Обзор|Слух|Скидки|Гайд|Видео|Интервью|Инсайд|Хайп|Утечка|Rumor|News|Hype)\s*[:—–\-]\s*/i;
+function stripCategoryPrefix(title) {
+  return (title || '').replace(CATEGORY_PREFIX_RE, '');
+}
+
+// Поиск цены игры в games.json для автоматического CTA
+const GAMES_FILE = path.join(__dirname, '../../../data/games.json');
+const DLC_RE = /\b(dlc|дополнение|expansion|season pass|сезонный абонемент)\b/i;
+
+function findGamePrice(title, content) {
+  try {
+    const data = JSON.parse(fs.readFileSync(GAMES_FILE, 'utf-8'));
+    const games = data.games || [];
+    const text = (title + ' ' + content).toLowerCase();
+    const isDlc = DLC_RE.test(text);
+
+    for (const game of games) {
+      const name = game.name?.toLowerCase();
+      if (!name) continue;
+      // Точное вхождение названия или первых 3 слов
+      const shortName = name.split(' ').slice(0, 3).join(' ');
+      if (text.includes(name) || text.includes(shortName)) {
+        const tr = game.prices?.TR?.editions?.[0];
+        if (tr && tr.clientPrice) {
+          return {
+            name: game.name,
+            priceTRY: tr.basePrice || tr.salePrice,
+            priceRUB: tr.clientPrice,
+            salePriceRUB: tr.clientSalePrice || null,
+            hasSale: !!tr.salePrice && tr.salePrice < tr.basePrice,
+          };
+        }
+      }
+    }
+
+    // Для DLC — попробовать найти базовую игру (без суффикса DLC)
+    if (isDlc) {
+      const cleaned = text
+        .replace(/dlc|дополнение|expansion|season pass|сезонный абонемент/gi, '')
+        .replace(/\s+/g, ' ').trim();
+      for (const game of games) {
+        const name = game.name?.toLowerCase();
+        if (!name) continue;
+        if (cleaned.includes(name)) {
+          const tr = game.prices?.TR?.editions?.[0];
+          if (tr && tr.clientPrice) {
+            return {
+              name: game.name,
+              priceTRY: tr.basePrice || tr.salePrice,
+              priceRUB: tr.clientPrice,
+              salePriceRUB: tr.clientSalePrice || null,
+              hasSale: !!tr.salePrice && tr.salePrice < tr.basePrice,
+            };
+          }
+        }
+      }
+    }
+
+    return null;
+  } catch { return null; }
+}
+
+// CTA — JSON-объекты для фронта
+function buildCtaData(gamePrice) {
+  if (!gamePrice) return null;
+  const price = gamePrice.hasSale ? gamePrice.salePriceRUB : gamePrice.priceRUB;
+  return {
+    gameId: gamePrice.gameId || undefined,
+    title: `Купить ${gamePrice.name}`,
+    description: 'Активация за 5 минут. Турецкий PS Store.',
+    price: price,
+    oldPrice: gamePrice.hasSale ? gamePrice.priceRUB : undefined,
+    url: '/sale',
+    buttonText: `Купить за ${price} ₽ →`,
+  };
+}
+
+const PRODUCT_CTA_MAP = {
+  'ps-plus-essential': { title: 'PS Plus Essential', description: 'Бесплатные игры каждый месяц', url: '/ps-plus-essential', buttonText: 'Подробнее →' },
+  'ps-plus-extra': { title: 'PS Plus Extra', description: 'Каталог из 400+ игр', url: '/ps-plus-extra', buttonText: 'Подробнее →' },
+  'ps-plus-deluxe': { title: 'PS Plus Deluxe', description: 'Каталог + классика + пробные версии', url: '/ps-plus-deluxe', buttonText: 'Подробнее →' },
+  'xbox-game-pass': { title: 'Xbox Game Pass', description: 'Сотни игр по подписке', url: '/xbox-game-pass-ultimate', buttonText: 'Подробнее →' },
+  'ea-play': { title: 'EA Play', description: 'Все игры EA по подписке', url: '/ea-play', buttonText: 'Подробнее →' },
+};
+
+function buildProductCta(relatedProduct) {
+  if (!relatedProduct || !PRODUCT_CTA_MAP[relatedProduct]) return null;
+  return PRODUCT_CTA_MAP[relatedProduct];
+}
+
+// Валидация: чистый текст, без HTML
+function validateNewsEntry(entry) {
+  if (/<[a-z][\s\S]*>/i.test(entry.content || '')) {
+    throw new Error(`HTML в content у "${entry.title}"! Запись отменена.`);
+  }
+  if ((entry.content || '').length < 100) {
+    throw new Error(`Текст слишком короткий: ${(entry.content || '').length} знаков — ${entry.id}`);
+  }
+  if (!entry.id || !entry.title || !entry.content) {
+    throw new Error(`Отсутствуют обязательные поля — ${entry.id}`);
+  }
+  return true;
+}
+
+// Backup news.json
+const BACKUP_DIR = path.join(__dirname, '../../../data/news-backups');
+
+function backupNewsJson() {
+  try {
+    if (!fs.existsSync(NEWS_JSON)) return;
+    if (!fs.existsSync(BACKUP_DIR)) fs.mkdirSync(BACKUP_DIR, { recursive: true });
+
+    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+    const backupPath = path.join(BACKUP_DIR, `news-${timestamp}.json`);
+    fs.copyFileSync(NEWS_JSON, backupPath);
+    console.log(`[NEWS] Backup: ${backupPath}`);
+
+    const backups = fs.readdirSync(BACKUP_DIR).filter(f => f.endsWith('.json')).sort();
+    while (backups.length > 20) {
+      fs.unlinkSync(path.join(BACKUP_DIR, backups.shift()));
+    }
+  } catch (err) {
+    console.error(`[NEWS] Backup error: ${err.message}`);
+  }
+}
+
+function slugify(text) {
+  return text
+    .toLowerCase()
+    .replace(/[ёЁ]/g, 'е')
+    .replace(/[а-яА-Я]/g, c => {
+      const ru = 'абвгдежзийклмнопрстуфхцчшщъыьэюя';
+      const en = ['a','b','v','g','d','e','zh','z','i','y','k','l','m','n','o','p','r','s','t','u','f','h','c','ch','sh','shch','','y','','e','yu','ya'];
+      const idx = ru.indexOf(c.toLowerCase());
+      return idx >= 0 ? en[idx] : c;
+    })
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '')
+    .substring(0, 80);
+}
+
+// Очистить текст от HTML
+function stripHtml(text) {
+  return (text || '').replace(/<[^>]*>/g, '');
+}
+
+function writeToSite(newArticles) {
+  // 1. BACKUP
+  backupNewsJson();
+
+  // 2. Прочитать текущие новости
+  let existing = [];
+  try {
+    existing = JSON.parse(fs.readFileSync(NEWS_JSON, 'utf-8'));
+  } catch (e) {
+    console.error('[NEWS] Не удалось прочитать news.json, начинаем с пустого:', e.message);
+  }
+
+  // 3. Подготовить новые записи
+  const prepared = newArticles.map(a => {
+    const cleanTitle = stripCategoryPrefix(a.site?.title || a.title);
+    const bodyText = stripHtml(a.site?.text || a.text || a.content || '');
+
+    // CTA
+    let cta = a.cta || null;
+    let cta2 = a.cta2 || null;
+
+    if (!cta) {
+      const gamePrice = findGamePrice(cleanTitle, bodyText);
+      if (gamePrice) {
+        cta = buildCtaData(gamePrice);
+        console.log(`[NEWS] Auto CTA: ${gamePrice.name} — ${gamePrice.priceRUB} ₽`);
+      }
+    }
+    if (!cta2 && a.relatedProduct) {
+      cta2 = buildProductCta(a.relatedProduct);
+    }
+
+    const entry = {
+      id: a.slug || slugify(cleanTitle),
+      slug: a.slug || slugify(cleanTitle),
+      title: cleanTitle,
+      content: bodyText,
+      metaDescription: a.site?.metaDescription || a.metaDescription || '',
+      coverUrl: a.imageUrl || a.image || '',
+      tags: a.site?.tags || a.tags || [],
+      category: CATEGORY_MAP[a.category] || a.category || 'news',
+      source: a.sourceName || a.source || '',
+      sourceUrl: a.link || a.sourceUrl || '',
+      publishedAt: new Date().toISOString(),
+      gameId: a.gameSlug || a.gameId || null,
+      relatedProduct: a.relatedProduct || null,
+      cta: cta,
+      cta2: cta2,
+    };
+
+    // Валидация
+    validateNewsEntry(entry);
+    return entry;
+  });
+
+  // 4. Дедупликация и слияние
+  const existingIds = new Set(existing.map(n => n.id));
+  const toAdd = prepared.filter(a => !existingIds.has(a.id));
+  const merged = [...toAdd, ...existing].slice(0, 50);
+
+  // 5. Записать JSON
+  fs.writeFileSync(NEWS_JSON, JSON.stringify(merged, null, 2), 'utf-8');
+  console.log(`[NEWS] Записано в news.json: ${toAdd.length} новых, ${merged.length} всего`);
+
+  // 6. Обновить архив
+  try {
+    let archive = [];
+    try { archive = JSON.parse(fs.readFileSync(NEWS_ARCHIVE, 'utf-8')); } catch {}
+    const archiveIds = new Set(archive.map(a => a.id));
+    const newForArchive = toAdd.filter(a => !archiveIds.has(a.id));
+    archive = [...newForArchive, ...archive].slice(0, 100);
+    fs.writeFileSync(NEWS_ARCHIVE, JSON.stringify(archive, null, 2));
+  } catch (err) {
+    console.error('[NEWS] Archive update error:', err.message);
+  }
+}
+
+function deployToSite() {
+  try {
+    const imagesDir = path.join(SITE_ROOT, 'public/images/news');
+    if (!fs.existsSync(imagesDir)) {
+      fs.mkdirSync(imagesDir, { recursive: true });
+    }
+
+    let gitAdd = `cd ${SITE_ROOT} && git add src/data/news.json`;
+    const hasImages = fs.readdirSync(imagesDir).length > 0;
+    if (hasImages) {
+      gitAdd += ' public/images/news/';
+    }
+
+    execSync(
+      `${gitAdd} && git commit -m "news: update" && git push`,
+      { timeout: 60000 }
+    );
+    console.log('[NEWS] Deployed');
+  } catch (err) {
+    console.error(`[NEWS] Deploy error: ${err.message}`);
+  }
+}
+
+module.exports = { publishToTelegram, publishToVK, writeToSite, deployToSite, validateNewsEntry, buildCtaData, buildProductCta, findGamePrice, slugify, stripHtml, CATEGORY_MAP, stripCategoryPrefix };

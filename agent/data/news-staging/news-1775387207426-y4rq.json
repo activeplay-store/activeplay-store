@@ -1,0 +1,42 @@
+{
+  "sourceId": "reddit-ps5",
+  "sourceName": "r/PS5",
+  "sourceWeight": 8,
+  "category": "Новость",
+  "title": "Crimson Desert on PS5 Pro: 30fps Quality Mode Gets A Big Image Quality Upgrade",
+  "link": "https://www.digitalfoundry.net/news/2026/04/crimson-desert-on-ps5-pro-30fps-quality-mode-gets-a-big-image-quality-upgrade",
+  "description": "Developer Pearl Abyss's work on Crimson Abyss is ongoing, with a rapid-fire of updates hitting the game every week since it launched. Now, as of April 4th, a brand new patch tackles a string of bugs, with PS5 Pro in particular receiving an especially big win. The upgraded PSSR's sharpen feature is added, but more crucially, a native AA mode is added to the 30fps quality mode, essentially running the game at native 4K, using PSSR for anti-aliasing alone - and the boost to the overall look of the image is significant. For those familiar with our Crimson Desert PS5 review, you'll be aware that the Pro's balanced and quality modes had an unusually soft image. Despite rendering at 1440p on balanced, and a native 4K on quality (with no PSSR applied in that case), it still appeared softer somehow compared to the performance option. Switching to the new patch, all of that is solved, and engaging the native AA feature of PSSR on Pro's quality mode makes a huge difference. The bottom line is that Pro now pushes a pin-sharp image, compared to the launch build. Arguably it's over-sharpened with that stated 'sharpen feature', with a crisp, high contrast look to all that fine grass detail ahead. A toggle to adjust this would surely be appreciated, since it does appear to have a 'deep-fried' look. Still, it's a move in the right direction overall for sheer clarity across the frame while running at 30fps - and we'll certainly take it. As ever, it's rare that an upgrade comes for free in GPU ",
+  "image": "",
+  "pubDate": "2026-04-04T11:48:26.000Z",
+  "redditScore": 406,
+  "score": 59,
+  "telegram": {
+    "title": "Crimson Desert: патч улучшает графику на PS5 Pro",
+    "text": "Разработчики обновили Crimson Desert. Главное: улучшили качество картинки в режиме 30 FPS на PS5 Pro. Добавили сглаживание и повысили резкость."
+  },
+  "vk": {
+    "title": "Crimson Desert похорошела на PS5 Pro после патча",
+    "text": "Pearl Abyss выпустила патч для Crimson Desert. Обновление значительно улучшило качество изображения на PS5 Pro. В режиме 30 FPS добавили сглаживание и увеличили резкость. Изображение стало чётким, как никогда."
+  },
+  "site": {
+    "title": "Crimson Desert: Графика на PS5 Pro улучшена в новом патче от 4 апреля",
+    "text": "Разработчики из Pearl Abyss продолжают улучшать Crimson Desert. Свежий патч от 4 апреля принёс исправления и улучшения. Особенно повезло владельцам PS5 Pro. \n\nВ режиме качества (30 FPS) появилась опция сглаживания. Теперь игра выдаёт честное 4K. PSSR отвечает только за сглаживание. Картинка стала заметно лучше!\n\nИзображение стало очень резким, возможно, даже слишком. Регулировка резкости не помешала бы. Но в целом это шаг в правильном направлении.\n\nОформить PS Plus можно в ActivePlay от 1 250 ₽/мес. Активация за 10 минут, оплата в рублях.",
+    "metaDescription": "Crimson Desert получила патч. На PS5 Pro улучшили графику в режиме 30 FPS, добавили сглаживание и повысили резкость.",
+    "tags": [
+      "Crimson Desert",
+      "PS5 Pro",
+      "патч",
+      "графика"
+    ]
+  },
+  "id": "news-1775387207426-y4rq",
+  "targets": [
+    "site"
+  ],
+  "platform": "playstation",
+  "ctaType": "psplus",
+  "ctaText": "PS Plus от 1 250 ₽/мес",
+  "ctaLink": "/subscriptions",
+  "imageUrl": "/images/news/news-1775387207426-y4rq.jpg",
+  "slug": "crimson-desert-grafika-na-ps5-pro-uluchshena-v-novom-patche-ot-4-aprelya"
+}

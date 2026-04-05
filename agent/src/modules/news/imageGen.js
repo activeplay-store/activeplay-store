@@ -4,6 +4,7 @@ const path = require('path');
 const fs = require('fs');
 
 const IMAGES_DIR = path.join(__dirname, '../../../../public/images/news');
+const FALLBACK_DIR = path.join(__dirname, '../../../../public/images/news/fallbacks');
 const TARGET_WIDTH = 1200;
 const TARGET_HEIGHT = 675;
 const RAWG_API_KEY = 'd9ca3380009e448e8fb356b3837cafa2';
@@ -28,23 +29,31 @@ const KNOWN_SLUGS = {
   'Like a Dragon': 'like-a-dragon-infinite-wealth',
 };
 
+// Фильтр мусорных RSS-картинок
+function isJunkImage(url) {
+  if (!url) return true;
+  const junk = ['avatar', 'icon', 'logo', 'thumbnail', 'profile', 'favicon', 'badge', 'emoji', 'placeholder', 'default', 'blank', 'spacer', '1x1', 'pixel'];
+  const lower = url.toLowerCase();
+  return junk.some(word => lower.includes(word));
+}
+
 // Извлечь название игры из заголовка новости
 function extractGameName(article) {
   const title = article.site?.title || article.title || '';
 
   // Текст в кавычках
-  const quoteMatch = title.match(/[«"']([^»"']+)[»"']/);
+  const quoteMatch = title.match(/[\u00ab\u201c'"]([^\u00bb\u201d'"]+)[\u00bb\u201d'"]/);
   if (quoteMatch) return quoteMatch[1].trim();
 
   // До двоеточия или тире
-  const colonMatch = title.match(/^([A-Za-zА-Яа-яёЁ0-9\s:'\-&.]+?)[\s]*[:\–\—]/);
+  const colonMatch = title.match(/^([A-Za-z\u0400-\u04FF\u0451\u04010-9\s:'\-&.]+?)[\s]*[:\u2013\u2014]/);
   if (colonMatch) {
     const candidate = colonMatch[1].trim();
     if (candidate.length >= 3) return candidate;
   }
 
-  // Английские слова в начале (название игры) перед русским текстом/глаголом
-  const engMatch = title.match(/^([A-Z][A-Za-z0-9'\s\-&.]{2,40}?)(?:\s+[\u0400-\u04FF]|\s*[:\–\—!?]|\s+на\s|\s+для\s|\s+получ|\s+выход|\s+убрал|\s+стал|\s+побил|\s+лиш|\s+потер)/);
+  // Английские слова в начале перед русским текстом/глаголом
+  const engMatch = title.match(/^([A-Z][A-Za-z0-9'\s\-&.]{2,40}?)(?:\s+[\u0400-\u04FF]|\s*[:\u2013\u2014!?]|\s+на\s|\s+для\s|\s+получ|\s+выход|\s+убрал|\s+стал|\s+побил|\s+лиш|\s+потер)/);
   if (engMatch) return engMatch[1].trim();
 
   // Просто первые английские слова
@@ -57,7 +66,8 @@ function extractGameName(article) {
 // Прямой запрос по slug
 async function getRAWGBySlug(slug) {
   try {
-    const response = await axios.get(`https://api.rawg.io/api/games/${slug}`, {
+    const url = 'https://api.rawg.io/api/games/' + slug;
+    const response = await axios.get(url, {
       params: { key: RAWG_API_KEY },
       timeout: 10000,
     });
@@ -88,29 +98,39 @@ async function searchRAWG(gameName) {
     const game = results.find(g => g.background_image);
     if (!game) return null;
 
-    console.log(`[NEWS] RAWG found: "${game.name}" for query "${gameName}", image: ${game.background_image}`);
+    console.log('[NEWS] RAWG found: "' + game.name + '" for query "' + gameName + '", image: ' + game.background_image);
     return game.background_image;
   } catch (err) {
-    console.error(`[NEWS] RAWG search error: ${err.message}`);
+    console.error('[NEWS] RAWG search error: ' + err.message);
     return null;
   }
 }
 
-// Скачать картинку по URL
-async function downloadImage(url) {
-  const response = await axios.get(url, {
-    responseType: 'arraybuffer',
-    timeout: 15000,
-    headers: { 'User-Agent': 'ActivePlay News Bot 1.0' },
-  });
-  return Buffer.from(response.data);
+// Скачать и ресайзить картинку
+async function downloadAndResize(url, filename) {
+  try {
+    const response = await axios.get(url, {
+      responseType: 'arraybuffer',
+      timeout: 15000,
+      headers: { 'User-Agent': 'ActivePlay News Bot 1.0' },
+    });
+    return await resizeImage(Buffer.from(response.data), filename);
+  } catch (err) {
+    console.error('[NEWS] Image download failed: ' + err.message);
+    return null;
+  }
 }
 
 // Проверить качество картинки из источника
 async function checkSourceImage(imageUrl) {
   if (!imageUrl) return null;
   try {
-    const buf = await downloadImage(imageUrl);
+    const response = await axios.get(imageUrl, {
+      responseType: 'arraybuffer',
+      timeout: 10000,
+      headers: { 'User-Agent': 'ActivePlay News Bot 1.0' },
+    });
+    const buf = Buffer.from(response.data);
     const metadata = await sharp(buf).metadata();
     if (metadata.width >= 600) return buf;
     return null;
@@ -127,24 +147,62 @@ async function resizeImage(imageBuffer, filename) {
     .resize(TARGET_WIDTH, TARGET_HEIGHT, { fit: 'cover', position: 'center' })
     .jpeg({ quality: 85 })
     .toFile(outputPath);
-  return `/images/news/${filename}`;
+  return '/images/news/' + filename;
+}
+
+// Платформенная заглушка
+async function getFallbackImage(platform) {
+  const platformMap = {
+    playstation: 'fallback-playstation',
+    xbox: 'fallback-xbox',
+    nintendo: 'fallback-nintendo',
+    pc: 'fallback-pc',
+    general: 'fallback-general',
+    multi: 'fallback-general',
+  };
+
+  const name = platformMap[platform] || platformMap.general;
+  const jpgPath = path.join(FALLBACK_DIR, name + '.jpg');
+
+  if (fs.existsSync(jpgPath)) {
+    return '/images/news/fallbacks/' + name + '.jpg';
+  }
+
+  const svgPath = path.join(FALLBACK_DIR, name + '.svg');
+  if (!fs.existsSync(svgPath)) {
+    console.error('[NEWS] Fallback SVG not found: ' + svgPath);
+    return null;
+  }
+
+  try {
+    await sharp(svgPath)
+      .resize(1200, 675)
+      .jpeg({ quality: 90 })
+      .toFile(jpgPath);
+    console.log('[NEWS] Created fallback JPG: ' + name + '.jpg');
+    return '/images/news/fallbacks/' + name + '.jpg';
+  } catch (err) {
+    console.error('[NEWS] Fallback conversion error: ' + err.message);
+    return null;
+  }
 }
 
 // Главная функция: получить картинку для новости
 async function getNewsImage(article) {
-  const filename = `${article.id}.jpg`;
+  var filename = article.id + '.jpg';
+  var platform = article.platform || 'general';
 
   // 1. RAWG — обложка игры (приоритет)
-  const gameName = extractGameName(article);
+  var gameName = extractGameName(article);
   if (gameName) {
-    console.log(`[NEWS] Searching RAWG for: "${gameName}"`);
+    console.log('[NEWS] Searching RAWG for: "' + gameName + '"');
 
-    let rawgUrl = null;
+    var rawgUrl = null;
 
     // 1a. Точный slug из маппинга
-    const knownSlug = KNOWN_SLUGS[gameName];
+    var knownSlug = KNOWN_SLUGS[gameName];
     if (knownSlug) {
-      console.log(`[NEWS] Using known slug: ${knownSlug}`);
+      console.log('[NEWS] Using known slug: ' + knownSlug);
       rawgUrl = await getRAWGBySlug(knownSlug);
     }
 
@@ -154,27 +212,26 @@ async function getNewsImage(article) {
     }
 
     if (rawgUrl) {
-      try {
-        const buf = await downloadImage(rawgUrl);
-        const resized = await resizeImage(buf, filename);
-        console.log(`[NEWS] Using RAWG image for: ${gameName}`);
-        return resized;
-      } catch (err) {
-        console.error(`[NEWS] RAWG image download failed: ${err.message}`);
+      var img = await downloadAndResize(rawgUrl, filename);
+      if (img) {
+        console.log('[NEWS] Using RAWG image for: ' + gameName);
+        return img;
       }
     }
   }
 
-  // 2. Source image из RSS (fallback)
-  const sourceImage = await checkSourceImage(article.image);
-  if (sourceImage) {
-    console.log(`[NEWS] Using source image for: ${article.title}`);
-    return await resizeImage(sourceImage, filename);
+  // 2. RSS image (только если не мусор)
+  if (article.image && !isJunkImage(article.image)) {
+    var sourceImage = await checkSourceImage(article.image);
+    if (sourceImage) {
+      console.log('[NEWS] Using source image for: ' + article.title);
+      return await resizeImage(sourceImage, filename);
+    }
   }
 
-  // 3. Null — без картинки
-  console.log(`[NEWS] No image found for: ${article.title}`);
-  return null;
+  // 3. Платформенная заглушка (финальный fallback)
+  console.log('[NEWS] Using ' + platform + ' fallback for: ' + article.title);
+  return await getFallbackImage(platform);
 }
 
-module.exports = { getNewsImage, checkSourceImage, searchRAWG, resizeImage, extractGameName };
+module.exports = { getNewsImage, checkSourceImage, searchRAWG, resizeImage, extractGameName, isJunkImage, getFallbackImage };

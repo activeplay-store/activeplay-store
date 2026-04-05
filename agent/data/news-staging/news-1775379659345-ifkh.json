@@ -1,0 +1,37 @@
+{
+  "sourceId": "pushsquare",
+  "sourceName": "Push Square",
+  "sourceWeight": 9,
+  "category": "Новость",
+  "title": "Sony Delists 100s More Crappy PS5, PS4 Games, Including Jesus Simulator",
+  "link": "https://www.pushsquare.com/news/2026/04/sony-delists-100s-more-crappy-ps5-ps4-games-including-jesus-simulator",
+  "description": "Wonder if it'll rise again.\nIt’s becoming increasingly obvious that Sony is not playing around with poor quality software on the PS Store anymore.\nThe company’s delisted thousands of cash grabs this year alone, and this morning it’s swept away hundreds more.\nRead the full article on pushsquare.com",
+  "image": "",
+  "pubDate": "Sat, 04 Apr 2026 23:30:00 GMT",
+  "score": 48,
+  "telegram": {
+    "title": "Sony удалила сотни игр с PS5 и PS4",
+    "text": "Sony продолжает чистку PlayStation Store от низкокачественных проектов. Компания удалила сотни игр с PS5 и PS4, включая Jesus Simulator."
+  },
+  "vk": {
+    "title": "Sony удалила сотни низкосортных игр с PS Store",
+    "text": "Sony всерьёз взялась за чистку PlayStation Store. Компания удалила сотни низкокачественных игр с PS5 и PS4. Среди них есть Jesus Simulator. Это уже не первая крупная чистка в этом году."
+  },
+  "site": {
+    "title": "Sony удалила Jesus Simulator и сотни других игр с PS Store",
+    "text": "Sony продолжает бороться с низкокачественными играми в PlayStation Store. Компания удалила сотни проектов с PS5 и PS4. В список попал даже Jesus Simulator.\n\nЭто не первая масштабная чистка в этом году. Sony явно настроена серьёзно, чтобы улучшить качество контента в своём магазине.\n\nУдаление коснулось в основном небольших и малоизвестных игр, которые, вероятно, не пользовались популярностью у игроков.",
+    "metaDescription": "Sony удалила сотни игр с PS Store, включая Jesus Simulator. Это часть стратегии по улучшению качества контента в магазине PlayStation.",
+    "tags": [
+      "PS5",
+      "PS4",
+      "PlayStation Store",
+      "Sony"
+    ]
+  },
+  "id": "news-1775379659345-ifkh",
+  "targets": [
+    "site"
+  ],
+  "imageUrl": "/images/news/news-1775379659345-ifkh.jpg",
+  "slug": "sony-udalila-jesus-simulator-i-sotni-drugih-igr-s-ps-store"
+}
