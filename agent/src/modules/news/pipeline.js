@@ -146,17 +146,29 @@ async function runPipeline(article, targets, bot) {
       }
     }
     if (article.site?.text && !article.site.text.includes('ActivePlay')) {
-      const funnels = {
-        playstation: '\n\nОформить PS Plus можно в ActivePlay от 1 250 \u20BD/мес. Активация за 10 минут, оплата в рублях.',
-        xbox: '\n\nОформить Xbox Game Pass можно в ActivePlay. Быстро, из России, оплата в рублях.',
-        multi: '\n\nПодписки PS Plus и Xbox Game Pass доступны в ActivePlay от 1 250 \u20BD/мес. 52 000+ клиентов с 2022 года.',
-        pc: '\n\nXbox Game Pass PC доступен в ActivePlay. Сотни игр по подписке, оформление из России за 10 минут.',
-        nintendo: '\n\nИгровые подписки доступны в ActivePlay от 1 250 \u20BD/мес. 52 000+ клиентов с 2022 года.',
-        general: '\n\nИгровые подписки PS Plus, Xbox Game Pass и EA Play доступны в ActivePlay от 1 250 \u20BD/мес.',
-      };
-      const funnel = funnels[article.platform] || funnels.general;
-      article.site.text += funnel;
-      console.log(`[PIPELINE] Funnel appended (platform: ${article.platform})`);
+      // If game exists on site — funnel about buying the game, not subscription
+      if (siteGame || article.cta) {
+        const gameName = siteGame?.name || article.gameSlug || '';
+        const price = siteGame?.minPrice || '';
+        const funnelGame = price
+          ? `\n\nПредзаказать ${gameName} можно в ActivePlay от ${price} \u20BD. Активация за 5 минут, оплата в рублях.`
+          : `\n\n${gameName} доступна в ActivePlay. Активация за 5 минут, оплата в рублях.`;
+        article.site.text += funnelGame;
+        console.log(`[PIPELINE] Game funnel appended: ${gameName} (${price} RUB)`);
+      } else {
+        // No game on site — use subscription funnel
+        const funnels = {
+          playstation: '\n\nОформить PS Plus можно в ActivePlay от 1 250 \u20BD/мес. Активация за 10 минут, оплата в рублях.',
+          xbox: '\n\nОформить Xbox Game Pass можно в ActivePlay. Быстро, из России, оплата в рублях.',
+          multi: '\n\nПодписки PS Plus и Xbox Game Pass доступны в ActivePlay от 1 250 \u20BD/мес. 52 000+ клиентов с 2022 года.',
+          pc: '\n\nXbox Game Pass PC доступен в ActivePlay. Сотни игр по подписке, оформление из России за 10 минут.',
+          nintendo: '\n\nИгровые подписки доступны в ActivePlay от 1 250 \u20BD/мес. 52 000+ клиентов с 2022 года.',
+          general: '\n\nИгровые подписки PS Plus, Xbox Game Pass и EA Play доступны в ActivePlay от 1 250 \u20BD/мес.',
+        };
+        const funnel = funnels[article.platform] || funnels.general;
+        article.site.text += funnel;
+        console.log(`[PIPELINE] Subscription funnel appended (platform: ${article.platform})`);
+      }
     }
 
     // ═══ ШАГ 4: ПРОВЕРКА ЗАГОЛОВКА ═══

@@ -95,22 +95,36 @@ function findGameOnSite(gameName) {
 
       // Точное вхождение
       if (query.includes(name) || name.includes(query)) {
-        const tr = game.prices?.TR?.editions?.[0];
-        const ua = game.prices?.UA?.editions?.[0];
-        const minPrice = Math.min(
-          tr?.clientSalePrice || tr?.clientPrice || Infinity,
-          ua?.clientSalePrice || ua?.clientPrice || Infinity
-        );
+        // Check ALL editions to find cheapest price
+        const allEditions = [
+          ...(game.prices?.TR?.editions || []),
+          ...(game.prices?.UA?.editions || []),
+        ].filter(e => e?.clientPrice || e?.clientSalePrice);
 
-        if (minPrice === Infinity) continue;
+        if (!allEditions.length) continue;
+
+        // Find cheapest edition
+        let cheapest = allEditions[0];
+        let cheapestPrice = cheapest.clientSalePrice || cheapest.clientPrice;
+        for (const ed of allEditions) {
+          const price = ed.clientSalePrice || ed.clientPrice;
+          if (price < cheapestPrice) {
+            cheapest = ed;
+            cheapestPrice = price;
+          }
+        }
+
+        // Also find the standard/base edition specifically
+        const trEditions = game.prices?.TR?.editions || [];
+        const standardEd = trEditions.find(e => !e.name || /standard|base|\u0441\u0442\u0430\u043d\u0434\u0430\u0440\u0442/i.test(e.name || '')) || trEditions[0];
 
         return {
           gameId: game.id,
           name: game.name,
-          minPrice: minPrice,
-          hasSale: !!(tr?.salePrice && tr.salePrice < tr.basePrice),
-          oldPrice: tr?.clientPrice || null,
-          salePrice: tr?.clientSalePrice || null,
+          minPrice: cheapestPrice,
+          hasSale: !!(cheapest.salePrice && cheapest.salePrice < cheapest.basePrice),
+          oldPrice: standardEd?.clientPrice || cheapest.clientPrice || null,
+          salePrice: standardEd?.clientSalePrice || cheapest.clientSalePrice || null,
         };
       }
     }

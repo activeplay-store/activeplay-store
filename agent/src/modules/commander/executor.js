@@ -179,6 +179,20 @@ async function regenerateNews(params, dryRun) {
     console.log("[CMD] Enrichment skipped:", err.message);
   }
 
+  // Add game-on-site info to context so LLM writes about buying the game, not subscription
+  try {
+    const { findGameOnSite, extractGameName } = require("../news/enrichment");
+    const gameName = extractGameName(article.title) || article.title;
+    const siteGame = findGameOnSite(gameName);
+    if (siteGame) {
+      const gameInfo = `\nИГРА НА САЙТЕ ACTIVEPLAY: ${siteGame.name}, цена от ${siteGame.minPrice} руб. В 4-м абзаце пиши про покупку этой игры в ActivePlay, а НЕ про подписку PS Plus или Game Pass.`;
+      enrichedContext = (enrichedContext || '') + gameInfo;
+      console.log("[CMD] Game found on site: " + siteGame.name + " (" + siteGame.minPrice + " RUB)");
+    }
+  } catch (err) {
+    console.log("[CMD] Game lookup skipped:", err.message);
+  }
+
   // Pass editor instruction into the description for the prompt
   const instruction = params.instruction || "";
   const descriptionWithInstruction = instruction
