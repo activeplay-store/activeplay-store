@@ -1,0 +1,51 @@
+{
+  "sourceId": "tg-psstore",
+  "sourceName": "PlayStation Store",
+  "sourceWeight": 6,
+  "category": "Новость",
+  "title": "Создатели Starfield обещают, что игра по-новому раскроется на PS5.7 апреля космическая action-RPG от",
+  "link": "https://t.me/xplaystore/15505",
+  "description": "Создатели Starfield обещают, что игра по-новому раскроется на PS5.7 апреля космическая action-RPG от Тодда Говарда перестанет быть консольным эксклюзивом Xbox. В честь этого события Bethesda поделилась новым трейлером и рассказала о «фишках», которые привнесет в игру релиз на PS5. Прежде всего создатели обещают поддержку всех функций контроллера DualSense. Для PS5 Pro предусмотрены режимы производительности Pro Visual и Pro Performance. Первый нацелен на 4К с максимальными настройками графики пр",
+  "image": "",
+  "pubDate": "2026-04-05T15:08:56+00:00",
+  "isTelegram": true,
+  "score": 56,
+  "telegram": {
+    "title": "Starfield выйдет на PS5 с улучшениями",
+    "text": "Starfield выйдет на PS5. Bethesda обещает поддержку DualSense и графические режимы Pro Visual/Pro Performance для PS5 Pro. Релиз космической RPG намечен на 7 апреля."
+  },
+  "vk": {
+    "title": "Starfield готовится к релизу на PlayStation 5 с улучшениями",
+    "text": "7 апреля Starfield перестанет быть консольным эксклюзивом Xbox. Bethesda готовит релиз на PlayStation 5. Разработчики обещают поддержку особенностей DualSense. Версия для PS5 Pro получит режимы Pro Visual и Pro Performance с улучшенной графикой."
+  },
+  "site": {
+    "title": "Starfield на PS5! Дата выхода и особенности DualSense раскрыты",
+    "text": "Космическая RPG Starfield выйдет на PlayStation 5 уже 7 апреля. Игра перестанет быть консольным эксклюзивом Xbox Series X|S. Bethesda обещает раскрыть потенциал тайтла по-новому на PS5. Игроков ждет поддержка особенностей контроллера DualSense.\n\nДля PlayStation 5 Pro заявлены режимы Pro Visual и Pro Performance. Первый выдаст 4K с максимальными настройками графики. Второй сделает упор на стабильную частоту кадров. \n\nРелиз Starfield на PS5 — важное событие для владельцев консоли Sony. Игра получила смешанные отзывы, но может раскрыться с новыми функциями.\n\nОформить Xbox Game Pass можно в ActivePlay. Быстро, из России, оплата в рублях.",
+    "metaDescription": "Starfield выйдет на PS5 с поддержкой DualSense и графическими режимами для PS5 Pro. Релиз космической RPG запланирован на 7 апреля.",
+    "tags": [
+      "Starfield",
+      "PS5",
+      "Bethesda",
+      "DualSense",
+      "RPG"
+    ]
+  },
+  "id": "news-1775408440003-vr5i",
+  "targets": [
+    "site"
+  ],
+  "platform": "xbox",
+  "ctaType": "gamepass",
+  "ctaText": "Xbox Game Pass",
+  "ctaLink": "/subscriptions",
+  "imageUrl": "/images/news/news-1775408440003-vr5i.jpg",
+  "cta": {
+    "gameId": "starfield",
+    "title": "Купить Starfield",
+    "description": "Активация за 5 минут. Турецкий PS Store.",
+    "price": 5600,
+    "url": "/sale",
+    "buttonText": "Купить за 5600 ₽ →"
+  },
+  "slug": "starfield-na-ps5-data-vyhoda-i-osobennosti-dualsense-raskryty"
+}

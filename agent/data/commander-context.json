@@ -1,8 +1,8 @@
 {
   "6649218901": {
-    "lastNewsTitle": "Элден Ринк",
+    "lastNewsTitle": "Starfield",
     "lastNewsId": "search",
-    "lastIntent": "edit_news_fix",
-    "timestamp": 1775399936205
+    "lastIntent": "regenerate_news",
+    "timestamp": 1775419035806
   }
 }
