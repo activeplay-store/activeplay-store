@@ -205,14 +205,15 @@ export default function RootLayout({
         trackLinks:true,
         accurateTrackBounce:true,
         webvisor:true,
-        ecommerce:"dataLayer"
+        ecommerce:"dataLayer",
+        trustedDomains:["activeplay.games"]
       });
     `,
           }}
         />
         <noscript>
           <div>
-            <img src="https://mc.yandex.ru/watch/108381188" style={{ position: 'absolute', left: '-9999px' }} alt="" />
+            <img src="https://activeplay.games/ym/watch/108381188" style={{ position: 'absolute', left: '-9999px' }} alt="" />
           </div>
         </noscript>
         {/* TODO: VK Pixel — вставить код */}

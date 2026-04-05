@@ -12,6 +12,14 @@ async redirects() {
       },
     ];
   },
+  async rewrites() {
+    return [
+      {
+        source: '/ym/:path*',
+        destination: 'https://mc.yandex.ru/:path*',
+      },
+    ];
+  },
 };
 
 export default nextConfig;
