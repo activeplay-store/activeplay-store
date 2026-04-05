@@ -1,5 +1,44 @@
 [
   {
+    "id": "starfield-na-ps5-russkaya-lokalizaciya-cherez-creations-eto-realno",
+    "slug": "starfield-na-ps5-russkaya-lokalizaciya-cherez-creations-eto-realno",
+    "title": "Starfield на PS5: русская локализация через Creations — это реально",
+    "content": "Владельцы PS5-версии Starfield могут получить неофициальную русскую локализацию. Об этом стало известно из информации PlayStation Store. Локализация, вероятно, будет добавлена через систему Creations, аналогично Xbox. Игрокам придётся дождаться поддержки PlayStation в Creations и адаптации мода.\n\nStarfield, разработанная Bethesda Game Studios, вышла 6 сентября 2023 года. Это RPG в открытом мире с элементами приключения, доступная сейчас на PC и Xbox Series S/X. Metacritic оценил игру в 88 баллов. Цена Starfield на ActivePlay составляет 4300 ₽. Игрокам предстоит исследовать космос, выполнять задания и развивать персонажа.\n\nВозможность добавления русской локализации через Creations важна для русскоязычного сообщества. Игры Bethesda, такие как Skyrim и Fallout 4, получили огромную популярность благодаря модам. Отсутствие официальной русской локализации часто компенсируется усилиями фанатов. Аналогичный подход используется в Fallout 76, где моды добавляют новые возможности.\n\nПока неизвестно, как быстро появится русская локализация и насколько полной она будет. Для доступа к другим топовым играм на PS5 оформите подписку PS Plus. В ActivePlay подписка PS Plus Extra доступна от 1 250 ₽/мес. 52 000+ клиентов уже выбрали нас с 2022 года.",
+    "metaDescription": "Русская локализация Starfield на PS5 может появиться через систему Creations. Ждём поддержку PlayStation и адаптацию мода. Подписка PS Plus от 1 250 ₽/мес.",
+    "coverUrl": "/images/news/news-1775420098809-wnga.jpg",
+    "tags": [
+      "PS5",
+      "Starfield",
+      "Локализация",
+      "Creations",
+      "Моды"
+    ],
+    "category": "news",
+    "source": "PlayStation Store",
+    "sourceUrl": "https://t.me/xplaystore/15506",
+    "publishedAt": "2026-04-05T20:16:01.567Z",
+    "gameId": "starfield",
+    "relatedProduct": "ps-plus-extra",
+    "platform": "playstation",
+    "ctaType": "psplus",
+    "ctaText": "PS Plus от 1 250 ₽/мес",
+    "ctaLink": "/subscriptions",
+    "cta": {
+      "gameId": "starfield",
+      "title": "Купить Starfield",
+      "description": "Активация за 5 минут. Турецкий PS Store.",
+      "price": 4300,
+      "url": "/sale",
+      "buttonText": "Купить за 4300 ₽ →"
+    },
+    "cta2": {
+      "title": "PS Plus Extra",
+      "description": "Каталог из 400+ игр",
+      "url": "/ps-plus-extra",
+      "buttonText": "Подробнее →"
+    }
+  },
+  {
     "id": "starfield-na-ps5-data-vyhoda-i-osobennosti-dualsense-raskryty",
     "slug": "starfield-na-ps5-data-vyhoda-i-osobennosti-dualsense-raskryty",
     "title": "Starfield выходит на PS5 Дата релиза и поддержка DualSense",
