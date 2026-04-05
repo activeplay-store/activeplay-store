@@ -145,6 +145,19 @@ clarify — команда непонятна, нужно уточнить у п
 Выход: {"intent":"suggest_news_titles","params":{"newsId":"search","newsTitle":"Elden Ring","count":3},"confirmation":"Сгенерировать 3 варианта заголовка для новости про Elden Ring?"}
 
 
+
+WHISPER-ТРАНСКРИПЦИЯ:
+Голосовой ввод через Whisper часто заменяет латиницу кириллицей и добавляет дефисы:
+- "А-24" → имеется в виду "A24" (латинская A, без дефиса)
+- "ПС5" → "PS5"
+- "Иксбокс" → "Xbox"
+В errorText и fixText ВСЕГДА используй ЛАТИНСКИЕ буквы и без лишних дефисов для брендов/названий.
+
+"ПРЕДЛОЖИ БЕЗ X":
+"Предложи заголовок без А-24" / "Предложи варианты без упоминания X" — это suggest_news_titles с дополнительным указанием.
+→ {"intent":"suggest_news_titles","params":{"newsId":"search/latest","newsTitle":"из контекста","count":3,"instruction":"без упоминания A24"},"confirmation":"Предложить варианты заголовка без A24?"}
+Это НЕ edit_title и НЕ preview_edit_title!
+
 КОНТЕКСТ РАЗГОВОРА:
 Тебе может быть передан контекст в формате [КОНТЕКСТ: ...] в начале сообщения.
 Он содержит: последнюю обсуждаемую новость (lastNewsTitle) и предыдущее действие (lastIntent).
@@ -225,6 +238,19 @@ async function parseIntent(text, context = {}) {
     const cleaned = content.replace(/```json\n?/g, "").replace(/```\n?/g, "").trim();
     const result = JSON.parse(cleaned);
 
+    // Нормализация Whisper-артефактов в параметрах
+    if (result.params) {
+      if (result.params.errorText) {
+        result.params.errorText = normalizeWhisper(result.params.errorText);
+      }
+      if (result.params.fixText) {
+        result.params.fixText = normalizeWhisper(result.params.fixText);
+      }
+      if (result.params.newTitle) {
+        result.params.newTitle = normalizeWhisper(result.params.newTitle);
+      }
+    }
+
     result.id = `cmd-${Date.now()}-${crypto.randomBytes(3).toString("hex")}`;
     result.originalText = text;
     result.timestamp = new Date().toISOString();
@@ -236,6 +262,20 @@ async function parseIntent(text, context = {}) {
     console.error(`[CMD] Intent parse error: ${err.message}`);
     return null;
   }
+}
+
+// Нормализация Whisper-транскрипции: кириллица→латиница для брендов, убрать лишние дефисы
+function normalizeWhisper(text) {
+  if (!text) return text;
+  let result = text;
+  // Кириллическая А/а → латинская A/a перед цифрами (А-24 → A24, А24 → A24)
+  result = result.replace(/[Аа][-\s]?(\d+)/g, "A$1");
+  // ПС → PS
+  result = result.replace(/ПС[-\s]?(\d)/g, "PS$1");
+  result = result.replace(/пс[-\s]?(\d)/g, "PS$1");
+  // Иксбокс → Xbox
+  result = result.replace(/[Ии]ксбокс/g, "Xbox");
+  return result;
 }
 
 module.exports = { parseIntent };

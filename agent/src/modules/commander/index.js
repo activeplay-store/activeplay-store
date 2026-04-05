@@ -69,6 +69,13 @@ async function handleCommand(bot, chatId, text, context = {}) {
       intent.suggestions = currentState.suggestions;
       savePendingCommand(intent);
 
+      // Сохраняем контекст с реальным заголовком статьи
+      setContext(chatId, {
+        lastNewsTitle: currentState.oldValue || intent.params?.newsTitle,
+        lastNewsId: intent.params?.newsId,
+        lastIntent: "suggest_news_titles",
+      });
+
       await bot.telegram.sendMessage(chatId,
         "\uD83D\uDCDD *\u0412\u0430\u0440\u0438\u0430\u043d\u0442\u044b \u0437\u0430\u0433\u043e\u043b\u043e\u0432\u043a\u0430*\n\n\u0422\u0435\u043a\u0443\u0449\u0438\u0439: _" + currentState.oldValue + "_\n\n" + currentState.newValue,
         { parse_mode: "Markdown", reply_markup: { inline_keyboard: buttons } }
@@ -154,6 +161,13 @@ function setupCommandHandlers(bot) {
 
       await ctx.editMessageText("\u2705 \u0417\u0430\u0433\u043e\u043b\u043e\u0432\u043e\u043a \u043e\u0431\u043d\u043e\u0432\u043b\u0451\u043d: \u00ab" + newTitle + "\u00bb");
       removePendingCommand(intentId);
+
+      // Обновить контекст с новым заголовком
+      setContext(ctx.chat.id, {
+        lastNewsTitle: newTitle,
+        lastNewsId: articleId,
+        lastIntent: "edit_news_title",
+      });
     } catch (err) {
       await ctx.editMessageText("\u274c \u041e\u0448\u0438\u0431\u043a\u0430: " + err.message);
     }
