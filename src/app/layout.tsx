@@ -198,7 +198,7 @@ export default function RootLayout({
       m[i].l=1*new Date();
       for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
       k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-      (window, document, "script", "https://mc.yandex.com/metrika/tag.js", "ym");
+      (window, document, "script", "https://cdn.jsdelivr.net/npm/yandex-metrica-watch/tag.js", "ym");
 
       ym(108381188, "init", {
         clickmap:true,
@@ -212,7 +212,7 @@ export default function RootLayout({
         />
         <noscript>
           <div>
-            <img src="https://mc.yandex.com/watch/108381188" style={{ position: 'absolute', left: '-9999px' }} alt="" />
+            <img src="https://mc.yandex.ru/watch/108381188" style={{ position: 'absolute', left: '-9999px' }} alt="" />
           </div>
         </noscript>
         {/* TODO: VK Pixel — вставить код */}
