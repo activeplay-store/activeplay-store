@@ -194,6 +194,61 @@ export default function RootLayout({
         <script
           dangerouslySetInnerHTML={{
             __html: `
+      // Перехват ПЕРЕД загрузкой скрипта
+      (function() {
+        var proxy = '/ym';
+        var target = 'mc.yandex.ru';
+        var targets = ['mc.yandex.ru', 'mc.yandex.com', 'mc.yandex.com.tr'];
+
+        function rewrite(url) {
+          if (typeof url !== 'string') return url;
+          for (var i = 0; i < targets.length; i++) {
+            if (url.indexOf(targets[i]) !== -1) {
+              return url.replace('https://' + targets[i], proxy).replace('http://' + targets[i], proxy);
+            }
+          }
+          return url;
+        }
+
+        // XMLHttpRequest
+        var origOpen = XMLHttpRequest.prototype.open;
+        XMLHttpRequest.prototype.open = function(method, url) {
+          arguments[1] = rewrite(url);
+          return origOpen.apply(this, arguments);
+        };
+
+        // fetch
+        var origFetch = window.fetch;
+        window.fetch = function(url, opts) {
+          if (typeof url === 'string') url = rewrite(url);
+          return origFetch.call(this, url, opts);
+        };
+
+        // sendBeacon
+        if (navigator.sendBeacon) {
+          var origBeacon = navigator.sendBeacon.bind(navigator);
+          navigator.sendBeacon = function(url, data) {
+            return origBeacon(rewrite(url), data);
+          };
+        }
+
+        // Image (pixel tracking)
+        var origImage = window.Image;
+        window.Image = function(w, h) {
+          var img = new origImage(w, h);
+          var origSrc = Object.getOwnPropertyDescriptor(HTMLImageElement.prototype, 'src');
+          if (origSrc && origSrc.set) {
+            Object.defineProperty(img, 'src', {
+              set: function(val) { origSrc.set.call(this, rewrite(val)); },
+              get: function() { return origSrc.get.call(this); }
+            });
+          }
+          return img;
+        };
+        window.Image.prototype = origImage.prototype;
+      })();
+
+      // Загрузка Метрики
       (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
       m[i].l=1*new Date();
       for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
@@ -205,15 +260,14 @@ export default function RootLayout({
         trackLinks:true,
         accurateTrackBounce:true,
         webvisor:true,
-        ecommerce:"dataLayer",
-        trustedDomains:["activeplay.games"]
+        ecommerce:"dataLayer"
       });
     `,
           }}
         />
         <noscript>
           <div>
-            <img src="https://activeplay.games/ym/watch/108381188" style={{ position: 'absolute', left: '-9999px' }} alt="" />
+            <img src="/ym/watch/108381188" style={{ position: 'absolute', left: '-9999px' }} alt="" />
           </div>
         </noscript>
         {/* TODO: VK Pixel — вставить код */}
