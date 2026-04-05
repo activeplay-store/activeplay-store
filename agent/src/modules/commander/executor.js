@@ -342,35 +342,78 @@ async function previewEditFix(params, dryRun) {
 
 // ==================== HELPERS ====================
 
+const TRANSLIT_MAP = {
+  "\u044d\u043b\u0434\u0435\u043d": "elden", "\u0440\u0438\u043d\u0433": "ring", "\u043a\u0440\u0438\u043c\u0441\u043e\u043d": "crimson", "\u0434\u0435\u0437\u0435\u0440\u0442": "desert",
+  "\u0431\u043e\u0440\u0434\u0435\u0440\u043b\u0435\u043d\u0434\u0441": "borderlands", "\u0440\u0435\u0437\u0438\u0434\u0435\u043d\u0442": "resident", "\u0441\u043f\u0430\u0439\u0434\u0435\u0440\u043c\u0435\u043d": "spider-man",
+  "\u043c\u0430\u0440\u0432\u0435\u043b": "marvel", "\u043b\u0430\u0441\u0442": "last", "\u0433\u043e\u0434": "god",
+  "\u0445\u043e\u0433\u0432\u0430\u0440\u0442\u0441": "hogwarts", "\u0441\u0430\u0439\u043b\u0435\u043d\u0442": "silent", "\u0445\u0438\u043b\u043b": "hill",
+  "\u0433\u0440\u0430\u043d": "gran", "\u0442\u0443\u0440\u0438\u0437\u043c\u043e": "turismo", "\u0434\u0430\u0440\u043a": "dark", "\u0441\u043e\u0443\u043b\u0441": "souls",
+  "\u0444\u0430\u0439\u043d\u0430\u043b": "final", "\u0444\u044d\u043d\u0442\u0435\u0437\u0438": "fantasy", "\u043c\u043e\u043d\u0441\u0442\u0435\u0440": "monster", "\u0445\u0430\u043d\u0442\u0435\u0440": "hunter",
+  "\u043c\u0430\u0444\u0438\u044f": "mafia", "\u043c\u0430\u0440\u0430\u0444\u043e\u043d": "marathon", "\u0434\u0438\u0430\u0431\u043b\u043e": "diablo",
+  "\u043a\u0438\u043d\u0433\u0434\u043e\u043c": "kingdom", "\u043a\u0430\u043c": "come", "\u0434\u0435\u043b\u0438\u0432\u0435\u0440\u0430\u043d\u0441": "deliverance",
+  "\u0441\u0442\u0440\u0435\u043d\u0434\u0438\u043d\u0433": "stranding", "\u0434\u0435\u0441": "death",
+};
+
+function transliterate(text) {
+  let result = text.toLowerCase();
+  for (const [ru, en] of Object.entries(TRANSLIT_MAP)) {
+    result = result.replace(new RegExp(ru, "g"), en);
+  }
+  return result;
+}
+
 function getNewsArticle(newsId, newsTitle) {
   console.log(`[CMD] getNewsArticle: newsId=${newsId}, newsTitle=${newsTitle}`);
   const archive = JSON.parse(fs.readFileSync(NEWS_ARCHIVE, "utf-8"));
 
-  if (newsId === "search" && newsTitle) {
+  if ((newsId === "search" || newsTitle) && newsTitle) {
     const lower = newsTitle.toLowerCase();
-    console.log(`[CMD] Searching archive for: "${lower}"`);
-    const found = archive.find(a => {
-      const title = (a.title || "").toLowerCase();
-      return title.includes(lower);
-    });
-    if (found) {
-      console.log(`[CMD] Found: "${found.title}"`);
-      return found;
+    const translit = transliterate(newsTitle);
+    const searchTerms = translit.split(/\s+/).filter(w => w.length > 2);
+    console.log(`[CMD] Searching archive for: "${lower}" (translit: "${translit}", terms: ${searchTerms.join(", ")})`);
+
+    // 1. Exact substring match (original)
+    const exact = archive.find(a => (a.title || "").toLowerCase().includes(lower));
+    if (exact) {
+      console.log(`[CMD] Exact match: "${exact.title}"`);
+      return exact;
     }
-    // Попробовать частичное совпадение по словам
-    const words = lower.split(/\s+/).filter(w => w.length > 3);
-    const partial = archive.find(a => {
-      const title = (a.title || "").toLowerCase();
-      return words.every(w => title.includes(w));
-    });
-    if (partial) {
-      console.log(`[CMD] Partial match: "${partial.title}"`);
-      return partial;
+
+    // 2. Transliterated substring match
+    const translitMatch = archive.find(a => (a.title || "").toLowerCase().includes(translit));
+    if (translitMatch) {
+      console.log(`[CMD] Translit match: "${translitMatch.title}"`);
+      return translitMatch;
     }
-    console.log(`[CMD] Not found, falling back to latest`);
+
+    // 3. All significant words must match (transliterated)
+    if (searchTerms.length > 0) {
+      const wordMatch = archive.find(a => {
+        const title = (a.title || "").toLowerCase();
+        return searchTerms.every(w => title.includes(w));
+      });
+      if (wordMatch) {
+        console.log(`[CMD] Word match: "${wordMatch.title}"`);
+        return wordMatch;
+      }
+    }
+
+    // 4. Any significant word matches (best effort)
+    if (searchTerms.length > 0) {
+      const anyMatch = archive.find(a => {
+        const title = (a.title || "").toLowerCase();
+        return searchTerms.some(w => w.length > 3 && title.includes(w));
+      });
+      if (anyMatch) {
+        console.log(`[CMD] Partial match: "${anyMatch.title}"`);
+        return anyMatch;
+      }
+    }
+
+    console.log(`[CMD] Not found by title, falling back to latest`);
   }
 
-  if (newsId === "latest" || newsId === "search") return archive[0];
+  if (newsId === "latest" || newsId === "search" || !newsId) return archive[0];
 
   const article = archive.find(a => a.id === newsId);
   if (!article) throw new Error(`Новость ${newsId} не найдена`);
