@@ -1,5 +1,39 @@
 [
   {
+    "id": "starfield-na-ps5-data-vyhoda-i-osobennosti-dualsense-raskryty",
+    "slug": "starfield-na-ps5-data-vyhoda-i-osobennosti-dualsense-raskryty",
+    "title": "Starfield на PS5! Дата выхода и особенности DualSense раскрыты",
+    "content": "Космическая RPG Starfield выйдет на PlayStation 5 уже 7 апреля. Игра перестанет быть консольным эксклюзивом Xbox Series X|S. Bethesda обещает раскрыть потенциал тайтла по-новому на PS5. Игроков ждет поддержка особенностей контроллера DualSense.\n\nДля PlayStation 5 Pro заявлены режимы Pro Visual и Pro Performance. Первый выдаст 4K с максимальными настройками графики. Второй сделает упор на стабильную частоту кадров. \n\nРелиз Starfield на PS5 — важное событие для владельцев консоли Sony. Игра получила смешанные отзывы, но может раскрыться с новыми функциями.\n\nОформить Xbox Game Pass можно в ActivePlay. Быстро, из России, оплата в рублях.",
+    "metaDescription": "Starfield выйдет на PS5 с поддержкой DualSense и графическими режимами для PS5 Pro. Релиз космической RPG запланирован на 7 апреля.",
+    "coverUrl": "/images/news/news-1775408440003-vr5i.jpg",
+    "tags": [
+      "Starfield",
+      "PS5",
+      "Bethesda",
+      "DualSense",
+      "RPG"
+    ],
+    "category": "news",
+    "source": "PlayStation Store",
+    "sourceUrl": "https://t.me/xplaystore/15505",
+    "publishedAt": "2026-04-05T17:11:56.986Z",
+    "gameId": null,
+    "relatedProduct": null,
+    "platform": "xbox",
+    "ctaType": "gamepass",
+    "ctaText": "Xbox Game Pass",
+    "ctaLink": "/subscriptions",
+    "cta": {
+      "gameId": "starfield",
+      "title": "Купить Starfield",
+      "description": "Активация за 5 минут. Турецкий PS Store.",
+      "price": 5600,
+      "url": "/sale",
+      "buttonText": "Купить за 5600 ₽ →"
+    },
+    "cta2": null
+  },
+  {
     "id": "elden-ring-ot-a24-sliv-kadrov-so-semok-filma",
     "slug": "elden-ring-ot-a24-sliv-kadrov-so-semok-filma",
     "title": "Elden Ring: Утекли кадры со съемок фильма A24",
