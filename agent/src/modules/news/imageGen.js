@@ -9,6 +9,34 @@ const TARGET_WIDTH = 1200;
 const TARGET_HEIGHT = 675;
 const RAWG_API_KEY = 'd9ca3380009e448e8fb356b3837cafa2';
 
+// Track recently used image URLs to avoid duplicates
+const USED_IMAGES_FILE = path.join(__dirname, '../../../data/used-images.json');
+
+function getRecentlyUsedImages(days = 7) {
+  try {
+    const data = JSON.parse(fs.readFileSync(USED_IMAGES_FILE, 'utf-8'));
+    const cutoff = Date.now() - days * 24 * 60 * 60 * 1000;
+    return data.filter(entry => entry.usedAt > cutoff);
+  } catch {
+    return [];
+  }
+}
+
+function markImageUsed(url, articleId) {
+  const recent = getRecentlyUsedImages(14); // keep 2 weeks
+  recent.push({ url, articleId, usedAt: Date.now() });
+  try {
+    fs.writeFileSync(USED_IMAGES_FILE, JSON.stringify(recent, null, 2));
+  } catch {}
+}
+
+function isImageRecentlyUsed(url) {
+  if (!url) return false;
+  const recent = getRecentlyUsedImages(7);
+  return recent.some(entry => entry.url === url);
+}
+
+
 const KNOWN_SLUGS = {
   'Crimson Desert': 'crimson-desert',
   'Death Stranding 2': 'death-stranding-2-on-the-beach',
@@ -98,7 +126,32 @@ async function searchRAWG(gameName) {
     const game = results.find(g => g.background_image);
     if (!game) return null;
 
-    console.log('[NEWS] RAWG found: "' + game.name + '" for query "' + gameName + '", image: ' + game.background_image);
+    // Check if this image was recently used
+    if (!isImageRecentlyUsed(game.background_image)) {
+      console.log('[NEWS] RAWG found: "' + game.name + '" for query "' + gameName + '", image: ' + game.background_image);
+      return game.background_image;
+    }
+
+    // Image is duplicate — try screenshots
+    console.log('[NEWS] RAWG image already used recently, trying screenshots...');
+    try {
+      const ssResponse = await axios.get('https://api.rawg.io/api/games/' + game.id + '/screenshots', {
+        params: { key: RAWG_API_KEY },
+        timeout: 10000,
+      });
+      const screenshots = ssResponse.data?.results || [];
+      const usedUrls = getRecentlyUsedImages(7).map(e => e.url);
+      const fresh = screenshots.find(ss => ss.image && !usedUrls.includes(ss.image));
+      if (fresh) {
+        console.log('[NEWS] Using RAWG screenshot instead: ' + fresh.image);
+        return fresh.image;
+      }
+    } catch (err) {
+      console.error('[NEWS] RAWG screenshots error: ' + err.message);
+    }
+
+    // No fresh screenshots — use background_image anyway (better than nothing)
+    console.log('[NEWS] No fresh screenshots, using duplicate image');
     return game.background_image;
   } catch (err) {
     console.error('[NEWS] RAWG search error: ' + err.message);
@@ -214,6 +267,7 @@ async function getNewsImage(article) {
     if (rawgUrl) {
       var img = await downloadAndResize(rawgUrl, filename);
       if (img) {
+        markImageUsed(rawgUrl, article.id);
         console.log('[NEWS] Using RAWG image for: ' + gameName);
         return img;
       }
