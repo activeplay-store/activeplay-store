@@ -166,6 +166,25 @@ async function regenerateNews(params, dryRun) {
   if (!newArticle) throw new Error("\u041d\u0435 \u0443\u0434\u0430\u043b\u043e\u0441\u044c \u043f\u0435\u0440\u0435\u0433\u0435\u043d\u0435\u0440\u0438\u0440\u043e\u0432\u0430\u0442\u044c");
 
   if (dryRun) {
+    // Save regenerated article to pending-news so previewEditParagraph can find it
+    try {
+      const pendingPath = path.join(SITE_ROOT, "agent/data/pending-news.json");
+      let pending = [];
+      try { pending = JSON.parse(fs.readFileSync(pendingPath, "utf-8")); } catch {}
+      const tempArticle = {
+        ...article,
+        title: newArticle.site.title,
+        site: newArticle.site,
+        text: newArticle.site.text,
+        platform: newArticle.platform || article.platform,
+        _regenPreview: true,
+      };
+      pending.push(tempArticle);
+      fs.writeFileSync(pendingPath, JSON.stringify(pending, null, 2));
+      console.log("[CMD] Saved regen preview to pending-news for paragraph editing");
+    } catch (err) {
+      console.error("[CMD] Failed to save regen preview:", err.message);
+    }
     return { oldValue: article.text, newValue: newArticle.site?.text || "", field: "full_text" };
   }
 
