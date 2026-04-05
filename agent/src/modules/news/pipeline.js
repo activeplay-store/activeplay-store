@@ -65,11 +65,63 @@ async function runPipeline(article, targets, bot) {
       if (fullArticle.ctaLink) article.ctaLink = fullArticle.ctaLink;
     } else {
       console.warn('[PIPELINE] Full article generation failed, using initial translation');
-      // Проверяем минимальную длину текста из начального перевода
       const textLen = (article.site?.text || '').length;
       if (textLen < 300) {
         throw new Error(`Текст слишком короткий (${textLen} знаков) и полная генерация не удалась`);
       }
+    }
+
+    // ═══ ГАРАНТИЯ: platform + ctaType + воронка ActivePlay ═══
+    // Если generateFullArticle не заполнил — определяем из текста
+    if (!article.platform || article.platform === 'general') {
+      const combined = ((article.site?.title || '') + ' ' + (article.site?.text || '') + ' ' + (article.tags || []).join(' ')).toLowerCase();
+      if (/xbox|game pass|microsoft|series x|series s/.test(combined)) {
+        article.platform = 'xbox';
+      } else if (/playstation|ps5|ps4|ps plus|sony|ps store|dualsense/.test(combined)) {
+        article.platform = 'playstation';
+      } else if (/nintendo|switch/.test(combined)) {
+        article.platform = 'nintendo';
+      } else if (/steam|pc|epic games|valve/.test(combined)) {
+        article.platform = 'pc';
+      } else if (/(ps5|ps4|playstation).*(xbox|game pass)|(xbox|game pass).*(ps5|ps4|playstation)/.test(combined)) {
+        article.platform = 'multi';
+      }
+      if (article.platform !== 'general') {
+        console.log(`[PIPELINE] Platform detected from text: ${article.platform}`);
+      }
+    }
+
+    // CTA type по платформе
+    if (!article.ctaType || article.ctaType === 'deals') {
+      const ctaMap = {
+        xbox: { ctaType: 'gamepass', ctaText: 'Xbox Game Pass', ctaLink: '/subscriptions' },
+        playstation: { ctaType: 'psplus', ctaText: 'PS Plus от 1 250 \u20BD/мес', ctaLink: '/subscriptions' },
+        nintendo: { ctaType: 'general', ctaText: 'Подписки и игры', ctaLink: '/subscriptions' },
+        pc: { ctaType: 'general', ctaText: 'Xbox Game Pass PC', ctaLink: '/subscriptions' },
+        multi: { ctaType: 'general', ctaText: 'Подписки от 1 250 \u20BD/мес', ctaLink: '/subscriptions' },
+      };
+      const mapped = ctaMap[article.platform];
+      if (mapped) {
+        article.ctaType = mapped.ctaType;
+        article.ctaText = mapped.ctaText;
+        article.ctaLink = mapped.ctaLink;
+        console.log(`[PIPELINE] CTA set from platform: ${article.ctaType}`);
+      }
+    }
+
+    // Гарантия воронки: если нет упоминания ActivePlay — дописать
+    if (article.site?.text && !article.site.text.includes('ActivePlay')) {
+      const funnels = {
+        playstation: '\n\nОформить PS Plus можно в ActivePlay от 1 250 \u20BD/мес. Активация за 10 минут, оплата в рублях.',
+        xbox: '\n\nОформить Xbox Game Pass можно в ActivePlay. Быстро, из России, оплата в рублях.',
+        multi: '\n\nПодписки PS Plus и Xbox Game Pass доступны в ActivePlay от 1 250 \u20BD/мес. 52 000+ клиентов с 2022 года.',
+        pc: '\n\nXbox Game Pass PC доступен в ActivePlay. Сотни игр по подписке, оформление из России за 10 минут.',
+        nintendo: '\n\nИгровые подписки доступны в ActivePlay от 1 250 \u20BD/мес. 52 000+ клиентов с 2022 года.',
+        general: '\n\nИгровые подписки PS Plus, Xbox Game Pass и EA Play доступны в ActivePlay от 1 250 \u20BD/мес.',
+      };
+      const funnel = funnels[article.platform] || funnels.general;
+      article.site.text += funnel;
+      console.log(`[PIPELINE] Funnel appended (platform: ${article.platform})`);
     }
 
     // ═══ ШАГ 4: ПРОВЕРКА ЗАГОЛОВКА ═══

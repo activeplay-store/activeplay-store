@@ -268,25 +268,55 @@ function postProcessText(text) {
   return processed;
 }
 
+const GEMINI_URL_LITE = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent';
+
 async function callGemini(prompt, maxTokens = 4000) {
   const key = process.env.GEMINI_API_KEY;
   if (!key) throw new Error('GEMINI_API_KEY not set');
 
-  const response = await axios.post(`${GEMINI_URL}?key=${key}`, {
-    contents: [{ parts: [{ text: prompt }] }],
-    generationConfig: {
-      maxOutputTokens: maxTokens,
-      temperature: 0.7,
-    },
-  }, {
-    timeout: 60000,
-    headers: { 'Content-Type': 'application/json' },
-  });
+  const models = [
+    { url: GEMINI_URL, name: 'gemini-2.0-flash' },
+    { url: GEMINI_URL_LITE, name: 'gemini-2.0-flash-lite' },
+  ];
 
-  return response.data?.candidates?.[0]?.content?.parts
-    ?.map(p => p.text)
-    .filter(Boolean)
-    .join('') || '';
+  for (const model of models) {
+    try {
+      const response = await axios.post(`${model.url}?key=${key}`, {
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: {
+          maxOutputTokens: maxTokens,
+          temperature: 0.7,
+        },
+      }, {
+        timeout: 60000,
+        headers: { 'Content-Type': 'application/json' },
+      });
+
+      const result = response.data?.candidates?.[0]?.content?.parts
+        ?.map(p => p.text)
+        .filter(Boolean)
+        .join('') || '';
+
+      if (result) {
+        console.log(`[NEWS] Gemini OK via ${model.name}`);
+        return result;
+      }
+    } catch (err) {
+      const status = err.response?.status || 0;
+      const msg = err.response?.data?.error?.message || err.message;
+      console.warn(`[NEWS] ${model.name} failed (${status}): ${msg.substring(0, 120)}`);
+
+      // Only fallback on quota/rate errors (429) or server errors (5xx)
+      if (status === 429 || status >= 500) {
+        console.log(`[NEWS] Trying fallback model...`);
+        continue;
+      }
+      // For other errors (400, 403, etc.) — throw immediately
+      throw err;
+    }
+  }
+
+  throw new Error('All Gemini models failed');
 }
 
 // Генерация полноценной статьи с обогащённым контекстом
