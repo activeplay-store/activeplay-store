@@ -1,5 +1,5 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-04-04T09:41:17.085Z
+// Обновлено: 2026-04-05T01:10:51.169Z
 // Горящих новинок: 4
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
@@ -51,29 +51,6 @@ export const hotReleases: HotRelease[] = [
     },
   },
   {
-    id: "marathon",
-    title: "Marathon",
-    slug: "marathon",
-    description: "Extraction-шутер от Bungie. PvPvE-лутер",
-    releaseDate: "5 марта 2026",
-    metacritic: 0,
-    genre: "Шутер",
-    platforms: ["PS5"],
-    cover: "/images/covers/marathon.jpg",
-    hypeScore: 3,
-    totalScore: 5,
-    editions: {
-      tr: [
-        { name: "Standard", priceRUB: 4050 },
-        { name: "Deluxe", priceRUB: 5600 },
-      ],
-      ua: [
-        { name: "Standard", priceRUB: 4050 },
-        { name: "Deluxe", priceRUB: 5600 },
-      ],
-    },
-  },
-  {
     id: "darwin-s-paradox",
     title: "Darwin's Paradox!",
     slug: "darwin-s-paradox",
@@ -112,6 +89,29 @@ export const hotReleases: HotRelease[] = [
       ],
       ua: [
         { name: "Standard", priceRUB: 4900 },
+      ],
+    },
+  },
+  {
+    id: "fatal-frame-ii-crimson-butterfly-remake",
+    title: "FATAL FRAME II: Crimson Butterfly REMAKE",
+    slug: "fatal-frame-ii-crimson-butterfly-remake",
+    description: "",
+    releaseDate: "12 марта 2026",
+    metacritic: 0,
+    genre: "Приключения",
+    platforms: ["PS5"],
+    cover: "https://media.rawg.io/media/screenshots/78d/78d5b7d94ade9903af80ba870d22cae9.jpg",
+    hypeScore: 2,
+    totalScore: 4.6,
+    editions: {
+      tr: [
+        { name: "Standard", priceRUB: 5350 },
+        { name: "Digital Deluxe", priceRUB: 6850 },
+      ],
+      ua: [
+        { name: "Standard", priceRUB: 5350 },
+        { name: "Digital Deluxe", priceRUB: 6850 },
       ],
     },
   },
