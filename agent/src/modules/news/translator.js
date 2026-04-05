@@ -110,8 +110,11 @@ async function translateAndRewrite(article) {
 
 // ====== PIPELINE V2: полная генерация текста с обогащённым контекстом ======
 
-const GEMINI_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
-const GEMINI_URL_LITE = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent';
+const OPENROUTER_MODELS = [
+  'google/gemini-2.0-flash-001',
+  'google/gemini-flash-1.5',
+  'anthropic/claude-3.5-haiku',
+];
 
 // ═══════════════════════════════════════════════════════════════════
 // ПРОМПТ С FEW-SHOT ПРИМЕРАМИ
@@ -299,7 +302,7 @@ function postProcessText(text) {
   processed = processed.replace(/\\n\\n/g, '\n\n');
   processed = processed.replace(/\\n/g, '\n');
 
-  // 2. Удалить канцеляризмы (авторемонт типичных паттернов Gemini)
+  // 2. Удалить канцеляризмы (авторемонт типичных паттернов LLM)
   const replacements = [
     [/стоит отметить,?\s*что\s*/gi, ''],
     [/нельзя не отметить,?\s*что\s*/gi, ''],
@@ -332,43 +335,42 @@ function postProcessText(text) {
   return processed.trim();
 }
 
-async function callGemini(prompt, maxTokens = 4000) {
-  const key = process.env.GEMINI_API_KEY;
-  if (!key) throw new Error('GEMINI_API_KEY not set');
+async function callOpenRouter(prompt, maxTokens = 4000) {
+  const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
+  if (!OPENROUTER_API_KEY) throw new Error('OPENROUTER_API_KEY not set');
 
-  const models = [
-    { url: GEMINI_URL, name: 'gemini-2.0-flash' },
-    { url: GEMINI_URL_LITE, name: 'gemini-2.0-flash-lite' },
-  ];
-
-  for (const model of models) {
+  for (const model of OPENROUTER_MODELS) {
     try {
-      const response = await axios.post(`${model.url}?key=${key}`, {
-        contents: [{ parts: [{ text: prompt }] }],
-        generationConfig: {
-          maxOutputTokens: maxTokens,
-          temperature: 0.7,
-        },
+      console.log(`[NEWS] Generating full article via OpenRouter (${model})...`);
+
+      const response = await axios.post(OPENROUTER_URL, {
+        model,
+        messages: [{ role: 'user', content: prompt }],
+        temperature: 0.7,
+        max_tokens: maxTokens,
       }, {
+        headers: {
+          'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
+          'Content-Type': 'application/json',
+          'HTTP-Referer': 'https://activeplay.games',
+          'X-Title': 'ActivePlay News Agent',
+        },
         timeout: 60000,
-        headers: { 'Content-Type': 'application/json' },
       });
 
-      const result = response.data?.candidates?.[0]?.content?.parts
-        ?.map(p => p.text)
-        .filter(Boolean)
-        .join('') || '';
-
-      if (result) {
-        console.log(`[NEWS] Gemini OK via ${model.name}`);
-        return result;
+      const content = response.data?.choices?.[0]?.message?.content;
+      if (!content) {
+        console.warn(`[NEWS] OpenRouter (${model}): empty response`);
+        continue;
       }
+
+      console.log(`[NEWS] OpenRouter OK via ${model}`);
+      return content;
     } catch (err) {
       const status = err.response?.status || 0;
       const msg = err.response?.data?.error?.message || err.message;
-      console.warn(`[NEWS] ${model.name} failed (${status}): ${msg.substring(0, 120)}`);
+      console.warn(`[NEWS] OpenRouter ${model} failed (${status}): ${msg.substring(0, 120)}`);
 
-      // Only fallback on quota/rate errors (429) or server errors (5xx)
       if (status === 429 || status >= 500) {
         console.log(`[NEWS] Trying fallback model...`);
         continue;
@@ -377,7 +379,7 @@ async function callGemini(prompt, maxTokens = 4000) {
     }
   }
 
-  throw new Error('All Gemini models failed');
+  throw new Error('All OpenRouter models failed');
 }
 
 // ═══ Построение промпта ═══
@@ -395,8 +397,8 @@ function buildPrompt(article, enrichedContext) {
     .replace('{enrichedContext}', enrichedContext || 'Нет дополнительных фактов.');
 }
 
-// ═══ Парсинг JSON из ответа Gemini ═══
-function parseGeminiResponse(text) {
+// ═══ Парсинг JSON из ответа LLM ═══
+function parseLLMResponse(text) {
   const jsonMatch = text.match(/\{[\s\S]*\}/);
   if (!jsonMatch) return null;
 
@@ -428,8 +430,8 @@ async function generateFullArticle(article, enrichedContext) {
         prompt += '\n\nВНИМАНИЕ: предыдущий ответ не удалось распарсить. Ответь СТРОГО JSON без backticks. Минимум 1200 символов в site.text, 4 абзаца.';
       }
 
-      const text = await callGemini(prompt);
-      const parsed = parseGeminiResponse(text);
+      const text = await callOpenRouter(prompt);
+      const parsed = parseLLMResponse(text);
 
       if (!parsed) {
         console.error(`[NEWS] generateFullArticle: no valid JSON (attempt ${attempt + 1})`);
@@ -510,7 +512,7 @@ async function checkHeadline(title, summary) {
 Ответь ТОЛЬКО заголовком, без пояснений.`;
 
   try {
-    const result = await callGemini(prompt, 200);
+    const result = await callOpenRouter(prompt, 200);
     const cleaned = result.trim().replace(/^["']|["']$/g, '');
     if (cleaned && cleaned.length >= 20 && cleaned.length <= 120) {
       console.log(`[NEWS] Headline: "${title}" \u2192 "${cleaned}"`);
