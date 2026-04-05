@@ -562,4 +562,4 @@ async function checkHeadline(title, summary) {
   }
 }
 
-module.exports = { translateAndRewrite, generateFullArticle, checkHeadline, postProcessText, validateArticle };
+module.exports = { translateAndRewrite, generateFullArticle, checkHeadline, cleanHeadline, postProcessText, validateArticle };

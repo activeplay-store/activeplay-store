@@ -436,10 +436,18 @@ function updateSiteNews(newsId, fields) {
       const data = JSON.parse(fs.readFileSync(newsJsonPath, "utf-8"));
       const index = newsId === "latest" ? 0 : data.findIndex(a => a.id === newsId);
       if (index >= 0) {
-        Object.assign(data[index], fields);
+        // Map archive field names to site field names (text -> content)
+        const mapped = {};
+        for (const [key, val] of Object.entries(fields)) {
+          mapped[key === "text" ? "content" : key] = val;
+        }
+        Object.assign(data[index], mapped);
         fs.writeFileSync(newsJsonPath, JSON.stringify(data, null, 2));
+        console.log("[CMD] updateSiteNews: updated fields for " + newsId);
       }
-    } catch {}
+    } catch (err) {
+      console.error("[CMD] updateSiteNews error:", err.message);
+    }
   }
 }
 

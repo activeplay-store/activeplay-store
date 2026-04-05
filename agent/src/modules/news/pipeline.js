@@ -4,7 +4,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { translateAndRewrite, generateFullArticle, checkHeadline } = require('./translator');
+const { translateAndRewrite, generateFullArticle, checkHeadline, cleanHeadline } = require('./translator');
 const { enrichArticle, findGameOnSite } = require('./enrichment');
 const { getNewsImage } = require('./imageGen');
 const { writeToSite, deployToSite, publishToTelegram, publishToVK, buildCtaData, buildProductCta, slugify } = require('./publisher');
@@ -97,28 +97,39 @@ async function runPipeline(article, targets, bot) {
       }
     }
 
-    // ═══ ГАРАНТИЯ: platform + ctaType + воронка ActivePlay ═══
-    // Если generateFullArticle не заполнил — определяем из текста
-    if (!article.platform || article.platform === 'general') {
+    // Count-based platform detection — always verify, even if Gemini set a platform
+    {
       const combined = ((article.site?.title || '') + ' ' + (article.site?.text || '') + ' ' + (article.tags || []).join(' ')).toLowerCase();
-      if (/xbox|game pass|microsoft|series x|series s/.test(combined)) {
-        article.platform = 'xbox';
-      } else if (/playstation|ps5|ps4|ps plus|sony|ps store|dualsense/.test(combined)) {
-        article.platform = 'playstation';
-      } else if (/nintendo|switch/.test(combined)) {
-        article.platform = 'nintendo';
-      } else if (/steam|pc|epic games|valve/.test(combined)) {
-        article.platform = 'pc';
-      } else if (/(ps5|ps4|playstation).*(xbox|game pass)|(xbox|game pass).*(ps5|ps4|playstation)/.test(combined)) {
-        article.platform = 'multi';
-      }
-      if (article.platform !== 'general') {
-        console.log(`[PIPELINE] Platform detected from text: ${article.platform}`);
+      const psCount = (combined.match(/ps5|ps4|playstation|dualsense|ps plus|sony|ps store/g) || []).length;
+      const xboxCount = (combined.match(/xbox|game pass|series x|series s|microsoft/g) || []).length;
+      const nintendoCount = (combined.match(/nintendo|switch/g) || []).length;
+      const pcCount = (combined.match(/steam|pc|epic games|valve/g) || []).length;
+
+      const maxCount = Math.max(psCount, xboxCount, nintendoCount, pcCount);
+      if (maxCount > 0) {
+        let detected;
+        if (psCount > 0 && xboxCount > 0 && Math.abs(psCount - xboxCount) <= 1) {
+          detected = 'multi';
+        } else if (psCount === maxCount) {
+          detected = 'playstation';
+        } else if (xboxCount === maxCount) {
+          detected = 'xbox';
+        } else if (nintendoCount === maxCount) {
+          detected = 'nintendo';
+        } else if (pcCount === maxCount) {
+          detected = 'pc';
+        }
+        if (detected && detected !== article.platform) {
+          console.log('[PIPELINE] Platform override: ' + article.platform + ' -> ' + detected + ' (ps:' + psCount + ' xbox:' + xboxCount + ')');
+          article.platform = detected;
+        } else if (!article.platform || article.platform === 'general') {
+          article.platform = detected || 'general';
+          console.log('[PIPELINE] Platform detected: ' + article.platform);
+        }
       }
     }
-
     // CTA type по платформе
-    if (!article.ctaType || article.ctaType === 'deals') {
+    {
       const ctaMap = {
         xbox: { ctaType: 'gamepass', ctaText: 'Xbox Game Pass', ctaLink: '/subscriptions' },
         playstation: { ctaType: 'psplus', ctaText: 'PS Plus от 1 250 \u20BD/мес', ctaLink: '/subscriptions' },
@@ -134,8 +145,6 @@ async function runPipeline(article, targets, bot) {
         console.log(`[PIPELINE] CTA set from platform: ${article.ctaType}`);
       }
     }
-
-    // Гарантия воронки: если нет упоминания ActivePlay — дописать
     if (article.site?.text && !article.site.text.includes('ActivePlay')) {
       const funnels = {
         playstation: '\n\nОформить PS Plus можно в ActivePlay от 1 250 \u20BD/мес. Активация за 10 минут, оплата в рублях.',
@@ -210,6 +219,8 @@ async function runPipeline(article, targets, bot) {
 
     // b-f) Записать на сайт (backup + validation + write внутри writeToSite)
     if (targets.includes('site')) {
+      if (article.site?.title) article.site.title = cleanHeadline(article.site.title);
+      if (article.title) article.title = cleanHeadline(article.title);
       writeToSite([article]);
       deployToSite();
     }
