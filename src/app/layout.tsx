@@ -194,56 +194,25 @@ export default function RootLayout({
         <script
           dangerouslySetInnerHTML={{
             __html: `
-      setTimeout(function() {
-        (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-        m[i].l=1*new Date();
-        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-        (window, document, "script", "/ym/metrika/watch.js", "ym");
+      (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+      m[i].l=1*new Date();
+      for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+      k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+      (window, document, "script", "https://mc.yandex.com/metrika/tag.js", "ym");
 
-        ym(108381188, "init", {
-          clickmap:true,
-          trackLinks:true,
-          accurateTrackBounce:true,
-          webvisor:true,
-          ecommerce:"dataLayer"
-        });
-
-        // Перехват запросов Метрики через прокси
-        var origOpen = XMLHttpRequest.prototype.open;
-        XMLHttpRequest.prototype.open = function(method, url) {
-          if (typeof url === 'string' && url.indexOf('mc.yandex.ru') !== -1) {
-            url = url.replace('https://mc.yandex.ru', '/ym');
-          }
-          return origOpen.apply(this, arguments);
-        };
-
-        // Перехват fetch
-        var origFetch = window.fetch;
-        window.fetch = function(url, opts) {
-          if (typeof url === 'string' && url.indexOf('mc.yandex.ru') !== -1) {
-            url = url.replace('https://mc.yandex.ru', '/ym');
-          }
-          return origFetch.call(this, url, opts);
-        };
-
-        // Перехват sendBeacon
-        if (navigator.sendBeacon) {
-          var origBeacon = navigator.sendBeacon.bind(navigator);
-          navigator.sendBeacon = function(url, data) {
-            if (typeof url === 'string' && url.indexOf('mc.yandex.ru') !== -1) {
-              url = url.replace('https://mc.yandex.ru', '/ym');
-            }
-            return origBeacon(url, data);
-          };
-        }
-      }, 3000);
+      ym(108381188, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        webvisor:true,
+        ecommerce:"dataLayer"
+      });
     `,
           }}
         />
         <noscript>
           <div>
-            <img src="/ym/watch/108381188" style={{ position: 'absolute', left: '-9999px' }} alt="" />
+            <img src="https://mc.yandex.com/watch/108381188" style={{ position: 'absolute', left: '-9999px' }} alt="" />
           </div>
         </noscript>
         {/* TODO: VK Pixel — вставить код */}
