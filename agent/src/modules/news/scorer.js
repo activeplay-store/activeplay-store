@@ -48,7 +48,48 @@ const NEGATIVE_KEYWORDS = [
   'wordle', 'crossword', 'puzzle answer',
 ];
 
+// Чёрный список — нерелевантный контент
+const BLACKLIST = [
+  // Аксессуары и периферия
+  "DAC", "ЦАП", "headphone", "наушники", "headset", "гарнитура", "controller stand",
+  "зарядная станция", "charging dock", "carrying case", "чехол", "screen protector",
+  "защитное стекло", "кабель", "cable", "adapter", "адаптер", "HiFi",
+  // Мобильные игры
+  "mobile game", "мобильная игра", "iOS game", "Android game", "App Store", "Google Play",
+  // Не игровые темы
+  "firmware update", "обновление прошивки", "router", "роутер", "TV settings",
+  "настройки телевизора", "soundbar", "саундбар",
+  // Спам/мусор
+  "giveaway", "розыгрыш", "sweepstakes", "free codes",
+];
+
+function isBlacklisted(article) {
+  const title = (article.title || "").toLowerCase();
+  const description = (article.description || "").toLowerCase();
+  const combined = title + " " + description;
+  return BLACKLIST.some(word => combined.includes(word.toLowerCase()));
+}
+
+const GAMING_KEYWORDS = [
+  "PS5", "PS4", "PlayStation", "Xbox", "Nintendo", "Switch", "Steam", "PC",
+  "PS Plus", "Game Pass", "EA Play", "game", "игр", "RPG", "FPS", "MMO",
+  "DLC", "патч", "patch", "update", "релиз", "release", "анонс",
+  "трейлер", "trailer", "геймплей", "gameplay", "студия", "studio",
+  "разработчик", "developer", "издатель", "publisher",
+];
+
+function hasGamingContent(article) {
+  const combined = ((article.title || "") + " " + (article.description || "")).toLowerCase();
+  return GAMING_KEYWORDS.some(kw => combined.toLowerCase().includes(kw.toLowerCase()));
+}
+
 function scoreArticle(article) {
+  // Blacklist check first
+  if (isBlacklisted(article)) {
+    console.log("[SCORER] Blacklisted: " + (article.title || "").slice(0, 60));
+    return 0;
+  }
+
   let score = 0;
   const text = `${article.title} ${article.description}`.toLowerCase();
   const titleLower = (article.title || '').toLowerCase();
@@ -101,6 +142,12 @@ function scoreArticle(article) {
   // 10. Reddit score бонус
   if (article.redditScore && article.redditScore > 500) score += 5;
   if (article.redditScore && article.redditScore > 2000) score += 5;
+
+  // Понизить score на 50% если нет игрового контента
+  if (!hasGamingContent(article)) {
+    console.log("[SCORER] No gaming content: " + (article.title || "").slice(0, 60));
+    score = Math.round(score * 0.5);
+  }
 
   return Math.max(0, Math.round(score * 10) / 10);
 }

@@ -11,6 +11,32 @@ const { writeToSite, deployToSite, publishToTelegram, publishToVK, buildCtaData,
 
 const STAGING_DIR = path.join(__dirname, '../../../data/news-staging');
 
+function getFunnelText(article) {
+  const text = (article.site?.text || article.text || '').toLowerCase();
+  const title = (article.site?.title || article.title || '').toLowerCase();
+  const combined = title + ' ' + text;
+
+  const isGaming = ['ps5', 'ps4', 'playstation', 'xbox', 'nintendo', 'switch', 'steam', 'pc',
+    'ps plus', 'game pass', 'ea play', 'game', 'игр', 'подписк']
+    .some(kw => combined.includes(kw));
+
+  if (!isGaming) {
+    return '\n\nСледите за новостями игровой индустрии на activeplay.games. Подписки PS Plus, Xbox Game Pass и EA Play доступны с доставкой из ActivePlay.';
+  }
+
+  const platform = article.platform || 'general';
+  const funnels = {
+    playstation: '\n\nОформить PS Plus можно в ActivePlay от 1 250 ₽/мес. Активация за 10 минут, оплата в рублях. 52 000+ клиентов с 2022 года.',
+    xbox: '\n\nОформить Xbox Game Pass можно в ActivePlay. Сотни игр по подписке, новинки с первого дня. Быстро, из России, оплата в рублях.',
+    multi: '\n\nПодписки PS Plus и Xbox Game Pass доступны в ActivePlay от 1 250 ₽/мес. 52 000+ клиентов с 2022 года.',
+    pc: '\n\nXbox Game Pass PC открывает доступ к сотням игр. Оформить можно в ActivePlay — быстро, из России, оплата в рублях.',
+    nintendo: '\n\nИгровые подписки доступны в ActivePlay от 1 250 ₽/мес. 52 000+ клиентов с 2022 года.',
+    general: '\n\nПодписки PS Plus, Xbox Game Pass и EA Play доступны в ActivePlay от 1 250 ₽/мес. 52 000+ клиентов с 2022 года.',
+  };
+
+  return funnels[platform] || funnels.general;
+}
+
 async function runPipeline(article, targets, bot) {
   const ADMIN_ID = process.env.ADMIN_CHAT_ID;
   const startTime = Date.now();

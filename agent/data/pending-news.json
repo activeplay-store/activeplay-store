@@ -1,108 +1,100 @@
 [
   {
+    "sourceId": "nintendolife",
+    "sourceName": "Nintendo Life",
+    "sourceWeight": 7,
+    "category": "Анонс",
+    "title": "'Another Eden Begins' Brings More RPG Action To Switch 1 & 2 This September, Here's 8 Minutes Of Footage",
+    "link": "https://www.nintendolife.com/news/2026/04/another-eden-begins-brings-more-rpg-action-to-switch-1-and-2-this-september-heres-8-minutes-of-footage",
+    "description": "Led by the writer behind Chrono Trigger and Xenogears.\nIn February, Wright Flyer Studios announced the turn-based RPG Another Eden Begins would be coming to Switch 1 & 2.\nAlongside a new trailer today, the developer and publisher has now confirmed this time-travelling adventure will be launching for both platforms on 17th September 2026. The new and rather lengthy video on display showcases the playable characters, chain skills and much more!\nRead the full article on nintendolife.com",
+    "image": "",
+    "pubDate": "Sun, 05 Apr 2026 07:00:00 GMT",
+    "score": 53,
+    "telegram": {
+      "title": "Another Eden Begins выйдет на Switch в сентябре",
+      "text": "Ролевая игра Another Eden Begins появится на Switch 17 сентября 2026 года. Разработчики Chrono Trigger и Xenogears обещают захватывающее приключение во времени. Новый трейлер демонстрирует персонажей и боевую систему."
+    },
+    "vk": {
+      "title": "RPG Another Eden Begins выйдет на Switch в 2026",
+      "text": "Another Eden Begins, новая RPG от авторов Chrono Trigger и Xenogears, выйдет на Switch 17 сентября 2026 года. Игроков ждет путешествие во времени и пошаговые сражения. Разработчики опубликовали новый трейлер с демонстрацией персонажей и боевой системы. В ролике можно увидеть цепочки навыков и другие особенности игры."
+    },
+    "site": {
+      "title": "Another Eden Begins: дата выхода RPG на Nintendo Switch",
+      "text": "Another Eden Begins, ролевая игра от создателей Chrono Trigger и Xenogears, выйдет на Switch 17 сентября 2026 года. Игроков ждет приключение, полное путешествий во времени. Проект разработан студией Wright Flyer Studios.\n\nВ новом трейлере разработчики показали персонажей и боевую систему. Особое внимание уделили цепочкам навыков. Игра выполнена в жанре пошаговой RPG.\n\nAnother Eden Begins обещает стать интересным проектом для фанатов жанра. Релиз на Switch позволит насладиться игрой в портативном режиме.",
+      "metaDescription": "Another Eden Begins выйдет на Nintendo Switch 17 сентября 2026 года. Разработчики Chrono Trigger и Xenogears обещают интересное приключение.",
+      "tags": [
+        "Another Eden Begins",
+        "Switch",
+        "RPG",
+        "Chrono Trigger",
+        "Xenogears"
+      ]
+    },
+    "id": "news-1775394038414-en50"
+  },
+  {
     "sourceId": "reddit-ps5",
     "sourceName": "r/PS5",
     "sourceWeight": 8,
     "category": "Новость",
-    "title": "Crimson Desert on PS5 Pro: 30fps Quality Mode Gets A Big Image Quality Upgrade",
-    "link": "https://www.digitalfoundry.net/news/2026/04/crimson-desert-on-ps5-pro-30fps-quality-mode-gets-a-big-image-quality-upgrade",
-    "description": "Developer Pearl Abyss's work on Crimson Abyss is ongoing, with a rapid-fire of updates hitting the game every week since it launched. Now, as of April 4th, a brand new patch tackles a string of bugs, with PS5 Pro in particular receiving an especially big win. The upgraded PSSR's sharpen feature is added, but more crucially, a native AA mode is added to the 30fps quality mode, essentially running the game at native 4K, using PSSR for anti-aliasing alone - and the boost to the overall look of the image is significant. For those familiar with our Crimson Desert PS5 review, you'll be aware that the Pro's balanced and quality modes had an unusually soft image. Despite rendering at 1440p on balanced, and a native 4K on quality (with no PSSR applied in that case), it still appeared softer somehow compared to the performance option. Switching to the new patch, all of that is solved, and engaging the native AA feature of PSSR on Pro's quality mode makes a huge difference. The bottom line is that Pro now pushes a pin-sharp image, compared to the launch build. Arguably it's over-sharpened with that stated 'sharpen feature', with a crisp, high contrast look to all that fine grass detail ahead. A toggle to adjust this would surely be appreciated, since it does appear to have a 'deep-fried' look. Still, it's a move in the right direction overall for sheer clarity across the frame while running at 30fps - and we'll certainly take it. As ever, it's rare that an upgrade comes for free in GPU ",
+    "title": "Latest Firmware 69 makes Neutron HiFi DAC V1 compatible with Sony PlayStation (PS4/PS5)",
+    "link": "https://www.reddit.com/r/PS5/comments/1scyqa7/latest_firmware_69_makes_neutron_hifi_dac_v1/",
+    "description": "If you’ve ever tried using a high-end USB DAC with a game console, you know the struggle: Sony (PS4/5) and Nintendo (NSW1/2) usually stick to the older UAC1 standard leaving many modern DACs silent or unrecognized. Additionally, PS4/5 sets connected USB DAC to a very low unusable volume level.\n\nLatest [Firmware 69](https://forum.neutroncode.com/viewtopic.php?f=10&amp;t=7507) update for Neutron HiFi DAC V1 officially bridges that gap, adding dedicated support for PlayStation 4/5 (PS4, PS5) and Ni",
     "image": "",
-    "pubDate": "2026-04-04T11:48:26.000Z",
-    "redditScore": 406,
-    "score": 59,
+    "pubDate": "2026-04-05T08:54:41.000Z",
+    "redditScore": 13,
+    "score": 52,
     "telegram": {
-      "title": "Crimson Desert: апгрейд графики на PS5 Pro",
-      "text": "Разработчики улучшили качество изображения в Crimson Desert на PS5 Pro. В режиме 30 FPS появился AA. Картинка стала заметно чётче."
+      "title": "Neutron HiFi DAC V1 теперь работает с PS5",
+      "text": "Вышло обновление Firmware 69 для Neutron HiFi DAC V1. Новая прошивка добавляет поддержку PlayStation 4 и PlayStation 5. Раньше консоли Sony не поддерживали современные USB DAC."
     },
     "vk": {
-      "title": "В Crimson Desert улучшили графику на PS5 Pro",
-      "text": "В Crimson Desert завезли патч. Разработчики из Pearl Abyss улучшили графику на PS5 Pro. В режиме качества с 30 FPS появился сглаживающий фильтр AA. \n\nИзображение стало заметно чётче. Правда, появилась излишняя резкость. Возможно, добавят регулировку."
+      "title": "Neutron HiFi DAC V1 получила поддержку PlayStation 5",
+      "text": "Neutron HiFi DAC V1 теперь полностью совместим с PlayStation 4 и 5. Обновление Firmware 69 добавляет поддержку консолей Sony. Ранее геймеры сталкивались с проблемами при подключении современных USB DAC к приставкам.\n\nКонсоли Sony обычно используют устаревший стандарт UAC1. Многие современные ЦАП оставались без звука или не распознавались. Новая прошивка решает эту проблему."
     },
     "site": {
-      "title": "Crimson Desert: графоний подтянули на PS5 Pro",
-      "text": "Разработчики из Pearl Abyss продолжают улучшать Crimson Desert. Свежий патч принёс улучшения графики на PS5 Pro. Теперь в режиме качества с 30 кадрами в секунду используется AA. \n\nКартинка в Crimson Desert стала намного чётче. Ранее она была излишне мягкой. Всё благодаря новой опции PSSR, отвечающей за сглаживание.\n\nИзображение стало излишне резким. Возможно, в будущем добавят регулировку этого параметра. В целом, это большой шаг вперёд.",
-      "metaDescription": "В Crimson Desert улучшили графику на PS5 Pro. Разработчики добавили AA в режим 30 FPS. Картинка стала намного чётче.",
+      "title": "Прошивка 69: Neutron HiFi DAC V1 работает с PlayStation 5",
+      "text": "Вышло обновление Firmware 69 для Neutron HiFi DAC V1. Теперь устройство официально поддерживает PlayStation 4 и PlayStation 5. Это отличная новость для владельцев консолей Sony.\n\nРанее подключение современных USB DAC к PS4 и PS5 было проблематичным. Консоли используют устаревший стандарт UAC1, из-за чего многие ЦАП не работали или выдавали очень тихий звук. Новая прошивка устраняет эту несовместимость.\n\nЧтобы воспользоваться улучшением, необходимо установить Firmware 69. После этого Neutron HiFi DAC V1 будет корректно работать с приставками Sony.",
+      "metaDescription": "Neutron HiFi DAC V1 получил обновление Firmware 69. Добавлена полная поддержка PlayStation 4 и PlayStation 5.",
       "tags": [
-        "Crimson Desert",
-        "PS5 Pro",
-        "графика",
-        "патч"
+        "PS5",
+        "PS4",
+        "Neutron HiFi DAC V1",
+        "Firmware 69"
       ]
     },
-    "id": "news-1775389526355-0lhw"
+    "id": "news-1775394043565-01qv"
   },
   {
-    "sourceId": "reddit-ps5",
-    "sourceName": "r/PS5",
-    "sourceWeight": 8,
+    "sourceId": "purexbox",
+    "sourceName": "Pure Xbox",
+    "sourceWeight": 7,
     "category": "Слух",
-    "title": "Resident Evil 4 - PS5 vs PS5 Pro PSSR 2.0 Visual Comparison",
-    "link": "https://youtu.be/MQwtitqiZKQ?si=JdNq-RLcaY_tnJ1X",
-    "description": "О сервисеПрессеАвторские праваСвязаться с намиАвторамРекламодателямРазработчикамУсловия использованияКонфиденциальностьПравила и безопасностьКак работает YouTubeТестирование новых функций© 2026 Google LLC",
+    "title": "Here's What Might Leave Xbox Game Pass In May 2026",
+    "link": "https://www.purexbox.com/news/2026/04/heres-what-might-leave-xbox-game-pass-in-may-2026",
+    "description": "Some early predictions!\nWhat's leaving Xbox Game Pass in May 2026? Well, Microsoft hasn't confirmed anything just yet, but based on some games that were added to the service this time last year, we can at least make a few predictions ahead of time.\nWe know that a lot of Xbox users want more advance notice of games leaving Xbox Game Pass, but Microsoft usually gives us around two weeks right now - and don't forget, publishers sometimes secure late deals with Microsoft to keep their games on Game Pass, even after they've been announced to be leaving!\nRead the full article on purexbox.com",
     "image": "",
-    "pubDate": "2026-04-04T15:08:13.000Z",
-    "redditScore": 163,
-    "score": 44,
+    "pubDate": "Sat, 04 Apr 2026 13:30:00 GMT",
+    "score": 47,
     "telegram": {
-      "title": "Resident Evil 4: сравнение графики на PS5 и PS5 Pro",
-      "text": "В сети появилось сравнение Resident Evil 4 на PS5 и потенциальной PS5 Pro. Предполагается, что в Pro-версии используют PSSR 2.0 для улучшения графики."
+      "title": "Xbox Game Pass: игры под угрозой в мае 2026",
+      "text": "Стали известны возможные кандидаты на вылет из Xbox Game Pass в мае 2026 года. Microsoft пока молчит, но есть интересные прогнозы."
     },
     "vk": {
-      "title": "Resident Evil 4: сравнение версий для PS5 и PS5 Pro",
-      "text": "В интернете появилось сравнение графики Resident Evil 4 на PS5 и, возможно, улучшенной PS5 Pro. В ролике демонстрируют отличия, благодаря технологии PSSR 2.0. Пока это лишь слухи, официально Sony не анонсировала PS5 Pro.",
+      "title": "Какие игры покинут Xbox Game Pass в мае 2026: первые прогнозы",
+      "text": "Появились первые предположения о том, какие тайтлы могут покинуть Xbox Game Pass в мае 2026. Microsoft пока не делала официальных заявлений. Однако, опираясь на прошлогодние добавления, можно строить прогнозы. Важно помнить, что Microsoft часто договаривается с издателями в последний момент, чтобы сохранить игры в сервисе."
+    },
+    "site": {
+      "title": "Xbox Game Pass: первые прогнозы по играм на вылет в мае 2026",
+      "text": "Появились ранние прогнозы о том, какие игры могут покинуть Xbox Game Pass в мае 2026 года. Список основан на играх, добавленных в сервис в это же время в прошлом году. Microsoft пока официально не подтвердила эту информацию. Фанатам стоит помнить об этом.\n\nXbox обычно предупреждает об удалении игр примерно за две недели. Впрочем, издатели нередко договариваются с Microsoft в последний момент. Это позволяет сохранить тайтлы в Game Pass, даже после объявления об их удалении.\n\nСледите за новостями, чтобы узнать точный список игр, покидающих сервис в мае 2026 года. Подписывайтесь на наш Telegram-канал, чтобы не пропустить важные анонсы.",
+      "metaDescription": "Первые прогнозы о том, какие игры могут покинуть Xbox Game Pass в мае 2026 года. Microsoft пока ничего не подтвердила.",
       "tags": [
-        "Resident Evil 4",
-        "PS5 Pro",
-        "графика",
+        "Xbox Game Pass",
+        "игры",
+        "подписка",
         "слухи"
       ]
     },
-    "site": {
-      "title": "Resident Evil 4: сравнение графики на PS5 и PS5 Pro – первые детали",
-      "text": "В сети появилось видео со сравнением графики Resident Evil 4 на PS5 и, как предполагается, PS5 Pro. Ролик демонстрирует возможные улучшения в Pro-версии за счёт технологии PSSR 2.0.\n\nПока Sony официально не анонсировала PS5 Pro, поэтому относиться к этим данным стоит с осторожностью. Инсайдеры сообщали о разработке улучшенной версии консоли.\n\nResident Evil 4 – это ремейк культовой игры в жанре survival horror от Capcom. Оригинальный тайтл вышел в 2005 году.",
-      "metaDescription": "Сравнение графики Resident Evil 4 на PS5 и PS5 Pro. Улучшения благодаря PSSR 2.0? Все детали в статье.",
-      "tags": [
-        "Resident Evil 4",
-        "PS5 Pro",
-        "графика",
-        "слухи",
-        "Capcom"
-      ]
-    },
-    "id": "news-1775389573033-p5l8"
-  },
-  {
-    "sourceId": "eurogamer",
-    "sourceName": "Eurogamer",
-    "sourceWeight": 9,
-    "category": "Инсайд",
-    "title": "Astonishing never-before-seen Elden Ring deleted cutscene discovered",
-    "link": "https://www.eurogamer.net/astonishing-never-before-seen-elden-ring-deleted-cutscene-discovered",
-    "description": "A new, never-before-seen map file has revealed more secrets about content cut from the final version of Elden Ring. Please note that what follows may be spoilery for some! Notable dataminer Lance McDonald uploaded his discovery earlier today, revealing what he claims is a deleted scene of Miquella planting the Haligtree. Elden Ring - Official The Journey So Far Trailer Elden Ring - Official The Journey So Far Trailer.Watch on YouTube \"This is a look at a never-before-seen map file where a cutscene was filmed for Elden Ring, which showed Miquella planting the Haligtree, as well as the process through which, during earlier development and testing, this cutscene was intended to have been played,\" McDonald explained. \"Finally, the similarly never-before-seen cutscene itself is shown.\" The idea of Miquella using his blood to nurture Haligtree isn't new, exactly, as the flavour text describing Haligtree Knight Armour says: \"Armour worn by knights sworn the Haligtree. Its left breast is emblazoned with the crest of the Haligtree. Though watered with Miquella's own blood since it was a sapling, the Haligtree ultimately failed to grow into an Erdtree\". Amazingly, though, McDonald has found a deleted cut-scene that pertains to this, including a \"number of unused lines of spoken dialogue\", although he cautions that \"without the intermediate cutscene file to connect these together, it's difficult to know for sure which of these are intended for playback during this specific video\". He wa",
-    "image": "https://assetsio.gnwcdn.com/elden-ring-player-facing-a-lesser-leonine-misebetton-on-the-right-in-miquella",
-    "pubDate": "Sat, 04 Apr 2026 17:23:51 +0000",
-    "score": 43,
-    "telegram": {
-      "title": "Удалённую катсцену Elden Ring показали игрокам",
-      "text": "Инсайдеры нашли вырезанную сцену из Elden Ring. Микелла сажает Древо Святых. В файлах обнаружили неиспользованные реплики персонажей."
-    },
-    "vk": {
-      "title": "В Elden Ring нашли вырезанную катсцену с Микеллой",
-      "text": "Датамайнер Lance McDonald обнаружил вырезанную катсцену из Elden Ring. На видео Микелла сажает Древо Святых. Инсайдер также нашёл неиспользованные реплики персонажей. \n\nПо словам McDonald, ролик раскрывает процесс создания Древа Святых. Из описания брони рыцаря Древа Святых известно: Микелла поливал древо собственной кровью, но оно не стало Великим древом."
-    },
-    "site": {
-      "title": "В Elden Ring нашли удалённую катсцену с Микеллой",
-      "text": "Инсайдеры нашли вырезанную сцену из Elden Ring. Датамайнер Lance McDonald обнаружил катсцену, где Микелла сажает Древо Святых. В файлах также нашли реплики персонажей, которые не вошли в финальную версию игры.\n\nMcDonald рассказал, что ролик показывает процесс создания Древа Святых. Из описания брони рыцаря Древа Святых известно: Микелла поливал древо кровью, но чуда не случилось. Оно так и не стало Великим древом.\n\nElden Ring вышла в феврале 2022 года. Игра получила высокие оценки критиков и игроков, её рейтинг на Metacritic — 89 баллов.",
-      "metaDescription": "Инсайдеры показали вырезанную катсцену из Elden Ring. В ролике Микелла сажает Древо Святых. Подробности и детали.",
-      "tags": [
-        "Elden Ring",
-        "Микелла",
-        "катсцена",
-        "инсайд",
-        "новости игр"
-      ]
-    },
-    "id": "news-1775389579074-o2s3"
+    "id": "news-1775394048859-cn0x"
   }
 ]

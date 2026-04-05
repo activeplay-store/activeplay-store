@@ -294,6 +294,42 @@ function validateArticle(result) {
 }
 
 // ═══ Пост-обработка текста: чистка канцеляризмов и литеральных \n\n ═══
+// Автоочистка заголовка от запрещённых символов
+function getSmartFunnel(article) {
+  const text = (article.site?.text || article.text || '').toLowerCase();
+  const title = (article.site?.title || article.title || '').toLowerCase();
+  const combined = title + ' ' + text;
+
+  const isGaming = ['ps5', 'ps4', 'playstation', 'xbox', 'nintendo', 'switch', 'steam', 'pc',
+    'ps plus', 'game pass', 'ea play', 'game', 'игр', 'подписк']
+    .some(kw => combined.includes(kw));
+
+  if (!isGaming) {
+    return '\n\nСледите за новостями игровой индустрии на activeplay.games. Подписки PS Plus, Xbox Game Pass и EA Play доступны с доставкой из ActivePlay.';
+  }
+
+  const platform = article.platform || 'general';
+  const funnels = {
+    playstation: '\n\nОформить PS Plus можно в ActivePlay от 1 250 ₽/мес. Активация за 10 минут, оплата в рублях. 52 000+ клиентов с 2022 года.',
+    xbox: '\n\nОформить Xbox Game Pass можно в ActivePlay. Сотни игр по подписке, новинки с первого дня. Быстро, из России, оплата в рублях.',
+    multi: '\n\nПодписки PS Plus и Xbox Game Pass доступны в ActivePlay от 1 250 ₽/мес. 52 000+ клиентов с 2022 года.',
+    pc: '\n\nXbox Game Pass PC открывает доступ к сотням игр. Оформить можно в ActivePlay — быстро, из России, оплата в рублях.',
+    general: '\n\nПодписки PS Plus, Xbox Game Pass и EA Play доступны в ActivePlay от 1 250 ₽/мес. 52 000+ клиентов с 2022 года.',
+  };
+
+  return funnels[platform] || funnels.general;
+}
+
+function cleanHeadline(title) {
+  if (!title) return title;
+  let cleaned = title;
+  cleaned = cleaned.replace(/!/g, "");
+  cleaned = cleaned.replace(/\?/g, "");
+  cleaned = cleaned.replace(/\.{2,}$/g, "");
+  cleaned = cleaned.replace(/ {2,}/g, " ").trim();
+  return cleaned;
+}
+
 function postProcessText(text) {
   if (!text) return text;
   let processed = text;
@@ -447,18 +483,15 @@ async function generateFullArticle(article, enrichedContext) {
       if (parsed.telegram?.text) parsed.telegram.text = postProcessText(parsed.telegram.text);
       if (parsed.vk?.text) parsed.vk.text = postProcessText(parsed.vk.text);
 
+      // Автоочистка заголовков от ! и ?
+      if (parsed.site?.title) parsed.site.title = cleanHeadline(parsed.site.title);
+      if (parsed.telegram?.title) parsed.telegram.title = cleanHeadline(parsed.telegram.title);
+      if (parsed.vk?.title) parsed.vk.title = cleanHeadline(parsed.vk.title);
+
       // Гарантия воронки: если текст не содержит "ActivePlay" — дописать
-      if (!parsed.site.text.includes('ActivePlay')) {
-        const defaultFunnels = {
-          playstation: '\n\nОформить PS Plus можно в ActivePlay от 1 250 \u20BD/мес. Активация за 10 минут, оплата в рублях.',
-          xbox: '\n\nXbox Game Pass открывает доступ к сотням игр по подписке. Оформить можно в ActivePlay \u2014 быстро, из России, оплата в рублях.',
-          multi: '\n\nПодписки PS Plus и Xbox Game Pass доступны в ActivePlay от 1 250 \u20BD/мес. 52 000+ клиентов с 2022 года.',
-          pc: '\n\nXbox Game Pass PC доступен в ActivePlay. Сотни игр по подписке, оформление из России за 10 минут.',
-          general: '\n\nИгровые подписки PS Plus, Xbox Game Pass и EA Play доступны в ActivePlay от 1 250 \u20BD/мес.',
-        };
-        const plat = parsed.platform || 'general';
-        parsed.site.text += defaultFunnels[plat] || defaultFunnels.general;
-        console.log(`[NEWS] Funnel appended (platform: ${plat})`);
+      if (!parsed.site.text.includes(ActivePlay)) {
+        parsed.site.text += getSmartFunnel(parsed);
+        console.log(`[NEWS] Funnel appended (platform: ${parsed.platform || general})`);
       }
 
       // Валидация с детальным логированием

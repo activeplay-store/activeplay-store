@@ -1,5 +1,30 @@
 [
   {
+    "sourceId": "reddit-ps5",
+    "sourceName": "r/PS5",
+    "sourceWeight": 8,
+    "category": "community",
+    "title": "Resident Evil 4 - PS5 vs PS5 Pro PSSR 2.0 Visual Comparison",
+    "link": "https://youtu.be/MQwtitqiZKQ?si=JdNq-RLcaY_tnJ1X",
+    "description": "О сервисеПрессеАвторские праваСвязаться с намиАвторамРекламодателямРазработчикамУсловия использованияКонфиденциальностьПравила и безопасностьКак работает YouTubeТестирование новых функций© 2026 Google LLC",
+    "image": "",
+    "pubDate": "2026-04-04T15:08:13.000Z",
+    "redditScore": 167,
+    "score": 44
+  },
+  {
+    "sourceId": "eurogamer",
+    "sourceName": "Eurogamer",
+    "sourceWeight": 9,
+    "category": "media",
+    "title": "Astonishing never-before-seen Elden Ring deleted cutscene discovered",
+    "link": "https://www.eurogamer.net/astonishing-never-before-seen-elden-ring-deleted-cutscene-discovered",
+    "description": "A new, never-before-seen map file has revealed more secrets about content cut from the final version of Elden Ring. Please note that what follows may be spoilery for some! Notable dataminer Lance McDonald uploaded his discovery earlier today, revealing what he claims is a deleted scene of Miquella planting the Haligtree. Elden Ring - Official The Journey So Far Trailer Elden Ring - Official The Journey So Far Trailer.Watch on YouTube \"This is a look at a never-before-seen map file where a cutscene was filmed for Elden Ring, which showed Miquella planting the Haligtree, as well as the process through which, during earlier development and testing, this cutscene was intended to have been played,\" McDonald explained. \"Finally, the similarly never-before-seen cutscene itself is shown.\" The idea of Miquella using his blood to nurture Haligtree isn't new, exactly, as the flavour text describing Haligtree Knight Armour says: \"Armour worn by knights sworn the Haligtree. Its left breast is emblazoned with the crest of the Haligtree. Though watered with Miquella's own blood since it was a sapling, the Haligtree ultimately failed to grow into an Erdtree\". Amazingly, though, McDonald has found a deleted cut-scene that pertains to this, including a \"number of unused lines of spoken dialogue\", although he cautions that \"without the intermediate cutscene file to connect these together, it's difficult to know for sure which of these are intended for playback during this specific video\". He wa",
+    "image": "https://assetsio.gnwcdn.com/elden-ring-player-facing-a-lesser-leonine-misebetton-on-the-right-in-miquella",
+    "pubDate": "Sat, 04 Apr 2026 17:23:51 +0000",
+    "score": 43
+  },
+  {
     "sourceId": "gamesradar",
     "sourceName": "GamesRadar+",
     "sourceWeight": 8,
@@ -10,5 +35,17 @@
     "image": "https://cdn.mos.cms.futurecdn.net/dx9msmZ2viLn24tuK28zZ3-1280-80.jpg",
     "pubDate": "Sun, 05 Apr 2026 11:29:06 +0000",
     "score": 41
+  },
+  {
+    "sourceId": "destructoid",
+    "sourceName": "Destructoid",
+    "sourceWeight": 7,
+    "category": "media",
+    "title": "This wildly successful indie gem is completely free on Steam—but only for another 48 hours",
+    "link": "https://www.destructoid.com/this-wildly-successful-indie-gem-is-completely-free-on-steam-but-only-for-another-48-hours/?utm_source=rss&utm_medium=rss&utm_campaign=this-wildly-successful-indie-gem-is-completely-free-on-steam-but-only-for-another-48-hours",
+    "description": "Free stuff is always great, and luckily for us, Steam tends to offer loads of free games just about every day, and sometimes it's a major title. Indies in particular are very good at willingly hopping into your library free of charge, and this time around, it's House Flipper doing so.\n\n\nIncredibly popular and successful, House Flipper is free to claim and keep forever on Steam, with this amazing offer available until April 6, the day after tomorrow. Released in 2018, House Flipper saw a rapid rise as players wanted to join in on the fun of purchasing, fixing up, and subsequently selling off properties for significant financial gain. \n\n\nIts easy and simple gameplay loop, loads of options, and countless DLC constantly adding to the fun made it into one of the most popular indies ever, with an estimated 2.5 million copies sold on Steam alone.\n\n\nWho wouldn't want to spend their free time fixing virtual houses and selling them off? Image via Frozen Way\n\n\nThis amazing offer comes in celebration of House Flipper Remastered Collection's upcoming release in the second quarter of 2026, which will cost as little as $16 for those who own the original game and at least six DLCs. The Remastered Collection will contain all DLCs and the remastered game in one package, allowing you to experience its full content library through a single purchase. \n\n\nGetting the free version will let you play the base game as it was in 2018 (though substantially updated), potentially getting you excited enough to buy into the remaster or even its sequel, House Flipper 2. \n\n\nHouse Flipper also has extensive mod support and tens of thousands of mods that can make your fun last even longer without any extra charges, meaning you could potentially squeeze out dozens of hours out of this game by spending literally zero bucks. \n\n\nFree-to-keep games are constantly available on Steam, and the easiest way to keep up to date with what's being offered up for nothing is to just click on the store search bar, as t",
+    "image": "https://www.destructoid.com/wp-content/uploads/2024/09/house-flipper-dine-out-table-settings.jpg",
+    "pubDate": "Sat, 04 Apr 2026 17:56:57 +0000",
+    "score": 37
   }
 ]
