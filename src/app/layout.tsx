@@ -208,6 +208,35 @@ export default function RootLayout({
           webvisor:true,
           ecommerce:"dataLayer"
         });
+
+        // Перехват запросов Метрики через прокси
+        var origOpen = XMLHttpRequest.prototype.open;
+        XMLHttpRequest.prototype.open = function(method, url) {
+          if (typeof url === 'string' && url.indexOf('mc.yandex.ru') !== -1) {
+            url = url.replace('https://mc.yandex.ru', '/ym');
+          }
+          return origOpen.apply(this, arguments);
+        };
+
+        // Перехват fetch
+        var origFetch = window.fetch;
+        window.fetch = function(url, opts) {
+          if (typeof url === 'string' && url.indexOf('mc.yandex.ru') !== -1) {
+            url = url.replace('https://mc.yandex.ru', '/ym');
+          }
+          return origFetch.call(this, url, opts);
+        };
+
+        // Перехват sendBeacon
+        if (navigator.sendBeacon) {
+          var origBeacon = navigator.sendBeacon.bind(navigator);
+          navigator.sendBeacon = function(url, data) {
+            if (typeof url === 'string' && url.indexOf('mc.yandex.ru') !== -1) {
+              url = url.replace('https://mc.yandex.ru', '/ym');
+            }
+            return origBeacon(url, data);
+          };
+        }
       }, 3000);
     `,
           }}
