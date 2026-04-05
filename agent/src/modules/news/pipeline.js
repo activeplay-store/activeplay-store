@@ -68,7 +68,13 @@ async function runPipeline(article, targets, bot) {
 
     // ═══ ШАГ 3: ГЕНЕРАЦИЯ ПОЛНОГО ТЕКСТА ═══
     console.log('[PIPELINE] Step 3: Generating full article...');
-    const fullArticle = await generateFullArticle(article, enrichedContext);
+    // Add game-on-site context so LLM writes about buying the game, not subscription
+    let finalContext = enrichedContext || '';
+    if (siteGame) {
+      finalContext += `\nИГРА НА САЙТЕ ACTIVEPLAY: ${siteGame.name}, цена от ${siteGame.minPrice} руб. В 4-м абзаце пиши про покупку/предзаказ этой игры в ActivePlay, а НЕ про подписку PS Plus или Game Pass. Укажи цену.`;
+      console.log(`[PIPELINE] Game on site: ${siteGame.name} (${siteGame.minPrice} RUB) — LLM will write game-specific funnel`);
+    }
+    const fullArticle = await generateFullArticle(article, finalContext);
     if (fullArticle) {
       // Перезаписать site/telegram/vk данными из полной генерации
       article.site = fullArticle.site;
