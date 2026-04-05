@@ -6,21 +6,114 @@ const fs = require('fs');
 const IMAGES_DIR = path.join(__dirname, '../../../../public/images/news');
 const TARGET_WIDTH = 1200;
 const TARGET_HEIGHT = 675;
+const RAWG_API_KEY = 'd9ca3380009e448e8fb356b3837cafa2';
+
+const KNOWN_SLUGS = {
+  'Crimson Desert': 'crimson-desert',
+  'Death Stranding 2': 'death-stranding-2-on-the-beach',
+  'Spider-Man 2': 'marvels-spider-man-2',
+  'EA FC 26': 'ea-sports-fc-26',
+  'EA FC 25': 'ea-sports-fc-25',
+  'GTA 6': 'grand-theft-auto-vi',
+  'GTA VI': 'grand-theft-auto-vi',
+  'Borderlands 4': 'borderlands-4',
+  'Ghost of Yotei': 'ghost-of-yotei',
+  'Monster Hunter Wilds': 'monster-hunter-wilds',
+  'Mafia The Old Country': 'mafia-the-old-country',
+  'Kingdom Come Deliverance 2': 'kingdom-come-deliverance-ii',
+  'Black Myth Wukong': 'black-myth-wukong',
+  'Astro Bot': 'astro-bot',
+  'Silent Hill 2': 'silent-hill-2',
+  'Metaphor ReFantazio': 'metaphor-refantazio',
+  'Like a Dragon': 'like-a-dragon-infinite-wealth',
+};
+
+// Извлечь название игры из заголовка новости
+function extractGameName(article) {
+  const title = article.site?.title || article.title || '';
+
+  // Текст в кавычках
+  const quoteMatch = title.match(/[«"']([^»"']+)[»"']/);
+  if (quoteMatch) return quoteMatch[1].trim();
+
+  // До двоеточия или тире
+  const colonMatch = title.match(/^([A-Za-zА-Яа-яёЁ0-9\s:'\-&.]+?)[\s]*[:\–\—]/);
+  if (colonMatch) {
+    const candidate = colonMatch[1].trim();
+    if (candidate.length >= 3) return candidate;
+  }
+
+  // Английские слова в начале (название игры) перед русским текстом/глаголом
+  const engMatch = title.match(/^([A-Z][A-Za-z0-9'\s\-&.]{2,40}?)(?:\s+[\u0400-\u04FF]|\s*[:\–\—!?]|\s+на\s|\s+для\s|\s+получ|\s+выход|\s+убрал|\s+стал|\s+побил|\s+лиш|\s+потер)/);
+  if (engMatch) return engMatch[1].trim();
+
+  // Просто первые английские слова
+  const simpleEng = title.match(/^([A-Z][A-Za-z0-9'\s\-&.]{2,30})\b/);
+  if (simpleEng) return simpleEng[1].trim();
+
+  return null;
+}
+
+// Прямой запрос по slug
+async function getRAWGBySlug(slug) {
+  try {
+    const response = await axios.get(`https://api.rawg.io/api/games/${slug}`, {
+      params: { key: RAWG_API_KEY },
+      timeout: 10000,
+    });
+    return response.data?.background_image || null;
+  } catch {
+    return null;
+  }
+}
+
+// Поиск обложки через RAWG
+async function searchRAWG(gameName) {
+  if (!gameName) return null;
+
+  try {
+    const response = await axios.get('https://api.rawg.io/api/games', {
+      params: {
+        key: RAWG_API_KEY,
+        search: gameName,
+        page_size: 3,
+        search_precise: true,
+      },
+      timeout: 10000,
+    });
+
+    const results = response.data?.results;
+    if (!results || results.length === 0) return null;
+
+    const game = results.find(g => g.background_image);
+    if (!game) return null;
+
+    console.log(`[NEWS] RAWG found: "${game.name}" for query "${gameName}", image: ${game.background_image}`);
+    return game.background_image;
+  } catch (err) {
+    console.error(`[NEWS] RAWG search error: ${err.message}`);
+    return null;
+  }
+}
+
+// Скачать картинку по URL
+async function downloadImage(url) {
+  const response = await axios.get(url, {
+    responseType: 'arraybuffer',
+    timeout: 15000,
+    headers: { 'User-Agent': 'ActivePlay News Bot 1.0' },
+  });
+  return Buffer.from(response.data);
+}
 
 // Проверить качество картинки из источника
 async function checkSourceImage(imageUrl) {
   if (!imageUrl) return null;
   try {
-    const response = await axios.get(imageUrl, {
-      responseType: 'arraybuffer',
-      timeout: 10000,
-      headers: { 'User-Agent': 'ActivePlay News Bot 1.0' },
-    });
-    const metadata = await sharp(Buffer.from(response.data)).metadata();
-    if (metadata.width >= 600) {
-      return Buffer.from(response.data);
-    }
-    return null; // Слишком маленькая
+    const buf = await downloadImage(imageUrl);
+    const metadata = await sharp(buf).metadata();
+    if (metadata.width >= 600) return buf;
+    return null;
   } catch {
     return null;
   }
@@ -37,155 +130,51 @@ async function resizeImage(imageBuffer, filename) {
   return `/images/news/${filename}`;
 }
 
-// Генерация через Gemini Imagen
-async function generateImage(title) {
-  const key = process.env.GEMINI_API_KEY;
-  if (!key) return null;
-
-  const prompt = `Generate an image: Gaming news cover image, 16:9 aspect ratio, high quality, cinematic lighting, professional gaming media style, NO TEXT on image: ${title}. Combine visual elements from the topic.`;
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${key}`;
-
-  try {
-    const response = await axios.post(url, {
-      contents: [{ parts: [{ text: prompt }] }],
-      generationConfig: {
-        responseModalities: ['IMAGE', 'TEXT'],
-      },
-    }, { timeout: 60000 });
-
-    const parts = response.data?.candidates?.[0]?.content?.parts || [];
-    const imagePart = parts.find(p => p.inlineData?.mimeType?.startsWith('image/'));
-    if (!imagePart) {
-      console.error('[NEWS] Gemini: no image in response');
-      return null;
-    }
-
-    return Buffer.from(imagePart.inlineData.data, 'base64');
-  } catch (err) {
-    const msg = err.response?.data?.error?.message || err.message;
-    console.error('[NEWS] Gemini image error:', msg);
-    return null;
-  }
-}
-
-// Поиск обложки игры через RAWG API
-const RAWG_KEY = process.env.RAWG_API_KEY || 'd9ca3380009e448e8fb356b3837cafa2';
-
-async function searchRawgImage(title) {
-  if (!title) return null;
-  try {
-    const gameMatch = title.match(/[A-Z][A-Za-z0-9':&\- ]{2,}/);
-    const query = gameMatch ? gameMatch[0].trim() : title.substring(0, 40);
-
-    const response = await axios.get('https://api.rawg.io/api/games', {
-      params: { key: RAWG_KEY, search: query, page_size: 1 },
-      timeout: 10000,
-    });
-
-    const game = response.data?.results?.[0];
-    if (game?.background_image) {
-      console.log(`[NEWS] RAWG found: ${game.name} → ${game.background_image}`);
-      const imgResponse = await axios.get(game.background_image, {
-        responseType: 'arraybuffer',
-        timeout: 10000,
-      });
-      return Buffer.from(imgResponse.data);
-    }
-    return null;
-  } catch (err) {
-    console.error(`[NEWS] RAWG error: ${err.message}`);
-    return null;
-  }
-}
-
-// Поиск картинки через Steam CDN
-async function searchSteamImage(title) {
-  if (!title) return null;
-  try {
-    // Извлечь название игры для поиска
-    const gameName = title.replace(/^(Новость|Анонс|Обзор|Слух|Инсайд|Хайп)\s*[:—–\-]\s*/i, '').trim();
-    // Поиск через Steam store search API
-    const response = await axios.get('https://store.steampowered.com/api/storesearch/', {
-      params: { term: gameName, l: 'english', cc: 'US' },
-      timeout: 10000,
-      headers: { 'User-Agent': 'ActivePlay News Bot 1.0' },
-    });
-
-    const app = response.data?.items?.[0];
-    if (!app?.id) return null;
-
-    // Steam header image (460x215, но лучше чем ничего)
-    const steamUrl = `https://cdn.akamai.steamstatic.com/steam/apps/${app.id}/header.jpg`;
-    console.log(`[NEWS] Steam found: ${app.name} (${app.id})`);
-
-    const imgResponse = await axios.get(steamUrl, {
-      responseType: 'arraybuffer',
-      timeout: 10000,
-    });
-    return Buffer.from(imgResponse.data);
-  } catch (err) {
-    console.error(`[NEWS] Steam image error: ${err.message}`);
-    return null;
-  }
-}
-
-// Дефолтная картинка-заглушка
-const DEFAULT_IMAGE = path.join(IMAGES_DIR, 'default-news.jpg');
-
-async function ensureDefaultImage() {
-  if (fs.existsSync(DEFAULT_IMAGE)) return;
-  // Создать простую заглушку через sharp
-  if (!fs.existsSync(IMAGES_DIR)) fs.mkdirSync(IMAGES_DIR, { recursive: true });
-  await sharp({
-    create: {
-      width: TARGET_WIDTH,
-      height: TARGET_HEIGHT,
-      channels: 3,
-      background: { r: 15, g: 23, b: 42 },
-    },
-  })
-    .jpeg({ quality: 85 })
-    .toFile(DEFAULT_IMAGE);
-  console.log('[NEWS] Created default news image');
-}
-
 // Главная функция: получить картинку для новости
 async function getNewsImage(article) {
   const filename = `${article.id}.jpg`;
 
-  // 1. Попробовать оригинал из RSS
+  // 1. RAWG — обложка игры (приоритет)
+  const gameName = extractGameName(article);
+  if (gameName) {
+    console.log(`[NEWS] Searching RAWG for: "${gameName}"`);
+
+    let rawgUrl = null;
+
+    // 1a. Точный slug из маппинга
+    const knownSlug = KNOWN_SLUGS[gameName];
+    if (knownSlug) {
+      console.log(`[NEWS] Using known slug: ${knownSlug}`);
+      rawgUrl = await getRAWGBySlug(knownSlug);
+    }
+
+    // 1b. Поиск по названию
+    if (!rawgUrl) {
+      rawgUrl = await searchRAWG(gameName);
+    }
+
+    if (rawgUrl) {
+      try {
+        const buf = await downloadImage(rawgUrl);
+        const resized = await resizeImage(buf, filename);
+        console.log(`[NEWS] Using RAWG image for: ${gameName}`);
+        return resized;
+      } catch (err) {
+        console.error(`[NEWS] RAWG image download failed: ${err.message}`);
+      }
+    }
+  }
+
+  // 2. Source image из RSS (fallback)
   const sourceImage = await checkSourceImage(article.image);
   if (sourceImage) {
     console.log(`[NEWS] Using source image for: ${article.title}`);
     return await resizeImage(sourceImage, filename);
   }
 
-  // 2. Поиск обложки игры через RAWG
-  console.log(`[NEWS] Trying RAWG for: ${article.site?.title || article.title}`);
-  const rawgImage = await searchRawgImage(article.site?.title || article.title);
-  if (rawgImage) {
-    return await resizeImage(rawgImage, filename);
-  }
-
-  // 3. Steam CDN
-  console.log(`[NEWS] Trying Steam for: ${article.site?.title || article.title}`);
-  const steamImage = await searchSteamImage(article.site?.title || article.title);
-  if (steamImage) {
-    return await resizeImage(steamImage, filename);
-  }
-
-  // 4. Генерить через Gemini Imagen
-  console.log(`[NEWS] Generating Gemini image for: ${article.site?.title || article.title}`);
-  const generated = await generateImage(article.site?.title || article.title);
-  if (generated) {
-    return await resizeImage(generated, filename);
-  }
-
-  // 5. Дефолтная заглушка
-  console.warn(`[NEWS] Using default image for: ${article.title}`);
-  await ensureDefaultImage();
-  const defaultBuf = fs.readFileSync(DEFAULT_IMAGE);
-  return await resizeImage(defaultBuf, filename);
+  // 3. Null — без картинки
+  console.log(`[NEWS] No image found for: ${article.title}`);
+  return null;
 }
 
-module.exports = { getNewsImage, checkSourceImage, generateImage, searchRawgImage, searchSteamImage, resizeImage };
+module.exports = { getNewsImage, checkSourceImage, searchRAWG, resizeImage, extractGameName };
