@@ -433,13 +433,20 @@ function buildPrompt(article, enrichedContext) {
 // ═══ Парсинг JSON из ответа LLM ═══
 function parseLLMResponse(text) {
   const jsonMatch = text.match(/\{[\s\S]*\}/);
-  if (!jsonMatch) return null;
+  if (!jsonMatch) {
+    console.error('[NEWS] parseLLM: no JSON found in response. First 500 chars:', (text || '').substring(0, 500));
+    return null;
+  }
 
   try {
     const parsed = JSON.parse(jsonMatch[0]);
-    if (!parsed.site?.text || !parsed.site?.title) return null;
+    if (!parsed.site?.text || !parsed.site?.title) {
+      console.error('[NEWS] parseLLM: JSON parsed but missing site.text or site.title. Keys:', Object.keys(parsed).join(', '), 'site keys:', parsed.site ? Object.keys(parsed.site).join(', ') : 'no site');
+      return null;
+    }
     return parsed;
-  } catch {
+  } catch (err) {
+    console.error('[NEWS] parseLLM: JSON parse error:', err.message, 'First 300 chars of match:', jsonMatch[0].substring(0, 300));
     return null;
   }
 }
