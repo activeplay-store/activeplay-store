@@ -37,7 +37,7 @@ function truncate(text, maxLen) {
 
 function escMd(s) {
   if (!s) return s;
-  return String(s).replace(/([_*[\]()~`>#+\-=|{}.!])/g, "\\$1");
+  return String(s).replace(/([_*`\[])/g, "\\$1");
 }
 
 module.exports = { buildPreview };

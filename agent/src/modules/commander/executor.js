@@ -41,7 +41,7 @@ async function editNewsTitle(params, dryRun) {
 
 async function editNewsParagraph(params, dryRun, options = {}) {
   const article = getNewsArticle(params.newsId, params.newsTitle);
-  const text = article.text || "";
+  const text = article.text || article.content || "";
   const paragraphs = text.split("\n\n").filter(p => p.trim());
   const pIndex = (params.paragraphNumber || 1) - 1;
 
@@ -71,7 +71,7 @@ async function editNewsParagraph(params, dryRun, options = {}) {
 
 async function editNewsFix(params, dryRun) {
   const article = getNewsArticle(params.newsId, params.newsTitle);
-  const oldText = article.text || "";
+  const oldText = article.text || article.content || "";
   const oldTitle = article.title || "";
 
   let newText = oldText;
@@ -131,6 +131,8 @@ async function deleteNews(params, dryRun) {
 
 async function regenerateNews(params, dryRun) {
   const article = getNewsArticle(params.newsId, params.newsTitle);
+  // Normalize: archive may store text as "content" (site format)
+  if (!article.text && article.content) article.text = article.content;
 
   // Enrich context if possible
   let enrichedContext = null;
@@ -468,8 +470,11 @@ function updateNewsField(newsId, field, value) {
   const archive = JSON.parse(fs.readFileSync(NEWS_ARCHIVE, "utf-8"));
   const index = newsId === "latest" ? 0 : archive.findIndex(a => a.id === newsId);
   if (index < 0) throw new Error("Новость не найдена");
-  archive[index][field] = value;
+  // Map field names: archive uses "content" not "text" (matches site format)
+  const mappedField = field === "text" ? "content" : field;
+  archive[index][mappedField] = value;
   fs.writeFileSync(NEWS_ARCHIVE, JSON.stringify(archive, null, 2));
+  console.log("[CMD] updateNewsField: " + mappedField + " for " + newsId);
 }
 
 function updateSiteNews(newsId, fields) {
