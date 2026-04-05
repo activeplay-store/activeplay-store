@@ -132,26 +132,70 @@ async function deleteNews(params, dryRun) {
 async function regenerateNews(params, dryRun) {
   const article = getNewsArticle(params.newsId, params.newsTitle);
 
+  // Enrich context if possible
+  let enrichedContext = null;
+  try {
+    const { enrichArticle } = require("../news/enrichment");
+    const enrichResult = await enrichArticle({
+      title: article.title,
+      site: { title: article.title, text: article.text },
+      sourceName: article.source,
+      link: article.sourceUrl,
+    });
+    enrichedContext = enrichResult?.enrichedContext || null;
+  } catch (err) {
+    console.log("[CMD] Enrichment skipped:", err.message);
+  }
+
+  // Pass editor instruction into the description for the prompt
+  const instruction = params.instruction || "";
+  const descriptionWithInstruction = instruction
+    ? article.text + "\n\nДОПОЛНИТЕЛЬНОЕ УКАЗАНИЕ РЕДАКТОРА: " + instruction
+    : article.text;
+
   const { generateFullArticle } = require("../news/translator");
   const newArticle = await generateFullArticle({
     title: article.title,
-    description: article.text,
+    description: descriptionWithInstruction,
     sourceName: article.source,
     link: article.sourceUrl,
-  });
+  }, enrichedContext);
 
-  if (!newArticle) throw new Error("Не удалось перегенерировать");
+  if (!newArticle) throw new Error("\u041d\u0435 \u0443\u0434\u0430\u043b\u043e\u0441\u044c \u043f\u0435\u0440\u0435\u0433\u0435\u043d\u0435\u0440\u0438\u0440\u043e\u0432\u0430\u0442\u044c");
 
   if (dryRun) {
     return { oldValue: article.text, newValue: newArticle.site?.text || "", field: "full_text" };
   }
 
+  // Update text and title
   updateNewsField(params.newsId, "text", newArticle.site.text);
   updateNewsField(params.newsId, "title", newArticle.site.title);
-  updateSiteNews(params.newsId, { text: newArticle.site.text, title: newArticle.site.title });
+
+  // Build site update fields
+  const siteFields = { text: newArticle.site.text, title: newArticle.site.title };
+
+  // Sync platform and CTA from regenerated article
+  if (newArticle.platform) {
+    updateNewsField(params.newsId, "platform", newArticle.platform);
+    siteFields.platform = newArticle.platform;
+  }
+  if (newArticle.ctaType) {
+    updateNewsField(params.newsId, "ctaType", newArticle.ctaType);
+    siteFields.ctaType = newArticle.ctaType;
+  }
+  if (newArticle.ctaText) {
+    updateNewsField(params.newsId, "ctaText", newArticle.ctaText);
+    siteFields.ctaText = newArticle.ctaText;
+  }
+  if (newArticle.ctaLink) {
+    updateNewsField(params.newsId, "ctaLink", newArticle.ctaLink);
+    siteFields.ctaLink = newArticle.ctaLink;
+  }
+
+  updateSiteNews(params.newsId, siteFields);
 
   return {
-    summary: `Текст перегенерирован: «${newArticle.site.title}»`,
+    summary: `\u0422\u0435\u043a\u0441\u0442 \u043f\u0435\u0440\u0435\u0433\u0435\u043d\u0435\u0440\u0438\u0440\u043e\u0432\u0430\u043d: \u00ab${newArticle.site.title}\u00bb`,
     needsDeploy: true,
     commitMessage: "fix: regenerate news text",
   };
@@ -551,7 +595,20 @@ async function suggestNewsTitles(params, dryRun) {
   }
 }
 
+// Fallback for intents that need user clarification
+async function handleClarify(params, dryRun) {
+  return {
+    summary: "\u041d\u0435 \u0443\u0434\u0430\u043b\u043e\u0441\u044c \u043e\u043f\u0440\u0435\u0434\u0435\u043b\u0438\u0442\u044c \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0435. \u041f\u043e\u043f\u0440\u043e\u0431\u0443\u0439\u0442\u0435 \u0441\u0444\u043e\u0440\u043c\u0443\u043b\u0438\u0440\u043e\u0432\u0430\u0442\u044c \u0442\u043e\u0447\u043d\u0435\u0435:\n" +
+      "\u2022 \u041f\u0435\u0440\u0435\u043f\u0438\u0448\u0438 \u0437\u0430\u0433\u043e\u043b\u043e\u0432\u043e\u043a \u043d\u043e\u0432\u043e\u0441\u0442\u0438 X\n" +
+      "\u2022 \u0412 \u0442\u0440\u0435\u0442\u044c\u0435\u043c \u0430\u0431\u0437\u0430\u0446\u0435 \u0434\u043e\u0431\u0430\u0432\u044c \u0444\u0430\u043a\u0442\u0443\u0440\u0443 \u043f\u0440\u043e Y\n" +
+      "\u2022 \u041f\u043e\u043b\u043d\u043e\u0441\u0442\u044c\u044e \u043f\u0435\u0440\u0435\u0440\u0430\u0431\u043e\u0442\u0430\u0439 \u043d\u043e\u0432\u043e\u0441\u0442\u044c Z",
+    needsDeploy: false,
+    commitMessage: "",
+  };
+}
+
 const ACTION_HANDLERS = {
+  clarify: handleClarify,
   edit_news_title: editNewsTitle,
   edit_news_paragraph: editNewsParagraph,
   edit_news_fix: editNewsFix,

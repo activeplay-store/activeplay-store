@@ -489,9 +489,9 @@ async function generateFullArticle(article, enrichedContext) {
       if (parsed.vk?.title) parsed.vk.title = cleanHeadline(parsed.vk.title);
 
       // Гарантия воронки: если текст не содержит "ActivePlay" — дописать
-      if (!parsed.site.text.includes(ActivePlay)) {
+      if (!parsed.site.text.includes('ActivePlay')) {
         parsed.site.text += getSmartFunnel(parsed);
-        console.log(`[NEWS] Funnel appended (platform: ${parsed.platform || general})`);
+        console.log(`[NEWS] Funnel appended (platform: ${parsed.platform || 'general'})`);
       }
 
       // Валидация с детальным логированием
