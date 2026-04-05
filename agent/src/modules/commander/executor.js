@@ -343,18 +343,34 @@ async function previewEditFix(params, dryRun) {
 // ==================== HELPERS ====================
 
 function getNewsArticle(newsId, newsTitle) {
+  console.log(`[CMD] getNewsArticle: newsId=${newsId}, newsTitle=${newsTitle}`);
   const archive = JSON.parse(fs.readFileSync(NEWS_ARCHIVE, "utf-8"));
-  if (newsId === "latest") return archive[0];
 
-  // Поиск по названию
   if (newsId === "search" && newsTitle) {
     const lower = newsTitle.toLowerCase();
-    const found = archive.find(a =>
-      (a.title || "").toLowerCase().includes(lower)
-    );
-    if (found) return found;
-    throw new Error(`Новость "${newsTitle}" не найдена`);
+    console.log(`[CMD] Searching archive for: "${lower}"`);
+    const found = archive.find(a => {
+      const title = (a.title || "").toLowerCase();
+      return title.includes(lower);
+    });
+    if (found) {
+      console.log(`[CMD] Found: "${found.title}"`);
+      return found;
+    }
+    // Попробовать частичное совпадение по словам
+    const words = lower.split(/\s+/).filter(w => w.length > 3);
+    const partial = archive.find(a => {
+      const title = (a.title || "").toLowerCase();
+      return words.every(w => title.includes(w));
+    });
+    if (partial) {
+      console.log(`[CMD] Partial match: "${partial.title}"`);
+      return partial;
+    }
+    console.log(`[CMD] Not found, falling back to latest`);
   }
+
+  if (newsId === "latest" || newsId === "search") return archive[0];
 
   const article = archive.find(a => a.id === newsId);
   if (!article) throw new Error(`Новость ${newsId} не найдена`);
