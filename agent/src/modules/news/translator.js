@@ -431,6 +431,28 @@ function buildPrompt(article, enrichedContext) {
 }
 
 // ═══ Парсинг JSON из ответа LLM ═══
+
+// Fix real newlines inside JSON string values (LLM output issue)
+function fixJsonNewlines(str) {
+  let result = "";
+  let inString = false;
+  let escaped = false;
+
+  for (let i = 0; i < str.length; i++) {
+    const ch = str[i];
+    if (escaped) { result += ch; escaped = false; continue; }
+    if (ch === "\\") { result += ch; escaped = true; continue; }
+    if (ch === '"') { inString = !inString; result += ch; continue; }
+    if (inString && (ch === "\n" || ch === "\r")) {
+      if (ch === "\r" && str[i + 1] === "\n") { result += "\\n"; i++; }
+      else if (ch === "\n") { result += "\\n"; }
+      continue;
+    }
+    result += ch;
+  }
+  return result;
+}
+
 function parseLLMResponse(text) {
   const jsonMatch = text.match(/\{[\s\S]*\}/);
   if (!jsonMatch) {
@@ -438,19 +460,22 @@ function parseLLMResponse(text) {
     return null;
   }
 
+  // Fix: LLM often returns real newlines inside JSON string values
+  // Use char-by-char scan to replace newlines only inside quoted strings
+  const jsonStr = fixJsonNewlines(jsonMatch[0]);
+
   try {
-    const parsed = JSON.parse(jsonMatch[0]);
+    const parsed = JSON.parse(jsonStr);
     if (!parsed.site?.text || !parsed.site?.title) {
-      console.error('[NEWS] parseLLM: JSON parsed but missing site.text or site.title. Keys:', Object.keys(parsed).join(', '), 'site keys:', parsed.site ? Object.keys(parsed.site).join(', ') : 'no site');
+      console.error('[NEWS] parseLLM: missing site.text or site.title. Keys:', Object.keys(parsed).join(', '));
       return null;
     }
     return parsed;
   } catch (err) {
-    console.error('[NEWS] parseLLM: JSON parse error:', err.message, 'First 300 chars of match:', jsonMatch[0].substring(0, 300));
+    console.error('[NEWS] parseLLM: JSON parse error:', err.message, 'First 300 chars:', jsonMatch[0].substring(0, 300));
     return null;
   }
 }
-
 // ═══ Подсчёт абзацев ═══
 function countParagraphs(text) {
   if (!text) return 0;
