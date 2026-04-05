@@ -23,6 +23,12 @@ async function executeAction(intent, options = {}) {
 
 async function editNewsTitle(params, dryRun) {
   const article = getNewsArticle(params.newsId, params.newsTitle);
+  // Resolve real article ID (params.newsId may be "search" or "latest")
+  const resolvedId = article.id || article.slug || params.newsId;
+  if (params.newsId !== resolvedId) {
+    console.log("[CMD] Resolved newsId: " + params.newsId + " -> " + resolvedId);
+    params.newsId = resolvedId;
+  }
   const oldTitle = article.title;
 
   if (dryRun) {
@@ -41,6 +47,12 @@ async function editNewsTitle(params, dryRun) {
 
 async function editNewsParagraph(params, dryRun, options = {}) {
   const article = getNewsArticle(params.newsId, params.newsTitle);
+  // Resolve real article ID (params.newsId may be "search" or "latest")
+  const resolvedId = article.id || article.slug || params.newsId;
+  if (params.newsId !== resolvedId) {
+    console.log("[CMD] Resolved newsId: " + params.newsId + " -> " + resolvedId);
+    params.newsId = resolvedId;
+  }
   const text = article.text || article.content || "";
   const paragraphs = text.split("\n\n").filter(p => p.trim());
   const pIndex = (params.paragraphNumber || 1) - 1;
@@ -71,6 +83,12 @@ async function editNewsParagraph(params, dryRun, options = {}) {
 
 async function editNewsFix(params, dryRun) {
   const article = getNewsArticle(params.newsId, params.newsTitle);
+  // Resolve real article ID (params.newsId may be "search" or "latest")
+  const resolvedId = article.id || article.slug || params.newsId;
+  if (params.newsId !== resolvedId) {
+    console.log("[CMD] Resolved newsId: " + params.newsId + " -> " + resolvedId);
+    params.newsId = resolvedId;
+  }
   const oldText = article.text || article.content || "";
   const oldTitle = article.title || "";
 
@@ -108,6 +126,12 @@ async function editNewsFix(params, dryRun) {
 
 async function deleteNews(params, dryRun) {
   const article = getNewsArticle(params.newsId, params.newsTitle);
+  // Resolve real article ID (params.newsId may be "search" or "latest")
+  const resolvedId = article.id || article.slug || params.newsId;
+  if (params.newsId !== resolvedId) {
+    console.log("[CMD] Resolved newsId: " + params.newsId + " -> " + resolvedId);
+    params.newsId = resolvedId;
+  }
 
   if (dryRun) {
     return { oldValue: article.title, newValue: "(удалена)", field: "delete" };
@@ -131,6 +155,12 @@ async function deleteNews(params, dryRun) {
 
 async function regenerateNews(params, dryRun) {
   const article = getNewsArticle(params.newsId, params.newsTitle);
+  // Resolve real article ID (params.newsId may be "search" or "latest")
+  const resolvedId = article.id || article.slug || params.newsId;
+  if (params.newsId !== resolvedId) {
+    console.log("[CMD] Resolved newsId: " + params.newsId + " -> " + resolvedId);
+    params.newsId = resolvedId;
+  }
   // Normalize: archive may store text as "content" (site format)
   if (!article.text && article.content) article.text = article.content;
 
@@ -569,6 +599,12 @@ ${isRetry ? "ВАЖНО: предыдущий вариант не понрави
 
 async function suggestNewsTitles(params, dryRun) {
   const article = getNewsArticle(params.newsId, params.newsTitle);
+  // Resolve real article ID (params.newsId may be "search" or "latest")
+  const resolvedId = article.id || article.slug || params.newsId;
+  if (params.newsId !== resolvedId) {
+    console.log("[CMD] Resolved newsId: " + params.newsId + " -> " + resolvedId);
+    params.newsId = resolvedId;
+  }
   const count = params.count || 3;
 
   const prompt = `Предложи ${count} варианта SEO-заголовка для этой новости.
