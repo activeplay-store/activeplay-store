@@ -37,7 +37,7 @@ async function publishToTelegram(bot, article) {
 
 async function publishToVK(article) {
   const VK_TOKEN = process.env.VK_ACCESS_TOKEN;
-  const VK_GROUP_ID = process.env.VK_GROUP_ID; // числовой ID группы (без минуса)
+  const VK_GROUP_ID = process.env.VK_GROUP_ID;
   if (!VK_TOKEN || !VK_GROUP_ID) {
     console.error('[NEWS] VK publish skipped: VK_ACCESS_TOKEN or VK_GROUP_ID not set');
     return;
@@ -46,13 +46,24 @@ async function publishToVK(article) {
   const vk = article.vk || {};
   const title = vk.title || article.site?.title || article.title || '';
   const rawText = vk.text || article.site?.text || article.text || '';
-  // Clean text for VK: convert unicode escapes to actual symbols
-  const text = rawText.replace(/\\u20BD/g, '\u20BD');
+  const text = rawText.replace(/\\u20BD/g, '\u20bd');
   const tags = (article.site?.tags || article.tags || []).map(t => `#${t.replace(/\s+/g, '_')}`).join(' ');
   const articleUrl = article.slug ? `https://activeplay.games/news/${article.slug}` : 'https://activeplay.games';
-  const message = `📰 ${title}\n\n${text}\n\n${tags}\n\n🔗 Читать на сайте: ${articleUrl}`;
+
+  const message = `\ud83d\udcf0 ${title}\n\n${text}\n\n${tags}\n\n\ud83d\udd17 \u0427\u0438\u0442\u0430\u0442\u044c \u043d\u0430 \u0441\u0430\u0439\u0442\u0435: ${articleUrl}`;
 
   try {
+    // Upload image to VK if available
+    let attachment = '';
+    const imageUrl = article.imageUrl || article.coverUrl || '';
+    if (imageUrl) {
+      try {
+        attachment = await uploadPhotoToVK(imageUrl, VK_TOKEN, VK_GROUP_ID);
+      } catch (imgErr) {
+        console.error('[NEWS] VK image upload failed:', imgErr.message);
+      }
+    }
+
     const params = new URLSearchParams({
       owner_id: `-${VK_GROUP_ID}`,
       from_group: '1',
@@ -60,6 +71,7 @@ async function publishToVK(article) {
       v: '5.199',
       access_token: VK_TOKEN,
     });
+    if (attachment) params.set('attachments', attachment);
 
     const res = await fetch(`https://api.vk.com/method/wall.post?${params.toString()}`, {
       method: 'POST',
@@ -69,11 +81,59 @@ async function publishToVK(article) {
     if (data.error) {
       console.error(`[NEWS] VK error: ${data.error.error_msg}`);
     } else {
-      console.log(`[NEWS] Published to VK: post_id=${data.response?.post_id}, title="${title}"`);
+      console.log(`[NEWS] Published to VK: post_id=${data.response?.post_id}, title="${title}", image=${!!attachment}`);
     }
   } catch (err) {
     console.error(`[NEWS] VK error: ${err.message}`);
   }
+}
+
+// Upload photo to VK wall
+async function uploadPhotoToVK(imageUrl, token, groupId) {
+  const FormData = require('form-data');
+
+  // Resolve image URL (may be relative path)
+  let imageBuffer;
+  if (imageUrl.startsWith('/')) {
+    const localPath = path.join(__dirname, '../../../../public', imageUrl);
+    imageBuffer = fs.readFileSync(localPath);
+  } else {
+    const response = await axios.get(imageUrl, { responseType: 'arraybuffer', timeout: 15000 });
+    imageBuffer = Buffer.from(response.data);
+  }
+
+  // 1. Get upload URL
+  const uploadUrlRes = await fetch(
+    `https://api.vk.com/method/photos.getWallUploadServer?group_id=${groupId}&v=5.199&access_token=${token}`
+  );
+  const uploadUrlData = await uploadUrlRes.json();
+  if (uploadUrlData.error) throw new Error('getWallUploadServer: ' + uploadUrlData.error.error_msg);
+  const uploadUrl = uploadUrlData.response.upload_url;
+
+  // 2. Upload photo
+  const form = new FormData();
+  form.append('photo', imageBuffer, { filename: 'cover.jpg', contentType: 'image/jpeg' });
+
+  const uploadRes = await fetch(uploadUrl, {
+    method: 'POST',
+    body: form,
+    headers: form.getHeaders(),
+  });
+  const uploadResult = await uploadRes.json();
+  if (!uploadResult.photo || uploadResult.photo === '[]') throw new Error('Photo upload returned empty');
+
+  // 3. Save photo
+  const saveRes = await fetch(
+    `https://api.vk.com/method/photos.saveWallPhoto?group_id=${groupId}&photo=${encodeURIComponent(uploadResult.photo)}&server=${uploadResult.server}&hash=${uploadResult.hash}&v=5.199&access_token=${token}`
+  );
+  const saveData = await saveRes.json();
+  if (saveData.error) throw new Error('saveWallPhoto: ' + saveData.error.error_msg);
+
+  const photo = saveData.response?.[0];
+  if (!photo) throw new Error('No photo in saveWallPhoto response');
+
+  console.log(`[NEWS] VK photo uploaded: photo${photo.owner_id}_${photo.id}`);
+  return `photo${photo.owner_id}_${photo.id}`;
 }
 
 // Маппинг категорий переводчика → NewsCategory для сайта

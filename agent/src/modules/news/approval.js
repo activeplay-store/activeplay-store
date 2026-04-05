@@ -244,7 +244,8 @@ function readSiteNews() {
         slug: a.slug,
         title: a.title,
         text: a.content || '',
-        imageUrl: (a.coverUrl && !a.coverUrl.startsWith('http')) ? 'https://activeplay.games' + a.coverUrl : (a.coverUrl || ''),
+        imageUrl: a.coverUrl || '',
+        coverUrl: a.coverUrl || '',
         tags: a.tags || [],
       }));
   } catch (err) {
