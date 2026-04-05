@@ -46,5 +46,33 @@
     "id": "cmd-1775398990862-916677",
     "originalText": "Новость про Элден Ринг. Нужно поменять заголовок.",
     "timestamp": "2026-04-05T14:23:10.862Z"
+  },
+  "cmd-1775399338313-030eba": {
+    "intent": "suggest_news_titles",
+    "params": {
+      "newsId": "search",
+      "newsTitle": "Elden Ring",
+      "count": 3
+    },
+    "confirmation": "Сгенерировать 3 варианта заголовка для новости про Elden Ring?",
+    "id": "cmd-1775399338313-030eba",
+    "originalText": "Новость про Elden Ring. Предложи три альтернативных варианта заголовка, более ярких.",
+    "timestamp": "2026-04-05T14:28:58.313Z",
+    "suggestions": [
+      "Elden Ring: Съемки фильма A24, утечка кадров",
+      "Elden Ring: Фильм A24 – первые кадры со съемочной площадки",
+      "Elden Ring: Утекшие кадры фильма A24 по игре"
+    ],
+    "retryCount": 2
+  },
+  "cmd-1775399416757-02a5fc": {
+    "intent": "preview_edit_title",
+    "params": {
+      "newTitle": "без А-24"
+    },
+    "confirmation": "Предложить вариант заголовка без упоминания A24?",
+    "id": "cmd-1775399416757-02a5fc",
+    "originalText": "Предложи заголовок без А-24.",
+    "timestamp": "2026-04-05T14:30:16.757Z"
   }
 }

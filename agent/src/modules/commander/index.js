@@ -3,6 +3,7 @@ const path = require("path");
 const { parseIntent } = require("./intentParser");
 const { executeAction, getNewsArticle, updateNewsField, updateSiteNews } = require("./executor");
 const { buildPreview } = require("./preview");
+const { getContext, setContext } = require("./context");
 const { validateParams } = require("./validators");
 
 const PENDING_FILE = path.join(__dirname, "../../../data/pending-commands.json");
@@ -11,34 +12,53 @@ async function handleCommand(bot, chatId, text, context = {}) {
   console.log(`[CMD] Received command: "${text}"`);
 
   try {
-    // 1. Парсим intent через LLM
-    const intent = await parseIntent(text, context);
+    // 1. Получаем сохранённый контекст
+    const savedContext = getContext(chatId);
+
+    // 2. Парсим intent через LLM с контекстом
+    const intent = await parseIntent(text, {
+      ...context,
+      lastNewsTitle: savedContext?.lastNewsTitle || null,
+      lastNewsId: savedContext?.lastNewsId || null,
+      lastIntent: savedContext?.lastIntent || null,
+    });
     if (!intent || intent.intent === "unknown") {
       return null; // Не распознано — вернём null, чтобы route мог обработать
     }
 
     console.log(`[CMD] Parsed intent: ${intent.intent}, action: ${JSON.stringify(intent.params)}`);
 
-    // 2. Валидация параметров
+    // 2.5. Сохраняем контекст после успешного парсинга
+    if (intent.intent !== "unknown" && intent.intent !== "clarify") {
+      const articleTitle = intent.params?.newsTitle || savedContext?.lastNewsTitle;
+      const articleId = intent.params?.newsId || savedContext?.lastNewsId;
+      setContext(chatId, {
+        lastNewsTitle: articleTitle,
+        lastNewsId: articleId,
+        lastIntent: intent.intent,
+      });
+    }
+
+    // 3. Валидация параметров
     const validation = validateParams(intent);
     if (!validation.valid) {
       await bot.telegram.sendMessage(chatId, `\u26A0\uFE0F ${validation.error}`);
       return true;
     }
 
-    // 3. Подготовка (получить текущее значение для превью "Было")
+    // 4. Подготовка (получить текущее значение для превью "Было")
     const currentState = await executeAction(intent, { dryRun: true });
 
-    // 4. Если skipPreview — выполняем сразу
+    // 5. Если skipPreview — выполняем сразу
     if (currentState?.skipPreview) {
       await bot.telegram.sendMessage(chatId, currentState.summary);
       return true;
     }
 
-    // 5. Формируем превью
+    // 6. Формируем превью
     const preview = buildPreview(intent, currentState);
 
-    // 5.5. Спец-обработка suggest_news_titles
+    // 6.5. Спец-обработка suggest_news_titles
     if (intent.intent === "suggest_news_titles" && currentState.suggestions) {
       const buttons = currentState.suggestions.map((title, i) => ([
         { text: (i + 1) + ". " + title.slice(0, 50), callback_data: "cmd_pick_title_" + intent.id + "_" + i }
@@ -56,7 +76,7 @@ async function handleCommand(bot, chatId, text, context = {}) {
       return true;
     }
 
-    // 6. Отправляе�� превью с кнопками
+    // 7. Отправляе�� превью с кнопками
     await bot.telegram.sendMessage(chatId, preview.text, {
       parse_mode: "Markdown",
       reply_markup: {
@@ -72,7 +92,7 @@ async function handleCommand(bot, chatId, text, context = {}) {
       },
     });
 
-    // 7. Сохранить pending command
+    // 8. Сохранить pending command
     savePendingCommand(intent);
     return true;
 

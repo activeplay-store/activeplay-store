@@ -144,6 +144,38 @@ clarify — команда непонятна, нужно уточнить у п
 Вход: "Предложи три варианта заголовка для новости про Elden Ring"
 Выход: {"intent":"suggest_news_titles","params":{"newsId":"search","newsTitle":"Elden Ring","count":3},"confirmation":"Сгенерировать 3 варианта заголовка для новости про Elden Ring?"}
 
+
+КОНТЕКСТ РАЗГОВОРА:
+Тебе может быть передан контекст в формате [КОНТЕКСТ: ...] в начале сообщения.
+Он содержит: последнюю обсуждаемую новость (lastNewsTitle) и предыдущее действие (lastIntent).
+Если пользователь говорит "убери A24 из заголовка" без указания какой новости — используй lastNewsTitle из контекста.
+Если контекста нет и новость не указана — спроси (clarify).
+
+Пример с контекстом:
+[КОНТЕКСТ: Последняя обсуждаемая новость: "Elden Ring от A24 — слив кадров". Предыдущее действие: suggest_news_titles.]
+Вход: "убери A24 из заголовка"
+Выход: {"intent":"edit_news_fix","params":{"newsId":"search","newsTitle":"Elden Ring","errorText":"A24","fixText":""},"confirmation":"Убрать A24 из заголовка новости про Elden Ring?"}
+
+СВОБОДНАЯ РЕЧЬ vs КОМАНДА:
+Пользователь может РАССУЖДАТЬ вслух, а не давать команду. Признаки рассуждения:
+- слова: "просто", "мне кажется", "может быть", "не знаю", "непонятно", "как думаешь"
+- длинные объяснения без конкретного действия
+- вопросы к агенту ("это студия или режиссер?")
+
+Правила:
+1. Рассуждение С выводом-действием в конце — извлеки действие:
+   "Просто здесь непонятно что такое A24, может быть без A24 в заголовке"
+   -> Действие: убрать A24 из заголовка
+   -> {"intent":"edit_news_fix","params":{"newsId":"search","newsTitle":"из контекста","errorText":"A24","fixText":""},"confirmation":"Убрать A24 из заголовка?"}
+
+2. Чисто рассуждение без действия:
+   "Мне кажется что A24 это студия, не знаю точно"
+   -> {"intent":"clarify","params":{},"confirmation":"Что сделать с заголовком?"}
+
+3. Вопрос к агенту:
+   "A24 это студия или режиссер?"
+   -> {"intent":"clarify","params":{},"confirmation":"A24 — это американская кинокомпания-дистрибьютор. Убрать A24 из заголовка?"}
+
 ОТВЕТ СТРОГО JSON (без backticks, без markdown):
 {"intent":"...","params":{...},"confirmation":"..."}`;
 
@@ -151,8 +183,21 @@ async function parseIntent(text, context = {}) {
   const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 
   let userMessage = text;
+
+  // Собираем контекст
+  const contextParts = [];
   if (context.hasActivePreview) {
-    userMessage = `[КОНТЕКСТ: сейчас в чате открыто превью новости, пользователь вероятно правит его]\n\n${text}`;
+    contextParts.push("В чате открыто превью новости.");
+  }
+  if (context.lastNewsTitle) {
+    contextParts.push(`Последняя обсуждаемая новость: "${context.lastNewsTitle}".`);
+  }
+  if (context.lastIntent) {
+    contextParts.push(`Предыдущее действие: ${context.lastIntent}.`);
+  }
+
+  if (contextParts.length > 0) {
+    userMessage = `[КОНТЕКСТ: ${contextParts.join(" ")}]\n\n${text}`;
   }
 
   try {
