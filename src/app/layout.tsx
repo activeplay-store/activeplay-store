@@ -194,11 +194,54 @@ export default function RootLayout({
         <script
           dangerouslySetInnerHTML={{
             __html: `
+      // Intercept all mc.yandex.ru requests → /ym proxy
+      (function() {
+        var targets = ['mc.yandex.ru', 'mc.yandex.com', 'mc.yandex.com.tr'];
+        function rewrite(url) {
+          if (typeof url !== 'string') return url;
+          for (var i = 0; i < targets.length; i++) {
+            if (url.indexOf(targets[i]) !== -1) {
+              return url.replace('https://' + targets[i], '/ym').replace('http://' + targets[i], '/ym');
+            }
+          }
+          return url;
+        }
+        var origOpen = XMLHttpRequest.prototype.open;
+        XMLHttpRequest.prototype.open = function(method, url) {
+          arguments[1] = rewrite(url);
+          return origOpen.apply(this, arguments);
+        };
+        var origFetch = window.fetch;
+        window.fetch = function(url, opts) {
+          if (typeof url === 'string') url = rewrite(url);
+          return origFetch.call(this, url, opts);
+        };
+        if (navigator.sendBeacon) {
+          var origBeacon = navigator.sendBeacon.bind(navigator);
+          navigator.sendBeacon = function(url, data) {
+            return origBeacon(rewrite(url), data);
+          };
+        }
+        var origImage = window.Image;
+        window.Image = function(w, h) {
+          var img = new origImage(w, h);
+          var origSrc = Object.getOwnPropertyDescriptor(HTMLImageElement.prototype, 'src');
+          if (origSrc && origSrc.set) {
+            Object.defineProperty(img, 'src', {
+              set: function(val) { origSrc.set.call(this, rewrite(val)); },
+              get: function() { return origSrc.get.call(this); }
+            });
+          }
+          return img;
+        };
+        window.Image.prototype = origImage.prototype;
+      })();
+
       (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
       m[i].l=1*new Date();
       for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
       k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-      (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+      (window, document, "script", "/ym/metrika/tag.js", "ym");
 
       ym(108381188, "init", {
         clickmap:true,
@@ -212,7 +255,7 @@ export default function RootLayout({
         />
         <noscript>
           <div>
-            <img src="https://mc.yandex.ru/watch/108381188" style={{ position: 'absolute', left: '-9999px' }} alt="" />
+            <img src="/ym/watch/108381188" style={{ position: 'absolute', left: '-9999px' }} alt="" />
           </div>
         </noscript>
         {/* TODO: VK Pixel — вставить код */}
