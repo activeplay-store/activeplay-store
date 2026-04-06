@@ -365,6 +365,7 @@ async function previewEditTitle(params, dryRun) {
 
   if (article.site) article.site.title = params.newTitle;
   article.title = params.newTitle;
+  article.manuallyEdited = true; // Prevent pipeline from overwriting
   fs.writeFileSync(pendingPath, JSON.stringify(pending, null, 2));
 
   return {
@@ -399,6 +400,7 @@ async function previewEditParagraph(params, dryRun, options = {}) {
   const newText = paragraphs.join("\n\n");
   if (article.site) article.site.text = newText;
   article.text = newText;
+  article.manuallyEdited = true; // Prevent pipeline from overwriting
   fs.writeFileSync(pendingPath, JSON.stringify(pending, null, 2));
 
   return {
@@ -441,6 +443,7 @@ async function previewEditFix(params, dryRun) {
   }
   article.text = newText;
   article.title = newTitle;
+  article.manuallyEdited = true; // Prevent pipeline from overwriting
   fs.writeFileSync(pendingPath, JSON.stringify(pending, null, 2));
 
   return {
