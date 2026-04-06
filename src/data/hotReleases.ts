@@ -1,5 +1,5 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-04-05T01:10:51.169Z
+// Обновлено: 2026-04-06T01:12:33.711Z
 // Горящих новинок: 4
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
@@ -57,7 +57,7 @@ export const hotReleases: HotRelease[] = [
     description: "Платформер от ZDT Studio. Стелс-осьминог",
     releaseDate: "2 апреля 2026",
     metacritic: 0,
-    genre: "Казуальная",
+    genre: "Платформер",
     platforms: ["PS5"],
     cover: "https://image.api.playstation.com/vulcan/ap/rnd/202511/0718/8dc3bb026f8c0873ac11c58a584c3ee618dbfc9db4064514.png",
     hypeScore: 2,
