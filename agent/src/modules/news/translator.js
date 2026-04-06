@@ -41,6 +41,7 @@ const SYSTEM_PROMPT = `Ты редактор игрового новостног
 - Называй игру/продукт + что произошло
 - Без двоеточий и тире в заголовке
 - НЕ добавляй категорию в заголовок
+- Только первое слово с большой буквы + имена собственные и аббревиатуры. НЕ пиши каждое русское слово с большой буквы
 
 ОТВЕТ СТРОГО JSON (без backticks):
 {
@@ -51,7 +52,12 @@ const SYSTEM_PROMPT = `Ты редактор игрового новостног
 }`;
 
 async function translateAndRewrite(article) {
-  const userPrompt = `ИСХОДНИК:
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('ru-RU', { timeZone: 'Europe/Moscow', day: 'numeric', month: 'long', year: 'numeric' });
+
+  const userPrompt = `СЕГОДНЯ: ${dateStr}. Учитывай дату: если акция/распродажа заканчивается скоро — пиши про завершение, а НЕ про старт.
+
+ИСХОДНИК:
 Заголовок: ${article.title}
 Текст: ${(article.description || '').substring(0, 3000)}
 Источник: ${article.sourceName}`;
@@ -144,7 +150,10 @@ const FULL_ARTICLE_PROMPT = `Ты \u2014 главный редактор ActiveP
 Почему это важно. Предыдущие игры студии. Сравнение с конкурентами. Что говорят критики или игроки. Metacritic если есть. Исторический контекст. Этот абзац отличает статью от пересказа \u2014 здесь твоя экспертиза.
 
 Абзац 4 \u2014 ВОРОНКА (2-3 предложения):
-Плавный переход к продукту ActivePlay. Если в дополнительных фактах указано «ИГРА НА САЙТЕ ACTIVEPLAY» — пиши про покупку/предзаказ этой игры с ценой, а НЕ про подписку. Иначе — упомяни конкретный продукт (PS Plus / Xbox Game Pass / EA Play) с ценой. Закончи призывом к действию.
+Плавный переход к продукту ActivePlay. Выбор воронки зависит от темы:
+- Если новость о СКИДКАХ/РАСПРОДАЖЕ в PS Store — направь читателя на страницу скидок ActivePlay. Пример: "Актуальные скидки PS Store со всеми ценами в рублях собраны на сайте ActivePlay в разделе скидок."
+- Если в дополнительных фактах указано «ИГРА НА САЙТЕ ACTIVEPLAY» — пиши про покупку/предзаказ этой игры с ценой, а НЕ про подписку.
+- Если новость о ПОДПИСКЕ/КАТАЛОГЕ — упомяни конкретный продукт (PS Plus / Xbox Game Pass / EA Play) с ценой. Закончи призывом к действию.
 
 \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550
 СТИЛЬ ТЕКСТА
@@ -172,10 +181,12 @@ const FULL_ARTICLE_PROMPT = `Ты \u2014 главный редактор ActiveP
 \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550
 
 SEO-формат. Конкретика. Название игры + суть новости.
+РЕГИСТР: Только первое слово заголовка с большой буквы + имена собственные и аббревиатуры (PS5, Xbox, GTA). НЕ пиши каждое слово с большой буквы.
+Хорошо: \u00ABВесенняя распродажа PS Store заканчивается \u2014 скидки до 70% до 8 апреля\u00BB
 Хорошо: \u00ABCrimson Desert: патч улучшил графику на PS5 Pro в режиме 30 FPS\u00BB
 Хорошо: \u00ABSony удалила сотни игр из PS Store \u2014 что произошло и кого затронуло\u00BB
+Плохо: \u00ABВесенняя Распродажа Скидки До 70% На PS4/PS5\u00BB
 Плохо: \u00ABНовая игра скоро выйдет \u2014 вот что известно\u00BB
-Плохо: \u00ABSony сделала важное изменение в магазине\u00BB
 
 \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550
 ДВА ЭТАЛОННЫХ ПРИМЕРА
@@ -422,12 +433,17 @@ function buildPrompt(article, enrichedContext) {
   const source = article.sourceName || '';
   const sourceUrl = article.link || article.sourceUrl || '';
 
+  // Текущая дата для контекста (чтобы модель знала, распродажа начинается или заканчивается)
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('ru-RU', { timeZone: 'Europe/Moscow', day: 'numeric', month: 'long', year: 'numeric' });
+  const dateContext = `\nСЕГОДНЯ: ${dateStr}. Учитывай эту дату при написании текста. Если распродажа/акция заканчивается через 1-3 дня — акцент на срочности и завершении, а НЕ на старте. Если событие уже прошло — пиши в прошедшем времени.`;
+
   return FULL_ARTICLE_PROMPT
     .replace('{title}', title)
     .replace('{translatedDescription}', description.substring(0, 3000))
     .replace('{sourceName}', source)
     .replace('{sourceUrl}', sourceUrl)
-    .replace('{enrichedContext}', enrichedContext || 'Нет дополнительных фактов.');
+    .replace('{enrichedContext}', (enrichedContext || 'Нет дополнительных фактов.') + dateContext);
 }
 
 // ═══ Парсинг JSON из ответа LLM ═══
@@ -522,8 +538,13 @@ async function generateFullArticle(article, enrichedContext) {
 
       // Гарантия воронки: если текст не содержит "ActivePlay" — дописать
       if (!parsed.site.text.includes('ActivePlay')) {
-        parsed.site.text += getSmartFunnel(parsed);
-        console.log(`[NEWS] Funnel appended (platform: ${parsed.platform || 'general'})`);
+        // Для скидок — НЕ добавлять подписочную воронку здесь, pipeline добавит deals-воронку
+        if (parsed.ctaType === 'deals') {
+          console.log(`[NEWS] Skipping funnel append for deals article (pipeline will handle)`);
+        } else {
+          parsed.site.text += getSmartFunnel(parsed);
+          console.log(`[NEWS] Funnel appended (platform: ${parsed.platform || 'general'})`);
+        }
       }
 
       // Валидация с детальным логированием
@@ -561,6 +582,53 @@ async function generateFullArticle(article, enrichedContext) {
   return lastResult;
 }
 
+// ═══ Нормализация регистра заголовка ═══
+function normalizeHeadlineCase(title) {
+  if (!title) return title;
+
+  // Слова-исключения, которые всегда uppercase (аббревиатуры, бренды)
+  const ALWAYS_UPPER = new Set([
+    'PS', 'PS4', 'PS5', 'VR', 'DLC', 'RPG', 'FPS', 'MMO', 'MMORPG', 'PvP', 'PvE',
+    'GTA', 'EA', 'VK', 'TG', 'PC', 'AI', 'PSVR', 'PSVR2', 'NBA', 'NFL', 'FIFA',
+    'UFC', 'WWE', 'NFS', 'COD', 'UE5', 'RTX', 'SSD', 'HDD', 'HDR', 'FPS',
+    'II', 'III', 'IV', 'VI', 'VII', 'VIII', 'IX', 'XII', 'XIII', 'XIV', 'XVI',
+  ]);
+
+  // Слова которые являются брендами/названиями — не трогать
+  const BRANDS = new Set([
+    'PlayStation', 'Xbox', 'Nintendo', 'Steam', 'Sony', 'Microsoft', 'Ubisoft',
+    'Bethesda', 'BioWare', 'ActivePlay', 'Metacritic', 'RAWG', 'Capcom',
+    'FromSoftware', 'Rockstar', 'Valve', 'Epic', 'Konami', 'Sega', 'Square',
+  ]);
+
+  const words = title.split(' ');
+  const result = words.map((word, i) => {
+    // Первое слово — всегда с большой буквы
+    if (i === 0) return word;
+
+    // Чистое слово без пунктуации
+    const clean = word.replace(/[^A-Za-zА-Яа-яЁё0-9]/g, '');
+
+    // Аббревиатуры — не трогать
+    if (ALWAYS_UPPER.has(clean)) return word;
+
+    // Бренды — не трогать
+    if (BRANDS.has(clean)) return word;
+
+    // Если всё uppercase и > 2 символов кириллицей — привести к нормальному регистру
+    const cyrOnly = clean.replace(/[^А-ЯЁа-яё]/g, '');
+    if (cyrOnly.length > 2 && cyrOnly === cyrOnly.toUpperCase()) {
+      return word.charAt(0) + word.slice(1).toLowerCase();
+    }
+
+    // Английские слова целиком CAPS > 3 букв — не трогать (могут быть названиями)
+    // Но если всё слово CapsCase уже — оставить
+    return word;
+  });
+
+  return result.join(' ');
+}
+
 // Проверка и улучшение заголовка (отдельный вызов)
 async function checkHeadline(title, summary) {
   const prompt = `Проверь заголовок новости для игрового сайта ActivePlay.
@@ -574,6 +642,7 @@ async function checkHeadline(title, summary) {
 3. Длина 60-80 символов?
 4. Цепляет внимание?
 5. Нет канцелярита?
+6. ВАЖНО: Только первое слово с большой буквы (+ имена собственные, аббревиатуры). НЕ пиши каждое слово с большой буквы. Правильно: "Весенняя распродажа в PS Store — скидки до 70% до 8 апреля". Неправильно: "Весенняя Распродажа Скидки До 70%".
 
 Если заголовок хорош \u2014 верни его как есть.
 Если можно улучшить \u2014 верни улучшенный вариант.
@@ -582,15 +651,17 @@ async function checkHeadline(title, summary) {
 
   try {
     const result = await callOpenRouter(prompt, 200);
-    const cleaned = result.trim().replace(/^["']|["']$/g, '');
+    let cleaned = result.trim().replace(/^["']|["']$/g, '');
     if (cleaned && cleaned.length >= 20 && cleaned.length <= 120) {
+      // Нормализовать регистр после LLM
+      cleaned = normalizeHeadlineCase(cleaned);
       console.log(`[NEWS] Headline: "${title}" \u2192 "${cleaned}"`);
       return cleaned;
     }
-    return title;
+    return normalizeHeadlineCase(title);
   } catch (err) {
     console.error(`[NEWS] checkHeadline error: ${err.message}`);
-    return title;
+    return normalizeHeadlineCase(title);
   }
 }
 

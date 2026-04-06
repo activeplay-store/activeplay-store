@@ -240,10 +240,38 @@ async function getFallbackImage(platform) {
   }
 }
 
+// Определить, является ли новость о распродаже/скидках (не о конкретной игре)
+function isSaleNews(article) {
+  const title = (article.site?.title || article.title || '').toLowerCase();
+  const saleKeywords = ['распродаж', 'скидк', 'sale', 'deals', 'акци', 'снижен', 'ps store:', 'spring sale', 'summer sale', 'winter sale', 'holiday sale', 'black friday'];
+  return saleKeywords.some(kw => title.includes(kw));
+}
+
 // Главная функция: получить картинку для новости
 async function getNewsImage(article) {
   var filename = article.id + '.jpg';
   var platform = article.platform || 'general';
+
+  // Для новостей о распродажах/скидках — приоритет на RSS картинку из источника
+  // (RAWG вернёт случайную обложку игры, а нужна картинка распродажи)
+  if (isSaleNews(article)) {
+    console.log('[NEWS] Sale/deals news detected, prioritizing source image');
+
+    // 1. RSS image из источника (баннер распродажи)
+    if (article.image && !isJunkImage(article.image)) {
+      var sourceImage = await checkSourceImage(article.image);
+      if (sourceImage) {
+        console.log('[NEWS] Using source image for sale news: ' + article.title);
+        return await resizeImage(sourceImage, filename);
+      }
+    }
+
+    // 2. Платформенная заглушка
+    console.log('[NEWS] Using ' + platform + ' fallback for sale news: ' + article.title);
+    return await getFallbackImage(platform);
+  }
+
+  // Для обычных новостей — стандартный порядок
 
   // 1. RAWG — обложка игры (приоритет)
   var gameName = extractGameName(article);

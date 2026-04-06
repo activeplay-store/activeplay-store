@@ -14,6 +14,7 @@ const siteWriter = require('./modules/siteWriter');
 const catalogMonitor = require('./modules/catalogMonitor');
 const { setupApprovalHandlers } = require('./modules/news/approval');
 const { runNewsCycle, processQueue } = require('./modules/news');
+const { handleVoice, setupEditHandlers } = require('./modules/voice/handler');
 
 const VERSION = '1.0.0';
 
@@ -358,6 +359,19 @@ async function main() {
     // Обработчики кнопок одобрения новостей
     setupApprovalHandlers(bot);
 
+    // Обработчики кнопок редактирования (голосовые команды)
+    setupEditHandlers(bot);
+
+    // Голосовые сообщения от админа
+    bot.on('voice', async (ctx) => {
+      try {
+        await handleVoice(ctx, bot);
+      } catch (err) {
+        console.error('[VOICE] Error:', err.message);
+        try { await ctx.reply(`❌ Ошибка: ${err.message}`); } catch (_) {}
+      }
+    });
+
     // Команда /id — узнать свой chat ID
     bot.command('id', (ctx) => {
       ctx.reply(`Ваш Chat ID: ${ctx.chat.id}`);
@@ -385,9 +399,13 @@ async function main() {
     const { setupRepublishHandlers } = require('./modules/news/approval');
     setupRepublishHandlers(bot);
 
-    // Bot polling disabled — ap-agent-bot handles all Telegram updates
-    // This process only uses bot.telegram.* for sending messages
-    console.log('[Bot] Telegram bot ready (API-only mode, no polling)');
+    // Запуск polling для получения голосовых команд и кнопок
+    bot.launch().then(() => {
+      console.log('[Bot] Telegram bot started (polling mode)');
+    }).catch(err => {
+      console.error('[Bot] Polling failed, using API-only mode:', err.message);
+      console.log('[Bot] Telegram bot ready (API-only mode)');
+    });
 
     // Проверка очереди отложенных публикаций — каждую минуту
     setInterval(() => processQueue(bot).catch(err => {

@@ -11,10 +11,25 @@ const { writeToSite, deployToSite, publishToTelegram, publishToVK, buildCtaData,
 
 const STAGING_DIR = path.join(__dirname, '../../../data/news-staging');
 
-function getFunnelText(article) {
+function getFunnelText(article, siteGame) {
   const text = (article.site?.text || article.text || '').toLowerCase();
   const title = (article.site?.title || article.title || '').toLowerCase();
   const combined = title + ' ' + text;
+
+  // Для новостей о скидках/распродажах — воронка на страницу скидок
+  if (article.ctaType === 'deals') {
+    return '\n\nАктуальные скидки PS Store со всеми ценами в рублях собраны на activeplay.games в разделе PlayStation Store скидки. Успейте воспользоваться предложениями, пока распродажа не закончилась.';
+  }
+
+  // Если игра есть на сайте — воронка про покупку этой игры
+  if (siteGame || article.cta) {
+    const gameName = siteGame?.name || article.gameSlug || '';
+    const price = siteGame?.minPrice || '';
+    if (price) {
+      return `\n\nПредзаказать ${gameName} можно в ActivePlay от ${price} \u20BD. Активация за 5 минут, оплата в рублях.`;
+    }
+    return `\n\n${gameName} доступна в ActivePlay. Активация за 5 минут, оплата в рублях.`;
+  }
 
   const isGaming = ['ps5', 'ps4', 'playstation', 'xbox', 'nintendo', 'switch', 'steam', 'pc',
     'ps plus', 'game pass', 'ea play', 'game', 'игр', 'подписк']
@@ -26,12 +41,12 @@ function getFunnelText(article) {
 
   const platform = article.platform || 'general';
   const funnels = {
-    playstation: '\n\nОформить PS Plus можно в ActivePlay от 1 250 ₽/мес. Активация за 10 минут, оплата в рублях. 52 000+ клиентов с 2022 года.',
+    playstation: '\n\nОформить PS Plus можно в ActivePlay от 1 250 \u20BD/мес. Активация за 10 минут, оплата в рублях. 52 000+ клиентов с 2022 года.',
     xbox: '\n\nОформить Xbox Game Pass можно в ActivePlay. Сотни игр по подписке, новинки с первого дня. Быстро, из России, оплата в рублях.',
-    multi: '\n\nПодписки PS Plus и Xbox Game Pass доступны в ActivePlay от 1 250 ₽/мес. 52 000+ клиентов с 2022 года.',
-    pc: '\n\nXbox Game Pass PC открывает доступ к сотням игр. Оформить можно в ActivePlay — быстро, из России, оплата в рублях.',
-    nintendo: '\n\nИгровые подписки доступны в ActivePlay от 1 250 ₽/мес. 52 000+ клиентов с 2022 года.',
-    general: '\n\nПодписки PS Plus, Xbox Game Pass и EA Play доступны в ActivePlay от 1 250 ₽/мес. 52 000+ клиентов с 2022 года.',
+    multi: '\n\nПодписки PS Plus и Xbox Game Pass доступны в ActivePlay от 1 250 \u20BD/мес. 52 000+ клиентов с 2022 года.',
+    pc: '\n\nXbox Game Pass PC открывает доступ к сотням игр. Оформить можно в ActivePlay \u2014 быстро, из России, оплата в рублях.',
+    nintendo: '\n\nИгровые подписки доступны в ActivePlay от 1 250 \u20BD/мес. 52 000+ клиентов с 2022 года.',
+    general: '\n\nПодписки PS Plus, Xbox Game Pass и EA Play доступны в ActivePlay от 1 250 \u20BD/мес. 52 000+ клиентов с 2022 года.',
   };
 
   return funnels[platform] || funnels.general;
@@ -44,7 +59,7 @@ async function runPipeline(article, targets, bot) {
   try {
     // Уведомить о начале
     if (bot && ADMIN_ID) {
-      await bot.telegram.sendMessage(ADMIN_ID, '⏳ Готовлю новость... ~1-2 минуты');
+      await bot.telegram.sendMessage(ADMIN_ID, '\u23f3 Готовлю новость... ~1-2 минуты');
     }
 
     console.log(`[PIPELINE] Starting for: ${article.site?.title || article.title}`);
@@ -67,39 +82,44 @@ async function runPipeline(article, targets, bot) {
     const { enrichedContext, siteGame } = await enrichArticle(article);
 
     // ═══ ШАГ 3: ГЕНЕРАЦИЯ ПОЛНОГО ТЕКСТА ═══
-    console.log('[PIPELINE] Step 3: Generating full article...');
-    // Add game-on-site context so LLM writes about buying the game, not subscription
-    let finalContext = enrichedContext || '';
-    if (siteGame) {
-      finalContext += `\nИГРА НА САЙТЕ ACTIVEPLAY: ${siteGame.name}, цена от ${siteGame.minPrice} руб. В 4-м абзаце пиши про покупку/предзаказ этой игры в ActivePlay, а НЕ про подписку PS Plus или Game Pass. Укажи цену.`;
-      console.log(`[PIPELINE] Game on site: ${siteGame.name} (${siteGame.minPrice} RUB) — LLM will write game-specific funnel`);
-    }
-    const fullArticle = await generateFullArticle(article, finalContext);
-    if (fullArticle) {
-      // Перезаписать site/telegram/vk данными из полной генерации
-      article.site = fullArticle.site;
-      article.telegram = fullArticle.telegram || article.telegram;
-      article.vk = fullArticle.vk || article.vk;
-      article.category = fullArticle.category || article.category;
-
-      // Сохранить gameSlug и relatedProduct из генерации
-      if (fullArticle.gameSlug && fullArticle.gameSlug !== 'null') {
-        article.gameSlug = fullArticle.gameSlug;
-      }
-      if (fullArticle.relatedProduct && fullArticle.relatedProduct !== 'null') {
-        article.relatedProduct = fullArticle.relatedProduct;
-      }
-
-      // Propagate platform and CTA fields from Gemini
-      if (fullArticle.platform) article.platform = fullArticle.platform;
-      if (fullArticle.ctaType) article.ctaType = fullArticle.ctaType;
-      if (fullArticle.ctaText) article.ctaText = fullArticle.ctaText;
-      if (fullArticle.ctaLink) article.ctaLink = fullArticle.ctaLink;
+    // Если текст был отредактирован вручную (через голосовые команды) — НЕ перезаписывать
+    if (article.manuallyEdited) {
+      console.log('[PIPELINE] Step 3: SKIPPED \u2014 article was manually edited');
     } else {
-      console.warn('[PIPELINE] Full article generation failed, using initial translation');
-      const textLen = (article.site?.text || '').length;
-      if (textLen < 300) {
-        throw new Error(`Текст слишком короткий (${textLen} знаков) и полная генерация не удалась`);
+      console.log('[PIPELINE] Step 3: Generating full article...');
+      // Add game-on-site context so LLM writes about buying the game, not subscription
+      let finalContext = enrichedContext || '';
+      if (siteGame) {
+        finalContext += `\nИГРА НА САЙТЕ ACTIVEPLAY: ${siteGame.name}, цена от ${siteGame.minPrice} руб. В 4-м абзаце пиши про покупку/предзаказ этой игры в ActivePlay, а НЕ про подписку PS Plus или Game Pass. Укажи цену.`;
+        console.log(`[PIPELINE] Game on site: ${siteGame.name} (${siteGame.minPrice} RUB) \u2014 LLM will write game-specific funnel`);
+      }
+      const fullArticle = await generateFullArticle(article, finalContext);
+      if (fullArticle) {
+        // Перезаписать site/telegram/vk данными из полной генерации
+        article.site = fullArticle.site;
+        article.telegram = fullArticle.telegram || article.telegram;
+        article.vk = fullArticle.vk || article.vk;
+        article.category = fullArticle.category || article.category;
+
+        // Сохранить gameSlug и relatedProduct из генерации
+        if (fullArticle.gameSlug && fullArticle.gameSlug !== 'null') {
+          article.gameSlug = fullArticle.gameSlug;
+        }
+        if (fullArticle.relatedProduct && fullArticle.relatedProduct !== 'null') {
+          article.relatedProduct = fullArticle.relatedProduct;
+        }
+
+        // Propagate platform and CTA fields from Gemini
+        if (fullArticle.platform) article.platform = fullArticle.platform;
+        if (fullArticle.ctaType) article.ctaType = fullArticle.ctaType;
+        if (fullArticle.ctaText) article.ctaText = fullArticle.ctaText;
+        if (fullArticle.ctaLink) article.ctaLink = fullArticle.ctaLink;
+      } else {
+        console.warn('[PIPELINE] Full article generation failed, using initial translation');
+        const textLen = (article.site?.text || '').length;
+        if (textLen < 300) {
+          throw new Error(`Текст слишком короткий (${textLen} знаков) и полная генерация не удалась`);
+        }
       }
     }
 
@@ -109,7 +129,7 @@ async function runPipeline(article, targets, bot) {
       const psCount = (combined.match(/ps5|ps4|playstation|dualsense|ps plus|sony|ps store/g) || []).length;
       const xboxCount = (combined.match(/xbox|game pass|series x|series s|microsoft/g) || []).length;
       const nintendoCount = (combined.match(/nintendo|switch/g) || []).length;
-      const pcCount = (combined.match(/steam|pc|epic games|valve/g) || []).length;
+      const pcCount = (combined.match(/steam|pc|epic games|valve/g) || []).length;
 
       const maxCount = Math.max(psCount, xboxCount, nintendoCount, pcCount);
       if (maxCount > 0) {
@@ -134,8 +154,9 @@ async function runPipeline(article, targets, bot) {
         }
       }
     }
-    // CTA type по платформе
-    {
+
+    // CTA type по платформе (только если Gemini не определил)
+    if (!article.ctaType) {
       const ctaMap = {
         xbox: { ctaType: 'gamepass', ctaText: 'Xbox Game Pass', ctaLink: '/subscriptions' },
         playstation: { ctaType: 'psplus', ctaText: 'PS Plus от 1 250 \u20BD/мес', ctaLink: '/subscriptions' },
@@ -151,30 +172,19 @@ async function runPipeline(article, targets, bot) {
         console.log(`[PIPELINE] CTA set from platform: ${article.ctaType}`);
       }
     }
+
+    // Если ctaType === 'deals' — убедиться, что ссылка на /sale
+    if (article.ctaType === 'deals') {
+      article.ctaLink = article.ctaLink || '/sale';
+      article.ctaText = article.ctaText || 'Скидки PS Store';
+      console.log(`[PIPELINE] Deals CTA preserved: ${article.ctaText} \u2192 ${article.ctaLink}`);
+    }
+
+    // Гарантия воронки: если нет упоминания ActivePlay — дописать
     if (article.site?.text && !article.site.text.includes('ActivePlay')) {
-      // If game exists on site — funnel about buying the game, not subscription
-      if (siteGame || article.cta) {
-        const gameName = siteGame?.name || article.gameSlug || '';
-        const price = siteGame?.minPrice || '';
-        const funnelGame = price
-          ? `\n\nПредзаказать ${gameName} можно в ActivePlay от ${price} \u20BD. Активация за 5 минут, оплата в рублях.`
-          : `\n\n${gameName} доступна в ActivePlay. Активация за 5 минут, оплата в рублях.`;
-        article.site.text += funnelGame;
-        console.log(`[PIPELINE] Game funnel appended: ${gameName} (${price} RUB)`);
-      } else {
-        // No game on site — use subscription funnel
-        const funnels = {
-          playstation: '\n\nОформить PS Plus можно в ActivePlay от 1 250 \u20BD/мес. Активация за 10 минут, оплата в рублях.',
-          xbox: '\n\nОформить Xbox Game Pass можно в ActivePlay. Быстро, из России, оплата в рублях.',
-          multi: '\n\nПодписки PS Plus и Xbox Game Pass доступны в ActivePlay от 1 250 \u20BD/мес. 52 000+ клиентов с 2022 года.',
-          pc: '\n\nXbox Game Pass PC доступен в ActivePlay. Сотни игр по подписке, оформление из России за 10 минут.',
-          nintendo: '\n\nИгровые подписки доступны в ActivePlay от 1 250 \u20BD/мес. 52 000+ клиентов с 2022 года.',
-          general: '\n\nИгровые подписки PS Plus, Xbox Game Pass и EA Play доступны в ActivePlay от 1 250 \u20BD/мес.',
-        };
-        const funnel = funnels[article.platform] || funnels.general;
-        article.site.text += funnel;
-        console.log(`[PIPELINE] Subscription funnel appended (platform: ${article.platform})`);
-      }
+      const funnel = getFunnelText(article, siteGame);
+      article.site.text += funnel;
+      console.log(`[PIPELINE] Funnel appended (platform: ${article.platform}, ctaType: ${article.ctaType})`);
     }
 
     // ═══ ШАГ 4: ПРОВЕРКА ЗАГОЛОВКА ═══
@@ -258,9 +268,9 @@ async function runPipeline(article, targets, bot) {
     if (bot && ADMIN_ID) {
       const publishedTargets = targets.join(' + ');
       await bot.telegram.sendMessage(ADMIN_ID,
-        `✅ Опубликовано (${elapsed}с): ${article.site.title}\n` +
-        `📢 ${publishedTargets}\n` +
-        `🔗 https://activeplay.games/news/${article.slug}`
+        `\u2705 Опубликовано (${elapsed}с): ${article.site.title}\n` +
+        `\ud83d\udce2 ${publishedTargets}\n` +
+        `\ud83d\udd17 https://activeplay.games/news/${article.slug}`
       );
     }
 
@@ -271,8 +281,8 @@ async function runPipeline(article, targets, bot) {
 
     if (bot && ADMIN_ID) {
       await bot.telegram.sendMessage(ADMIN_ID,
-        `❌ Ошибка публикации (${elapsed}с): ${err.message}\n` +
-        `📰 ${article.site?.title || article.title}`
+        `\u274c Ошибка публикации (${elapsed}с): ${err.message}\n` +
+        `\ud83d\udcf0 ${article.site?.title || article.title}`
       );
     }
 
