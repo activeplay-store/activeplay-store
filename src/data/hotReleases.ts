@@ -1,5 +1,5 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-04-06T01:12:33.711Z
+// Обновлено: 2026-04-07T01:16:41.609Z
 // Горящих новинок: 4
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
@@ -37,8 +37,8 @@ export const hotReleases: HotRelease[] = [
     genre: "Экшен",
     platforms: ["PS5"],
     cover: "https://media.rawg.io/media/games/dac/dacfcdeaef957a36416f4e6d5ec76229.jpg",
-    hypeScore: 4,
-    totalScore: 5.4,
+    hypeScore: 5,
+    totalScore: 5.8,
     editions: {
       tr: [
         { name: "Standard", priceRUB: 7300 },
@@ -47,6 +47,29 @@ export const hotReleases: HotRelease[] = [
       ua: [
         { name: "Standard", priceRUB: 7300 },
         { name: "Deluxe", priceRUB: 8350 },
+      ],
+    },
+  },
+  {
+    id: "starfield",
+    title: "Starfield",
+    slug: "starfield",
+    description: "Космическая RPG от Bethesda. 1000+ планет",
+    releaseDate: "7 апреля 2026",
+    metacritic: 0,
+    genre: "Экшен",
+    platforms: ["PS5"],
+    cover: "https://image.api.playstation.com/vulcan/ap/rnd/202603/0401/18b516e759613304c7efc7bcd3c134d6bfb5380d655df9be.jpg",
+    hypeScore: 2,
+    totalScore: 4.6,
+    editions: {
+      tr: [
+        { name: "Standard", priceRUB: 4300 },
+        { name: "Premium", priceRUB: 5600 },
+      ],
+      ua: [
+        { name: "Standard", priceRUB: 4400 },
+        { name: "Premium", priceRUB: 5700 },
       ],
     },
   },
@@ -89,29 +112,6 @@ export const hotReleases: HotRelease[] = [
       ],
       ua: [
         { name: "Standard", priceRUB: 4900 },
-      ],
-    },
-  },
-  {
-    id: "fatal-frame-ii-crimson-butterfly-remake",
-    title: "FATAL FRAME II: Crimson Butterfly REMAKE",
-    slug: "fatal-frame-ii-crimson-butterfly-remake",
-    description: "",
-    releaseDate: "12 марта 2026",
-    metacritic: 0,
-    genre: "Приключения",
-    platforms: ["PS5"],
-    cover: "https://media.rawg.io/media/screenshots/78d/78d5b7d94ade9903af80ba870d22cae9.jpg",
-    hypeScore: 2,
-    totalScore: 4.6,
-    editions: {
-      tr: [
-        { name: "Standard", priceRUB: 5350 },
-        { name: "Digital Deluxe", priceRUB: 6850 },
-      ],
-      ua: [
-        { name: "Standard", priceRUB: 5350 },
-        { name: "Digital Deluxe", priceRUB: 6850 },
       ],
     },
   },
