@@ -146,7 +146,7 @@ export default function NewsContent() {
                 className="group block rounded-xl bg-[#0a0f1a] overflow-hidden transition-all duration-300 hover:ring-1 hover:ring-[#00D4FF]/40 hover:shadow-[0_0_20px_rgba(0,212,255,0.08)] hover:-translate-y-0.5"
               >
                 {/* Cover */}
-                <div className={`relative overflow-hidden ${item.category === 'podcast' ? 'aspect-square' : 'aspect-video'}`}>
+                <div className={`relative overflow-hidden -m-px ${item.category === 'podcast' ? 'aspect-square' : 'aspect-video'}`}>
                   {item.coverUrl ? (
                     /* eslint-disable-next-line @next/next/no-img-element */
                     <img
