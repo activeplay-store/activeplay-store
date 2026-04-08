@@ -1,5 +1,5 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-04-08T01:17:19.423Z
+// Обновлено: 2026-04-08T09:00:54.779Z
 // Горящих новинок: 4
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
@@ -81,8 +81,8 @@ export const hotReleases: HotRelease[] = [
     genre: "Экшен",
     platforms: ["PS5"],
     cover: "https://image.api.playstation.com/vulcan/ap/rnd/202603/0401/18b516e759613304c7efc7bcd3c134d6bfb5380d655df9be.jpg",
-    hypeScore: 3,
-    totalScore: 5,
+    hypeScore: 2,
+    totalScore: 4.6,
     editions: {
       tr: [
         { name: "Standard", priceRUB: 4300 },
