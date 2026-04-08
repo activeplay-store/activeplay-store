@@ -1,5 +1,5 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-04-07T09:01:00.980Z
+// Обновлено: 2026-04-08T01:17:19.423Z
 // Горящих новинок: 4
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
@@ -51,6 +51,27 @@ export const hotReleases: HotRelease[] = [
     },
   },
   {
+    id: "the-occultist",
+    title: "The Occultist",
+    slug: "the-occultist",
+    description: "Хоррор от Daedalic. Мистический маятник",
+    releaseDate: "8 апреля 2026",
+    metacritic: 66,
+    genre: "Приключения",
+    platforms: ["PS5"],
+    cover: "https://image.api.playstation.com/vulcan/ap/rnd/202603/2415/4ab56c3b6a86dca29d85b9334859f84a0516b039bad836d5.png",
+    hypeScore: 2,
+    totalScore: 5.1,
+    editions: {
+      tr: [
+        { name: "Deluxe", priceRUB: 4550 },
+      ],
+      ua: [
+        { name: "Deluxe", priceRUB: 3800 },
+      ],
+    },
+  },
+  {
     id: "starfield",
     title: "Starfield",
     slug: "starfield",
@@ -60,8 +81,8 @@ export const hotReleases: HotRelease[] = [
     genre: "Экшен",
     platforms: ["PS5"],
     cover: "https://image.api.playstation.com/vulcan/ap/rnd/202603/0401/18b516e759613304c7efc7bcd3c134d6bfb5380d655df9be.jpg",
-    hypeScore: 2,
-    totalScore: 4.6,
+    hypeScore: 3,
+    totalScore: 5,
     editions: {
       tr: [
         { name: "Standard", priceRUB: 4300 },
@@ -91,27 +112,6 @@ export const hotReleases: HotRelease[] = [
       ],
       ua: [
         { name: "Standard", priceRUB: 2950 },
-      ],
-    },
-  },
-  {
-    id: "monster-hunter-stories-3-twisted-reflection",
-    title: "Monster Hunter Stories 3: Twisted Reflection",
-    slug: "monster-hunter-stories-3-twisted-reflection",
-    description: "",
-    releaseDate: "13 марта 2026",
-    metacritic: 0,
-    genre: "Экшен",
-    platforms: ["PS5"],
-    cover: "https://media.rawg.io/media/screenshots/c84/c842dbb0dcd7e2689ca2f587ef28f99f.jpg",
-    hypeScore: 2,
-    totalScore: 4.6,
-    editions: {
-      tr: [
-        { name: "Standard", priceRUB: 5550 },
-      ],
-      ua: [
-        { name: "Standard", priceRUB: 4900 },
       ],
     },
   },
