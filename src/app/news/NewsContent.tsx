@@ -143,7 +143,7 @@ export default function NewsContent() {
             <ScrollReveal key={item.id}>
               <a
                 href={getCardHref(item)}
-                className="group block rounded-xl overflow-hidden transition-all duration-300 hover:ring-1 hover:ring-[#00D4FF]/40 hover:shadow-[0_0_20px_rgba(0,212,255,0.08)] hover:-translate-y-0.5"
+                className="group block rounded-xl bg-[#0a0f1a] overflow-hidden transition-all duration-300 hover:ring-1 hover:ring-[#00D4FF]/40 hover:shadow-[0_0_20px_rgba(0,212,255,0.08)] hover:-translate-y-0.5"
               >
                 {/* Cover */}
                 <div className={`relative overflow-hidden ${item.category === 'podcast' ? 'aspect-square' : 'aspect-video'}`}>
@@ -185,7 +185,7 @@ export default function NewsContent() {
                 </div>
 
                 {/* Content */}
-                <div className="p-4 bg-white/[0.03]">
+                <div className="p-4">
                   {/* Category badge */}
                   <span
                     className="inline-block px-2 py-0.5 rounded text-xs font-semibold mb-2"
