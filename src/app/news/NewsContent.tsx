@@ -152,7 +152,7 @@ export default function NewsContent() {
                     <img
                       src={item.coverUrl}
                       alt={item.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      className="w-full h-full object-cover scale-[1.02] transition-transform duration-500 group-hover:scale-105"
                       loading="lazy"
                     />
                   ) : (
