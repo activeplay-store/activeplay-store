@@ -240,6 +240,72 @@ async function getFallbackImage(platform) {
   }
 }
 
+// Извлечь og:image с веб-страницы источника
+async function fetchOgImage(sourceUrl) {
+  if (!sourceUrl) return null;
+  try {
+    const response = await axios.get(sourceUrl, {
+      timeout: 10000,
+      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; ActivePlayBot/1.0)' },
+      maxRedirects: 3,
+    });
+    const html = typeof response.data === 'string' ? response.data : '';
+    // Try og:image first
+    const ogMatch = html.match(/<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["']/i)
+      || html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+property=["']og:image["']/i);
+    if (ogMatch && ogMatch[1] && !isJunkImage(ogMatch[1])) {
+      console.log('[NEWS] Found og:image from source: ' + ogMatch[1]);
+      return ogMatch[1];
+    }
+    // Try twitter:image
+    const twMatch = html.match(/<meta[^>]+name=["']twitter:image["'][^>]+content=["']([^"']+)["']/i)
+      || html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+name=["']twitter:image["']/i);
+    if (twMatch && twMatch[1] && !isJunkImage(twMatch[1])) {
+      console.log('[NEWS] Found twitter:image from source: ' + twMatch[1]);
+      return twMatch[1];
+    }
+    return null;
+  } catch (err) {
+    console.error('[NEWS] og:image fetch error: ' + err.message);
+    return null;
+  }
+}
+
+// Поиск изображения через веб по ключевым словам статьи
+async function searchWebImage(article) {
+  // Build search keywords from title and tags
+  const title = article.site?.title || article.title || '';
+  const tags = (article.tags || []).join(' ');
+  const query = (title + ' ' + tags).substring(0, 120) + ' banner';
+
+  // Try Bing Image Search (scraping — no API key needed)
+  try {
+    const searchUrl = 'https://www.bing.com/images/search';
+    const response = await axios.get(searchUrl, {
+      params: { q: query, first: 1, count: 5, qft: '+filterui:imagesize-wallpaper' },
+      timeout: 10000,
+      headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' },
+    });
+    const html = response.data || '';
+    // Extract image URLs from murl attribute
+    const matches = [...html.matchAll(/murl&quot;:&quot;(https?:\/\/[^&]+?)&quot;/g)];
+    for (const match of matches) {
+      const imgUrl = match[1];
+      if (!isJunkImage(imgUrl) && !isImageRecentlyUsed(imgUrl)) {
+        // Verify image is large enough
+        const buf = await checkSourceImage(imgUrl);
+        if (buf) {
+          console.log('[NEWS] Web search found image: ' + imgUrl);
+          return imgUrl;
+        }
+      }
+    }
+  } catch (err) {
+    console.error('[NEWS] Web image search error: ' + err.message);
+  }
+  return null;
+}
+
 // Определить, является ли новость о распродаже/скидках (не о конкретной игре)
 function isSaleNews(article) {
   const title = (article.site?.title || article.title || '').toLowerCase();
@@ -266,7 +332,29 @@ async function getNewsImage(article) {
       }
     }
 
-    // 2. Платформенная заглушка
+    // 2. og:image с сайта-источника
+    var ogUrl = await fetchOgImage(article.sourceUrl || article.link);
+    if (ogUrl) {
+      var ogImg = await downloadAndResize(ogUrl, filename);
+      if (ogImg) {
+        markImageUsed(ogUrl, article.id);
+        console.log('[NEWS] Using og:image for sale news: ' + article.title);
+        return ogImg;
+      }
+    }
+
+    // 3. Поиск баннера через веб
+    var webUrl = await searchWebImage(article);
+    if (webUrl) {
+      var webImg = await downloadAndResize(webUrl, filename);
+      if (webImg) {
+        markImageUsed(webUrl, article.id);
+        console.log('[NEWS] Using web search image for sale news: ' + article.title);
+        return webImg;
+      }
+    }
+
+    // 4. Платформенная заглушка
     console.log('[NEWS] Using ' + platform + ' fallback for sale news: ' + article.title);
     return await getFallbackImage(platform);
   }
@@ -302,7 +390,18 @@ async function getNewsImage(article) {
     }
   }
 
-  // 2. RSS image (только если не мусор)
+  // 2. og:image с сайта-источника
+  var ogUrl = await fetchOgImage(article.sourceUrl || article.link);
+  if (ogUrl && !isImageRecentlyUsed(ogUrl)) {
+    var ogImg = await downloadAndResize(ogUrl, filename);
+    if (ogImg) {
+      markImageUsed(ogUrl, article.id);
+      console.log('[NEWS] Using og:image for: ' + article.title);
+      return ogImg;
+    }
+  }
+
+  // 3. RSS image (только если не мусор)
   if (article.image && !isJunkImage(article.image)) {
     var sourceImage = await checkSourceImage(article.image);
     if (sourceImage) {
@@ -311,9 +410,20 @@ async function getNewsImage(article) {
     }
   }
 
-  // 3. Платформенная заглушка (финальный fallback)
+  // 4. Поиск через веб по ключевым словам
+  var webUrl = await searchWebImage(article);
+  if (webUrl) {
+    var webImg = await downloadAndResize(webUrl, filename);
+    if (webImg) {
+      markImageUsed(webUrl, article.id);
+      console.log('[NEWS] Using web search image for: ' + article.title);
+      return webImg;
+    }
+  }
+
+  // 5. Платформенная заглушка (финальный fallback)
   console.log('[NEWS] Using ' + platform + ' fallback for: ' + article.title);
   return await getFallbackImage(platform);
 }
 
-module.exports = { getNewsImage, checkSourceImage, searchRAWG, resizeImage, extractGameName, isJunkImage, getFallbackImage };
+module.exports = { getNewsImage, checkSourceImage, searchRAWG, resizeImage, extractGameName, isJunkImage, getFallbackImage, fetchOgImage, searchWebImage };
