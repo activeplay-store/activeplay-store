@@ -1,6 +1,6 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-04-08T01:16:28.174Z
-// Предзаказов: 25
+// Обновлено: 2026-04-09T01:11:42.048Z
+// Предзаказов: 24
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
 export interface PreorderEdition {
@@ -23,23 +23,6 @@ export interface PreorderGame {
 }
 
 export const preorderData: PreorderGame[] = [
-  {
-    id: "the-occultist",
-    name: "The Occultist",
-    platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202603/2415/4ab56c3b6a86dca29d85b9334859f84a0516b039bad836d5.png",
-    releaseDate: "2026-04-08",
-    genre: "Приключения",
-    description: "Хоррор от Daedalic. Мистический маятник",
-    editions: {
-      TR: [
-        { name: "Deluxe", clientPrice: 4550 },
-      ],
-      UA: [
-        { name: "Deluxe", clientPrice: 3800 },
-      ],
-    },
-  },
   {
     id: "pragmata",
     name: "PRAGMATA",
@@ -235,7 +218,7 @@ export const preorderData: PreorderGame[] = [
     id: "bus-bound",
     name: "Bus Bound",
     platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202512/1113/0466c34c4f4ceeeb44c46ba875dcc58753f1a5ae30d7257c.png",
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202602/0909/efad045c4766c0944329abc8ca80a585decde5fe214f3349.png",
     releaseDate: "2026-04-30",
     genre: "Экшен",
     description: "In Bound, the player takes on the role of a dancing lady in",
@@ -302,7 +285,7 @@ export const preorderData: PreorderGame[] = [
     name: "007 First Light",
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202507/0215/f54f11bcf773a3bcace540344dc12154973f53d3490b93fc.png",
-    releaseDate: "2026-05-25",
+    releaseDate: "2026-05-26",
     genre: "Экшен",
     description: "Стелс от IO Interactive. Молодой Бонд",
     editions: {
