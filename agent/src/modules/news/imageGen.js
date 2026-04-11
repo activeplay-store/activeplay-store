@@ -55,6 +55,10 @@ const KNOWN_SLUGS = {
   'Silent Hill 2': 'silent-hill-2',
   'Metaphor ReFantazio': 'metaphor-refantazio',
   'Like a Dragon': 'like-a-dragon-infinite-wealth',
+  'Metro': 'metro-exodus',
+  'Metro Exodus': 'metro-exodus',
+  'Metro 2033': 'metro-2033-redux',
+  'Pragmata': 'pragmata',
 };
 
 // Фильтр мусорных RSS-картинок
