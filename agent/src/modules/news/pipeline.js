@@ -110,10 +110,13 @@ async function runPipeline(article, targets, bot) {
         }
 
         // Propagate platform and CTA fields from Gemini
+        // НО: если enrichment уже выставил ctaType='deals', НЕ перезаписывать
         if (fullArticle.platform) article.platform = fullArticle.platform;
-        if (fullArticle.ctaType) article.ctaType = fullArticle.ctaType;
-        if (fullArticle.ctaText) article.ctaText = fullArticle.ctaText;
-        if (fullArticle.ctaLink) article.ctaLink = fullArticle.ctaLink;
+        if (article.ctaType !== 'deals') {
+          if (fullArticle.ctaType) article.ctaType = fullArticle.ctaType;
+          if (fullArticle.ctaText) article.ctaText = fullArticle.ctaText;
+          if (fullArticle.ctaLink) article.ctaLink = fullArticle.ctaLink;
+        }
       } else {
         console.warn('[PIPELINE] Full article generation failed, using initial translation');
         const textLen = (article.site?.text || '').length;
