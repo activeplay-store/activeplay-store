@@ -182,6 +182,7 @@ const FULL_ARTICLE_PROMPT = `Ты \u2014 главный редактор ActiveP
 
 SEO-формат. Конкретика. Название игры + суть новости.
 РЕГИСТР: Только первое слово заголовка с большой буквы + имена собственные и аббревиатуры (PS5, Xbox, GTA). НЕ пиши каждое слово с большой буквы.
+КАТЕГОРИЯ В ЗАГОЛОВКЕ ЗАПРЕЩЕНА: НЕ пиши "инсайд", "слух", "хайп", "анонс" в заголовке. Для этого есть отдельное поле category. Плохо: "Новая Metro: анонс уже скоро — инсайд". Хорошо: "Новая Metro может выйти уже на следующей неделе".
 Хорошо: \u00ABВесенняя распродажа PS Store заканчивается \u2014 скидки до 70% до 8 апреля\u00BB
 Хорошо: \u00ABCrimson Desert: патч улучшил графику на PS5 Pro в режиме 30 FPS\u00BB
 Хорошо: \u00ABSony удалила сотни игр из PS Store \u2014 что произошло и кого затронуло\u00BB
@@ -337,6 +338,18 @@ function cleanHeadline(title) {
   cleaned = cleaned.replace(/!/g, "");
   cleaned = cleaned.replace(/\?/g, "");
   cleaned = cleaned.replace(/\.{2,}$/g, "");
+
+  // Удаляем категориальные слова из заголовка (у нас есть рубрика для этого)
+  // "Новая metro: анонс уже на следующей неделе — инсайд" → "Новая metro: анонс уже на следующей неделе"
+  cleaned = cleaned.replace(/\s*[\u2014\u2013\-]\s*инсайд\s*$/i, '');
+  cleaned = cleaned.replace(/\s*[\u2014\u2013\-]\s*слух\s*$/i, '');
+  cleaned = cleaned.replace(/\s*[\u2014\u2013\-]\s*хайп\s*$/i, '');
+  cleaned = cleaned.replace(/^\s*инсайд\s*[:;\u2014\u2013\-]\s*/i, '');
+  cleaned = cleaned.replace(/^\s*слух\s*[:;\u2014\u2013\-]\s*/i, '');
+  cleaned = cleaned.replace(/^\s*хайп\s*[:;\u2014\u2013\-]\s*/i, '');
+  // Также в скобках: "Metro (инсайд)"
+  cleaned = cleaned.replace(/\s*\(\s*(инсайд|слух|хайп|insider|rumor)\s*\)\s*/gi, '');
+
   cleaned = cleaned.replace(/ {2,}/g, " ").trim();
   return cleaned;
 }

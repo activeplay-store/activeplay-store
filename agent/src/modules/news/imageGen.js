@@ -271,18 +271,51 @@ async function fetchOgImage(sourceUrl) {
   }
 }
 
-// Поиск изображения через веб по ключевым словам статьи
-async function searchWebImage(article) {
-  // Build search keywords from title and tags
+// Построить умный поисковый запрос для изображения
+function buildImageSearchQuery(article) {
+  const gameName = extractGameName(article);
   const title = article.site?.title || article.title || '';
-  const tags = (article.tags || []).join(' ');
-  const query = (title + ' ' + tags).substring(0, 120) + ' banner';
+
+  // Для распродаж/скидок — ищем официальный баннер
+  if (isSaleNews(article)) {
+    const platform = article.platform || '';
+    if (platform === 'playstation' || /ps\s?(store|plus|4|5)/i.test(title)) {
+      // Извлекаем тип распродажи из заголовка
+      const saleType = title.match(/(весенн|летн|зимн|осенн|holiday|spring|summer|winter|black friday|январск|февральск)/i);
+      const saleName = saleType ? saleType[0] : '';
+      return `PlayStation Store ${saleName} sale official banner 2026`.trim();
+    }
+    if (platform === 'xbox' || /xbox|game\s?pass/i.test(title)) {
+      return 'Xbox Store sale official banner 2026';
+    }
+    return title.substring(0, 80) + ' official sale banner';
+  }
+
+  // Для игровых новостей — ищем по названию игры + "game"
+  if (gameName) {
+    // Убираем общие слова, оставляем название игры
+    return `${gameName} video game official screenshot 2026`;
+  }
+
+  // Фоллбэк — заголовок без русских стоп-слов + game
+  const cleanTitle = title
+    .replace(/[\u2014\u2013:!?]/g, ' ')
+    .replace(/(инсайд|слух|анонс|новост|обзор|хайп|уже|на следующ|скоро|стал|побил|получ)/gi, '')
+    .replace(/ {2,}/g, ' ')
+    .trim();
+  return (cleanTitle.substring(0, 80) + ' game screenshot').trim();
+}
+
+// Поиск изображения через веб по ключевым словам статьи
+async function searchWebImage(article, customQuery) {
+  const query = customQuery || buildImageSearchQuery(article);
+  console.log('[NEWS] Web image search query: "' + query + '"');
 
   // Try Bing Image Search (scraping — no API key needed)
   try {
     const searchUrl = 'https://www.bing.com/images/search';
     const response = await axios.get(searchUrl, {
-      params: { q: query, first: 1, count: 5, qft: '+filterui:imagesize-wallpaper' },
+      params: { q: query, first: 1, count: 10, qft: '+filterui:imagesize-wallpaper' },
       timeout: 10000,
       headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' },
     });
@@ -354,7 +387,14 @@ async function getNewsImage(article) {
       }
     }
 
-    // 4. Платформенная заглушка
+    // 4. AI-генерация обложки
+    var aiUrl = await generateAiCover(article, filename);
+    if (aiUrl) {
+      console.log('[NEWS] Using AI-generated cover for sale news: ' + article.title);
+      return aiUrl;
+    }
+
+    // 5. Платформенная заглушка
     console.log('[NEWS] Using ' + platform + ' fallback for sale news: ' + article.title);
     return await getFallbackImage(platform);
   }
@@ -410,7 +450,7 @@ async function getNewsImage(article) {
     }
   }
 
-  // 4. Поиск через веб по ключевым словам
+  // 4. Поиск через веб по ключевым словам (умный запрос)
   var webUrl = await searchWebImage(article);
   if (webUrl) {
     var webImg = await downloadAndResize(webUrl, filename);
@@ -421,9 +461,82 @@ async function getNewsImage(article) {
     }
   }
 
-  // 5. Платформенная заглушка (финальный fallback)
+  // 4b. Вторая попытка веб-поиска с альтернативными ключевыми словами
+  if (gameName) {
+    var altQuery = gameName + ' game banner wallpaper';
+    var altUrl = await searchWebImage(article, altQuery);
+    if (altUrl) {
+      var altImg = await downloadAndResize(altUrl, filename);
+      if (altImg) {
+        markImageUsed(altUrl, article.id);
+        console.log('[NEWS] Using alt web search image for: ' + article.title);
+        return altImg;
+      }
+    }
+  }
+
+  // 5. AI-генерация обложки (если есть OPENROUTER_API_KEY)
+  var aiUrl = await generateAiCover(article, filename);
+  if (aiUrl) {
+    console.log('[NEWS] Using AI-generated cover for: ' + article.title);
+    return aiUrl;
+  }
+
+  // 6. Платформенная заглушка (финальный fallback)
   console.log('[NEWS] Using ' + platform + ' fallback for: ' + article.title);
   return await getFallbackImage(platform);
 }
 
-module.exports = { getNewsImage, checkSourceImage, searchRAWG, resizeImage, extractGameName, isJunkImage, getFallbackImage, fetchOgImage, searchWebImage };
+// AI-генерация обложки через OpenRouter (Flux)
+async function generateAiCover(article, filename) {
+  const apiKey = process.env.OPENROUTER_API_KEY;
+  if (!apiKey) return null;
+
+  const gameName = extractGameName(article);
+  const title = article.site?.title || article.title || '';
+
+  // Составляем промпт для генерации
+  let imagePrompt;
+  if (isSaleNews(article)) {
+    const platform = article.platform || 'playstation';
+    imagePrompt = `A sleek promotional banner for a ${platform} gaming store sale. Dark blue and cyan color scheme. Text "SALE" with glowing neon effect. Gaming controllers and digital discount tags floating. Modern, premium, minimalist design. 16:9 aspect ratio, high quality.`;
+  } else if (gameName) {
+    imagePrompt = `A cinematic key art for the video game "${gameName}". Epic, dramatic scene from the game. Dark atmospheric lighting. AAA game quality. 16:9 aspect ratio, photorealistic, highly detailed.`;
+  } else {
+    imagePrompt = `A cinematic gaming news banner for: "${title}". Dark atmospheric design with gaming elements. Neon accents on dark background. Modern, premium feel. 16:9 aspect ratio, high quality.`;
+  }
+
+  console.log('[NEWS] Generating AI cover with prompt: ' + imagePrompt.substring(0, 100) + '...');
+
+  try {
+    const response = await axios.post('https://openrouter.ai/api/v1/images/generations', {
+      model: 'flux/schnell',
+      prompt: imagePrompt,
+      n: 1,
+      size: '1024x576',
+    }, {
+      headers: {
+        'Authorization': 'Bearer ' + apiKey,
+        'Content-Type': 'application/json',
+      },
+      timeout: 60000,
+    });
+
+    const imageUrl = response.data?.data?.[0]?.url;
+    if (!imageUrl) {
+      console.log('[NEWS] AI image generation returned no URL');
+      return null;
+    }
+
+    const result = await downloadAndResize(imageUrl, filename);
+    if (result) {
+      markImageUsed('ai-generated:' + article.id, article.id);
+    }
+    return result;
+  } catch (err) {
+    console.error('[NEWS] AI image generation error: ' + (err.response?.data ? JSON.stringify(err.response.data) : err.message));
+    return null;
+  }
+}
+
+module.exports = { getNewsImage, checkSourceImage, searchRAWG, resizeImage, extractGameName, isJunkImage, getFallbackImage, fetchOgImage, searchWebImage, generateAiCover };
