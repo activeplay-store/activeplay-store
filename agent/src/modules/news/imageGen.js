@@ -293,8 +293,12 @@ function buildImageSearchQuery(article) {
 
   // Для игровых новостей — ищем по названию игры + "game"
   if (gameName) {
-    // Убираем общие слова, оставляем название игры
-    return `${gameName} video game official screenshot 2026`;
+    // Убираем русские прилагательные-описатели (новая, следующая и т.д.)
+    const cleanName = gameName
+      .replace(/^(новая|новый|новое|новые|следующая|следующий|грядущая|грядущий|большой|большая)\s+/i, '')
+      .trim();
+    const searchName = cleanName || gameName;
+    return `${searchName} video game official screenshot 2026`;
   }
 
   // Фоллбэк — заголовок без русских стоп-слов + game
