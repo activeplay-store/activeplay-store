@@ -350,7 +350,17 @@ function writeToSite(newArticles) {
     return entry;
   });
 
-  // 4. Дедупликация и слияние
+  // 4. Дедупликация coverUrl — каждая статья должна иметь уникальную обложку
+  const usedCovers = new Set(existing.map(n => n.coverUrl).filter(Boolean));
+  for (const article of prepared) {
+    if (article.coverUrl && usedCovers.has(article.coverUrl)) {
+      console.warn('[NEWS] WARNING: duplicate coverUrl detected for "' + article.title + '": ' + article.coverUrl);
+      // Не блокируем, но логируем — в будущем можно перегенерировать
+    }
+    if (article.coverUrl) usedCovers.add(article.coverUrl);
+  }
+
+  // 5. Дедупликация и слияние
   const existingIds = new Set(existing.map(n => n.id));
   const toAdd = prepared.filter(a => !existingIds.has(a.id));
   const merged = [...toAdd, ...existing].slice(0, 50);

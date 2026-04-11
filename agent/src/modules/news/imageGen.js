@@ -23,7 +23,7 @@ function getRecentlyUsedImages(days = 7) {
 }
 
 function markImageUsed(url, articleId) {
-  const recent = getRecentlyUsedImages(14); // keep 2 weeks
+  const recent = getRecentlyUsedImages(14);
   recent.push({ url, articleId, usedAt: Date.now() });
   try {
     fs.writeFileSync(USED_IMAGES_FILE, JSON.stringify(recent, null, 2));
@@ -36,20 +36,28 @@ function isImageRecentlyUsed(url) {
   return recent.some(entry => entry.url === url);
 }
 
-
+// ═══════════════════════════════════════════════
+// KNOWN_SLUGS — маппинг игр → RAWG slug
+// Добавляй сюда все игры, у которых RAWG неправильно ищет по названию
+// ═══════════════════════════════════════════════
 const KNOWN_SLUGS = {
   'Crimson Desert': 'crimson-desert',
   'Death Stranding 2': 'death-stranding-2-on-the-beach',
+  'Death Stranding': 'death-stranding',
   'Spider-Man 2': 'marvels-spider-man-2',
+  'Spider-Man': 'marvels-spider-man',
   'EA FC 26': 'ea-sports-fc-26',
   'EA FC 25': 'ea-sports-fc-25',
   'GTA 6': 'grand-theft-auto-vi',
   'GTA VI': 'grand-theft-auto-vi',
+  'GTA V': 'grand-theft-auto-v',
   'Borderlands 4': 'borderlands-4',
   'Ghost of Yotei': 'ghost-of-yotei',
+  'Ghost of Tsushima': 'ghost-of-tsushima',
   'Monster Hunter Wilds': 'monster-hunter-wilds',
   'Mafia The Old Country': 'mafia-the-old-country',
   'Kingdom Come Deliverance 2': 'kingdom-come-deliverance-ii',
+  'Kingdom Come Deliverance': 'kingdom-come-deliverance',
   'Black Myth Wukong': 'black-myth-wukong',
   'Astro Bot': 'astro-bot',
   'Silent Hill 2': 'silent-hill-2',
@@ -58,18 +66,87 @@ const KNOWN_SLUGS = {
   'Metro': 'metro-exodus',
   'Metro Exodus': 'metro-exodus',
   'Metro 2033': 'metro-2033-redux',
+  'Metro Last Light': 'metro-last-light-redux',
   'Pragmata': 'pragmata',
+  'Elden Ring': 'elden-ring',
+  'God of War Ragnarok': 'god-of-war-ragnarok',
+  'God of War': 'god-of-war-2018',
+  'The Last of Us': 'the-last-of-us-part-i',
+  'The Last of Us Part II': 'the-last-of-us-part-ii',
+  'Horizon Forbidden West': 'horizon-forbidden-west',
+  'Horizon Zero Dawn': 'horizon-zero-dawn',
+  'Final Fantasy XVI': 'final-fantasy-xvi',
+  'Final Fantasy VII Rebirth': 'final-fantasy-vii-rebirth',
+  'Final Fantasy VII': 'final-fantasy-vii-remake',
+  'Stellar Blade': 'stellar-blade',
+  'Helldivers 2': 'helldivers-2',
+  'Hogwarts Legacy': 'hogwarts-legacy',
+  'Assassins Creed Shadows': 'assassins-creed-codename-red',
+  'Assassin\'s Creed Shadows': 'assassins-creed-codename-red',
+  'Fable': 'fable-4',
+  'Doom The Dark Ages': 'doom-the-dark-ages',
+  'Wolverine': 'marvels-wolverine',
+  'Venom': 'marvels-venom',
+  'Cyberpunk 2077': 'cyberpunk-2077',
+  'The Witcher 4': 'the-witcher-4',
+  'Witcher 4': 'the-witcher-4',
+  'Red Dead Redemption 2': 'red-dead-redemption-2',
+  'Hades II': 'hades-ii',
+  'Hades 2': 'hades-ii',
+  'Hollow Knight Silksong': 'hollow-knight-silksong',
+  'Resident Evil 9': 'resident-evil-9',
+  'Devil May Cry': 'devil-may-cry-5',
+  'Dragon Age The Veilguard': 'dragon-age-dreadwolf',
+  'Star Wars Outlaws': 'star-wars-outlaws',
+  'Indiana Jones': 'indiana-jones-and-the-great-circle',
+  'Avowed': 'avowed',
+  'Clair Obscur Expedition 33': 'clair-obscur-expedition-33',
+  'Expedition 33': 'clair-obscur-expedition-33',
+  'Wuthering Waves': 'wuthering-waves',
+  'Zenless Zone Zero': 'zenless-zone-zero',
+  'Genshin Impact': 'genshin-impact',
+  'Palworld': 'palworld',
+  'Tekken 8': 'tekken-8',
+  'Mortal Kombat 1': 'mortal-kombat-1-2',
+  'Street Fighter 6': 'street-fighter-6',
+  'Forza Horizon 5': 'forza-horizon-5',
+  'Forza Motorsport': 'forza-motorsport-3',
+  'Starfield': 'starfield',
+  'Diablo IV': 'diablo-iv',
+  'Diablo 4': 'diablo-iv',
+  'Path of Exile 2': 'path-of-exile-2',
+  'Baldur\'s Gate 3': 'baldurs-gate-iii',
+  'ARC Raiders': 'arc-raiders',
+  'Marathon': 'marathon-2',
+  'The Elder Scrolls VI': 'the-elder-scrolls-vi',
+  'State of Decay 3': 'state-of-decay-3',
+  'Perfect Dark': 'perfect-dark-2',
+  'Atomfall': 'atomfall',
+  'Subnautica 2': 'subnautica-2',
+  'Civilization VII': 'civilization-7',
+  'Civilization 7': 'civilization-7',
+  'Ratchet & Clank': 'ratchet-clank-rift-apart',
+  'Returnal': 'returnal',
+  'Bloodborne': 'bloodborne',
+  'Demon\'s Souls': 'demons-souls',
+  'Dark Souls': 'dark-souls-iii',
 };
 
-// Фильтр мусорных RSS-картинок
+// ═══════════════════════════════════════════════
+// УТИЛИТЫ
+// ═══════════════════════════════════════════════
+
 function isJunkImage(url) {
   if (!url) return true;
-  const junk = ['avatar', 'icon', 'logo', 'thumbnail', 'profile', 'favicon', 'badge', 'emoji', 'placeholder', 'default', 'blank', 'spacer', '1x1', 'pixel'];
+  const junk = ['avatar', 'icon', 'logo', 'thumbnail', 'profile', 'favicon', 'badge', 'emoji',
+    'placeholder', 'default', 'blank', 'spacer', '1x1', 'pixel', 'spinner', 'loading'];
   const lower = url.toLowerCase();
   return junk.some(word => lower.includes(word));
 }
 
-// Извлечь название игры из заголовка новости
+// Русские прилагательные-описатели перед названием игры
+const RU_ADJECTIVES = /^(новая|новый|новое|новые|следующая|следующий|грядущая|грядущий|большой|большая|ожидаемая|ожидаемый|анонсирован[аоы]?|долгожданн[аоыйе]+|предстоящ[аоыйе]+)\s+/i;
+
 function extractGameName(article) {
   const title = article.site?.title || article.title || '';
 
@@ -95,11 +172,52 @@ function extractGameName(article) {
   return null;
 }
 
-// Прямой запрос по slug
+// Очистить извлечённое имя игры от русских описателей
+function cleanGameName(name) {
+  if (!name) return name;
+  return name.replace(RU_ADJECTIVES, '').trim() || name;
+}
+
+// Найти slug в KNOWN_SLUGS (case-insensitive, с очисткой)
+function findKnownSlug(gameName) {
+  if (!gameName) return null;
+  const clean = cleanGameName(gameName);
+
+  // Точное совпадение
+  if (KNOWN_SLUGS[clean]) return KNOWN_SLUGS[clean];
+  if (KNOWN_SLUGS[gameName]) return KNOWN_SLUGS[gameName];
+
+  // Case-insensitive
+  const lower = clean.toLowerCase();
+  for (const [key, slug] of Object.entries(KNOWN_SLUGS)) {
+    if (key.toLowerCase() === lower) return slug;
+  }
+
+  // Partial match — если запрос содержит известное название
+  for (const [key, slug] of Object.entries(KNOWN_SLUGS)) {
+    if (lower.includes(key.toLowerCase()) || key.toLowerCase().includes(lower)) {
+      return slug;
+    }
+  }
+
+  return null;
+}
+
+function isSaleNews(article) {
+  const title = (article.site?.title || article.title || '').toLowerCase();
+  const saleKeywords = ['распродаж', 'скидк', 'sale', 'deals', 'акци', 'снижен',
+    'ps store:', 'spring sale', 'summer sale', 'winter sale', 'holiday sale', 'black friday',
+    'скидки до', 'бесплатн'];
+  return saleKeywords.some(kw => title.includes(kw));
+}
+
+// ═══════════════════════════════════════════════
+// RAWG
+// ═══════════════════════════════════════════════
+
 async function getRAWGBySlug(slug) {
   try {
-    const url = 'https://api.rawg.io/api/games/' + slug;
-    const response = await axios.get(url, {
+    const response = await axios.get('https://api.rawg.io/api/games/' + slug, {
       params: { key: RAWG_API_KEY },
       timeout: 10000,
     });
@@ -109,16 +227,16 @@ async function getRAWGBySlug(slug) {
   }
 }
 
-// Поиск обложки через RAWG
 async function searchRAWG(gameName) {
   if (!gameName) return null;
+  const clean = cleanGameName(gameName);
 
   try {
     const response = await axios.get('https://api.rawg.io/api/games', {
       params: {
         key: RAWG_API_KEY,
-        search: gameName,
-        page_size: 3,
+        search: clean,
+        page_size: 5,
         search_precise: true,
       },
       timeout: 10000,
@@ -127,12 +245,24 @@ async function searchRAWG(gameName) {
     const results = response.data?.results;
     if (!results || results.length === 0) return null;
 
-    const game = results.find(g => g.background_image);
-    if (!game) return null;
+    // Проверяем что найденная игра реально похожа на запрос
+    const game = results.find(g => {
+      if (!g.background_image) return false;
+      const gName = g.name.toLowerCase();
+      const qName = clean.toLowerCase();
+      // Имя игры должно содержать хотя бы одно ключевое слово из запроса
+      const queryWords = qName.split(/\s+/).filter(w => w.length >= 3);
+      return queryWords.some(w => gName.includes(w));
+    });
 
-    // Check if this image was recently used
+    if (!game) {
+      console.log('[NEWS] RAWG: no relevant match for "' + clean + '" in results: ' +
+        results.slice(0, 3).map(g => g.name).join(', '));
+      return null;
+    }
+
     if (!isImageRecentlyUsed(game.background_image)) {
-      console.log('[NEWS] RAWG found: "' + game.name + '" for query "' + gameName + '", image: ' + game.background_image);
+      console.log('[NEWS] RAWG found: "' + game.name + '" for query "' + clean + '"');
       return game.background_image;
     }
 
@@ -147,14 +277,13 @@ async function searchRAWG(gameName) {
       const usedUrls = getRecentlyUsedImages(7).map(e => e.url);
       const fresh = screenshots.find(ss => ss.image && !usedUrls.includes(ss.image));
       if (fresh) {
-        console.log('[NEWS] Using RAWG screenshot instead: ' + fresh.image);
+        console.log('[NEWS] Using RAWG screenshot: ' + fresh.image);
         return fresh.image;
       }
     } catch (err) {
       console.error('[NEWS] RAWG screenshots error: ' + err.message);
     }
 
-    // No fresh screenshots — use background_image anyway (better than nothing)
     console.log('[NEWS] No fresh screenshots, using duplicate image');
     return game.background_image;
   } catch (err) {
@@ -163,13 +292,16 @@ async function searchRAWG(gameName) {
   }
 }
 
-// Скачать и ресайзить картинку
+// ═══════════════════════════════════════════════
+// СКАЧИВАНИЕ И ОБРАБОТКА
+// ═══════════════════════════════════════════════
+
 async function downloadAndResize(url, filename) {
   try {
     const response = await axios.get(url, {
       responseType: 'arraybuffer',
       timeout: 15000,
-      headers: { 'User-Agent': 'ActivePlay News Bot 1.0' },
+      headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' },
     });
     return await resizeImage(Buffer.from(response.data), filename);
   } catch (err) {
@@ -178,14 +310,13 @@ async function downloadAndResize(url, filename) {
   }
 }
 
-// Проверить качество картинки из источника
 async function checkSourceImage(imageUrl) {
   if (!imageUrl) return null;
   try {
     const response = await axios.get(imageUrl, {
       responseType: 'arraybuffer',
       timeout: 10000,
-      headers: { 'User-Agent': 'ActivePlay News Bot 1.0' },
+      headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' },
     });
     const buf = Buffer.from(response.data);
     const metadata = await sharp(buf).metadata();
@@ -196,7 +327,6 @@ async function checkSourceImage(imageUrl) {
   }
 }
 
-// Ресайз картинки в 16:9
 async function resizeImage(imageBuffer, filename) {
   if (!fs.existsSync(IMAGES_DIR)) fs.mkdirSync(IMAGES_DIR, { recursive: true });
   const outputPath = path.join(IMAGES_DIR, filename);
@@ -207,7 +337,6 @@ async function resizeImage(imageBuffer, filename) {
   return '/images/news/' + filename;
 }
 
-// Платформенная заглушка
 async function getFallbackImage(platform) {
   const platformMap = {
     playstation: 'fallback-playstation',
@@ -217,95 +346,79 @@ async function getFallbackImage(platform) {
     general: 'fallback-general',
     multi: 'fallback-general',
   };
-
   const name = platformMap[platform] || platformMap.general;
   const jpgPath = path.join(FALLBACK_DIR, name + '.jpg');
-
-  if (fs.existsSync(jpgPath)) {
-    return '/images/news/fallbacks/' + name + '.jpg';
-  }
-
+  if (fs.existsSync(jpgPath)) return '/images/news/fallbacks/' + name + '.jpg';
   const svgPath = path.join(FALLBACK_DIR, name + '.svg');
-  if (!fs.existsSync(svgPath)) {
-    console.error('[NEWS] Fallback SVG not found: ' + svgPath);
-    return null;
-  }
-
+  if (!fs.existsSync(svgPath)) return null;
   try {
-    await sharp(svgPath)
-      .resize(1200, 675)
-      .jpeg({ quality: 90 })
-      .toFile(jpgPath);
-    console.log('[NEWS] Created fallback JPG: ' + name + '.jpg');
+    await sharp(svgPath).resize(1200, 675).jpeg({ quality: 90 }).toFile(jpgPath);
     return '/images/news/fallbacks/' + name + '.jpg';
-  } catch (err) {
-    console.error('[NEWS] Fallback conversion error: ' + err.message);
+  } catch {
     return null;
   }
 }
 
-// Извлечь og:image с веб-страницы источника
+// ═══════════════════════════════════════════════
+// og:image ИЗ ИСТОЧНИКА
+// ═══════════════════════════════════════════════
+
 async function fetchOgImage(sourceUrl) {
   if (!sourceUrl) return null;
   try {
     const response = await axios.get(sourceUrl, {
       timeout: 10000,
-      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; ActivePlayBot/1.0)' },
+      headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' },
       maxRedirects: 3,
     });
     const html = typeof response.data === 'string' ? response.data : '';
-    // Try og:image first
     const ogMatch = html.match(/<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["']/i)
       || html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+property=["']og:image["']/i);
     if (ogMatch && ogMatch[1] && !isJunkImage(ogMatch[1])) {
-      console.log('[NEWS] Found og:image from source: ' + ogMatch[1]);
+      console.log('[NEWS] Found og:image: ' + ogMatch[1]);
       return ogMatch[1];
     }
-    // Try twitter:image
     const twMatch = html.match(/<meta[^>]+name=["']twitter:image["'][^>]+content=["']([^"']+)["']/i)
       || html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+name=["']twitter:image["']/i);
     if (twMatch && twMatch[1] && !isJunkImage(twMatch[1])) {
-      console.log('[NEWS] Found twitter:image from source: ' + twMatch[1]);
+      console.log('[NEWS] Found twitter:image: ' + twMatch[1]);
       return twMatch[1];
     }
     return null;
   } catch (err) {
-    console.error('[NEWS] og:image fetch error: ' + err.message);
+    console.error('[NEWS] og:image error: ' + err.message);
     return null;
   }
 }
 
-// Построить умный поисковый запрос для изображения
+// ═══════════════════════════════════════════════
+// ВЕБ-ПОИСК КАРТИНОК (Google + Bing + DuckDuckGo)
+// ═══════════════════════════════════════════════
+
+// Построить умный поисковый запрос
 function buildImageSearchQuery(article) {
   const gameName = extractGameName(article);
   const title = article.site?.title || article.title || '';
 
-  // Для распродаж/скидок — ищем официальный баннер
   if (isSaleNews(article)) {
     const platform = article.platform || '';
     if (platform === 'playstation' || /ps\s?(store|plus|4|5)/i.test(title)) {
-      // Извлекаем тип распродажи из заголовка
-      const saleType = title.match(/(весенн|летн|зимн|осенн|holiday|spring|summer|winter|black friday|январск|февральск)/i);
-      const saleName = saleType ? saleType[0] : '';
-      return `PlayStation Store ${saleName} sale official banner 2026`.trim();
+      const saleType = title.match(/(весенн|летн|зимн|осенн|holiday|spring|summer|winter|black friday)/i);
+      const season = saleType ? saleType[0] : '';
+      return `PlayStation Store ${season} sale official banner`.trim();
     }
     if (platform === 'xbox' || /xbox|game\s?pass/i.test(title)) {
-      return 'Xbox Store sale official banner 2026';
+      return 'Xbox Store sale official banner';
     }
-    return title.substring(0, 80) + ' official sale banner';
+    return 'PlayStation Store sale banner official';
   }
 
-  // Для игровых новостей — ищем по названию игры + "game"
   if (gameName) {
-    // Убираем русские прилагательные-описатели (новая, следующая и т.д.)
-    const cleanName = gameName
-      .replace(/^(новая|новый|новое|новые|следующая|следующий|грядущая|грядущий|большой|большая)\s+/i, '')
-      .trim();
-    const searchName = cleanName || gameName;
-    return `${searchName} video game official screenshot 2026`;
+    const clean = cleanGameName(gameName);
+    return `${clean} video game official screenshot`;
   }
 
-  // Фоллбэк — заголовок без русских стоп-слов + game
+  // Фоллбэк
   const cleanTitle = title
     .replace(/[\u2014\u2013:!?]/g, ' ')
     .replace(/(инсайд|слух|анонс|новост|обзор|хайп|уже|на следующ|скоро|стал|побил|получ)/gi, '')
@@ -314,196 +427,124 @@ function buildImageSearchQuery(article) {
   return (cleanTitle.substring(0, 80) + ' game screenshot').trim();
 }
 
-// Поиск изображения через веб по ключевым словам статьи
-async function searchWebImage(article, customQuery) {
-  const query = customQuery || buildImageSearchQuery(article);
-  console.log('[NEWS] Web image search query: "' + query + '"');
-
-  // Try Bing Image Search (scraping — no API key needed)
+// Поиск через Google Images (scraping)
+async function searchGoogleImages(query) {
   try {
-    const searchUrl = 'https://www.bing.com/images/search';
-    const response = await axios.get(searchUrl, {
+    const response = await axios.get('https://www.google.com/search', {
+      params: { q: query, tbm: 'isch', tbs: 'isz:l' }, // isz:l = large images
+      timeout: 10000,
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'Accept-Language': 'en-US,en;q=0.9',
+      },
+    });
+    const html = response.data || '';
+    // Google Images stores URLs in multiple formats
+    const urls = [];
+    // Format 1: ["url",width,height]
+    const matches1 = [...html.matchAll(/\["(https?:\/\/[^"]+\.(?:jpg|jpeg|png|webp))[^"]*",\d+,\d+\]/gi)];
+    for (const m of matches1) urls.push(m[1]);
+    // Format 2: data-src or src attributes
+    const matches2 = [...html.matchAll(/(?:data-src|src)=["'](https?:\/\/[^"']+\.(?:jpg|jpeg|png|webp)[^"']*)["']/gi)];
+    for (const m of matches2) urls.push(m[1]);
+    // Format 3: ou: parameter (old format)
+    const matches3 = [...html.matchAll(/"ou":"(https?:\/\/[^"]+)"/g)];
+    for (const m of matches3) urls.push(m[1]);
+
+    // Deduplicate and filter
+    const unique = [...new Set(urls)].filter(u =>
+      !isJunkImage(u) &&
+      !u.includes('gstatic.com') &&
+      !u.includes('google.com') &&
+      !u.includes('googleapis.com/encrypted') &&
+      u.length < 500
+    );
+    console.log('[NEWS] Google Images found ' + unique.length + ' candidates for: "' + query + '"');
+    return unique.slice(0, 10);
+  } catch (err) {
+    console.error('[NEWS] Google Images error: ' + err.message);
+    return [];
+  }
+}
+
+// Поиск через Bing Images (scraping)
+async function searchBingImages(query) {
+  try {
+    const response = await axios.get('https://www.bing.com/images/search', {
       params: { q: query, first: 1, count: 10, qft: '+filterui:imagesize-wallpaper' },
       timeout: 10000,
       headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' },
     });
     const html = response.data || '';
-    // Extract image URLs from murl attribute
     const matches = [...html.matchAll(/murl&quot;:&quot;(https?:\/\/[^&]+?)&quot;/g)];
-    for (const match of matches) {
-      const imgUrl = match[1];
-      if (!isJunkImage(imgUrl) && !isImageRecentlyUsed(imgUrl)) {
-        // Verify image is large enough
-        const buf = await checkSourceImage(imgUrl);
-        if (buf) {
-          console.log('[NEWS] Web search found image: ' + imgUrl);
-          return imgUrl;
-        }
+    const urls = matches.map(m => m[1]).filter(u => !isJunkImage(u));
+    console.log('[NEWS] Bing Images found ' + urls.length + ' candidates for: "' + query + '"');
+    return urls.slice(0, 10);
+  } catch (err) {
+    console.error('[NEWS] Bing Images error: ' + err.message);
+    return [];
+  }
+}
+
+// Основной поиск: Google → Bing → фильтрация
+async function searchWebImage(article, customQuery) {
+  const query = customQuery || buildImageSearchQuery(article);
+  console.log('[NEWS] Image search: "' + query + '"');
+
+  // Собираем кандидатов из нескольких источников
+  let candidates = [];
+
+  // Google Images (приоритет — более релевантные результаты)
+  const googleResults = await searchGoogleImages(query);
+  candidates.push(...googleResults);
+
+  // Если Google не дал результатов — Bing
+  if (candidates.length === 0) {
+    const bingResults = await searchBingImages(query);
+    candidates.push(...bingResults);
+  }
+
+  // Фильтруем и валидируем
+  for (const imgUrl of candidates) {
+    if (isImageRecentlyUsed(imgUrl)) continue;
+    const buf = await checkSourceImage(imgUrl);
+    if (buf) {
+      console.log('[NEWS] Web search found valid image: ' + imgUrl);
+      return imgUrl;
+    }
+  }
+
+  // Если первый запрос не сработал и это игра — альтернативный запрос
+  const gameName = extractGameName(article);
+  if (gameName && !customQuery) {
+    const clean = cleanGameName(gameName);
+    const altQuery = clean + ' game wallpaper banner';
+    console.log('[NEWS] Trying alt query: "' + altQuery + '"');
+    const altResults = await searchBingImages(altQuery);
+    for (const imgUrl of altResults) {
+      if (isImageRecentlyUsed(imgUrl)) continue;
+      const buf = await checkSourceImage(imgUrl);
+      if (buf) {
+        console.log('[NEWS] Alt search found: ' + imgUrl);
+        return imgUrl;
       }
     }
-  } catch (err) {
-    console.error('[NEWS] Web image search error: ' + err.message);
   }
+
   return null;
 }
 
-// Определить, является ли новость о распродаже/скидках (не о конкретной игре)
-function isSaleNews(article) {
-  const title = (article.site?.title || article.title || '').toLowerCase();
-  const saleKeywords = ['распродаж', 'скидк', 'sale', 'deals', 'акци', 'снижен', 'ps store:', 'spring sale', 'summer sale', 'winter sale', 'holiday sale', 'black friday'];
-  return saleKeywords.some(kw => title.includes(kw));
-}
+// ═══════════════════════════════════════════════
+// AI-ГЕНЕРАЦИЯ ОБЛОЖКИ
+// ═══════════════════════════════════════════════
 
-// Главная функция: получить картинку для новости
-async function getNewsImage(article) {
-  var filename = article.id + '.jpg';
-  var platform = article.platform || 'general';
-
-  // Для новостей о распродажах/скидках — приоритет на RSS картинку из источника
-  // (RAWG вернёт случайную обложку игры, а нужна картинка распродажи)
-  if (isSaleNews(article)) {
-    console.log('[NEWS] Sale/deals news detected, prioritizing source image');
-
-    // 1. RSS image из источника (баннер распродажи)
-    if (article.image && !isJunkImage(article.image)) {
-      var sourceImage = await checkSourceImage(article.image);
-      if (sourceImage) {
-        console.log('[NEWS] Using source image for sale news: ' + article.title);
-        return await resizeImage(sourceImage, filename);
-      }
-    }
-
-    // 2. og:image с сайта-источника
-    var ogUrl = await fetchOgImage(article.sourceUrl || article.link);
-    if (ogUrl) {
-      var ogImg = await downloadAndResize(ogUrl, filename);
-      if (ogImg) {
-        markImageUsed(ogUrl, article.id);
-        console.log('[NEWS] Using og:image for sale news: ' + article.title);
-        return ogImg;
-      }
-    }
-
-    // 3. Поиск баннера через веб
-    var webUrl = await searchWebImage(article);
-    if (webUrl) {
-      var webImg = await downloadAndResize(webUrl, filename);
-      if (webImg) {
-        markImageUsed(webUrl, article.id);
-        console.log('[NEWS] Using web search image for sale news: ' + article.title);
-        return webImg;
-      }
-    }
-
-    // 4. AI-генерация обложки
-    var aiUrl = await generateAiCover(article, filename);
-    if (aiUrl) {
-      console.log('[NEWS] Using AI-generated cover for sale news: ' + article.title);
-      return aiUrl;
-    }
-
-    // 5. Платформенная заглушка
-    console.log('[NEWS] Using ' + platform + ' fallback for sale news: ' + article.title);
-    return await getFallbackImage(platform);
-  }
-
-  // Для обычных новостей — стандартный порядок
-
-  // 1. RAWG — обложка игры (приоритет)
-  var gameName = extractGameName(article);
-  if (gameName) {
-    console.log('[NEWS] Searching RAWG for: "' + gameName + '"');
-
-    var rawgUrl = null;
-
-    // 1a. Точный slug из маппинга
-    var knownSlug = KNOWN_SLUGS[gameName];
-    if (knownSlug) {
-      console.log('[NEWS] Using known slug: ' + knownSlug);
-      rawgUrl = await getRAWGBySlug(knownSlug);
-    }
-
-    // 1b. Поиск по названию
-    if (!rawgUrl) {
-      rawgUrl = await searchRAWG(gameName);
-    }
-
-    if (rawgUrl) {
-      var img = await downloadAndResize(rawgUrl, filename);
-      if (img) {
-        markImageUsed(rawgUrl, article.id);
-        console.log('[NEWS] Using RAWG image for: ' + gameName);
-        return img;
-      }
-    }
-  }
-
-  // 2. og:image с сайта-источника
-  var ogUrl = await fetchOgImage(article.sourceUrl || article.link);
-  if (ogUrl && !isImageRecentlyUsed(ogUrl)) {
-    var ogImg = await downloadAndResize(ogUrl, filename);
-    if (ogImg) {
-      markImageUsed(ogUrl, article.id);
-      console.log('[NEWS] Using og:image for: ' + article.title);
-      return ogImg;
-    }
-  }
-
-  // 3. RSS image (только если не мусор)
-  if (article.image && !isJunkImage(article.image)) {
-    var sourceImage = await checkSourceImage(article.image);
-    if (sourceImage) {
-      console.log('[NEWS] Using source image for: ' + article.title);
-      return await resizeImage(sourceImage, filename);
-    }
-  }
-
-  // 4. Поиск через веб по ключевым словам (умный запрос)
-  var webUrl = await searchWebImage(article);
-  if (webUrl) {
-    var webImg = await downloadAndResize(webUrl, filename);
-    if (webImg) {
-      markImageUsed(webUrl, article.id);
-      console.log('[NEWS] Using web search image for: ' + article.title);
-      return webImg;
-    }
-  }
-
-  // 4b. Вторая попытка веб-поиска с альтернативными ключевыми словами
-  if (gameName) {
-    var altQuery = gameName + ' game banner wallpaper';
-    var altUrl = await searchWebImage(article, altQuery);
-    if (altUrl) {
-      var altImg = await downloadAndResize(altUrl, filename);
-      if (altImg) {
-        markImageUsed(altUrl, article.id);
-        console.log('[NEWS] Using alt web search image for: ' + article.title);
-        return altImg;
-      }
-    }
-  }
-
-  // 5. AI-генерация обложки (если есть OPENROUTER_API_KEY)
-  var aiUrl = await generateAiCover(article, filename);
-  if (aiUrl) {
-    console.log('[NEWS] Using AI-generated cover for: ' + article.title);
-    return aiUrl;
-  }
-
-  // 6. Платформенная заглушка (финальный fallback)
-  console.log('[NEWS] Using ' + platform + ' fallback for: ' + article.title);
-  return await getFallbackImage(platform);
-}
-
-// AI-генерация обложки через OpenRouter (Flux)
 async function generateAiCover(article, filename) {
   const apiKey = process.env.OPENROUTER_API_KEY;
   if (!apiKey) return null;
 
-  const gameName = extractGameName(article);
+  const gameName = cleanGameName(extractGameName(article));
   const title = article.site?.title || article.title || '';
 
-  // Составляем промпт для генерации
   let imagePrompt;
   if (isSaleNews(article)) {
     const platform = article.platform || 'playstation';
@@ -514,7 +555,7 @@ async function generateAiCover(article, filename) {
     imagePrompt = `A cinematic gaming news banner for: "${title}". Dark atmospheric design with gaming elements. Neon accents on dark background. Modern, premium feel. 16:9 aspect ratio, high quality.`;
   }
 
-  console.log('[NEWS] Generating AI cover with prompt: ' + imagePrompt.substring(0, 100) + '...');
+  console.log('[NEWS] AI cover: ' + imagePrompt.substring(0, 100) + '...');
 
   try {
     const response = await axios.post('https://openrouter.ai/api/v1/images/generations', {
@@ -531,20 +572,143 @@ async function generateAiCover(article, filename) {
     });
 
     const imageUrl = response.data?.data?.[0]?.url;
-    if (!imageUrl) {
-      console.log('[NEWS] AI image generation returned no URL');
-      return null;
-    }
+    if (!imageUrl) return null;
 
     const result = await downloadAndResize(imageUrl, filename);
-    if (result) {
-      markImageUsed('ai-generated:' + article.id, article.id);
-    }
+    if (result) markImageUsed('ai-generated:' + article.id, article.id);
     return result;
   } catch (err) {
-    console.error('[NEWS] AI image generation error: ' + (err.response?.data ? JSON.stringify(err.response.data) : err.message));
+    console.error('[NEWS] AI image error: ' + (err.response?.data ? JSON.stringify(err.response.data) : err.message));
     return null;
   }
 }
 
-module.exports = { getNewsImage, checkSourceImage, searchRAWG, resizeImage, extractGameName, isJunkImage, getFallbackImage, fetchOgImage, searchWebImage, generateAiCover };
+// ═══════════════════════════════════════════════
+// ГЛАВНАЯ ФУНКЦИЯ
+// ═══════════════════════════════════════════════
+
+async function getNewsImage(article) {
+  const filename = article.id + '.jpg';
+  const platform = article.platform || 'general';
+
+  // ═══ РАСПРОДАЖА/СКИДКИ ═══
+  if (isSaleNews(article)) {
+    console.log('[NEWS] === Sale news: ' + article.title + ' ===');
+
+    // 1. og:image (у крупных источников типа PS Blog всегда есть хороший баннер)
+    const ogUrl = await fetchOgImage(article.sourceUrl || article.link);
+    if (ogUrl) {
+      const ogImg = await downloadAndResize(ogUrl, filename);
+      if (ogImg) {
+        markImageUsed(ogUrl, article.id);
+        console.log('[NEWS] SALE: og:image from source');
+        return ogImg;
+      }
+    }
+
+    // 2. RSS image (если качественная)
+    if (article.image && !isJunkImage(article.image)) {
+      const sourceImage = await checkSourceImage(article.image);
+      if (sourceImage) {
+        console.log('[NEWS] SALE: RSS source image');
+        return await resizeImage(sourceImage, filename);
+      }
+    }
+
+    // 3. Веб-поиск баннера
+    const webUrl = await searchWebImage(article);
+    if (webUrl) {
+      const webImg = await downloadAndResize(webUrl, filename);
+      if (webImg) {
+        markImageUsed(webUrl, article.id);
+        console.log('[NEWS] SALE: web search image');
+        return webImg;
+      }
+    }
+
+    // 4. AI-генерация
+    const aiResult = await generateAiCover(article, filename);
+    if (aiResult) return aiResult;
+
+    // 5. Заглушка
+    return await getFallbackImage(platform);
+  }
+
+  // ═══ ОБЫЧНАЯ НОВОСТЬ ═══
+  console.log('[NEWS] === Regular news: ' + article.title + ' ===');
+  const gameName = extractGameName(article);
+
+  // 1. RAWG — обложка игры (приоритет для игровых новостей)
+  if (gameName) {
+    const clean = cleanGameName(gameName);
+    console.log('[NEWS] Game: "' + gameName + '" → clean: "' + clean + '"');
+
+    let rawgUrl = null;
+
+    // 1a. KNOWN_SLUGS (гарантированный результат)
+    const knownSlug = findKnownSlug(gameName);
+    if (knownSlug) {
+      console.log('[NEWS] Known slug: ' + knownSlug);
+      rawgUrl = await getRAWGBySlug(knownSlug);
+    }
+
+    // 1b. Поиск по названию с валидацией релевантности
+    if (!rawgUrl) {
+      rawgUrl = await searchRAWG(clean);
+    }
+
+    if (rawgUrl) {
+      const img = await downloadAndResize(rawgUrl, filename);
+      if (img) {
+        markImageUsed(rawgUrl, article.id);
+        console.log('[NEWS] GAME: RAWG image for "' + clean + '"');
+        return img;
+      }
+    }
+  }
+
+  // 2. og:image с сайта-источника
+  const ogUrl = await fetchOgImage(article.sourceUrl || article.link);
+  if (ogUrl && !isImageRecentlyUsed(ogUrl)) {
+    const ogImg = await downloadAndResize(ogUrl, filename);
+    if (ogImg) {
+      markImageUsed(ogUrl, article.id);
+      console.log('[NEWS] SOURCE: og:image');
+      return ogImg;
+    }
+  }
+
+  // 3. RSS image
+  if (article.image && !isJunkImage(article.image)) {
+    const sourceImage = await checkSourceImage(article.image);
+    if (sourceImage) {
+      console.log('[NEWS] SOURCE: RSS image');
+      return await resizeImage(sourceImage, filename);
+    }
+  }
+
+  // 4. Веб-поиск
+  const webUrl = await searchWebImage(article);
+  if (webUrl) {
+    const webImg = await downloadAndResize(webUrl, filename);
+    if (webImg) {
+      markImageUsed(webUrl, article.id);
+      console.log('[NEWS] WEB: search image');
+      return webImg;
+    }
+  }
+
+  // 5. AI-генерация
+  const aiResult = await generateAiCover(article, filename);
+  if (aiResult) return aiResult;
+
+  // 6. Заглушка
+  console.log('[NEWS] FALLBACK: ' + platform);
+  return await getFallbackImage(platform);
+}
+
+module.exports = {
+  getNewsImage, checkSourceImage, searchRAWG, resizeImage, extractGameName,
+  isJunkImage, getFallbackImage, fetchOgImage, searchWebImage, generateAiCover,
+  cleanGameName, findKnownSlug, KNOWN_SLUGS,
+};
