@@ -43,39 +43,83 @@ function today() {
   return new Date().toISOString().split('T')[0];
 }
 
-// ── Essential ───────────────────────────────────────────────────────────
-
-async function parseEssentialSource() {
-  // For now: reads from essential.json (updated via bot or manually)
-  // Future: auto-parse pushsquare.com/guides/all-ps-plus-games
-  return loadCatalog('essential').games || [];
+function slugify(name) {
+  return name
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
 }
+
+// ── Essential ───────────────────────────────────────────────────────────
 
 async function checkEssential() {
   const current = loadCatalog('essential');
-  const fresh = await parseEssentialSource();
+  const currentMonth = getCurrentMonth();
 
-  const added = fresh.filter(g => !current.games.find(c => c.id === g.id));
-  const removed = current.games.filter(g => !fresh.find(f => f.id === g.id));
-
-  if (added.length === 0 && removed.length === 0) {
-    console.log(`${PREFIX} Essential — без изменений`);
+  if (current.month === currentMonth && current.games.length > 0) {
+    console.log(`${PREFIX} Essential — актуален (${currentMonth}, ${current.games.length} игр)`);
     return { changed: false };
   }
 
-  const addedNames = added.map(g => g.name).join(', ');
-  const removedNames = removed.map(g => g.name).join(', ');
+  // Если месяц не совпадает — каталог устарел, шлём алерт
+  console.log(`${PREFIX} Essential — устарел! Текущий: ${current.month}, ожидается: ${currentMonth}`);
+  notifier.sendAlert('catalog_update', `⚠️ Essential каталог устарел!\nМесяц в файле: ${current.month}\nТекущий месяц: ${currentMonth}\nОбновите каталог вручную или дождитесь новости.`);
+  return { changed: false, stale: true };
+}
 
-  let msg = '📦 Essential обновлён!';
-  if (addedNames) msg += `\n➕ ${addedNames}`;
-  if (removedNames) msg += `\n➖ ${removedNames}`;
-  notifier.sendAlert('catalog_update', msg);
+/**
+ * Update Essential catalog from a published news article.
+ * Called by news pipeline when PS Plus Essential monthly games article is detected.
+ * @param {Array<{name: string, platforms: string[]}>} games — game list from article
+ */
+async function updateEssentialFromNews(games) {
+  if (!games || games.length === 0) {
+    console.log(`${PREFIX} Essential updateFromNews — пустой список игр`);
+    return { changed: false };
+  }
+
+  const current = loadCatalog('essential');
+  const newGames = games.map(g => ({
+    id: slugify(g.name),
+    name: g.name,
+    platforms: g.platforms || ['PS5'],
+  }));
+
+  const currentIds = new Set(current.games.map(g => g.id));
+  const newIds = new Set(newGames.map(g => g.id));
+  const added = newGames.filter(g => !currentIds.has(g.id));
+  const removed = current.games.filter(g => !newIds.has(g.id));
+
+  if (added.length === 0 && removed.length === 0) {
+    console.log(`${PREFIX} Essential — без изменений (из новости)`);
+    return { changed: false };
+  }
 
   saveCatalog('essential', {
     updatedAt: new Date().toISOString(),
     month: getCurrentMonth(),
-    games: fresh,
+    games: newGames,
   });
+
+  const addedNames = added.map(g => g.name).join(', ');
+  const removedNames = removed.map(g => g.name).join(', ');
+  let msg = '📦 Essential обновлён из новости!';
+  if (addedNames) msg += `\n➕ ${addedNames}`;
+  if (removedNames) msg += `\n➖ ${removedNames}`;
+  notifier.sendAlert('catalog_update', msg);
+
+  console.log(`${PREFIX} Essential обновлён: ${newGames.length} игр`);
+
+  // Обновить psplus.ts на сайте
+  try {
+    const siteWriter = require('./siteWriter');
+    const result = await siteWriter.generateEssentialShowcase();
+    if (result.pushed) {
+      console.log(`${PREFIX} Essential showcase обновлён на сайте`);
+    }
+  } catch (err) {
+    console.error(`${PREFIX} Essential showcase ошибка: ${err.message}`);
+  }
 
   return { changed: true, added, removed };
 }
@@ -187,6 +231,7 @@ async function checkAllExtra() {
 
 module.exports = {
   checkEssential,
+  updateEssentialFromNews,
   checkExtra,
   checkClassics,
   checkTrials,

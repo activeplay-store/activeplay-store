@@ -143,13 +143,12 @@ export const psPlus: Record<PsPlusTier, PsPlusPlan> = {
     },
     showcaseGames: {
       monthlyGames: {
-        month: 'Март 2026',
-        availableUntil: '7 апреля 2026',
+        month: 'Апрель 2026',
+        availableUntil: '5 мая 2026',
         games: [
-          { title: 'Monster Hunter Rise', image: '/images/covers/monster-hunter-rise.jpg', platform: ['PS4', 'PS5'] },
-          { title: 'PGA Tour 2K25', image: '/images/covers/pga-tour-2k25.jpg', platform: ['PS5'] },
-          { title: 'Slime Rancher 2', image: '/images/covers/slime-rancher-2.jpg', platform: ['PS5'] },
-          { title: 'The Elder Scrolls Online: Tamriel Unlimited', image: '/images/covers/elder-scrolls-online.jpg', platform: ['PS4', 'PS5'] },
+          { title: 'Lords of the Fallen', image: '/images/covers/lords-of-the-fallen.jpg', platform: ['PS5'] },
+          { title: 'Tomb Raider I-III Remastered', image: '/images/covers/tomb-raider-i-iii-remastered.jpg', platform: ['PS4', 'PS5'] },
+          { title: 'Sword Art Online: Fractured Daydream', image: '/images/covers/sword-art-online-fractured-daydream.jpg', platform: ['PS5'] },
         ],
       },
     },

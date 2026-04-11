@@ -230,6 +230,25 @@ async function runPipeline(article, targets, bot) {
       }
     }
 
+    // Автоопределение relatedProduct для PS Plus Essential
+    if (!article.relatedProduct) {
+      const titleLower = (article.site?.title || article.title || '').toLowerCase();
+      const tagsLower = (article.tags || []).map(t => t.toLowerCase());
+      if (
+        tagsLower.includes('ps-plus-essential') ||
+        (titleLower.includes('ps plus essential') && (titleLower.includes('бесплатн') || titleLower.includes('monthly') || titleLower.includes('игры')))
+      ) {
+        article.relatedProduct = 'ps-plus-essential';
+        console.log('[PIPELINE] relatedProduct auto-detected: ps-plus-essential');
+      } else if (
+        tagsLower.includes('ps-plus-extra') ||
+        (titleLower.includes('ps plus extra') && (titleLower.includes('каталог') || titleLower.includes('catalog') || titleLower.includes('новые игры')))
+      ) {
+        article.relatedProduct = 'ps-plus-extra';
+        console.log('[PIPELINE] relatedProduct auto-detected: ps-plus-extra');
+      }
+    }
+
     // CTA2 для подписок
     if (article.relatedProduct) {
       article.cta2 = buildProductCta(article.relatedProduct);
@@ -275,6 +294,51 @@ async function runPipeline(article, targets, bot) {
         `\ud83d\udce2 ${publishedTargets}\n` +
         `\ud83d\udd17 https://activeplay.games/news/${article.slug}`
       );
+    }
+
+    // ═══ POST-PUBLISH: Обновить каталог Essential если это новость о бесплатных играх ═══
+    if (article.relatedProduct === 'ps-plus-essential') {
+      try {
+        const titleLower = (article.site?.title || '').toLowerCase();
+        const isMonthlyGamesNews =
+          titleLower.includes('бесплатн') || titleLower.includes('уже доступн') ||
+          titleLower.includes('monthly') || titleLower.includes('new games');
+
+        if (isMonthlyGamesNews) {
+          console.log('[PIPELINE] Detected Essential monthly games news — updating catalog...');
+          const { updateEssentialFromNews } = require('../catalogMonitor');
+
+          // Extract game names from tags (skip platform/category tags)
+          const skipTags = new Set(['ps5', 'ps4', 'ps-plus-essential', 'ps-plus-extra', 'ps-plus-deluxe', 'sony', 'playstation']);
+          const gameNames = (article.tags || []).filter(t => !skipTags.has(t.toLowerCase()));
+
+          // Extract platforms from article content
+          const content = (article.site?.text || article.content || '').toLowerCase();
+          const games = gameNames.map(name => {
+            const nameLower = name.toLowerCase();
+            // Check if PS4 is mentioned near this game name
+            const nearContext = content.slice(
+              Math.max(0, content.indexOf(nameLower) - 50),
+              content.indexOf(nameLower) + nameLower.length + 100
+            );
+            const hasPS4 = /ps4|ps 4/.test(nearContext);
+            const hasPS5 = /ps5|ps 5/.test(nearContext);
+            const platforms = [];
+            if (hasPS4) platforms.push('PS4');
+            if (hasPS5 || platforms.length === 0) platforms.push('PS5');
+            return { name, platforms };
+          });
+
+          if (games.length > 0) {
+            const result = await updateEssentialFromNews(games);
+            if (result.changed) {
+              console.log(`[PIPELINE] Essential catalog updated: ${games.length} games`);
+            }
+          }
+        }
+      } catch (err) {
+        console.error('[PIPELINE] Essential catalog update failed:', err.message);
+      }
     }
 
     return article;

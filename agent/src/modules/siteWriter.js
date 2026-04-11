@@ -2247,6 +2247,193 @@ async function generateTopSellers(gameList) {
   return { written: true, count, pushed, month: meta.month, year: meta.year };
 }
 
+// ── Essential Showcase ──────────────────────────────────────────────────
+
+const PSPLUS_FILE = 'src/data/psplus.ts';
+const ESSENTIAL_JSON = path.join(__dirname, '..', 'data', 'catalogs', 'essential.json');
+
+const MONTH_NAMES_RU = [
+  'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
+  'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь',
+];
+
+const MONTH_NAMES_RU_GEN = [
+  'января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
+  'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря',
+];
+
+// Essential release dates — first Tuesday of each month
+const ESSENTIAL_RELEASES = [
+  '2026-04-07','2026-05-05','2026-06-02','2026-07-07','2026-08-04','2026-09-01',
+  '2026-10-06','2026-11-03','2026-12-01','2027-01-05','2027-02-02','2027-03-02',
+];
+
+function getEssentialAvailableUntil(currentMonth) {
+  // Find next release date after currentMonth
+  for (const date of ESSENTIAL_RELEASES) {
+    if (date > currentMonth + '-31') {
+      const d = new Date(date);
+      const day = d.getDate();
+      const monthName = MONTH_NAMES_RU_GEN[d.getMonth()];
+      const year = d.getFullYear();
+      return `${day} ${monthName} ${year}`;
+    }
+  }
+  return '';
+}
+
+async function ensureCoverImage(gameName, gameSlug) {
+  const coversDir = path.join(REPO_ROOT, 'public', 'images', 'covers');
+  const coverPath = path.join(coversDir, gameSlug + '.jpg');
+
+  if (fs.existsSync(coverPath)) return true;
+
+  // Try to download from RAWG
+  try {
+    const { searchRAWG, getRAWGBySlug, findKnownSlug } = require('./news/imageGen');
+    const axios = require('axios');
+    const sharp = require('sharp');
+
+    let imageUrl = null;
+
+    // Try known slug first
+    const knownSlug = findKnownSlug(gameName);
+    if (knownSlug) {
+      imageUrl = await getRAWGBySlug(knownSlug);
+    }
+
+    // Fallback to search
+    if (!imageUrl) {
+      imageUrl = await searchRAWG(gameName);
+    }
+
+    if (imageUrl) {
+      const response = await axios.get(imageUrl, {
+        responseType: 'arraybuffer',
+        timeout: 15000,
+        headers: { 'User-Agent': 'Mozilla/5.0' },
+      });
+
+      if (!fs.existsSync(coversDir)) fs.mkdirSync(coversDir, { recursive: true });
+
+      // Cover images: portrait 3:4 ratio, 400x533
+      await sharp(Buffer.from(response.data))
+        .resize(400, 533, { fit: 'cover', position: 'center' })
+        .jpeg({ quality: 85 })
+        .toFile(coverPath);
+
+      console.log(PREFIX + ' Обложка скачана: ' + gameSlug + '.jpg');
+      return true;
+    }
+  } catch (err) {
+    console.error(PREFIX + ' Ошибка скачивания обложки ' + gameSlug + ': ' + err.message);
+  }
+
+  return false;
+}
+
+function gitPushEssential() {
+  try {
+    const filesToAdd = [PSPLUS_FILE];
+    // Also add any new cover images
+    const diff = execSync('git status --porcelain public/images/covers/', { cwd: REPO_ROOT, encoding: 'utf8' }).trim();
+    if (diff) {
+      filesToAdd.push('public/images/covers/');
+    }
+
+    const mainDiff = execSync('git diff --name-only ' + PSPLUS_FILE, { cwd: REPO_ROOT, encoding: 'utf8' }).trim();
+    if (!mainDiff && !diff) {
+      console.log(PREFIX + ' psplus.ts не изменился');
+      return false;
+    }
+
+    for (const f of filesToAdd) {
+      execSync('git add ' + f, { cwd: REPO_ROOT });
+    }
+
+    const msg = 'data: обновление PS Plus Essential каталога';
+    execSync('git commit -m "' + msg + '"', { cwd: REPO_ROOT });
+    execSync('git push', { cwd: REPO_ROOT });
+
+    console.log(PREFIX + ' ✅ Essential showcase push');
+    return true;
+  } catch (err) {
+    console.error(PREFIX + ' ❌ Essential push: ' + err.message);
+    return false;
+  }
+}
+
+async function generateEssentialShowcase() {
+  console.log(PREFIX + ' === Генерация Essential showcase ===');
+
+  // Load essential.json
+  let essentialData;
+  try {
+    essentialData = JSON.parse(fs.readFileSync(ESSENTIAL_JSON, 'utf8'));
+  } catch (err) {
+    console.error(PREFIX + ' Не удалось прочитать essential.json: ' + err.message);
+    return { written: false, pushed: false };
+  }
+
+  const games = essentialData.games || [];
+  if (games.length === 0) {
+    console.log(PREFIX + ' Essential — нет игр');
+    return { written: false, pushed: false };
+  }
+
+  const currentMonth = essentialData.month || new Date().toISOString().slice(0, 7);
+  const [year, monthNum] = currentMonth.split('-').map(Number);
+  const monthName = MONTH_NAMES_RU[monthNum - 1] + ' ' + year;
+  const availableUntil = getEssentialAvailableUntil(currentMonth);
+
+  // Ensure cover images exist
+  for (const game of games) {
+    const gameSlug = slugify(game.name);
+    await ensureCoverImage(game.name, gameSlug);
+  }
+
+  // Read current psplus.ts
+  const psplusPath = path.join(REPO_ROOT, PSPLUS_FILE);
+  let content;
+  try {
+    content = fs.readFileSync(psplusPath, 'utf8');
+  } catch (err) {
+    console.error(PREFIX + ' Не удалось прочитать psplus.ts: ' + err.message);
+    return { written: false, pushed: false };
+  }
+
+  // Build new monthlyGames block
+  const gamesLines = games.map(g => {
+    const slug = slugify(g.name);
+    const platforms = JSON.stringify(g.platforms || ['PS5']);
+    return `          { title: '${g.name.replace(/'/g, "\\'")}', image: '/images/covers/${slug}.jpg', platform: ${platforms} },`;
+  }).join('\n');
+
+  const newMonthlyGames =
+    `monthlyGames: {\n` +
+    `        month: '${monthName}',\n` +
+    `        availableUntil: '${availableUntil}',\n` +
+    `        games: [\n` +
+    gamesLines + '\n' +
+    `        ],\n` +
+    `      }`;
+
+  // Replace existing monthlyGames block
+  const monthlyGamesRegex = /monthlyGames:\s*\{[\s\S]*?games:\s*\[[\s\S]*?\],\s*\}/;
+  if (!monthlyGamesRegex.test(content)) {
+    console.error(PREFIX + ' Не найден блок monthlyGames в psplus.ts');
+    return { written: false, pushed: false };
+  }
+
+  const updated = content.replace(monthlyGamesRegex, newMonthlyGames);
+  fs.writeFileSync(psplusPath, updated, 'utf8');
+  console.log(PREFIX + ' ✅ psplus.ts обновлён: ' + games.length + ' игр, ' + monthName);
+
+  const pushed = gitPushEssential();
+
+  return { written: true, pushed, count: games.length, month: monthName };
+}
+
 // ── Export ───────────────────────────────────────────────────────────────
 
 module.exports = {
@@ -2255,4 +2442,5 @@ module.exports = {
   generatePreorders,
   generateHotReleases,
   generateTopSellers,
+  generateEssentialShowcase,
 };
