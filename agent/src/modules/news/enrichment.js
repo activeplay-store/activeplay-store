@@ -166,17 +166,79 @@ function extractGameName(title) {
   return match ? match[0].trim() : clean.split(/[—–:\-]/).shift()?.trim() || clean.substring(0, 50);
 }
 
+// Определить, является ли статья о распродаже/скидках
+function isDealsArticle(article) {
+  const title = (article.site?.title || article.title || '').toLowerCase();
+  const text = (article.site?.text || article.description || '').toLowerCase();
+  const combined = title + ' ' + text;
+  const dealKeywords = ['распродаж', 'скидк', 'sale', 'deals', 'discount', 'spring sale', 'summer sale',
+    'winter sale', 'holiday sale', 'black friday', 'весенн', 'летн', 'зимн', 'осенн',
+    'ps store sale', 'playstation sale', 'до 90%', 'до 80%', 'до 70%', 'до 60%', 'до 50%'];
+  return dealKeywords.some(kw => combined.includes(kw));
+}
+
+// Собрать топ игр со скидками из games.json для статьи о распродаже
+function getTopDeals(maxItems = 15) {
+  try {
+    const data = JSON.parse(fs.readFileSync(GAMES_FILE, 'utf-8'));
+    const games = data.games || [];
+
+    const dealsGames = [];
+    for (const game of games) {
+      // Проверяем все регионы
+      for (const regionCode of ['TR', 'UA']) {
+        const editions = game.prices?.[regionCode]?.editions || [];
+        for (const ed of editions) {
+          if (ed.salePrice && ed.basePrice && ed.salePrice < ed.basePrice && ed.clientSalePrice && ed.clientPrice) {
+            const discountPct = Math.round((1 - ed.salePrice / ed.basePrice) * 100);
+            if (discountPct >= 20) { // Только скидки от 20%
+              dealsGames.push({
+                name: game.name,
+                edition: ed.name || 'Standard',
+                oldPrice: ed.clientPrice,
+                salePrice: ed.clientSalePrice,
+                discountPct,
+                metacritic: game.metacritic || null,
+                region: regionCode,
+              });
+              break; // Одна запись на игру из региона
+            }
+          }
+        }
+        if (dealsGames.find(d => d.name === game.name)) break; // Не дублировать между регионами
+      }
+    }
+
+    // Сортировать: сначала большие скидки на известные игры (metacritic > 0)
+    dealsGames.sort((a, b) => {
+      // Приоритет: есть metacritic → выше
+      if (a.metacritic && !b.metacritic) return -1;
+      if (!a.metacritic && b.metacritic) return 1;
+      // Потом по metacritic
+      if (a.metacritic && b.metacritic && a.metacritic !== b.metacritic) return b.metacritic - a.metacritic;
+      // Потом по скидке
+      return b.discountPct - a.discountPct;
+    });
+
+    return dealsGames.slice(0, maxItems);
+  } catch (err) {
+    console.error(`[ENRICH] getTopDeals error: ${err.message}`);
+    return [];
+  }
+}
+
 // Главная функция: собрать весь контекст для генерации текста
 async function enrichArticle(article) {
   const title = article.site?.title || article.title || '';
   const description = article.site?.text || article.description || '';
   const gameName = extractGameName(title);
+  const isDeal = isDealsArticle(article);
 
   // Параллельные запросы
   const [groundingFacts, rawgFacts, siteGame] = await Promise.all([
     searchGrounding(title, description),
-    fetchRawgData(gameName),
-    Promise.resolve(findGameOnSite(gameName)),
+    isDeal ? Promise.resolve(null) : fetchRawgData(gameName),
+    Promise.resolve(isDeal ? null : findGameOnSite(gameName)),
   ]);
 
   const parts = [];
@@ -194,6 +256,31 @@ async function enrichArticle(article) {
       ? `${siteGame.salePrice} ₽ (скидка с ${siteGame.oldPrice} ₽)`
       : `${siteGame.minPrice} ₽`;
     parts.push(`ИГРА НА ACTIVEPLAY:\nНазвание: ${siteGame.name}\nЦена: ${priceInfo}\nID: ${siteGame.gameId}`);
+  }
+
+  // Для статей о распродажах — подтягиваем реальные игры со скидками из базы
+  if (isDeal) {
+    const topDeals = getTopDeals(15);
+    if (topDeals.length > 0) {
+      const dealLines = topDeals.map(d => {
+        const mc = d.metacritic ? ` (Metacritic: ${d.metacritic})` : '';
+        return `- ${d.name}: ${d.salePrice} ₽ (было ${d.oldPrice} ₽, скидка ${d.discountPct}%)${mc}`;
+      });
+      parts.push(
+        `ИГРЫ СО СКИДКАМИ НА ACTIVEPLAY (цены в рублях):\n` +
+        `Всего игр со скидками в базе: ${topDeals.length}+\n` +
+        dealLines.join('\n') +
+        `\n\nВАЖНО: Используй ЭТИ цены в рублях из списка выше. НЕ выдумывай цены. НЕ пиши цены в долларах, турецких лирах или любой другой валюте. Все цены — ТОЛЬКО в рублях (₽). Упомяни 5-8 конкретных игр из этого списка с их ценами в рублях.`
+      );
+      console.log(`[ENRICH] Deals mode: injected ${topDeals.length} games with RUB prices`);
+    } else {
+      console.warn('[ENRICH] Deals mode: no sale games found in games.json');
+    }
+
+    // Помечаем статью как deals
+    article.ctaType = 'deals';
+    article.ctaText = 'Скидки PS Store';
+    article.ctaLink = '/sale';
   }
 
   return {
