@@ -112,6 +112,7 @@ const KNOWN_SLUGS = {
   'Tekken 8': 'tekken-8',
   'Mortal Kombat 1': 'mortal-kombat-1-2',
   'Street Fighter 6': 'street-fighter-6',
+  'Forza Horizon 6': 'forza-horizon-6',
   'Forza Horizon 5': 'forza-horizon-5',
   'Forza Motorsport': 'forza-motorsport-3',
   'Starfield': 'starfield',
@@ -133,6 +134,20 @@ const KNOWN_SLUGS = {
   'Bloodborne': 'bloodborne',
   'Demon\'s Souls': 'demons-souls',
   'Dark Souls': 'dark-souls-iii',
+  'Graveyard Keeper': 'graveyard-keeper',
+  'Graveyard Keeper 2': 'graveyard-keeper-2',
+  'Dune Awakening': 'dune-awakening',
+  'Judas': 'judas',
+  'Dying Light 2': 'dying-light-2',
+  'The Outer Worlds 2': 'the-outer-worlds-2',
+  'South of Midnight': 'south-of-midnight',
+  'Ninja Gaiden 4': 'ninja-gaiden-4',
+  'Mafia 4': 'mafia-the-old-country',
+  'Oblivion Remastered': 'the-elder-scrolls-iv-oblivion',
+  'Oblivion': 'the-elder-scrolls-iv-oblivion',
+  'Split Fiction': 'split-fiction',
+  'Assassins Creed Mirage': 'assassins-creed-mirage',
+  'Assassin\'s Creed Mirage': 'assassins-creed-mirage',
 };
 
 // ═══════════════════════════════════════════════
@@ -142,7 +157,9 @@ const KNOWN_SLUGS = {
 function isJunkImage(url) {
   if (!url) return true;
   const junk = ['avatar', 'icon', 'logo', 'thumbnail', 'profile', 'favicon', 'badge', 'emoji',
-    'placeholder', 'default', 'blank', 'spacer', '1x1', 'pixel', 'spinner', 'loading'];
+    'placeholder', 'default', 'blank', 'spacer', '1x1', 'pixel', 'spinner', 'loading',
+    'author', 'gravatar', 'widget', 'button', 'arrow', 'banner-ad', 'advert', 'tracking',
+    'social-share', 'share-btn', '/ads/', '/ad/', 'captcha'];
   const lower = url.toLowerCase();
   return junk.some(word => lower.includes(word));
 }
@@ -150,8 +167,56 @@ function isJunkImage(url) {
 // Русские прилагательные-описатели перед названием игры
 const RU_ADJECTIVES = /^(новая|новый|новое|новые|следующая|следующий|грядущая|грядущий|большой|большая|ожидаемая|ожидаемый|анонсирован[аоы]?|долгожданн[аоыйе]+|предстоящ[аоыйе]+)\s+/i;
 
+// Сервисы/подписки — НЕ игры. Если заголовок начинается с них, игру надо искать ПОСЛЕ двоеточия/тире
+const SERVICE_NAMES = /^(Xbox\s*Game\s*Pass|PS\s*Plus|PlayStation\s*Plus|EA\s*Play|Game\s*Pass|Ubisoft\+|Nintendo\s*Switch\s*Online)\b/i;
+
+function isServiceTitle(title) {
+  return SERVICE_NAMES.test(title.trim());
+}
+
+// Извлечь название игры из ПРАВОЙ части заголовка (после двоеточия/тире)
+function extractGameFromRightPart(title) {
+  // "Xbox Game Pass в мае 2026: Forza Horizon 6 и другие новинки" → "Forza Horizon 6"
+  const afterColon = title.match(/[:\u2013\u2014]\s*(.+)/);
+  if (!afterColon) return null;
+  const right = afterColon[1].trim();
+
+  // Текст в кавычках
+  const quoteMatch = right.match(/[\u00ab\u201c'"]([^\u00bb\u201d'"]+)[\u00bb\u201d'"]/);
+  if (quoteMatch) return quoteMatch[1].trim();
+
+  // Английское название игры в начале правой части
+  const engMatch = right.match(/^([A-Z][A-Za-z0-9'\s\-&.:]{2,40}?)(?:\s+и\s|\s+[\u0400-\u04FF]|\s*[\u2013\u2014!?]|$)/);
+  if (engMatch) return engMatch[1].trim();
+
+  // НЕ возвращаем чисто русский текст без заглавных английских слов — это не название игры,
+  // а описание ("названы игры-кандидаты", "обновление каталога", etc.)
+  // Русское название подходит только если начинается с заглавной и похоже на название
+  const ruMatch = right.match(/^([А-ЯЁ][А-Яа-яёЁA-Za-z0-9'\s\-&.:]{2,50}?)(?:\s+и\s+друг|\s+и\s+ещ[её]|,|\s*$)/);
+  if (ruMatch) {
+    const candidate = ruMatch[1].trim();
+    // Отсеиваем фразы, которые не похожи на названия игр
+    const notGameName = /^(назван|список|обновлен|добавлен|удалён|убран|первые|новые|лучшие|все |какие|когда|почему|стали|сколько|появи)/i;
+    if (!notGameName.test(candidate)) return candidate;
+  }
+
+  return null;
+}
+
 function extractGameName(article) {
   const title = article.site?.title || article.title || '';
+
+  // ═══ СЕРВИСНЫЕ ЗАГОЛОВКИ: Game Pass, PS Plus — ищем игру ПОСЛЕ двоеточия ═══
+  if (isServiceTitle(title)) {
+    const gameFromRight = extractGameFromRightPart(title);
+    if (gameFromRight) {
+      console.log('[NEWS] Service title detected, game from right part: "' + gameFromRight + '"');
+      return gameFromRight;
+    }
+    // Если после двоеточия нет конкретной игры — вернуть null (это новость про сервис)
+    console.log('[NEWS] Service title without specific game: "' + title + '"');
+    return null;
+  }
 
   // Текст в кавычках
   const quoteMatch = title.match(/[\u00ab\u201c'"]([^\u00bb\u201d'"]+)[\u00bb\u201d'"]/);
@@ -161,16 +226,17 @@ function extractGameName(article) {
   const colonMatch = title.match(/^([A-Za-z\u0400-\u04FF\u0451\u04010-9\s:'\-&.]+?)[\s]*[:\u2013\u2014]/);
   if (colonMatch) {
     const candidate = colonMatch[1].trim();
-    if (candidate.length >= 3) return candidate;
+    // Убедиться что это не сервис (дополнительная проверка)
+    if (candidate.length >= 3 && !SERVICE_NAMES.test(candidate)) return candidate;
   }
 
   // Английские слова в начале перед русским текстом/глаголом
   const engMatch = title.match(/^([A-Z][A-Za-z0-9'\s\-&.]{2,40}?)(?:\s+[\u0400-\u04FF]|\s*[:\u2013\u2014!?]|\s+на\s|\s+для\s|\s+получ|\s+выход|\s+убрал|\s+стал|\s+побил|\s+лиш|\s+потер)/);
-  if (engMatch) return engMatch[1].trim();
+  if (engMatch && !SERVICE_NAMES.test(engMatch[1].trim())) return engMatch[1].trim();
 
   // Просто первые английские слова
   const simpleEng = title.match(/^([A-Z][A-Za-z0-9'\s\-&.]{2,30})\b/);
-  if (simpleEng) return simpleEng[1].trim();
+  if (simpleEng && !SERVICE_NAMES.test(simpleEng[1].trim())) return simpleEng[1].trim();
 
   return null;
 }
@@ -323,8 +389,27 @@ async function checkSourceImage(imageUrl) {
     });
     const buf = Buffer.from(response.data);
     const metadata = await sharp(buf).metadata();
-    if (metadata.width >= 600) return buf;
-    return null;
+
+    // Минимум 800px ширина (раньше было 600 — слишком мало, пропускало мусор)
+    if (!metadata.width || metadata.width < 800) {
+      console.log('[NEWS] Image rejected: too small (' + metadata.width + 'x' + metadata.height + ') — ' + imageUrl.substring(0, 80));
+      return null;
+    }
+
+    // Минимум 400px высота — отсеивает узкие баннеры и полоски
+    if (!metadata.height || metadata.height < 400) {
+      console.log('[NEWS] Image rejected: too short (' + metadata.width + 'x' + metadata.height + ') — ' + imageUrl.substring(0, 80));
+      return null;
+    }
+
+    // Проверка соотношения сторон: не уже 4:1 и не выше 1:2
+    const ratio = metadata.width / metadata.height;
+    if (ratio > 4 || ratio < 0.5) {
+      console.log('[NEWS] Image rejected: bad aspect ratio (' + ratio.toFixed(2) + ') — ' + imageUrl.substring(0, 80));
+      return null;
+    }
+
+    return buf;
   } catch {
     return null;
   }
@@ -416,9 +501,17 @@ function buildImageSearchQuery(article) {
     return 'PlayStation Store sale banner official';
   }
 
+  // Сервисные новости (Game Pass, PS Plus) без конкретной игры — искать брендинг сервиса
+  if (isServiceTitle(title) && !gameName) {
+    if (/game\s*pass/i.test(title)) return 'Xbox Game Pass official banner 2026 wallpaper';
+    if (/ps\s*plus|playstation\s*plus/i.test(title)) return 'PS Plus official banner 2026 wallpaper';
+    if (/ea\s*play/i.test(title)) return 'EA Play official banner wallpaper';
+    return 'gaming subscription service banner';
+  }
+
   if (gameName) {
     const clean = cleanGameName(gameName);
-    return `${clean} video game official screenshot`;
+    return `${clean} game official key art wallpaper`;
   }
 
   // Фоллбэк
@@ -427,7 +520,7 @@ function buildImageSearchQuery(article) {
     .replace(/(инсайд|слух|анонс|новост|обзор|хайп|уже|на следующ|скоро|стал|побил|получ)/gi, '')
     .replace(/ {2,}/g, ' ')
     .trim();
-  return (cleanTitle.substring(0, 80) + ' game screenshot').trim();
+  return (cleanTitle.substring(0, 80) + ' game official wallpaper').trim();
 }
 
 // Поиск через Google Images (scraping)
@@ -638,7 +731,9 @@ async function getNewsImage(article) {
   }
 
   // ═══ ОБЫЧНАЯ НОВОСТЬ ═══
-  console.log('[NEWS] === Regular news: ' + article.title + ' ===');
+  const title = article.site?.title || article.title || '';
+  const isService = isServiceTitle(title);
+  console.log('[NEWS] === Regular news: ' + title + (isService ? ' [SERVICE]' : '') + ' ===');
   const gameName = extractGameName(article);
 
   // 1. RAWG — обложка игры (приоритет для игровых новостей)
@@ -666,6 +761,20 @@ async function getNewsImage(article) {
         markImageUsed(rawgUrl, article.id);
         console.log('[NEWS] GAME: RAWG image for "' + clean + '"');
         return img;
+      }
+    }
+
+    // 1c. Для игровых новостей — веб-поиск конкретной игры ДО og:image
+    // (og:image часто содержит логотип сайта-источника, а не картинку игры)
+    const gameWebQuery = `${clean} game official key art wallpaper`;
+    console.log('[NEWS] Game web search: "' + gameWebQuery + '"');
+    const gameWebUrl = await searchWebImage(article, gameWebQuery);
+    if (gameWebUrl) {
+      const gameWebImg = await downloadAndResize(gameWebUrl, filename);
+      if (gameWebImg) {
+        markImageUsed(gameWebUrl, article.id);
+        console.log('[NEWS] GAME: web search image for "' + clean + '"');
+        return gameWebImg;
       }
     }
   }
@@ -713,5 +822,5 @@ async function getNewsImage(article) {
 module.exports = {
   getNewsImage, checkSourceImage, searchRAWG, resizeImage, extractGameName,
   isJunkImage, getFallbackImage, fetchOgImage, searchWebImage, generateAiCover,
-  cleanGameName, findKnownSlug, KNOWN_SLUGS,
+  cleanGameName, findKnownSlug, isServiceTitle, KNOWN_SLUGS,
 };
