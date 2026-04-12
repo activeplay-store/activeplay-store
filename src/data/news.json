@@ -1,5 +1,43 @@
 [
   {
+    "id": "starfield-vylety-na-ps5-i-ps5-pro-chto-sluchilos",
+    "slug": "starfield-vylety-na-ps5-i-ps5-pro-chto-sluchilos",
+    "title": "Starfield: вылеты на PS5 и PS5 Pro — что случилось",
+    "content": "Игроки Starfield на консолях PlayStation 5 столкнулись с неожиданной проблемой. Пользователи массово сообщают о вылетах игры, особенно часто это происходит на PS5 Pro. Информация о проблемах появилась в сети сегодня, 12 апреля 2026 года. Причины сбоев пока остаются неизвестными, и разработчики ситуацию не комментируют.\n\nStarfield – это RPG от Bethesda, вышедшая 6 сентября 2023 года. Игра предлагает исследовать космос, сражаться с врагами и развивать персонажа. На Metacritic игра получила 88 баллов. Starfield доступна на PC и Xbox Series S/X, а вот на PlayStation 5 её нет, что делает сообщения о вылетах на этой платформе особенно странными.\n\nПроблема с вылетами, судя по всему, затронула не всех игроков. Некоторые пользователи сообщают о стабильной работе Starfield на PS5. Другие же не могут нормально играть из-за постоянных вылетов. Возможно, проблема связана с конкретной версией консоли, настройками или другими установленными играми.\n\nНесмотря на отсутствие Starfield на PlayStation, владельцы PS5 могут насладиться другими играми Bethesda по подписке PS Plus. Каталог включает Fallout 4, Skyrim и Doom Eternal. Оформить подписку PS Plus Extra или Premium можно на ActivePlay от 1 250 ₽/мес. На сайте 52 000+ довольных клиентов с 2022 года.",
+    "metaDescription": "Игроки Starfield на PS5 и PS5 Pro жалуются на вылеты. Разработчики пока не комментируют ситуацию. Что происходит и как решить проблему?",
+    "coverUrl": "/images/news/news-1775998870896-t5kq.jpg",
+    "tags": [
+      "PS5",
+      "Starfield",
+      "вылеты",
+      "Bethesda"
+    ],
+    "category": "news",
+    "source": "Push Square",
+    "sourceUrl": "https://www.pushsquare.com/news/2026/04/ps5-starfield-launch-plagued-by-crashes-even-on-ps5-pro",
+    "publishedAt": "2026-04-12T13:02:04.809Z",
+    "gameId": null,
+    "relatedProduct": "ps-plus-extra",
+    "platform": "playstation",
+    "ctaType": "psplus",
+    "ctaText": "PS Plus от 1 250 ₽/мес",
+    "ctaLink": "/subscriptions",
+    "cta": {
+      "title": "Купить Fallout 4",
+      "description": "Активация за 5 минут. Турецкий PS Store.",
+      "price": 1250,
+      "oldPrice": 2400,
+      "url": "/sale",
+      "buttonText": "Купить за 1250 ₽ →"
+    },
+    "cta2": {
+      "title": "PS Plus Extra",
+      "description": "Каталог из 400+ игр",
+      "url": "/ps-plus-extra",
+      "buttonText": "Подробнее →"
+    }
+  },
+  {
     "id": "epic-games-delaet-shuter-s-personazhami-disney-v-stile-arc-raiders",
     "slug": "epic-games-delaet-shuter-s-personazhami-disney-v-stile-arc-raiders",
     "title": "Epic games делает шутер с персонажами disney в стиле arc raiders",
@@ -13,7 +51,7 @@
       "Шутер",
       "Слухи"
     ],
-    "category": "Слухи",
+    "category": "rumor",
     "source": "Eurogamer",
     "sourceUrl": "https://www.eurogamer.net/epic-set-to-release-arc-raiders-like-extraction-shooter-with-disney-characters-by-the-end-of-the-year",
     "publishedAt": "2026-04-12T09:14:05.654Z",
