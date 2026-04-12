@@ -138,10 +138,10 @@ async function uploadPhotoToVK(imageUrl, token, groupId) {
 
 // Маппинг категорий переводчика → NewsCategory для сайта
 const CATEGORY_MAP = {
-  'Новость': 'news', 'Анонс': 'announcement', 'Обзор': 'review',
-  'Слух': 'rumor', 'Скидки': 'news', 'Гайд': 'guide',
+  'Новость': 'news', 'Новости': 'news', 'Анонс': 'announcement', 'Обзор': 'review',
+  'Слух': 'rumor', 'Слухи': 'rumor', 'Скидки': 'news', 'Гайд': 'guide',
   'Видео': 'video', 'Интервью': 'interview',
-  'Хайп': 'hype', 'Инсайд': 'insider',
+  'Хайп': 'hype', 'Инсайд': 'insider', 'Утечка': 'insider',
 };
 
 // Убрать категорию из начала заголовка (например "Инсайд: Title" → "Title")
@@ -331,7 +331,7 @@ function writeToSite(newArticles) {
       metaDescription: a.site?.metaDescription || a.metaDescription || '',
       coverUrl: a.imageUrl || a.image || '',
       tags: a.site?.tags || a.tags || [],
-      category: CATEGORY_MAP[a.category] || a.category || 'news',
+      category: CATEGORY_MAP[a.category] || (['news','hype','insider','rumor','video','guide','interview','podcast','review','announcement'].includes(a.category) ? a.category : 'news'),
       source: a.sourceName || a.source || '',
       sourceUrl: a.link || a.sourceUrl || '',
       publishedAt: new Date().toISOString(),

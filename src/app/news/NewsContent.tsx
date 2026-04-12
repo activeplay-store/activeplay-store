@@ -190,12 +190,12 @@ export default function NewsContent() {
                   <span
                     className="inline-block px-2 py-0.5 rounded text-xs font-semibold mb-2"
                     style={{
-                      backgroundColor: `${NEWS_CATEGORIES[item.category].color}15`,
-                      color: NEWS_CATEGORIES[item.category].color,
-                      border: `1px solid ${NEWS_CATEGORIES[item.category].color}30`,
+                      backgroundColor: `${(NEWS_CATEGORIES[item.category] || NEWS_CATEGORIES.news).color}15`,
+                      color: (NEWS_CATEGORIES[item.category] || NEWS_CATEGORIES.news).color,
+                      border: `1px solid ${(NEWS_CATEGORIES[item.category] || NEWS_CATEGORIES.news).color}30`,
                     }}
                   >
-                    {NEWS_CATEGORIES[item.category].icon} {NEWS_CATEGORIES[item.category].label}
+                    {(NEWS_CATEGORIES[item.category] || NEWS_CATEGORIES.news).icon} {(NEWS_CATEGORIES[item.category] || NEWS_CATEGORIES.news).label}
                   </span>
 
                   {/* Title */}

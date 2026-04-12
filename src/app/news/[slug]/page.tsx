@@ -58,7 +58,7 @@ export default async function NewsArticlePage({ params }: Props) {
   const article = newsData.find((n) => n.slug === slug);
   if (!article || article.category === 'guide') return notFound();
 
-  const cat = NEWS_CATEGORIES[article.category];
+  const cat = NEWS_CATEGORIES[article.category] || NEWS_CATEGORIES.news;
 
   // Related articles (same category or shared tags)
   const related = newsData
@@ -263,7 +263,7 @@ export default async function NewsArticlePage({ params }: Props) {
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   {related.map((item) => {
-                    const itemCat = NEWS_CATEGORIES[item.category];
+                    const itemCat = NEWS_CATEGORIES[item.category] || NEWS_CATEGORIES.news;
                     return (
                       <a
                         key={item.id}
