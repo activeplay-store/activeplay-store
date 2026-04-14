@@ -1,5 +1,5 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-04-12T01:09:26.658Z
+// Обновлено: 2026-04-14T01:08:15.330Z
 // Предзаказов: 26
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
@@ -163,6 +163,24 @@ export const preorderData: PreorderGame[] = [
     },
   },
   {
+    id: "saros",
+    name: "SAROS",
+    platforms: ["PS5"],
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202512/0216/559cda0aac5db568f4d5ab40f73ad0c45416c58ee852e673.jpg",
+    releaseDate: "2026-04-27",
+    genre: "Экшен",
+    description: "Рогалик-шутер от Housemarque. Щит из пуль",
+    editions: {
+      TR: [
+        { name: "Standard", clientPrice: 8600 },
+        { name: "Digital Deluxe", clientPrice: 9550 },
+      ],
+      UA: [
+        { name: "Standard", clientPrice: 6100 },
+      ],
+    },
+  },
+  {
     id: "motogp26",
     name: "MotoGP 26",
     platforms: ["PS5"],
@@ -197,24 +215,6 @@ export const preorderData: PreorderGame[] = [
     },
   },
   {
-    id: "saros",
-    name: "SAROS",
-    platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202509/2318/89c3538003fb34870e745493412408eeeed5f02b32c55d23.png",
-    releaseDate: "2026-04-29",
-    genre: "Экшен",
-    description: "Рогалик-шутер от Housemarque. Щит из пуль",
-    editions: {
-      TR: [
-        { name: "Standard", clientPrice: 8600 },
-        { name: "Digital Deluxe", clientPrice: 9550 },
-      ],
-      UA: [
-        { name: "Standard", clientPrice: 6100 },
-      ],
-    },
-  },
-  {
     id: "magin-the-rat-project-stories",
     name: "Magin: The Rat Project Stories",
     platforms: ["PS5"],
@@ -235,13 +235,13 @@ export const preorderData: PreorderGame[] = [
     id: "invincible-vs",
     name: "Invincible VS",
     platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202512/0223/abae93143736137f8d17917de28aa0eedbf2f098ee3402e4.jpg",
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202512/0223/15539affbc76982465016d8f9800a13dcee3adff9685c037.jpg",
     releaseDate: "2026-04-30",
     genre: "Файтинг",
     description: "2D-файтинг от Skybound. 3v3 бои Invincible",
     editions: {
       TR: [
-        { name: "Standard", clientPrice: 5500 },
+        { name: "Deluxe", clientPrice: 7550 },
       ],
       UA: [
         { name: "Standard", clientPrice: 4950 },
