@@ -8,6 +8,7 @@ const { translateAndRewrite, generateFullArticle, checkHeadline, cleanHeadline }
 const { enrichArticle, findGameOnSite } = require('./enrichment');
 const { getNewsImage } = require('./imageGen');
 const { writeToSite, deployToSite, publishToTelegram, publishToVK, buildCtaData, buildProductCta, slugify } = require('./publisher');
+const { factCheckArticle } = require('./factCheck');
 
 const STAGING_DIR = path.join(__dirname, '../../../data/news-staging');
 
@@ -83,6 +84,7 @@ async function runPipeline(article, targets, bot) {
     let step2Start = Date.now();
     console.log('[PIPELINE] Step 2: Enriching...');
     const { enrichedContext, siteGame } = await enrichArticle(article);
+    article.enrichedContext = enrichedContext; // нужно для Step 4.5 (fact-check)
     console.log(`[PIPELINE] Step 2 done in ${((Date.now() - step2Start) / 1000).toFixed(1)}s`);
 
     // ═══ ШАГ 3: ГЕНЕРАЦИЯ ПОЛНОГО ТЕКСТА ═══
@@ -209,6 +211,25 @@ async function runPipeline(article, targets, bot) {
       console.warn(`[PIPELINE] Step 4: logic flag for "${article.site.title}" — ${checkResult.textFixes}`);
     }
     console.log(`[PIPELINE] Step 4 done in ${((Date.now() - step4Start) / 1000).toFixed(1)}s`);
+
+    // ═══ ШАГ 4.5: ФАКТ-ЧЕК (глубокая сверка с оригиналом + RAWG) ═══
+    let step45Start = Date.now();
+    console.log('[PIPELINE] Step 4.5: Fact-checking...');
+    const factResult = await factCheckArticle(article);
+    if (factResult?.hasErrors && factResult.errors?.length > 0) {
+      if (factResult.correctedTitle) {
+        console.log(`[PIPELINE] Title fixed: "${article.site.title}" \u2192 "${factResult.correctedTitle}"`);
+        article.site.title = factResult.correctedTitle;
+        if (article.telegram) article.telegram.title = factResult.correctedTitle;
+        if (article.vk) article.vk.title = factResult.correctedTitle;
+      }
+      if (factResult.correctedText) {
+        console.log(`[PIPELINE] Text corrected: ${factResult.errors.length} fixes applied`);
+        article.site.text = factResult.correctedText;
+      }
+      article.factCheckNotes = factResult.errors;
+    }
+    console.log(`[PIPELINE] Step 4.5 done in ${((Date.now() - step45Start) / 1000).toFixed(1)}s`);
 
     // ═══ ШАГ 5: КАРТИНКА ═══
     let step5Start = Date.now();

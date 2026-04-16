@@ -159,6 +159,10 @@ async function sendPreview(bot, article) {
   const text = (article.site?.text || article.text || '').replace(/[*_`\[\]]/g, '');
   const tags = (article.site?.tags || article.tags || []).map(t => '#' + t.replace(/[*_`\[\]]/g, '')).join(' ');
 
+  const factNote = Array.isArray(article.factCheckNotes) && article.factCheckNotes.length > 0
+    ? `⚠️ Факт-чек: ${article.factCheckNotes.length} исправлений`
+    : null;
+
   const preview = [
     `📰 ${cat.toUpperCase()}`,
     '',
@@ -170,6 +174,7 @@ async function sendPreview(bot, article) {
     `📡 ${article.sourceName} | Score: ${article.score}`,
     `🔗 ${article.link}`,
     article.image ? '🖼 Картинка: есть' : '🖼 Картинка: будет сгенерирована',
+    ...(factNote ? [factNote] : []),
   ].join('\n');
 
   await bot.telegram.sendMessage(ADMIN_ID, preview, {
