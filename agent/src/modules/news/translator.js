@@ -46,6 +46,12 @@ const SYSTEM_PROMPT = `Ты редактор игрового новостног
 - НЕ добавляй категорию в заголовок
 - Только первое слово с большой буквы + имена собственные и аббревиатуры. НЕ пиши каждое русское слово с большой буквы
 
+ЖЕЛЕЗНЫЕ ПРАВИЛА:
+6. ПРОВЕРЯЙ ВНУТРЕННЮЮ ЛОГИКУ:
+   - Перечитай текст перед выдачей. Если в одном предложении написано "перенесли на неделю", а в следующем "прошла вчера" — это противоречие. Исправь.
+   - Не придумывай даты, которых нет в источнике. Если в оригинале нет точной даты презентации — не пиши "вчера прошла".
+   - Если факт не подтверждён источником — не добавляй его. Лучше короче и точно, чем длинно и с ошибками.
+
 ОТВЕТ СТРОГО JSON (без backticks):
 {
   "category": "Новость/Анонс/Обзор/Слух/Инсайд/Хайп/Скидки/Гайд/Видео/Интервью",
@@ -643,14 +649,15 @@ function normalizeHeadlineCase(title) {
   return result.join(' ');
 }
 
-// Проверка и улучшение заголовка (отдельный вызов)
-async function checkHeadline(title, summary) {
-  const prompt = `Проверь заголовок новости для игрового сайта ActivePlay.
+// Проверка и улучшение заголовка + проверка текста на внутренние противоречия
+// Возвращает { headline, textFixes } — textFixes описание проблем или null
+async function checkHeadline(title, fullText) {
+  const prompt = `Проверь заголовок и текст новости для игрового сайта ActivePlay.
 
 Заголовок: ${title}
-Тема новости: ${summary}
+Текст: ${(fullText || '').substring(0, 3000)}
 
-Критерии:
+Критерии заголовка:
 1. Есть конкретика (цифры, названия, даты)?
 2. Есть SEO-ключевики по которым люди ищут?
 3. Длина 60-80 символов?
@@ -660,24 +667,46 @@ async function checkHeadline(title, summary) {
 7. Нет грамматических ошибок? Проверь согласование падежей, числительных, пропущенные буквы.
 8. Названия игр и студий написаны правильно?
 
-Если заголовок хорош \u2014 верни его как есть.
-Если можно улучшить \u2014 верни улучшенный вариант.
+Также проверь текст на внутренние противоречия: если одно предложение утверждает X, а другое — не-X, исправь. Верни JSON: {"headline": "...", "textFixes": "описание исправлений или null"}
 
-Ответь ТОЛЬКО заголовком, без пояснений.`;
+Если заголовок хорош — верни его как есть. Если можно улучшить — верни улучшенный вариант.
+Если текст логически непротиворечив — "textFixes": null. Если найдены противоречия/выдуманные даты/несовпадения — коротко опиши их в textFixes (до 200 символов).
+
+Ответь СТРОГО JSON без backticks, без пояснений.`;
 
   try {
-    const result = await callAI(prompt, 200);
-    let cleaned = result.trim().replace(/^["']|["']$/g, '');
-    if (cleaned && cleaned.length >= 20 && cleaned.length <= 120) {
-      // Нормализовать регистр после LLM
-      cleaned = normalizeHeadlineCase(cleaned);
-      console.log(`[NEWS] Headline: "${title}" \u2192 "${cleaned}"`);
-      return cleaned;
+    const result = await callAI(prompt, 400);
+    const jsonMatch = result.match(/\{[\s\S]*\}/);
+    if (!jsonMatch) {
+      // Fallback: старый формат — просто заголовок строкой
+      const cleaned = result.trim().replace(/^["']|["']$/g, '');
+      if (cleaned && cleaned.length >= 20 && cleaned.length <= 120) {
+        return { headline: normalizeHeadlineCase(cleaned), textFixes: null };
+      }
+      return { headline: normalizeHeadlineCase(title), textFixes: null };
     }
-    return normalizeHeadlineCase(title);
+
+    let parsed;
+    try { parsed = JSON.parse(jsonMatch[0]); }
+    catch { return { headline: normalizeHeadlineCase(title), textFixes: null }; }
+
+    let headline = typeof parsed.headline === 'string' ? parsed.headline.trim().replace(/^["']|["']$/g, '') : title;
+    if (!headline || headline.length < 20 || headline.length > 120) {
+      headline = title;
+    }
+    headline = normalizeHeadlineCase(headline);
+
+    const textFixes = (parsed.textFixes && parsed.textFixes !== 'null' && typeof parsed.textFixes === 'string')
+      ? parsed.textFixes.trim().substring(0, 400)
+      : null;
+
+    if (headline !== title) console.log(`[NEWS] Headline: "${title}" \u2192 "${headline}"`);
+    if (textFixes) console.warn(`[NEWS] Logic check flagged contradictions: ${textFixes}`);
+
+    return { headline, textFixes };
   } catch (err) {
     console.error(`[NEWS] checkHeadline error: ${err.message}`);
-    return normalizeHeadlineCase(title);
+    return { headline: normalizeHeadlineCase(title), textFixes: null };
   }
 }
 

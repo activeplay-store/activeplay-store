@@ -196,13 +196,17 @@ async function runPipeline(article, targets, bot) {
       console.log(`[PIPELINE] Funnel appended (platform: ${article.platform}, ctaType: ${article.ctaType})`);
     }
 
-    // ═══ ШАГ 4: ПРОВЕРКА ЗАГОЛОВКА ═══
+    // ═══ ШАГ 4: ПРОВЕРКА ЗАГОЛОВКА + ПРОВЕРКА ВНУТРЕННЕЙ ЛОГИКИ ТЕКСТА ═══
     let step4Start = Date.now();
-    console.log('[PIPELINE] Step 4: Checking headline...');
-    const summary = (article.site?.text || '').substring(0, 200);
-    const improvedTitle = await checkHeadline(article.site.title, summary);
-    if (improvedTitle) {
-      article.site.title = improvedTitle;
+    console.log('[PIPELINE] Step 4: Checking headline + text logic...');
+    const fullText = article.site?.text || '';
+    const checkResult = await checkHeadline(article.site.title, fullText);
+    if (checkResult?.headline) {
+      article.site.title = checkResult.headline;
+    }
+    if (checkResult?.textFixes) {
+      article.logicCheckNotes = checkResult.textFixes;
+      console.warn(`[PIPELINE] Step 4: logic flag for "${article.site.title}" — ${checkResult.textFixes}`);
     }
     console.log(`[PIPELINE] Step 4 done in ${((Date.now() - step4Start) / 1000).toFixed(1)}s`);
 
