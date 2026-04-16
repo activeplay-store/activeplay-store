@@ -227,7 +227,7 @@ async function runPipeline(article, targets, bot) {
         hasSale: siteGame.hasSale,
       });
     } else if (article.gameSlug) {
-      // Попробовать найти по gameSlug из Gemini
+      // Попробовать найти по gameSlug от LLM
       const gameData = findGameOnSite(article.gameSlug);
       if (gameData) {
         article.cta = buildCtaData({

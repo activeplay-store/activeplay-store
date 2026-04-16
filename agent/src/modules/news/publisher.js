@@ -145,10 +145,16 @@ const CATEGORY_MAP = {
   'Хайп': 'hype', 'Инсайд': 'insider', 'Утечка': 'insider',
 };
 
-// Убрать категорию из начала заголовка (например "Инсайд: Title" → "Title")
-const CATEGORY_PREFIX_RE = /^(Новость|Анонс|Обзор|Слух|Скидки|Гайд|Видео|Интервью|Инсайд|Хайп|Утечка|Rumor|News|Hype)\s*[:—–\-]\s*/i;
+// Убрать категорию из начала/конца заголовка
+// Примеры: "Инсайд: Title" → "Title"; "Title — слух" → "Title"; "Title Слухи" → "Title"
+const CATEGORY_WORDS = 'Новости|Новость|Анонсы|Анонс|Обзоры|Обзор|Слухи|Слух|Скидки|Гайды|Гайд|Видео|Интервью|Инсайды|Инсайд|Хайп|Утечки|Утечка|Rumors|Rumor|News|Hype|Insider|Leak|Announcement';
+const CATEGORY_PREFIX_RE = new RegExp(`^\\s*(${CATEGORY_WORDS})\\s*[:;\u2014\u2013\\-]\\s*`, 'i');
+// Суффикс: любой разделитель (включая просто пробел) + категория в конце
+const CATEGORY_SUFFIX_RE = new RegExp(`[\\s\u2014\u2013\\-:;\\.]+(${CATEGORY_WORDS})\\s*[\\.\\!\\?]*\\s*$`, 'i');
 function stripCategoryPrefix(title) {
-  return (title || '').replace(CATEGORY_PREFIX_RE, '');
+  let t = (title || '').replace(CATEGORY_PREFIX_RE, '');
+  t = t.replace(CATEGORY_SUFFIX_RE, '');
+  return t.trim();
 }
 
 // Поиск цены игры в games.json для автоматического CTA

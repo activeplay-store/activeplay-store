@@ -353,14 +353,14 @@ function cleanHeadline(title) {
 
   // Удаляем категориальные слова из заголовка (у нас есть рубрика для этого)
   // "Новая metro: анонс уже на следующей неделе — инсайд" → "Новая metro: анонс уже на следующей неделе"
-  cleaned = cleaned.replace(/\s*[\u2014\u2013\-]\s*инсайд\s*$/i, '');
-  cleaned = cleaned.replace(/\s*[\u2014\u2013\-]\s*слух\s*$/i, '');
-  cleaned = cleaned.replace(/\s*[\u2014\u2013\-]\s*хайп\s*$/i, '');
-  cleaned = cleaned.replace(/^\s*инсайд\s*[:;\u2014\u2013\-]\s*/i, '');
-  cleaned = cleaned.replace(/^\s*слух\s*[:;\u2014\u2013\-]\s*/i, '');
-  cleaned = cleaned.replace(/^\s*хайп\s*[:;\u2014\u2013\-]\s*/i, '');
-  // Также в скобках: "Metro (инсайд)"
-  cleaned = cleaned.replace(/\s*\(\s*(инсайд|слух|хайп|insider|rumor)\s*\)\s*/gi, '');
+  // "Fairgame$: режим Extraction как в Tarkov Слухи" → "Fairgame$: режим Extraction как в Tarkov"
+  const CAT_WORDS = 'инсайд[ыа]?|слух[иа]?|хайп[ау]?|анонс[ыа]?|утечк[иаи]|rumou?rs?|insider|leak|hype|announcement';
+  // Суффикс — любой разделитель включая пробел
+  cleaned = cleaned.replace(new RegExp(`[\\s\u2014\u2013\\-:;\\.]+(${CAT_WORDS})[\\.\\!\\?]*\\s*$`, 'i'), '');
+  // Префикс — требует разделитель
+  cleaned = cleaned.replace(new RegExp(`^\\s*(${CAT_WORDS})\\s*[:;\u2014\u2013\\-]\\s*`, 'i'), '');
+  // В скобках: "Metro (инсайд)"
+  cleaned = cleaned.replace(new RegExp(`\\s*\\(\\s*(${CAT_WORDS})\\s*\\)\\s*`, 'gi'), '');
 
   cleaned = cleaned.replace(/ {2,}/g, " ").trim();
   return cleaned;
@@ -403,8 +403,27 @@ function postProcessText(text) {
   processed = processed.replace(/ +\./g, '.');
   // 5. Пустые предложения
   processed = processed.replace(/\.\s*\./g, '.');
+  // 6. Одиночные \n между предложениями → \n\n (LLM иногда теряет двойной перенос)
+  processed = processed.replace(/([.!?])\n(?=[A-ZА-ЯЁ])/g, '$1\n\n');
 
   return processed.trim();
+}
+
+// Fallback: разбить сплошной текст на абзацы по ~3 предложения
+// Срабатывает когда LLM выдал текст БЕЗ переносов вообще
+function ensureParagraphs(text, targetParagraphs = 4) {
+  if (!text) return text;
+  if (/\n\n/.test(text)) return text; // уже есть абзацы
+
+  const sentences = text.match(/[^.!?]+[.!?]+[\s\u00A0]*/g) || [text];
+  if (sentences.length < 4) return text; // мало для разбиения
+
+  const perParagraph = Math.ceil(sentences.length / targetParagraphs);
+  const paragraphs = [];
+  for (let i = 0; i < sentences.length; i += perParagraph) {
+    paragraphs.push(sentences.slice(i, i + perParagraph).join('').trim());
+  }
+  return paragraphs.filter(Boolean).join('\n\n');
 }
 
 async function callAI(prompt, maxTokens = 4000) {
@@ -513,8 +532,16 @@ async function generateFullArticle(article, enrichedContext) {
         continue;
       }
 
-      // Пос��-обработка текстов
+      // Пост-обработка текстов
       parsed.site.text = postProcessText(parsed.site.text);
+      // Fallback: если LLM выдал сплошной текст — разбить на абзацы
+      if (parsed.site.text && !/\n\n/.test(parsed.site.text)) {
+        const withParas = ensureParagraphs(parsed.site.text, 4);
+        if (withParas !== parsed.site.text) {
+          console.log('[NEWS] Paragraph fallback applied — inserted \\n\\n between sentences');
+          parsed.site.text = withParas;
+        }
+      }
       if (parsed.telegram?.text) parsed.telegram.text = postProcessText(parsed.telegram.text);
       if (parsed.vk?.text) parsed.vk.text = postProcessText(parsed.vk.text);
 
@@ -654,4 +681,4 @@ async function checkHeadline(title, summary) {
   }
 }
 
-module.exports = { translateAndRewrite, generateFullArticle, checkHeadline, cleanHeadline, postProcessText, validateArticle };
+module.exports = { translateAndRewrite, generateFullArticle, checkHeadline, cleanHeadline, postProcessText, validateArticle, ensureParagraphs };

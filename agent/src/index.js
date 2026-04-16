@@ -286,6 +286,7 @@ async function checkCatalogRetry() {
 // ── HTTP server ──────────────────────────────────────────────────────────
 
 let lastUpdate = null;
+let botInstance = null; // выставляется в main() — нужна для POST /trigger-news
 
 function isLocalRequest(req) {
   const ip = req.socket.remoteAddress;
@@ -381,6 +382,19 @@ const server = http.createServer((req, res) => {
     return;
   }
 
+  // POST /trigger-news — запуск цикла новостей из agent-bot (/news команда)
+  if (req.method === 'POST' && req.url === '/trigger-news') {
+    if (!checkAuth(req)) { res.statusCode = 401; res.end(JSON.stringify({ error: 'Unauthorized' })); return; }
+    if (!botInstance) {
+      res.statusCode = 503;
+      res.end(JSON.stringify({ error: 'Bot not initialized' }));
+      return;
+    }
+    res.end(JSON.stringify({ ok: true, status: 'started' }));
+    safeRunNewsCycle(botInstance).catch(err => console.error('[TRIGGER-NEWS]', err.message));
+    return;
+  }
+
   // POST /publish — приём решений из agent-bot
   if (req.method === 'POST' && req.url === '/publish') {
     if (!checkAuth(req)) { res.statusCode = 401; res.end(JSON.stringify({ error: 'Unauthorized' })); return; }
@@ -431,6 +445,7 @@ async function main() {
   let bot = null;
   if (process.env.BOT_TOKEN) {
     bot = new Telegraf(process.env.BOT_TOKEN);
+    botInstance = bot; // доступ для POST /trigger-news
 
     // NOTE: setupApprovalHandlers удалён — approval handlers только в agent-bot.
     // Обработчики кнопок редактирования (голосовые команды)

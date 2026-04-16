@@ -142,9 +142,28 @@ export default async function NewsArticlePage({ params }: Props) {
             {/* Article body — plain text split into paragraphs */}
             {article.content && (
               <div className="prose-custom font-[family-name:var(--font-body)] text-base text-gray-300 leading-[1.7] mt-8">
-                {article.content.split('\n\n').filter(Boolean).map((paragraph, i) => (
-                  <p key={i} className="mb-4">{paragraph.replace(/\n/g, ' ')}</p>
-                ))}
+                {(() => {
+                  const text = article.content;
+                  let paragraphs = text.split(/\n\n+/).filter(Boolean);
+                  // Fallback 1: если нет двойных переносов, попробовать одиночные
+                  if (paragraphs.length === 1 && /\n/.test(text)) {
+                    paragraphs = text.split(/\n+/).filter(Boolean);
+                  }
+                  // Fallback 2: если всё ещё один длинный блок — разбить по предложениям (3-4 в абзац)
+                  if (paragraphs.length === 1 && paragraphs[0].length > 600) {
+                    const sentences = paragraphs[0].match(/[^.!?]+[.!?]+[\s\u00A0]*/g) || [];
+                    if (sentences.length >= 4) {
+                      const per = Math.ceil(sentences.length / 4);
+                      paragraphs = [];
+                      for (let i = 0; i < sentences.length; i += per) {
+                        paragraphs.push(sentences.slice(i, i + per).join('').trim());
+                      }
+                    }
+                  }
+                  return paragraphs.map((paragraph, i) => (
+                    <p key={i} className="mb-4">{paragraph.replace(/\n/g, ' ')}</p>
+                  ));
+                })()}
               </div>
             )}
 
