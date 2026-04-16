@@ -1,4 +1,12 @@
 export async function POST(request: Request) {
+  // Auth check
+  if (process.env.INDEXNOW_SECRET) {
+    const auth = request.headers.get('authorization');
+    if (auth !== `Bearer ${process.env.INDEXNOW_SECRET}`) {
+      return Response.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+  }
+
   const { urls } = await request.json();
   const key = 'activeplay2026indexnow';
   const host = 'https://activeplay.games';

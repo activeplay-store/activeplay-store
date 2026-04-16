@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const GEMINI_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
-const RAWG_KEY = process.env.RAWG_API_KEY || 'd9ca3380009e448e8fb356b3837cafa2';
+const RAWG_KEY = process.env.RAWG_API_KEY || '';
 const GAMES_FILE = path.join(__dirname, '../../../data/games.json');
 
 // Gemini с Google Search grounding — ищет доп. факты по теме новости
@@ -81,11 +81,29 @@ async function fetchRawgData(gameName) {
   }
 }
 
+// Кеш games.json
+let gamesCache = null;
+let gamesCacheTime = 0;
+const CACHE_TTL = 10 * 60 * 1000; // 10 минут
+
+function loadGamesData() {
+  const now = Date.now();
+  if (gamesCache && now - gamesCacheTime < CACHE_TTL) return gamesCache;
+  try {
+    gamesCache = JSON.parse(fs.readFileSync(GAMES_FILE, 'utf-8'));
+    gamesCacheTime = now;
+  } catch (err) {
+    console.error('[ENRICHMENT] Failed to load games.json:', err.message);
+    gamesCache = gamesCache || { games: [] };
+  }
+  return gamesCache;
+}
+
 // Поиск игры в games.json по названию (fuzzy)
 function findGameOnSite(gameName) {
   if (!gameName) return null;
   try {
-    const data = JSON.parse(fs.readFileSync(GAMES_FILE, 'utf-8'));
+    const data = loadGamesData();
     const games = data.games || [];
     const query = gameName.toLowerCase();
 

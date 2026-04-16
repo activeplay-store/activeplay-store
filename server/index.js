@@ -24,7 +24,7 @@ const VK_CONFIRMATION_CODE = 'bd10b591';
 
 const CHATWOOT_BASE = 'http://127.0.0.1:3500';
 const CHATWOOT_ACCOUNT_ID = 1;
-const CHATWOOT_API_TOKEN = '9Kw1x6XXKcXQJkY9D7snD2sY';
+const CHATWOOT_API_TOKEN = process.env.CHATWOOT_API_TOKEN || '';
 
 const VK_ACCESS_TOKEN = process.env.VK_ACCESS_TOKEN || '';
 const VK_API_VERSION = '5.199';
@@ -220,6 +220,14 @@ async function sendVkMessage(userId, message) {
 // ═══════════════════════════════════════════════════════
 
 app.post('/chatwoot-webhook', async (req, res) => {
+  // Verify webhook secret if configured
+  if (process.env.CHATWOOT_WEBHOOK_SECRET) {
+    const sig = req.headers['x-chatwoot-signature'] || req.headers['authorization'];
+    if (sig !== process.env.CHATWOOT_WEBHOOK_SECRET) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+  }
+
   try {
     const { event, data } = req.body || {};
 

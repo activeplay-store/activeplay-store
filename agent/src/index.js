@@ -1,3 +1,21 @@
+process.on('uncaughtException', (err) => {
+  console.error('[FATAL] Uncaught exception:', err.stack || err.message);
+  try {
+    const fs = require('fs');
+    fs.appendFileSync(require('path').join(__dirname, '..', 'data', 'crash.log'),
+      `[${new Date().toISOString()}] UNCAUGHT: ${err.stack || err.message}\n`);
+  } catch(e) {}
+});
+
+process.on('unhandledRejection', (reason) => {
+  console.error('[FATAL] Unhandled rejection:', reason);
+  try {
+    const fs = require('fs');
+    fs.appendFileSync(require('path').join(__dirname, '..', 'data', 'crash.log'),
+      `[${new Date().toISOString()}] REJECTION: ${reason}\n`);
+  } catch(e) {}
+});
+
 require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') });
 
 const http = require('http');
@@ -12,8 +30,18 @@ const notifier = require('./modules/notifier');
 const logger = require('./modules/logger');
 const siteWriter = require('./modules/siteWriter');
 const catalogMonitor = require('./modules/catalogMonitor');
-const { setupApprovalHandlers } = require('./modules/news/approval');
-const { runNewsCycle, processQueue } = require('./modules/news');
+const { runNewsCycle } = require('./modules/news');
+const locks = require('./modules/utils/locks');
+
+async function safeRunNewsCycle(bot) {
+  if (locks.newsCycle.isLocked()) {
+    console.log('[NEWS] Cycle already running, skipping');
+    return;
+  }
+  await locks.newsCycle.runExclusive(async () => {
+    await safeRunNewsCycle(bot);
+  });
+}
 const { handleVoice, setupEditHandlers } = require('./modules/voice/handler');
 
 const VERSION = '1.0.0';
@@ -259,6 +287,17 @@ async function checkCatalogRetry() {
 
 let lastUpdate = null;
 
+function isLocalRequest(req) {
+  const ip = req.socket.remoteAddress;
+  return ip === '127.0.0.1' || ip === '::1' || ip === '::ffff:127.0.0.1';
+}
+
+function checkAuth(req) {
+  if (isLocalRequest(req)) return true;
+  const token = req.headers['authorization'];
+  return token === `Bearer ${process.env.AGENT_API_TOKEN}`;
+}
+
 const server = http.createServer((req, res) => {
   res.setHeader('Content-Type', 'application/json; charset=utf-8');
 
@@ -295,6 +334,7 @@ const server = http.createServer((req, res) => {
   }
 
   if (req.url === '/parse') {
+    if (!checkAuth(req)) { res.statusCode = 401; res.end(JSON.stringify({ error: 'Unauthorized' })); return; }
     res.end(JSON.stringify({ status: 'started' }));
     runNightlyParse().catch(err => console.error('[Ручной парсинг]', err.message));
     return;
@@ -319,20 +359,54 @@ const server = http.createServer((req, res) => {
   }
 
   if (req.url === '/update-rates') {
+    if (!checkAuth(req)) { res.statusCode = 401; res.end(JSON.stringify({ error: 'Unauthorized' })); return; }
     res.end(JSON.stringify({ status: 'started' }));
     updateRates().catch(console.error);
     return;
   }
 
   if (req.url === '/hot-releases') {
+    if (!checkAuth(req)) { res.statusCode = 401; res.end(JSON.stringify({ error: 'Unauthorized' })); return; }
     res.end(JSON.stringify({ status: 'started' }));
     siteWriter.generateHotReleases().catch(err => console.error('[HotReleases]', err.message));
     return;
   }
 
   if (req.url === '/top-sellers') {
+    if (!checkAuth(req)) { res.statusCode = 401; res.end(JSON.stringify({ error: 'Unauthorized' })); return; }
     res.end(JSON.stringify({ status: 'started' }));
     siteWriter.generateTopSellers().catch(err => console.error('[TopSellers]', err.message));
+    return;
+  }
+
+  // POST /publish — приём решений из agent-bot
+  if (req.method === 'POST' && req.url === '/publish') {
+    if (!checkAuth(req)) { res.statusCode = 401; res.end(JSON.stringify({ error: 'Unauthorized' })); return; }
+    let body = '';
+    req.on('data', chunk => { body += chunk; });
+    req.on('end', async () => {
+      try {
+        const { id, approved, targets } = JSON.parse(body);
+        if (!id) { res.statusCode = 400; res.end(JSON.stringify({ error: 'Missing id' })); return; }
+
+        console.log(`[PUBLISH] ${approved ? 'APPROVED' : 'REJECTED'}: ${id}, targets: ${targets || 'default'}`);
+
+        if (approved) {
+          const { executePublish } = require('./modules/news/approval');
+          await executePublish(null, id, targets);
+          res.end(JSON.stringify({ ok: true, action: 'published' }));
+        } else {
+          const { loadPending, savePending } = require('./modules/news/approval');
+          const pending = loadPending();
+          savePending(pending.filter(a => a.id !== id));
+          res.end(JSON.stringify({ ok: true, action: 'rejected' }));
+        }
+      } catch (err) {
+        console.error('[PUBLISH] Error:', err.message);
+        res.statusCode = 500;
+        res.end(JSON.stringify({ error: err.message }));
+      }
+    });
     return;
   }
 
@@ -356,9 +430,7 @@ async function main() {
   if (process.env.BOT_TOKEN) {
     bot = new Telegraf(process.env.BOT_TOKEN);
 
-    // Обработчики кнопок одобрения новостей
-    setupApprovalHandlers(bot);
-
+    // NOTE: setupApprovalHandlers удалён — approval handlers только в agent-bot.
     // Обработчики кнопок редактирования (голосовые команды)
     setupEditHandlers(bot);
 
@@ -382,7 +454,7 @@ async function main() {
       if (String(ctx.chat.id) !== String(process.env.ADMIN_CHAT_ID)) return;
       ctx.reply('🔄 Запускаю сбор новостей...');
       try {
-        await runNewsCycle(bot);
+        await safeRunNewsCycle(bot);
       } catch (err) {
         ctx.reply(`❌ Ошибка: ${err.message}`);
       }
@@ -395,22 +467,12 @@ async function main() {
       await showRepublishMenu(bot, ctx);
     });
 
-    // Подключить обработчики republish кнопок
-    const { setupRepublishHandlers } = require('./modules/news/approval');
-    setupRepublishHandlers(bot);
+    // NOTE: setupRepublishHandlers удалён — republish handlers только в agent-bot.
 
-    // Запуск polling для получения голосовых команд и кнопок
-    bot.launch().then(() => {
-      console.log('[Bot] Telegram bot started (polling mode)');
-    }).catch(err => {
-      console.error('[Bot] Polling failed, using API-only mode:', err.message);
-      console.log('[Bot] Telegram bot ready (API-only mode)');
-    });
-
-    // Проверка очереди отложенных публикаций — каждую минуту
-    setInterval(() => processQueue(bot).catch(err => {
-      console.error('[NEWS] Queue error:', err.message);
-    }), 60000);
+    // NOTE: bot.launch() и processQueue удалены — polling и очередь
+    // обрабатываются ТОЛЬКО в agent-bot, чтобы избежать двойного polling.
+    // Агент использует bot только для отправки сообщений (API-only mode).
+    console.log('[Bot] Telegram bot ready (API-only mode, no polling)');
   } else {
     console.log('[Bot] BOT_TOKEN not set — Telegram bot disabled');
   }
@@ -511,7 +573,7 @@ async function main() {
     cron.schedule('0 8,12,16,20 * * *', async () => {
       console.log('[Cron] Сбор новостей...');
       try {
-        await runNewsCycle(bot);
+        await safeRunNewsCycle(bot);
       } catch (err) {
         console.error('[Cron] Новости:', err.message);
       }

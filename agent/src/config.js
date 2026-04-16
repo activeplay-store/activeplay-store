@@ -24,7 +24,7 @@ module.exports = {
 
   // PlatPrices обложки
   platprices: {
-    apiKey: 'TWIhJB5GCGDCbBGnUPqUZ04VnKinXVFC',
+    apiKey: process.env.PLATPRICES_API_KEY || '',
     baseUrl: 'https://platprices.com/api.php',
     maxPerHour: 480,
     delayMs: 800,
@@ -139,7 +139,7 @@ module.exports = {
 
     platprices: {
       endpoint: 'https://platprices.com/api.php',
-      apiKey: 'TWIhJB5GCGDCbBGnUPqUZ04VnKinXVFC',
+      apiKey: process.env.PLATPRICES_API_KEY || '',
     },
 
     xbox: {
@@ -149,7 +149,7 @@ module.exports = {
     },
 
     rawg: {
-      apiKey: 'd9ca3380009e448e8fb356b3837cafa2',
+      apiKey: process.env.RAWG_API_KEY || '',
       endpoint: 'https://api.rawg.io/api',
       rateLimit: 1000
     }

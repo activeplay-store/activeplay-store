@@ -13,9 +13,13 @@ interface Props {
   params: Promise<{ slug: string }>;
 }
 
+export const revalidate = 3600; // ISR: 1 час
+export const dynamicParams = true; // остальные слаги генерируются по запросу
+
 export async function generateStaticParams() {
   return newsData
     .filter((n) => n.category !== 'guide')
+    .slice(0, 20) // Только последние 20 — остальные по запросу
     .map((n) => ({ slug: n.slug }));
 }
 

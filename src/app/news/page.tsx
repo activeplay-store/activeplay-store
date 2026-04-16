@@ -25,6 +25,8 @@ export const metadata: Metadata = {
   },
 };
 
+export const revalidate = 1800; // ISR: 30 минут
+
 const collectionSchema = {
   '@context': 'https://schema.org',
   '@type': 'CollectionPage',

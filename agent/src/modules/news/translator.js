@@ -1,7 +1,11 @@
 const axios = require('axios');
 
 const OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions';
-const MODEL = 'google/gemini-2.0-flash-001';
+const TRANSLATE_MODELS = [
+  'google/gemini-2.0-flash-001',
+  'google/gemini-flash-1.5',
+  'anthropic/claude-3.5-haiku',
+];
 
 const SYSTEM_PROMPT = `Ты редактор игрового новостного канала ActivePlay. Переведи и перепиши новость на русский.
 
@@ -68,9 +72,10 @@ async function translateAndRewrite(article) {
 Текст: ${(article.description || '').substring(0, 3000)}
 Источник: ${article.sourceName}`;
 
+  for (const model of TRANSLATE_MODELS) {
   try {
     const response = await axios.post(OPENROUTER_URL, {
-      model: MODEL,
+      model,
       max_tokens: 2000,
       messages: [
         { role: 'system', content: SYSTEM_PROMPT },
@@ -110,14 +115,18 @@ async function translateAndRewrite(article) {
       parsed.site.metaDescription = parsed.site.metaDescription.substring(0, 157) + '...';
     }
 
-    console.log(`[NEWS] Translated: ${parsed.site.title} [${parsed.category}]`);
+    console.log(`[NEWS] Translated (${model}): ${parsed.site.title} [${parsed.category}]`);
     return parsed;
   } catch (err) {
     const status = err.response?.status || '';
     const body = err.response?.data ? JSON.stringify(err.response.data) : err.message;
-    console.error(`[NEWS] Translator error: ${status} ${body}`);
-    return null;
+    console.error(`[NEWS] Translator ${model} failed: ${status} ${body}`);
+    continue;
   }
+  } // end for
+
+  console.error('[NEWS] All translation models failed');
+  return null;
 }
 
 // ====== PIPELINE V2: полная генерация текста с обогащённым контекстом ======

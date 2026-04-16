@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const locks = require('../utils/locks');
 
 const PENDING_FILE = path.join(__dirname, '../../../data/pending-news.json');
 const QUEUE_FILE = path.join(__dirname, '../../../data/news-queue.json');

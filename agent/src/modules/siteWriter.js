@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { execSync } = require('child_process');
+const { queueDeploy } = require('./utils/deployQueue');
 const config = require('../config');
 const parsers = require('./parsers');
 const sony = require('./parsers/sony');
@@ -98,13 +98,34 @@ function cleanGameName(name) {
   return n;
 }
 
+// Game index for O(1) lookups
+let gameIndex = null;
+let gameIndexSource = null;
+
+function buildGameIndex(games) {
+  gameIndex = new Map();
+  gameIndexSource = games;
+  for (const game of games) {
+    const key = cleanGameName(cleanName(game.name)).toLowerCase().trim();
+    if (key && !gameIndex.has(key)) gameIndex.set(key, game);
+    const slug = slugify(key);
+    if (slug && !gameIndex.has(slug)) gameIndex.set(slug, game);
+  }
+}
+
 /**
  * Find a game in a list by name, preferring Full Game (not DLC/addon).
- * Strategy: 1) exact slug match → prefer Full Game, 2) fuzzy includes → prefer Full Game with higher basePrice.
+ * Uses index for O(1) exact lookups, falls back to fuzzy search.
  */
 function findGameByName(gamesList, searchName) {
+  if (!gameIndex || gameIndexSource !== gamesList) buildGameIndex(gamesList);
+
   const searchSlug = slugify(searchName);
   const searchLower = searchName.toLowerCase();
+
+  // Fast path: index lookup
+  const indexed = gameIndex.get(searchLower) || gameIndex.get(searchSlug);
+  if (indexed) return indexed;
 
   // 1) Exact slug or name match — collect all matches
   const exactMatches = gamesList.filter(g => {
@@ -211,7 +232,7 @@ function parsePlatforms(platformStr) {
 /**
  * Pick the best edition for a region — the one with highest saving in client rubles.
  */
-function pickBestEdition(editions) {
+function pickBestDealEdition(editions) {
   if (!editions || editions.length === 0) return null;
 
   let best = null;
@@ -242,8 +263,8 @@ function mapGameToDeal(game) {
   const trEditions = game.prices?.TR?.editions || [];
   const uaEditions = game.prices?.UA?.editions || [];
 
-  const bestTR = pickBestEdition(trEditions);
-  const bestUA = pickBestEdition(uaEditions);
+  const bestTR = pickBestDealEdition(trEditions);
+  const bestUA = pickBestDealEdition(uaEditions);
 
   // Must have at least one region with a discount
   if (!bestTR && !bestUA) return null;
@@ -540,30 +561,9 @@ function generateDealsTs(games) {
 // ── Git operations ──────────────────────────────────────────────────────
 
 function gitPush(gamesCount) {
-  try {
-    // Check if there are actual changes
-    const diff = execSync(`git diff --name-only ${DEALS_FILE}`, { cwd: REPO_ROOT, encoding: 'utf8' }).trim();
-    if (!diff) {
-      // Also check staged
-      const staged = execSync(`git diff --cached --name-only ${DEALS_FILE}`, { cwd: REPO_ROOT, encoding: 'utf8' }).trim();
-      if (!staged) {
-        console.log(`${PREFIX} Файл не изменился — коммит не нужен`);
-        return false;
-      }
-    }
-
-    execSync(`git add ${DEALS_FILE}`, { cwd: REPO_ROOT });
-
-    const msg = `data: обновление скидок (${gamesCount} игр)`;
-    execSync(`git commit -m "${msg}"`, { cwd: REPO_ROOT });
-    execSync('git push', { cwd: REPO_ROOT });
-
-    console.log(`${PREFIX} ✅ Git push выполнен`);
-    return true;
-  } catch (err) {
-    console.error(`${PREFIX} ❌ Git push ошибка:`, err.message);
-    return false;
-  }
+  queueDeploy(DEALS_FILE);
+  console.log(`${PREFIX} ✅ Queued deploy: ${DEALS_FILE} (${gamesCount} игр)`);
+  return true;
 }
 
 // ── Main entry point ────────────────────────────────────────────────────
@@ -627,7 +627,9 @@ function calculatePreorderClientPrices(game, regionCode) {
       try {
         const result = pricing.calculatePrice(edition.basePrice, regionCode);
         edition.clientPrice = result.clientPrice;
-      } catch {}
+      } catch (err) {
+        console.error(`[SiteWriter] Price calc error (${regionCode}, ${edition.basePrice}):`, err.message);
+      }
     }
   }
 }
@@ -1075,27 +1077,9 @@ function generatePreordersTs(games) {
 }
 
 function gitPushPreorders(count) {
-  try {
-    const diff = execSync('git diff --name-only ' + PREORDERS_FILE, { cwd: REPO_ROOT, encoding: 'utf8' }).trim();
-    if (!diff) {
-      const staged = execSync('git diff --cached --name-only ' + PREORDERS_FILE, { cwd: REPO_ROOT, encoding: 'utf8' }).trim();
-      if (!staged) {
-        console.log(PREFIX + ' preorders.ts не изменился');
-        return false;
-      }
-    }
-
-    execSync('git add ' + PREORDERS_FILE, { cwd: REPO_ROOT });
-    const msg = 'data: обновление предзаказов (' + count + ' игр)';
-    execSync('git commit -m "' + msg + '"', { cwd: REPO_ROOT });
-    execSync('git push', { cwd: REPO_ROOT });
-
-    console.log(PREFIX + ' ✅ preorders.ts push');
-    return true;
-  } catch (err) {
-    console.error(PREFIX + ' ❌ preorders push: ' + err.message);
-    return false;
-  }
+  queueDeploy(PREORDERS_FILE);
+  console.log(PREFIX + ' ✅ Queued deploy: ' + PREORDERS_FILE + ' (' + count + ' игр)');
+  return true;
 }
 
 async function generatePreorders() {
@@ -1299,27 +1283,9 @@ function generateHotReleasesTs(releases) {
 }
 
 function gitPushHotReleases(count) {
-  try {
-    const diff = execSync('git diff --name-only ' + HOT_RELEASES_FILE, { cwd: REPO_ROOT, encoding: 'utf8' }).trim();
-    if (!diff) {
-      const staged = execSync('git diff --cached --name-only ' + HOT_RELEASES_FILE, { cwd: REPO_ROOT, encoding: 'utf8' }).trim();
-      if (!staged) {
-        console.log(PREFIX + ' hotReleases.ts не изменился');
-        return false;
-      }
-    }
-
-    execSync('git add ' + HOT_RELEASES_FILE, { cwd: REPO_ROOT });
-    const msg = 'data: обновление горящих новинок (' + count + ' игр)';
-    execSync('git commit -m "' + msg + '"', { cwd: REPO_ROOT });
-    execSync('git push', { cwd: REPO_ROOT });
-
-    console.log(PREFIX + ' ✅ hotReleases.ts push');
-    return true;
-  } catch (err) {
-    console.error(PREFIX + ' ❌ hotReleases push: ' + err.message);
-    return false;
-  }
+  queueDeploy(HOT_RELEASES_FILE);
+  console.log(PREFIX + ' ✅ Queued deploy: ' + HOT_RELEASES_FILE + ' (' + count + ' игр)');
+  return true;
 }
 
 async function generateHotReleases() {
@@ -1630,8 +1596,18 @@ async function generateHotReleases() {
 
   scored.sort((a, b) => b.totalScore - a.totalScore);
 
-  // 6. Взять топ-N
-  const topGames = scored.slice(0, HOT_RELEASES_COUNT);
+  // 6. Aging filter: старше 14 дней — только хиты (Metacritic 75+ или hype 7+)
+  const topGames = scored
+    .filter(g => {
+      if (!g.releaseDate) return true;
+      const days = (new Date() - new Date(g.releaseDate)) / (1000 * 60 * 60 * 24);
+      if (days > 14 && (!g.metacritic || g.metacritic < 75) && (g.hypeData?.hypeScore || 0) < 7) {
+        console.log(`${PREFIX} [HOT] Aged out: ${g.cleanName} (${Math.round(days)}d, MC=${g.metacritic || '?'}, hype=${g.hypeData?.hypeScore || 0})`);
+        return false;
+      }
+      return true;
+    })
+    .slice(0, HOT_RELEASES_COUNT);
 
   console.log(PREFIX + ' Топ горящих новинок:');
   for (const g of topGames) {
@@ -1872,27 +1848,9 @@ function generateTopSellersTs(games, meta) {
 }
 
 function gitPushTopSellers(count) {
-  try {
-    const diff = execSync('git diff --name-only ' + TOP_SELLERS_FILE, { cwd: REPO_ROOT, encoding: 'utf8' }).trim();
-    if (!diff) {
-      const staged = execSync('git diff --cached --name-only ' + TOP_SELLERS_FILE, { cwd: REPO_ROOT, encoding: 'utf8' }).trim();
-      if (!staged) {
-        console.log(PREFIX + ' top-sellers.ts не изменился');
-        return false;
-      }
-    }
-
-    execSync('git add ' + TOP_SELLERS_FILE, { cwd: REPO_ROOT });
-    const msg = 'data: обновление топ-продаж (' + count + ' игр)';
-    execSync('git commit -m "' + msg + '"', { cwd: REPO_ROOT });
-    execSync('git push', { cwd: REPO_ROOT });
-
-    console.log(PREFIX + ' ✅ top-sellers.ts push');
-    return true;
-  } catch (err) {
-    console.error(PREFIX + ' ❌ top-sellers push: ' + err.message);
-    return false;
-  }
+  queueDeploy(TOP_SELLERS_FILE);
+  console.log(PREFIX + ' ✅ Queued deploy: ' + TOP_SELLERS_FILE + ' (' + count + ' игр)');
+  return true;
 }
 
 /**
@@ -2333,34 +2291,9 @@ async function ensureCoverImage(gameName, gameSlug) {
 }
 
 function gitPushEssential() {
-  try {
-    const filesToAdd = [PSPLUS_FILE];
-    // Also add any new cover images
-    const diff = execSync('git status --porcelain public/images/covers/', { cwd: REPO_ROOT, encoding: 'utf8' }).trim();
-    if (diff) {
-      filesToAdd.push('public/images/covers/');
-    }
-
-    const mainDiff = execSync('git diff --name-only ' + PSPLUS_FILE, { cwd: REPO_ROOT, encoding: 'utf8' }).trim();
-    if (!mainDiff && !diff) {
-      console.log(PREFIX + ' psplus.ts не изменился');
-      return false;
-    }
-
-    for (const f of filesToAdd) {
-      execSync('git add ' + f, { cwd: REPO_ROOT });
-    }
-
-    const msg = 'data: обновление PS Plus Essential каталога';
-    execSync('git commit -m "' + msg + '"', { cwd: REPO_ROOT });
-    execSync('git push', { cwd: REPO_ROOT });
-
-    console.log(PREFIX + ' ✅ Essential showcase push');
-    return true;
-  } catch (err) {
-    console.error(PREFIX + ' ❌ Essential push: ' + err.message);
-    return false;
-  }
+  queueDeploy([PSPLUS_FILE, 'public/images/covers/']);
+  console.log(PREFIX + ' ✅ Queued deploy: Essential showcase');
+  return true;
 }
 
 async function generateEssentialShowcase() {

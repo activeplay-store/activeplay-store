@@ -88,9 +88,9 @@ function QuickOrderForm({ product }: { product: string }) {
   const handleSubmit = async () => {
     if (!contactValue.trim()) return;
     try {
-      await fetch('https://chat.activeplay.games/api/v1/accounts/1/conversations', {
+      await fetch('/api/contact', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'api_access_token': '9Kw1x6XXKcXQJkY9D7snD2sY' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           contact: { name: contactValue.trim(), identifier: contactValue.trim() },
           message: { content: `Быстрый заказ с сайта: ${product || 'Общий запрос'} — контакт: ${contactValue.trim()}` },

@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
-const { execSync } = require('child_process');
+const axios = require('axios');
+const { queueDeploy } = require('../utils/deployQueue');
 
 const SITE_ROOT = process.env.SITE_ROOT || '/var/www/activeplay-store';
 const NEWS_JSON = path.join(SITE_ROOT, 'src/data/news.json');
@@ -288,7 +289,33 @@ function slugify(text) {
 
 // Очистить текст от HTML
 function stripHtml(text) {
-  return (text || '').replace(/<[^>]*>/g, '');
+  return (text || '')
+    .replace(/<[^>]+>/g, '')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/\s{2,}/g, ' ')
+    .trim();
+}
+
+function ensureUniqueSlug(slug, existingArticles) {
+  let finalSlug = slug;
+  let counter = 1;
+  while (existingArticles.some(a => a.slug === finalSlug)) {
+    finalSlug = `${slug}-${counter}`;
+    counter++;
+  }
+  return finalSlug;
+}
+
+function isValidImageUrl(url) {
+  if (!url) return false;
+  try {
+    const parsed = new URL(url);
+    return ['http:', 'https:'].includes(parsed.protocol)
+      && /\.(jpg|jpeg|png|webp|gif)(\?|$)/i.test(parsed.pathname);
+  } catch { return false; }
 }
 
 function writeToSite(newArticles) {
@@ -323,9 +350,10 @@ function writeToSite(newArticles) {
       cta2 = buildProductCta(a.relatedProduct);
     }
 
+    const baseSlug = a.slug || slugify(cleanTitle);
     const entry = {
-      id: a.slug || slugify(cleanTitle),
-      slug: a.slug || slugify(cleanTitle),
+      id: baseSlug,
+      slug: baseSlug,
       title: cleanTitle,
       content: bodyText,
       metaDescription: a.site?.metaDescription || a.metaDescription || '',
@@ -334,7 +362,7 @@ function writeToSite(newArticles) {
       category: CATEGORY_MAP[a.category] || (['news','hype','insider','rumor','video','guide','interview','podcast','review','announcement'].includes(a.category) ? a.category : 'news'),
       source: a.sourceName || a.source || '',
       sourceUrl: a.link || a.sourceUrl || '',
-      publishedAt: new Date().toISOString(),
+      publishedAt: a.publishedAt || new Date().toISOString(),
       gameId: a.gameSlug || a.gameId || null,
       relatedProduct: a.relatedProduct || null,
       platform: a.platform || 'general',
@@ -360,10 +388,15 @@ function writeToSite(newArticles) {
     if (article.coverUrl) usedCovers.add(article.coverUrl);
   }
 
-  // 5. Дедупликация и слияние
+  // 5. Дедупликация и слияние (ensure unique slugs)
   const existingIds = new Set(existing.map(n => n.id));
   const toAdd = prepared.filter(a => !existingIds.has(a.id));
+  for (const article of toAdd) {
+    article.slug = ensureUniqueSlug(article.slug, existing);
+    article.id = article.slug;
+  }
   const merged = [...toAdd, ...existing].slice(0, 50);
+  console.log(`[NEWS] Trimmed: ${toAdd.length + existing.length} → ${merged.length}`);
 
   // 5. Записать JSON
   fs.writeFileSync(NEWS_JSON, JSON.stringify(merged, null, 2), 'utf-8');
@@ -389,17 +422,14 @@ function deployToSite() {
       fs.mkdirSync(imagesDir, { recursive: true });
     }
 
-    let gitAdd = `cd ${SITE_ROOT} && git add src/data/news.json`;
-    const hasImages = fs.readdirSync(imagesDir).length > 0;
+    const files = ['src/data/news.json'];
+    const hasImages = fs.existsSync(imagesDir) && fs.readdirSync(imagesDir).length > 0;
     if (hasImages) {
-      gitAdd += ' public/images/news/';
+      files.push('public/images/news/');
     }
 
-    execSync(
-      `${gitAdd} && git commit -m "news: update" && git push`,
-      { timeout: 60000 }
-    );
-    console.log('[NEWS] Deployed');
+    queueDeploy(files);
+    console.log('[NEWS] Queued for deploy');
   } catch (err) {
     console.error(`[NEWS] Deploy error: ${err.message}`);
   }

@@ -45,29 +45,13 @@ module.exports = [
   { id: 'yt-digitalfoundry', name: 'Digital Foundry', url: 'https://www.youtube.com/feeds/videos.xml?channel_id=UC9PBzalIcEQCsiIkq36PyUA', type: 'rss', weight: 7, category: 'media' },
   { id: 'yt-gamexplain', name: 'GameXplain', url: 'https://www.youtube.com/feeds/videos.xml?channel_id=UCfAPTv1LgeEWevG8X_6PUOQ', type: 'rss', weight: 6, category: 'media' },
 
-  // === TWITTER через Nitter RSS ===
-  // Tier 1 инсайдеры
-  { id: 'tw-schreier', name: 'Jason Schreier', url: 'https://nitter.privacydev.net/jasonschreier/rss', type: 'nitter', weight: 10, category: 'insider' },
-  { id: 'tw-henderson', name: 'Tom Henderson', url: 'https://nitter.privacydev.net/_Tom_Henderson_/rss', type: 'nitter', weight: 10, category: 'insider' },
-  // Tier 2
-  { id: 'tw-grubb', name: 'Jeff Grubb', url: 'https://nitter.privacydev.net/JeffGrubb/rss', type: 'nitter', weight: 9, category: 'insider' },
-  { id: 'tw-billbilkun', name: 'BillBil-Kun', url: 'https://nitter.privacydev.net/billbil_kun/rss', type: 'nitter', weight: 9, category: 'insider' },
-  { id: 'tw-jez', name: 'Jez Corden', url: 'https://nitter.privacydev.net/JezCorden/rss', type: 'nitter', weight: 8, category: 'insider' },
-  { id: 'tw-warren', name: 'Tom Warren', url: 'https://nitter.privacydev.net/tomwarren/rss', type: 'nitter', weight: 8, category: 'insider' },
-  { id: 'tw-shinobi', name: 'Shinobi602', url: 'https://nitter.privacydev.net/shinobi602/rss', type: 'nitter', weight: 8, category: 'insider' },
-  { id: 'tw-robinson', name: 'Andy Robinson', url: 'https://nitter.privacydev.net/Andy_VGC/rss', type: 'nitter', weight: 8, category: 'insider' },
-  { id: 'tw-zhugex', name: 'Daniel Ahmad', url: 'https://nitter.privacydev.net/ZhugeEX/rss', type: 'nitter', weight: 8, category: 'insider' },
-  { id: 'tw-klobrille', name: 'Klobrille', url: 'https://nitter.privacydev.net/klobrille/rss', type: 'nitter', weight: 7, category: 'insider' },
-  { id: 'tw-natethehate', name: 'NateTheHate', url: 'https://nitter.privacydev.net/NateTheHate2/rss', type: 'nitter', weight: 8, category: 'insider' },
-  { id: 'tw-wario64', name: 'Wario64', url: 'https://nitter.privacydev.net/Wario64/rss', type: 'nitter', weight: 9, category: 'deals' },
-  // Ключевые фигуры
-  { id: 'tw-kojima', name: 'Hideo Kojima', url: 'https://nitter.privacydev.net/HIDEO_KOJIMA_EN/rss', type: 'nitter', weight: 8, category: 'industry' },
-  { id: 'tw-keighley', name: 'Geoff Keighley', url: 'https://nitter.privacydev.net/geoffkeighley/rss', type: 'nitter', weight: 9, category: 'industry' },
-  { id: 'tw-spencer', name: 'Phil Spencer', url: 'https://nitter.privacydev.net/XboxP3/rss', type: 'nitter', weight: 8, category: 'industry' },
-  // Официальные
-  { id: 'tw-playstation', name: 'PlayStation', url: 'https://nitter.privacydev.net/PlayStation/rss', type: 'nitter', weight: 10, category: 'official' },
-  { id: 'tw-xbox', name: 'Xbox', url: 'https://nitter.privacydev.net/Xbox/rss', type: 'nitter', weight: 7, category: 'official' },
-  { id: 'tw-rockstar', name: 'Rockstar Games', url: 'https://nitter.privacydev.net/RockstarGames/rss', type: 'nitter', weight: 10, category: 'official' },
+  // === BLUESKY RSS замены (Nitter мёртв) ===
+  // Инсайдеры
+  { id: 'bsky-schreier', name: 'Jason Schreier (Bluesky)', url: 'https://bsky.app/profile/jasonschreier.bsky.social/rss', type: 'rss', weight: 10, category: 'insider' },
+  { id: 'bsky-grubb', name: 'Jeff Grubb (Bluesky)', url: 'https://bsky.app/profile/jeffgrubb.bsky.social/rss', type: 'rss', weight: 9, category: 'insider' },
+  { id: 'bsky-keighley', name: 'Geoff Keighley (Bluesky)', url: 'https://bsky.app/profile/geoffkeighley.bsky.social/rss', type: 'rss', weight: 9, category: 'industry' },
+  // Официальные — прямые RSS (дубли psblog/xboxwire уже выше, добавляем только Rockstar)
+  { id: 'rockstar', name: 'Rockstar Newswire', url: 'https://www.rockstargames.com/newswire/feed', type: 'rss', weight: 10, category: 'official' },
 
   // === TELEGRAM (публичное web-превью) ===
   { id: 'tg-psprices', name: 'PSPrices RU', url: 'https://t.me/s/psprices_ru_ps4', type: 'telegram', weight: 8, category: 'deals' },

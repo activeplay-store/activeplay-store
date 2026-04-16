@@ -3,6 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   compress: true,
   poweredByHeader: false,
+  outputFileTracingRoot: '/var/www/activeplay-store',
 async redirects() {
     return [
       {
