@@ -1,5 +1,5 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-04-08T09:00:54.779Z
+// Обновлено: 2026-04-16T01:09:24.707Z
 // Горящих новинок: 4
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
@@ -28,29 +28,6 @@ export interface HotRelease {
 
 export const hotReleases: HotRelease[] = [
   {
-    id: "crimson-desert",
-    title: "Crimson Desert",
-    slug: "crimson-desert",
-    description: "Open-world RPG от Pearl Abyss. Хардкор-бой",
-    releaseDate: "19 марта 2026",
-    metacritic: 0,
-    genre: "Экшен",
-    platforms: ["PS5"],
-    cover: "https://media.rawg.io/media/games/dac/dacfcdeaef957a36416f4e6d5ec76229.jpg",
-    hypeScore: 5,
-    totalScore: 5.8,
-    editions: {
-      tr: [
-        { name: "Standard", priceRUB: 7400 },
-        { name: "Deluxe", priceRUB: 8450 },
-      ],
-      ua: [
-        { name: "Standard", priceRUB: 7400 },
-        { name: "Deluxe", priceRUB: 8450 },
-      ],
-    },
-  },
-  {
     id: "the-occultist",
     title: "The Occultist",
     slug: "the-occultist",
@@ -59,15 +36,38 @@ export const hotReleases: HotRelease[] = [
     metacritic: 66,
     genre: "Приключения",
     platforms: ["PS5"],
-    cover: "https://image.api.playstation.com/vulcan/ap/rnd/202603/2415/4ab56c3b6a86dca29d85b9334859f84a0516b039bad836d5.png",
-    hypeScore: 2,
-    totalScore: 5.1,
+    cover: "https://image.api.playstation.com/vulcan/ap/rnd/202408/0109/1a0d7fdc724c04debb886c4421d4db4199a771f8dfe22ae1.jpg",
+    hypeScore: 4,
+    totalScore: 5.9,
     editions: {
       tr: [
-        { name: "Deluxe", priceRUB: 4550 },
+        { name: "Standard", priceRUB: 3650 },
       ],
       ua: [
-        { name: "Deluxe", priceRUB: 3800 },
+        { name: "Standard", priceRUB: 3250 },
+      ],
+    },
+  },
+  {
+    id: "pragmata",
+    title: "PRAGMATA",
+    slug: "pragmata",
+    description: "Sci-fi адвенчура от Capcom. Дуэт с андроидом",
+    releaseDate: "16 апреля 2026",
+    metacritic: 0,
+    genre: "Экшен",
+    platforms: ["PS5"],
+    cover: "https://image.api.playstation.com/vulcan/ap/rnd/202511/2605/b7ec5836e23affe26c8ad00124a1eddddab5e1bad456c03e.jpg",
+    hypeScore: 4,
+    totalScore: 5.4,
+    editions: {
+      tr: [
+        { name: "Standard", priceRUB: 6650 },
+        { name: "Deluxe", priceRUB: 7650 },
+      ],
+      ua: [
+        { name: "Standard", priceRUB: 5250 },
+        { name: "Deluxe", priceRUB: 5700 },
       ],
     },
   },
@@ -81,12 +81,12 @@ export const hotReleases: HotRelease[] = [
     genre: "Экшен",
     platforms: ["PS5"],
     cover: "https://image.api.playstation.com/vulcan/ap/rnd/202603/0401/18b516e759613304c7efc7bcd3c134d6bfb5380d655df9be.jpg",
-    hypeScore: 2,
-    totalScore: 4.6,
+    hypeScore: 4,
+    totalScore: 5.4,
     editions: {
       tr: [
-        { name: "Standard", priceRUB: 4300 },
-        { name: "Premium", priceRUB: 5600 },
+        { name: "Standard", priceRUB: 4250 },
+        { name: "Premium", priceRUB: 5550 },
       ],
       ua: [
         { name: "Standard", priceRUB: 4400 },
@@ -95,23 +95,23 @@ export const hotReleases: HotRelease[] = [
     },
   },
   {
-    id: "darwin-s-paradox",
-    title: "Darwin's Paradox!",
-    slug: "darwin-s-paradox",
-    description: "Платформер от ZDT Studio. Стелс-осьминог",
-    releaseDate: "2 апреля 2026",
-    metacritic: 0,
+    id: "cthulhu-the-cosmic-abyss-r-lyeh-edition",
+    title: "Cthulhu: The Cosmic Abyss - R'lyeh Edition",
+    slug: "cthulhu-the-cosmic-abyss-r-lyeh-edition",
+    description: "Хоррор от Big Bad Wolf. Лавкрафт, Р'льех",
+    releaseDate: "16 апреля 2026",
+    metacritic: 78,
     genre: "Платформер",
     platforms: ["PS5"],
-    cover: "https://image.api.playstation.com/vulcan/ap/rnd/202511/0718/8dc3bb026f8c0873ac11c58a584c3ee618dbfc9db4064514.png",
-    hypeScore: 2,
-    totalScore: 4.6,
+    cover: "https://image.api.playstation.com/vulcan/ap/rnd/202601/2013/e8cc34b3e9fc782c62214c44aa4ad60242defb0e24e31ce0.jpg",
+    hypeScore: 1,
+    totalScore: 5,
     editions: {
       tr: [
-        { name: "Standard", priceRUB: 3150 },
+        { name: "Standard", priceRUB: 6650 },
       ],
       ua: [
-        { name: "Standard", priceRUB: 2950 },
+        { name: "Standard", priceRUB: 5250 },
       ],
     },
   },
