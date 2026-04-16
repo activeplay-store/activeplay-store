@@ -1,5 +1,42 @@
 [
   {
+    "id": "film-call-of-duty-data-vyhoda-i-detali",
+    "slug": "film-call-of-duty-data-vyhoda-i-detali",
+    "title": "Фильм Call of Duty: дата выхода и детали",
+    "content": "Официальная дата выхода фильма Call of Duty назначена на 30 июня 2028 года. Эту информацию подтвердили представители Paramount на CinemaCon. Сценарий для фильма пишет Тейлор Шеридан, известный по сериалу «Йеллоустоун». Режиссёром выступит Питер Берг, который ранее работал над такими фильмами, как «Уцелевший» и «Морской бой».\n\nФильм будет создан в партнёрстве с Activision, чтобы сохранить дух знаменитой игровой серии. Call of Duty — это шутер от первого лица, разработанный студиями Infinity Ward, Treyarch и Sledgehammer Games. Серия включает более 20 игр, начиная с 2003 года, и она завоевала сердца миллионов игроков по всему миру. Последняя игра в серии, Call of Duty: Modern Warfare II, вышла в октябре 2022 года и получила высокие оценки на Metacritic (84/100).\n\nВыход фильма Call of Duty в 2028 году подчеркивает важность франшизы, которая на протяжении многих лет остаётся одной из самых популярных в игровом мире. Игры серии неоднократно становились бестселлерами, предлагая игрокам захватывающий сюжет и динамичные сражения. Учитывая успех предыдущих проектов, можно ожидать, что фильм также будет высоко оценён критиками и зрителями.\n\nДля поклонников Call of Duty и других игр на консолях PlayStation доступна подписка PS Plus. Она предоставляет доступ к огромной библиотеке игр, включая новинки и классику. Оформить подписку PS Plus можно на ActivePlay от 1 250 ₽/мес. Это отличный способ насладиться играми на PlayStation по выгодной цене.",
+    "metaDescription": "Фильм Call of Duty выйдет 30 июня 2028 года. Узнайте подробности о проекте и его создателях.",
+    "coverUrl": "/images/news/news-1776373932696-lo2s.jpg",
+    "tags": [
+      "PS5",
+      "Sony",
+      "PS Store"
+    ],
+    "category": "news",
+    "source": "GameSpot",
+    "sourceUrl": "https://www.gamespot.com/articles/call-of-duty-movie-gets-a-2028-release-date/1100-6539455/?ftag=CAD-01-10abi2f",
+    "publishedAt": "2026-04-16T21:12:41.359Z",
+    "gameId": null,
+    "relatedProduct": "ps-plus-extra",
+    "platform": "playstation",
+    "ctaType": "psplus",
+    "ctaText": "PS Plus от 1 250 ₽/мес",
+    "ctaLink": "/subscriptions",
+    "cta": {
+      "title": "Купить Call of Duty: Modern Warfare",
+      "description": "Активация за 5 минут. Турецкий PS Store.",
+      "price": 2500,
+      "oldPrice": 5600,
+      "url": "/sale",
+      "buttonText": "Купить за 2500 ₽ →"
+    },
+    "cta2": {
+      "title": "PS Plus Extra",
+      "description": "Каталог из 400+ игр",
+      "url": "/ps-plus-extra",
+      "buttonText": "Подробнее →"
+    }
+  },
+  {
     "id": "metro-2039-anons-novoy-chasti-na-xbox-series-ot-4a-games",
     "slug": "metro-2039-anons-novoy-chasti-na-xbox-series-ot-4a-games",
     "title": "Metro 2039: анонс новой части на Xbox Series от 4A Games",
