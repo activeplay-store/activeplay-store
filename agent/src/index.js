@@ -39,7 +39,7 @@ async function safeRunNewsCycle(bot) {
     return;
   }
   await locks.newsCycle.runExclusive(async () => {
-    await safeRunNewsCycle(bot);
+    await runNewsCycle(bot);
   });
 }
 const { handleVoice, setupEditHandlers } = require('./modules/voice/handler');
@@ -341,6 +341,7 @@ const server = http.createServer((req, res) => {
   }
 
   if (req.url === '/check-essential') {
+    if (!checkAuth(req)) { res.statusCode = 401; res.end(JSON.stringify({ error: 'Unauthorized' })); return; }
     catalogMonitor.checkEssential()
       .then(r => { res.end(JSON.stringify(r)); })
       .catch(err => { res.statusCode = 500; res.end(JSON.stringify({ error: err.message })); });
@@ -348,6 +349,7 @@ const server = http.createServer((req, res) => {
   }
 
   if (req.url === '/check-catalogs') {
+    if (!checkAuth(req)) { res.statusCode = 401; res.end(JSON.stringify({ error: 'Unauthorized' })); return; }
     (async () => {
       const essential = await catalogMonitor.checkEssential();
       const allExtra = await catalogMonitor.checkAllExtra();
