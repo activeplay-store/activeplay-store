@@ -1,24 +1,17 @@
 const axios = require('axios');
 const fs = require('fs');
 const path = require('path');
+const { chatCompletion } = require('../utils/aiClient');
 
-const GEMINI_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
 const RAWG_KEY = process.env.RAWG_API_KEY || '';
 const GAMES_FILE = path.join(__dirname, '../../../data/games.json');
 
-// Gemini с Google Search grounding — ищет доп. факты по теме новости
+// OpenAI GPT-4o — ищет доп. факты по теме новости из своих знаний
 async function searchGrounding(title, description) {
-  const key = process.env.GEMINI_API_KEY;
-  if (!key) {
-    console.warn('[ENRICH] No GEMINI_API_KEY, skipping grounding');
-    return '';
-  }
-
   try {
-    const response = await axios.post(`${GEMINI_URL}?key=${key}`, {
-      contents: [{
-        parts: [{
-          text: `Найди дополнительные факты об этой новости для игрового сайта.
+    const text = await chatCompletion([
+      { role: 'system', content: 'Ты — энциклопедия игровой индустрии. Отвечай кратко, по делу, на русском. Не выдумывай факты — если не уверен, не пиши.' },
+      { role: 'user', content: `Найди дополнительные факты об этой новости для игрового сайта.
 
 Заголовок: ${title}
 Описание: ${(description || '').substring(0, 1500)}
@@ -30,24 +23,13 @@ async function searchGrounding(title, description) {
 - Дата релиза или анонса
 - Связь с другими играми серии
 
-Ответь списком фактов на русском. Коротко, по делу. Не больше 10 пунктов.`
-        }]
-      }],
-      tools: [{ google_search_retrieval: {} }],
-    }, {
-      timeout: 30000,
-      headers: { 'Content-Type': 'application/json' },
-    });
-
-    const text = response.data?.candidates?.[0]?.content?.parts
-      ?.map(p => p.text)
-      .filter(Boolean)
-      .join('\n') || '';
+Ответь списком фактов на русском. Коротко, по делу. Не больше 10 пунктов.` },
+    ], { model: 'gpt-4o-mini', temperature: 0.3, maxTokens: 1500, timeout: 30000 });
 
     console.log(`[ENRICH] Grounding: ${text.length} chars`);
     return text;
   } catch (err) {
-    console.error(`[ENRICH] Grounding error: ${err.response?.data?.error?.message || err.message}`);
+    console.error(`[ENRICH] Grounding error: ${err.message}`);
     return '';
   }
 }

@@ -1,11 +1,4 @@
-const axios = require('axios');
-
-const OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions';
-const TRANSLATE_MODELS = [
-  'google/gemini-2.0-flash-001',
-  'google/gemini-flash-1.5',
-  'anthropic/claude-3.5-haiku',
-];
+const { chatCompletion } = require('../utils/aiClient');
 
 const SYSTEM_PROMPT = `Ты редактор игрового новостного канала ActivePlay. Переведи и перепиши новость на русский.
 
@@ -72,24 +65,11 @@ async function translateAndRewrite(article) {
 Текст: ${(article.description || '').substring(0, 3000)}
 Источник: ${article.sourceName}`;
 
-  for (const model of TRANSLATE_MODELS) {
   try {
-    const response = await axios.post(OPENROUTER_URL, {
-      model,
-      max_tokens: 2000,
-      messages: [
-        { role: 'system', content: SYSTEM_PROMPT },
-        { role: 'user', content: userPrompt },
-      ],
-    }, {
-      headers: {
-        'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
-      timeout: 60000,
-    });
-
-    const text = response.data?.choices?.[0]?.message?.content || '';
+    const text = await chatCompletion([
+      { role: 'system', content: SYSTEM_PROMPT },
+      { role: 'user', content: userPrompt },
+    ], { model: 'gpt-4o', maxTokens: 2000 });
 
     const jsonMatch = text.match(/\{[\s\S]*\}/);
     if (!jsonMatch) {
@@ -115,27 +95,16 @@ async function translateAndRewrite(article) {
       parsed.site.metaDescription = parsed.site.metaDescription.substring(0, 157) + '...';
     }
 
-    console.log(`[NEWS] Translated (${model}): ${parsed.site.title} [${parsed.category}]`);
+    console.log(`[NEWS] Translated (gpt-4o): ${parsed.site.title} [${parsed.category}]`);
     return parsed;
   } catch (err) {
-    const status = err.response?.status || '';
-    const body = err.response?.data ? JSON.stringify(err.response.data) : err.message;
-    console.error(`[NEWS] Translator ${model} failed: ${status} ${body}`);
-    continue;
+    const msg = err.response?.data?.error?.message || err.message;
+    console.error(`[NEWS] Translation failed: ${msg}`);
+    return null;
   }
-  } // end for
-
-  console.error('[NEWS] All translation models failed');
-  return null;
 }
 
 // ====== PIPELINE V2: полная генерация текста с обогащённым контекстом ======
-
-const OPENROUTER_MODELS = [
-  'google/gemini-2.0-flash-001',
-  'google/gemini-flash-1.5',
-  'anthropic/claude-3.5-haiku',
-];
 
 // ═══════════════════════════════════════════════════════════════════
 // ПРОМПТ С FEW-SHOT ПРИМЕРАМИ
@@ -438,48 +407,10 @@ function postProcessText(text) {
   return processed.trim();
 }
 
-async function callOpenRouter(prompt, maxTokens = 4000) {
-  const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
-  if (!OPENROUTER_API_KEY) throw new Error('OPENROUTER_API_KEY not set');
-
-  for (const model of OPENROUTER_MODELS) {
-    try {
-      console.log(`[NEWS] Generating full article via OpenRouter (${model})...`);
-
-      const response = await axios.post(OPENROUTER_URL, {
-        model,
-        messages: [{ role: 'user', content: prompt }],
-        temperature: 0.7,
-        max_tokens: maxTokens,
-      }, {
-        headers: {
-          'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
-          'Content-Type': 'application/json',
-          'HTTP-Referer': 'https://activeplay.games',
-          'X-Title': 'ActivePlay News Agent',
-        },
-        timeout: 60000,
-      });
-
-      const content = response.data?.choices?.[0]?.message?.content;
-      if (!content) {
-        console.warn(`[NEWS] OpenRouter (${model}): empty response`);
-        continue;
-      }
-
-      console.log(`[NEWS] OpenRouter OK via ${model}`);
-      return content;
-    } catch (err) {
-      const status = err.response?.status || 0;
-      const msg = err.response?.data?.error?.message || err.message;
-      console.warn(`[NEWS] OpenRouter ${model} failed (${status}): ${msg.substring(0, 120)}`);
-
-      // FIX: always try next model on any error (quota errors may come as non-429 status)
-      continue;
-    }
-  }
-
-  throw new Error('All OpenRouter models failed');
+async function callAI(prompt, maxTokens = 4000) {
+  return chatCompletion([
+    { role: 'user', content: prompt },
+  ], { model: 'gpt-4o', maxTokens, temperature: 0.7 });
 }
 
 // ═══ Построение промпта ═══
@@ -573,7 +504,7 @@ async function generateFullArticle(article, enrichedContext) {
         prompt += '\n\nВНИМАНИЕ: предыдущий ответ не удалось распарсить. Ответь СТРОГО JSON без backticks. Минимум 1200 символов в site.text, 4 абзаца.';
       }
 
-      const text = await callOpenRouter(prompt);
+      const text = await callAI(prompt);
       const parsed = parseLLMResponse(text);
 
       if (!parsed) {
@@ -708,7 +639,7 @@ async function checkHeadline(title, summary) {
 Ответь ТОЛЬКО заголовком, без пояснений.`;
 
   try {
-    const result = await callOpenRouter(prompt, 200);
+    const result = await callAI(prompt, 200);
     let cleaned = result.trim().replace(/^["']|["']$/g, '');
     if (cleaned && cleaned.length >= 20 && cleaned.length <= 120) {
       // Нормализовать регистр после LLM

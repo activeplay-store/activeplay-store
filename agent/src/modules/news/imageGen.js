@@ -2,6 +2,7 @@ const axios = require('axios');
 const sharp = require('sharp');
 const path = require('path');
 const fs = require('fs');
+const { generateImage } = require('../utils/aiClient');
 
 const IMAGES_DIR = path.join(__dirname, '../../../../public/images/news');
 const FALLBACK_DIR = path.join(__dirname, '../../../../public/images/news/fallbacks');
@@ -650,8 +651,6 @@ async function searchWebImage(article, customQuery) {
 // ═══════════════════════════════════════════════
 
 async function generateAiCover(article, filename) {
-  const apiKey = process.env.OPENROUTER_API_KEY;
-  if (!apiKey) return null;
 
   const gameName = cleanGameName(extractGameName(article));
   const title = article.site?.title || article.title || '';
@@ -688,27 +687,14 @@ async function generateAiCover(article, filename) {
   console.log('[NEWS] AI cover: ' + imagePrompt.substring(0, 100) + '...');
 
   try {
-    const response = await axios.post('https://openrouter.ai/api/v1/images/generations', {
-      model: 'flux/schnell',
-      prompt: imagePrompt,
-      n: 1,
-      size: '1024x576',
-    }, {
-      headers: {
-        'Authorization': 'Bearer ' + apiKey,
-        'Content-Type': 'application/json',
-      },
-      timeout: 60000,
-    });
-
-    const imageUrl = response.data?.data?.[0]?.url;
+    const imageUrl = await generateImage(imagePrompt);
     if (!imageUrl) return null;
 
     const result = await downloadAndResize(imageUrl, filename);
     if (result) markImageUsed('ai-generated:' + article.id, article.id);
     return result;
   } catch (err) {
-    console.error('[NEWS] AI image error: ' + (err.response?.data ? JSON.stringify(err.response.data) : err.message));
+    console.error('[NEWS] AI image error: ' + err.message);
     return null;
   }
 }

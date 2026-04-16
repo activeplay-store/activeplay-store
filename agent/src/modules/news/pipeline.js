@@ -65,6 +65,7 @@ async function runPipeline(article, targets, bot) {
     console.log(`[PIPELINE] Starting for: ${article.site?.title || article.title}`);
 
     // ═══ ШАГ 1: ПЕРЕВОД (если ещё не переведена) ═══
+    let step1Start = Date.now();
     if (!article.site?.text) {
       console.log('[PIPELINE] Step 1: Translating...');
       const translation = await translateAndRewrite(article);
@@ -76,12 +77,16 @@ async function runPipeline(article, targets, bot) {
     } else {
       console.log('[PIPELINE] Step 1: Already translated, skipping');
     }
+    console.log(`[PIPELINE] Step 1 done in ${((Date.now() - step1Start) / 1000).toFixed(1)}s`);
 
     // ═══ ШАГ 2: СБОР ФАКТУРЫ ═══
+    let step2Start = Date.now();
     console.log('[PIPELINE] Step 2: Enriching...');
     const { enrichedContext, siteGame } = await enrichArticle(article);
+    console.log(`[PIPELINE] Step 2 done in ${((Date.now() - step2Start) / 1000).toFixed(1)}s`);
 
     // ═══ ШАГ 3: ГЕНЕРАЦИЯ ПОЛНОГО ТЕКСТА ═══
+    let step3Start = Date.now();
     // Если текст был отредактирован вручную (через голосовые команды) — НЕ перезаписывать
     if (article.manuallyEdited) {
       console.log('[PIPELINE] Step 3: SKIPPED \u2014 article was manually edited');
@@ -109,7 +114,7 @@ async function runPipeline(article, targets, bot) {
           article.relatedProduct = fullArticle.relatedProduct;
         }
 
-        // Propagate platform and CTA fields from Gemini
+        // Propagate platform and CTA fields from GPT-4o
         // НО: если enrichment уже выставил ctaType='deals', НЕ перезаписывать
         if (fullArticle.platform) article.platform = fullArticle.platform;
         if (article.ctaType !== 'deals') {
@@ -125,8 +130,9 @@ async function runPipeline(article, targets, bot) {
         }
       }
     }
+    console.log(`[PIPELINE] Step 3 done in ${((Date.now() - step3Start) / 1000).toFixed(1)}s`);
 
-    // Count-based platform detection — always verify, even if Gemini set a platform
+    // Count-based platform detection — always verify, even if GPT-4o set a platform
     {
       const combined = ((article.site?.title || '') + ' ' + (article.site?.text || '') + ' ' + (article.tags || []).join(' ')).toLowerCase();
       const psCount = (combined.match(/ps5|ps4|playstation|dualsense|ps plus|sony|ps store/g) || []).length;
@@ -158,7 +164,7 @@ async function runPipeline(article, targets, bot) {
       }
     }
 
-    // CTA type по платформе (только если Gemini не определил)
+    // CTA type по платформе (только если GPT-4o не определил)
     if (!article.ctaType) {
       const ctaMap = {
         xbox: { ctaType: 'gamepass', ctaText: 'Xbox Game Pass', ctaLink: '/subscriptions' },
@@ -191,18 +197,22 @@ async function runPipeline(article, targets, bot) {
     }
 
     // ═══ ШАГ 4: ПРОВЕРКА ЗАГОЛОВКА ═══
+    let step4Start = Date.now();
     console.log('[PIPELINE] Step 4: Checking headline...');
     const summary = (article.site?.text || '').substring(0, 200);
     const improvedTitle = await checkHeadline(article.site.title, summary);
     if (improvedTitle) {
       article.site.title = improvedTitle;
     }
+    console.log(`[PIPELINE] Step 4 done in ${((Date.now() - step4Start) / 1000).toFixed(1)}s`);
 
     // ═══ ШАГ 5: КАРТИНКА ═══
+    let step5Start = Date.now();
     console.log('[PIPELINE] Step 5: Getting image...');
     if (!article.imageUrl) {
       article.imageUrl = await getNewsImage(article);
     }
+    console.log(`[PIPELINE] Step 5 done in ${((Date.now() - step5Start) / 1000).toFixed(1)}s`);
 
     // ═══ ШАГ 6: CTA ═══
     console.log('[PIPELINE] Step 6: Building CTA...');
