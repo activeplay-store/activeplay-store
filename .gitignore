@@ -51,10 +51,8 @@ agent/data/modes.json
 agent/data/anchors.backup.json
 agent/node_modules
 
-# agent-bot (код в репо, секреты и зависимости — нет)
-agent-bot/.env
-agent-bot/.env.*
-agent-bot/node_modules/
+# agent-bot (deployed separately to /home/activeplay/agent-bot — не в репо)
+agent-bot/
 agent-bot-prompt.md 
 mega-unified-prompt.md 
 agent-bot-phase2-prompt.md 

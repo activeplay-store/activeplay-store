@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "postinstall": "node -e \"const fs=require('fs'),cp=require('child_process'); if(process.platform==='linux' && fs.existsSync('/home/activeplay') && fs.existsSync('../agent-bot')){ try{ cp.execSync('rsync -a --delete --exclude=.env --exclude=node_modules ../agent-bot/ /home/activeplay/agent-bot/ && cd /home/activeplay/agent-bot && npm install --production', {stdio:'inherit'}); } catch(e){ console.log('[postinstall] agent-bot sync skipped:', e.message);} }\"",
     "start": "node src/index.js",
     "test-rates": "node -e \"const c = require('./src/modules/currency'); c.fetchAndSave().then(r => console.log(r))\"",
     "test-parser": "node -e \"const p = require('./src/modules/parsers'); p.testSingle('sony', 'TR').then(r => console.log(JSON.stringify(r, null, 2)))\"",
