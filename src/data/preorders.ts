@@ -1,5 +1,5 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-04-15T01:08:42.821Z
+// Обновлено: 2026-04-16T01:08:44.220Z
 // Предзаказов: 27
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
@@ -37,8 +37,8 @@ export const preorderData: PreorderGame[] = [
         { name: "Deluxe", clientPrice: 7650 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 5200 },
-        { name: "Deluxe", clientPrice: 5650 },
+        { name: "Standard", clientPrice: 5250 },
+        { name: "Deluxe", clientPrice: 5700 },
       ],
     },
   },
@@ -55,7 +55,7 @@ export const preorderData: PreorderGame[] = [
         { name: "Standard", clientPrice: 6650 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 5200 },
+        { name: "Standard", clientPrice: 5250 },
       ],
     },
   },
@@ -69,7 +69,7 @@ export const preorderData: PreorderGame[] = [
     description: "Beat 'em up от Interabang. Кооп-аркада",
     editions: {
       TR: [
-        { name: "Standard", clientPrice: 2800 },
+        { name: "Standard", clientPrice: 2850 },
       ],
     },
   },
@@ -83,10 +83,10 @@ export const preorderData: PreorderGame[] = [
     description: "Приключение от DigixArt. Решения онлайн",
     editions: {
       TR: [
-        { name: "Standard", clientPrice: 3800 },
+        { name: "Standard", clientPrice: 3850 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 3350 },
+        { name: "Standard", clientPrice: 3400 },
       ],
     },
   },
@@ -100,10 +100,10 @@ export const preorderData: PreorderGame[] = [
     description: "Стратегия от KITE Games. Бои ВМВ, 300+ юнитов",
     editions: {
       TR: [
-        { name: "Standard", clientPrice: 5550 },
+        { name: "Standard", clientPrice: 5600 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 4600 },
+        { name: "Standard", clientPrice: 4650 },
       ],
     },
   },
@@ -137,7 +137,7 @@ export const preorderData: PreorderGame[] = [
         { name: "Standard", clientPrice: 3600 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 3250 },
+        { name: "Standard", clientPrice: 3300 },
       ],
     },
   },
@@ -151,14 +151,14 @@ export const preorderData: PreorderGame[] = [
     description: "RPG-DLC от Blizzard. Паладин и Чернокнижник",
     editions: {
       TR: [
-        { name: "Standard", clientPrice: 4400 },
+        { name: "Standard", clientPrice: 4450 },
         { name: "Deluxe", clientPrice: 6200 },
-        { name: "Ultimate", clientPrice: 9050 },
+        { name: "Ultimate", clientPrice: 9100 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 5000 },
-        { name: "Deluxe", clientPrice: 6900 },
-        { name: "Ultimate", clientPrice: 9850 },
+        { name: "Standard", clientPrice: 5050 },
+        { name: "Deluxe", clientPrice: 7000 },
+        { name: "Ultimate", clientPrice: 9950 },
       ],
     },
   },
@@ -172,11 +172,11 @@ export const preorderData: PreorderGame[] = [
     description: "Рогалик-шутер от Housemarque. Щит из пуль",
     editions: {
       TR: [
-        { name: "Standard", clientPrice: 8700 },
-        { name: "Digital Deluxe", clientPrice: 9600 },
+        { name: "Standard", clientPrice: 8750 },
+        { name: "Digital Deluxe", clientPrice: 9700 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 6150 },
+        { name: "Standard", clientPrice: 6250 },
       ],
     },
   },
@@ -193,7 +193,7 @@ export const preorderData: PreorderGame[] = [
         { name: "Standard", clientPrice: 7650 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 5650 },
+        { name: "Standard", clientPrice: 5700 },
       ],
     },
   },
@@ -210,7 +210,7 @@ export const preorderData: PreorderGame[] = [
         { name: "Standard", clientPrice: 4250 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 3700 },
+        { name: "Standard", clientPrice: 3750 },
       ],
     },
   },
@@ -224,10 +224,10 @@ export const preorderData: PreorderGame[] = [
     description: "Deck-builder от Daedalic. Эмоции и карты",
     editions: {
       TR: [
-        { name: "Standard", clientPrice: 2800 },
+        { name: "Standard", clientPrice: 2850 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 2550 },
+        { name: "Standard", clientPrice: 2600 },
       ],
     },
   },
@@ -241,10 +241,10 @@ export const preorderData: PreorderGame[] = [
     description: "2D-файтинг от Skybound. 3v3 бои Invincible",
     editions: {
       TR: [
-        { name: "Standard", clientPrice: 5550 },
+        { name: "Standard", clientPrice: 5600 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 5000 },
+        { name: "Standard", clientPrice: 5050 },
       ],
     },
   },
@@ -258,10 +258,10 @@ export const preorderData: PreorderGame[] = [
     description: "In Bound, the player takes on the role of a dancing lady in",
     editions: {
       TR: [
-        { name: "Standard", clientPrice: 3800 },
+        { name: "Standard", clientPrice: 3850 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 3350 },
+        { name: "Deluxe", clientPrice: 3900 },
       ],
     },
   },
@@ -275,10 +275,10 @@ export const preorderData: PreorderGame[] = [
     description: "In this hybrid RPG/idol simulation, five idols wield Sound W",
     editions: {
       TR: [
-        { name: "Standard", clientPrice: 3800 },
+        { name: "Standard", clientPrice: 3850 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 3350 },
+        { name: "Standard", clientPrice: 3400 },
       ],
     },
   },
@@ -292,10 +292,10 @@ export const preorderData: PreorderGame[] = [
     description: "Хоррор от Supermassive. Мимики в космосе",
     editions: {
       TR: [
-        { name: "Standard", clientPrice: 5550 },
+        { name: "Standard", clientPrice: 5600 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 4600 },
+        { name: "Standard", clientPrice: 4650 },
       ],
     },
   },
@@ -310,10 +310,10 @@ export const preorderData: PreorderGame[] = [
     editions: {
       TR: [
         { name: "Standard", clientPrice: 7650 },
-        { name: "Deluxe", clientPrice: 9600 },
+        { name: "Deluxe", clientPrice: 9700 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 5650 },
+        { name: "Standard", clientPrice: 5700 },
       ],
     },
   },
@@ -327,7 +327,7 @@ export const preorderData: PreorderGame[] = [
     description: "Join Bubsy on an intergalactic, platforming adventure! The i",
     editions: {
       TR: [
-        { name: "Standard", clientPrice: 2800 },
+        { name: "Standard", clientPrice: 2850 },
       ],
     },
   },
@@ -355,10 +355,10 @@ export const preorderData: PreorderGame[] = [
     description: "Nickelodeon All-Star Brawl, is a new platform fighting game",
     editions: {
       TR: [
-        { name: "Standard", clientPrice: 3800 },
+        { name: "Standard", clientPrice: 3850 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 3350 },
+        { name: "Standard", clientPrice: 3400 },
       ],
     },
   },
@@ -373,11 +373,11 @@ export const preorderData: PreorderGame[] = [
     editions: {
       TR: [
         { name: "Standard", clientPrice: 4250 },
-        { name: "Deluxe", clientPrice: 5100 },
+        { name: "Deluxe", clientPrice: 5150 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 3600 },
-        { name: "Deluxe", clientPrice: 4250 },
+        { name: "Standard", clientPrice: 3650 },
+        { name: "Deluxe", clientPrice: 4300 },
       ],
     },
   },
@@ -394,7 +394,7 @@ export const preorderData: PreorderGame[] = [
         { name: "Standard", clientPrice: 6650 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 5200 },
+        { name: "Standard", clientPrice: 5250 },
       ],
     },
   },
@@ -409,11 +409,11 @@ export const preorderData: PreorderGame[] = [
     editions: {
       TR: [
         { name: "Standard", clientPrice: 7650 },
-        { name: "Digital Deluxe", clientPrice: 8700 },
+        { name: "Digital Deluxe", clientPrice: 8750 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 5650 },
-        { name: "Digital Deluxe", clientPrice: 6150 },
+        { name: "Standard", clientPrice: 5700 },
+        { name: "Digital Deluxe", clientPrice: 6250 },
       ],
     },
   },
@@ -427,12 +427,12 @@ export const preorderData: PreorderGame[] = [
     description: "3D-файтинг от Team NINJA. 29 бойцов на PS5",
     editions: {
       TR: [
-        { name: "Standard", clientPrice: 4700 },
+        { name: "Standard", clientPrice: 4750 },
         { name: "Deluxe", clientPrice: 7650 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 4350 },
-        { name: "Deluxe", clientPrice: 6400 },
+        { name: "Standard", clientPrice: 4400 },
+        { name: "Deluxe", clientPrice: 6500 },
       ],
     },
   },
@@ -447,13 +447,13 @@ export const preorderData: PreorderGame[] = [
     editions: {
       TR: [
         { name: "Standard", clientPrice: 7650 },
-        { name: "Deluxe", clientPrice: 9600 },
-        { name: "Ultimate", clientPrice: 11600 },
+        { name: "Deluxe", clientPrice: 9700 },
+        { name: "Ultimate", clientPrice: 11650 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 5650 },
-        { name: "Deluxe", clientPrice: 6650 },
-        { name: "Ultimate", clientPrice: 7650 },
+        { name: "Standard", clientPrice: 5700 },
+        { name: "Deluxe", clientPrice: 6750 },
+        { name: "Ultimate", clientPrice: 7700 },
       ],
     },
   },
@@ -461,18 +461,18 @@ export const preorderData: PreorderGame[] = [
     id: "marvel-t-kon-fighting-souls",
     name: "MARVEL Tōkon: Fighting Souls",
     platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202602/0512/c6c3c4e932208ec7edc7a53dee1b11555c3d7be56e60ad18.jpg",
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202602/0512/7ba3a1fac3bdcf6df6ffd10662d2a7833abe9743529782fb.jpg",
     releaseDate: "2026-08-06",
     genre: "Файтинг",
     description: "Файтинг от Arc System Works. 4v4 Marvel",
     editions: {
       TR: [
         { name: "Standard", clientPrice: 7650 },
-        { name: "Digital Deluxe", clientPrice: 10050 },
-        { name: "Ultimate", clientPrice: 11600 },
+        { name: "Digital Deluxe", clientPrice: 10150 },
+        { name: "Ultimate", clientPrice: 11650 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 5650 },
+        { name: "Standard", clientPrice: 5700 },
       ],
     },
   },
@@ -486,10 +486,10 @@ export const preorderData: PreorderGame[] = [
     description: "Стелс от Konami. MGS4 + Peace Walker",
     editions: {
       TR: [
-        { name: "Standard", clientPrice: 5550 },
+        { name: "Standard", clientPrice: 5600 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 4600 },
+        { name: "Standard", clientPrice: 4650 },
       ],
     },
   },
