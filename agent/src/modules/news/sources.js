@@ -7,7 +7,7 @@ module.exports = [
   { id: 'eurogamer', name: 'Eurogamer', url: 'https://www.eurogamer.net/feed', type: 'rss', weight: 9, category: 'media' },
   { id: 'pcgamer', name: 'PC Gamer', url: 'https://www.pcgamer.com/rss/', type: 'rss', weight: 8, category: 'media' },
   { id: 'gamesradar', name: 'GamesRadar+', url: 'https://www.gamesradar.com/rss/', type: 'rss', weight: 8, category: 'media' },
-  { id: 'theverge', name: 'The Verge Gaming', url: 'https://www.theverge.com/games/rss/index.xml', type: 'rss', weight: 8, category: 'media' },
+  { id: 'theverge', name: 'The Verge', url: 'https://www.theverge.com/rss/index.xml', type: 'rss', weight: 8, category: 'media' },
   { id: 'vgc', name: 'VGC', url: 'https://www.videogameschronicle.com/feed', type: 'rss', weight: 9, category: 'media' },
   { id: 'insidergaming', name: 'Insider Gaming', url: 'https://insidergaming.com/feed', type: 'rss', weight: 10, category: 'media' },
   { id: 'destructoid', name: 'Destructoid', url: 'https://www.destructoid.com/feed/', type: 'rss', weight: 7, category: 'media' },
@@ -16,8 +16,8 @@ module.exports = [
   { id: 'vg247', name: 'VG247', url: 'https://www.vg247.com/feed', type: 'rss', weight: 7, category: 'media' },
   { id: 'rps', name: 'Rock Paper Shotgun', url: 'https://www.rockpapershotgun.com/feed', type: 'rss', weight: 7, category: 'media' },
   { id: 'gematsu', name: 'Gematsu', url: 'https://www.gematsu.com/feed', type: 'rss', weight: 8, category: 'media' },
-  { id: 'giantbomb', name: 'Giant Bomb', url: 'https://www.giantbomb.com/feeds/mashup/', type: 'rss', weight: 7, category: 'media' },
   { id: 'gamesindustry', name: 'GamesIndustry.biz', url: 'https://www.gamesindustry.biz/feed', type: 'rss', weight: 8, category: 'business' },
+  { id: 'forbes-games', name: 'Forbes Gaming', url: 'https://www.forbes.com/gaming/feed/', type: 'rss', weight: 7, category: 'business' },
 
   // === ПЛАТФОРМО-СПЕЦИФИЧЕСКИЕ ===
   { id: 'pushsquare', name: 'Push Square', url: 'https://www.pushsquare.com/feeds/latest', type: 'rss', weight: 9, category: 'platform' },
@@ -29,8 +29,7 @@ module.exports = [
   { id: 'xboxwire', name: 'Xbox Wire', url: 'https://news.xbox.com/en-us/feed/', type: 'rss', weight: 8, category: 'official' },
 
   // === ПАБЛИШЕРЫ ===
-  { id: 'ea', name: 'EA News', url: 'https://www.ea.com/en-gb/news/feed', type: 'rss', weight: 8, category: 'publisher' },
-  { id: 'ubisoft', name: 'Ubisoft News', url: 'https://news.ubisoft.com/en-us/feed/', type: 'rss', weight: 7, category: 'publisher' },
+  { id: 'ubisoft', name: 'Ubisoft News', url: 'https://news.ubisoft.com/feed', type: 'rss', weight: 7, category: 'publisher' },
   { id: 'bethesda', name: 'Bethesda', url: 'https://bethesda.net/en/news/feed', type: 'rss', weight: 8, category: 'publisher' },
 
   // === REDDIT ===
@@ -41,17 +40,13 @@ module.exports = [
   { id: 'reddit-ps5deals', name: 'r/PS5Deals', url: 'https://www.reddit.com/r/PS5Deals/hot.json', type: 'reddit', weight: 8, category: 'deals' },
   { id: 'reddit-gamedeals', name: 'r/GameDeals', url: 'https://www.reddit.com/r/GameDeals/hot.json', type: 'reddit', weight: 7, category: 'deals' },
 
-  // === YOUTUBE (бесплатный RSS по channel_id) ===
-  { id: 'yt-digitalfoundry', name: 'Digital Foundry', url: 'https://www.youtube.com/feeds/videos.xml?channel_id=UC9PBzalIcEQCsiIkq36PyUA', type: 'rss', weight: 7, category: 'media' },
+  // === YOUTUBE / ПОДКАСТЫ ===
   { id: 'yt-gamexplain', name: 'GameXplain', url: 'https://www.youtube.com/feeds/videos.xml?channel_id=UCfAPTv1LgeEWevG8X_6PUOQ', type: 'rss', weight: 6, category: 'media' },
+  { id: 'podcast-natethehate', name: 'NateTheHate Podcast', url: 'https://feeds.buzzsprout.com/929602.rss', type: 'rss', weight: 8, category: 'insider' },
 
-  // === BLUESKY RSS замены (Nitter мёртв) ===
-  // Инсайдеры
-  { id: 'bsky-schreier', name: 'Jason Schreier (Bluesky)', url: 'https://bsky.app/profile/jasonschreier.bsky.social/rss', type: 'rss', weight: 10, category: 'insider' },
-  { id: 'bsky-grubb', name: 'Jeff Grubb (Bluesky)', url: 'https://bsky.app/profile/jeffgrubb.bsky.social/rss', type: 'rss', weight: 9, category: 'insider' },
-  { id: 'bsky-keighley', name: 'Geoff Keighley (Bluesky)', url: 'https://bsky.app/profile/geoffkeighley.bsky.social/rss', type: 'rss', weight: 9, category: 'industry' },
-  // Официальные — прямые RSS (дубли psblog/xboxwire уже выше, добавляем только Rockstar)
-  { id: 'rockstar', name: 'Rockstar Newswire', url: 'https://www.rockstargames.com/newswire/feed', type: 'rss', weight: 10, category: 'official' },
+  // === ИНСАЙДЕРЫ ===
+  // Nitter: единственный живой публичный mirror (nitter.net). Если упадёт — поднять свой инстанс или искать рабочий mirror.
+  { id: 'kepler-l2', name: 'Kepler_L2 (chip leaks)', url: 'https://nitter.net/Kepler_L2/rss', type: 'rss', weight: 9, category: 'insider' },
 
   // === TELEGRAM (публичное web-превью) ===
   { id: 'tg-psprices', name: 'PSPrices RU', url: 'https://t.me/s/psprices_ru_ps4', type: 'telegram', weight: 8, category: 'deals' },
