@@ -1,12 +1,44 @@
 const RssParser = require('rss-parser');
 const axios = require('axios');
+const { HttpsProxyAgent } = require('https-proxy-agent');
 const cheerio = require('cheerio');
 const sources = require('./sources');
 
+const FETCH_TIMEOUT = 30000;
+const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36';
+const proxyAgent = process.env.KZ_PROXY_URL
+  ? new HttpsProxyAgent(process.env.KZ_PROXY_URL)
+  : null;
+
+if (proxyAgent) console.log('[NEWS] KZ_PROXY_URL agent ready (used by sources marked proxy: true)');
+
 const rssParser = new RssParser({
-  timeout: 15000,
-  headers: { 'User-Agent': 'ActivePlay News Bot 1.0' },
+  timeout: FETCH_TIMEOUT,
+  headers: { 'User-Agent': UA },
 });
+
+function axiosOpts(source, extra = {}) {
+  const useProxy = source && source.proxy && proxyAgent;
+  return {
+    headers: {
+      'User-Agent': UA,
+      'Accept': 'application/rss+xml, application/atom+xml, application/xml, text/xml, application/json, text/html, */*',
+      'Accept-Language': 'en-US,en;q=0.9',
+    },
+    timeout: FETCH_TIMEOUT,
+    maxRedirects: 5,
+    ...(useProxy ? { httpsAgent: proxyAgent, proxy: false } : {}),
+    ...extra,
+  };
+}
+
+// Strip BOM / HTML wrapper / leading whitespace before XML root.
+// Some servers (Bethesda, Ubisoft, Insider Gaming) prepend cruft that breaks rss-parser.
+function cleanXml(s) {
+  if (!s || typeof s !== 'string') return s;
+  const m = s.match(/<(\?xml|rss|feed|rdf:RDF)\b/i);
+  return m ? s.slice(s.indexOf(m[0])) : s;
+}
 
 // Дедупликация по заголовку (нормализованному)
 function normalizeTitle(title) {
@@ -35,7 +67,7 @@ function extractImageFromItem(item) {
 async function fetchFulltext(url) {
   try {
     const { data } = await axios.get(url, {
-      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; ActivePlayBot/1.0)' },
+      headers: { 'User-Agent': UA },
       timeout: 8000,
       maxRedirects: 3,
     });
@@ -59,9 +91,13 @@ async function fetchFulltext(url) {
 }
 
 // === RSS ===
+// Fetch via axios (full control over UA/proxy/timeout), then hand body to rss-parser.
+// Pre-cleans the body to strip BOM/HTML wrappers that otherwise crash parseString.
 async function fetchRSS(source) {
+  const useProxy = source.proxy && proxyAgent;
   try {
-    const feed = await rssParser.parseURL(source.url);
+    const { data } = await axios.get(source.url, axiosOpts(source, { responseType: 'text' }));
+    const feed = await rssParser.parseString(cleanXml(data));
     const articles = (feed.items || []).slice(0, 15).map(item => ({
       sourceId: source.id,
       sourceName: source.name,
@@ -73,10 +109,10 @@ async function fetchRSS(source) {
       image: extractImageFromItem(item) || '',
       pubDate: item.pubDate || item.isoDate || new Date().toISOString(),
     }));
-    console.log(`[NEWS] ${source.name}: ${articles.length} articles`);
+    console.log(`[NEWS] ${source.name}: ${articles.length} articles${useProxy ? ' [proxy]' : ''}`);
     return articles;
   } catch (err) {
-    console.error(`[NEWS] ${source.name} error: ${err.message}`);
+    console.error(`[NEWS] ${source.name} error: ${err.message}${useProxy ? ' [proxy]' : ''}`);
     return [];
   }
 }
@@ -84,10 +120,7 @@ async function fetchRSS(source) {
 // === Reddit ===
 async function fetchReddit(source) {
   try {
-    const { data } = await axios.get(source.url, {
-      headers: { 'User-Agent': 'ActivePlay News Bot 1.0' },
-      timeout: 10000,
-    });
+    const { data } = await axios.get(source.url, axiosOpts(source));
     const posts = (data.data?.children || []).slice(0, 15);
     return posts
       .filter(p => p.data && !p.data.stickied)
@@ -143,10 +176,7 @@ async function fetchNitter(source) {
 // === Telegram (публичное web-превью) ===
 async function fetchTelegram(source) {
   try {
-    const { data } = await axios.get(source.url, {
-      headers: { 'User-Agent': 'Mozilla/5.0' },
-      timeout: 10000,
-    });
+    const { data } = await axios.get(source.url, axiosOpts(source));
     const $ = cheerio.load(data);
     const posts = [];
     $('.tgme_widget_message').each((i, el) => {
