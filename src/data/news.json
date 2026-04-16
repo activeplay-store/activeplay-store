@@ -1,5 +1,42 @@
 [
   {
+    "id": "fairgames-ot-haven-studios-novyy-ekstrakshen-shuter-na-podhode",
+    "slug": "fairgames-ot-haven-studios-novyy-ekstrakshen-shuter-na-podhode",
+    "title": "Fairgames от Haven Studios: новый экстракшен-шутер на подходе",
+    "content": "Haven Studios анонсировала новый экстракшен-шутер Fairgames, который станет доступен для тестирования уже на этих выходных. Согласно информации от Insider Gaming, игра предложит игрокам 'соревновательный опыт ограблений', а одним из ключевых режимов станет 'Cargo Heist'. Этот режим предполагает поиск кода от сейфа, сбор денег и улучшение навыков для успешного ограбления и последующей эвакуации.\n\nИгра разрабатывается для платформ PlayStation 5 и ПК. Fairgames сочетает элементы шутера и соревновательных ограблений, предоставляя игрокам возможность погружаться в напряженные миссии, напоминающие Marathon с контрактами. Издателем выступает Sony Interactive Entertainment. Хотя точная дата выхода пока не объявлена, интерес к проекту подогревают регулярные плейтесты, ближайший из которых запланирован на эти выходные.\n\nПроект Fairgames имеет непростую историю разработки. Основанная Джейд Реймонд Haven Studios столкнулась с трудностями после ее ухода. Тем не менее, Sony продолжает поддерживать студию, инвестируя в развитие игры. Fairgames не является продолжением известных проектов, но ее механики сравнивают с другими экстракшен-шутерами, такими как Marathon. Metacritic еще не оценил игру, так как она не вышла.\n\nДля тех, кто хочет оставаться на волне игровых новинок, подписка PS Plus предоставляет доступ к эксклюзивным играм. Это позволит вам первыми опробовать новинки и делиться впечатлениями с другими игроками.",
+    "metaDescription": "Fairgames от Haven Studios — экстракшен-шутер с элементами ограблений. Издатель Sony, платформы PS5 и ПК. Первый плейтест на выходных.",
+    "coverUrl": "/images/news/news-1776379782713-bo3v.jpg",
+    "tags": [
+      "PS5",
+      "Sony",
+      "PS Store"
+    ],
+    "category": "news",
+    "source": "r/PS5",
+    "sourceUrl": "https://insider-gaming.com/fairgames-extraction-shooter/",
+    "publishedAt": "2026-04-16T22:50:13.424Z",
+    "gameId": null,
+    "relatedProduct": "ps-plus-extra",
+    "platform": "playstation",
+    "ctaType": "psplus",
+    "ctaText": "PS Plus от 1 250 ₽/мес",
+    "ctaLink": "/subscriptions",
+    "cta": {
+      "title": "Купить INSIDE",
+      "description": "Активация за 5 минут. Турецкий PS Store.",
+      "price": 650,
+      "oldPrice": 3050,
+      "url": "/sale",
+      "buttonText": "Купить за 650 ₽ →"
+    },
+    "cta2": {
+      "title": "PS Plus Extra",
+      "description": "Каталог из 400+ игр",
+      "url": "/ps-plus-extra",
+      "buttonText": "Подробнее →"
+    }
+  },
+  {
     "id": "film-call-of-duty-data-vyhoda-i-detali",
     "slug": "film-call-of-duty-data-vyhoda-i-detali",
     "title": "Фильм Call of Duty: дата выхода и детали",
