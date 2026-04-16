@@ -51,8 +51,10 @@ agent/data/modes.json
 agent/data/anchors.backup.json
 agent/node_modules
 
-# agent-bot (отдельный от основного проекта)
-agent-bot/
+# agent-bot (код в репо, секреты и зависимости — нет)
+agent-bot/.env
+agent-bot/.env.*
+agent-bot/node_modules/
 agent-bot-prompt.md 
 mega-unified-prompt.md 
 agent-bot-phase2-prompt.md 

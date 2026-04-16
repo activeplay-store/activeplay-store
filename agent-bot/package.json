@@ -1,0 +1,15 @@
+{
+  "name": "activeplay-agent-bot",
+  "version": "1.0.0",
+  "description": "Telegram bot for ActivePlay AI Agent management",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js"
+  },
+  "dependencies": {
+    "telegraf": "^4.16.3",
+    "dotenv": "^16.4.5",
+    "axios": "^1.7.2",
+    "form-data": "^4.0.0"
+  }
+}

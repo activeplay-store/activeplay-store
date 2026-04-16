@@ -33,11 +33,17 @@ function deploy() {
   const start = Date.now();
 
   const script = `
+    set -e
     cd ${REPO_DIR} &&
     git fetch origin main &&
     git reset --hard origin/main &&
     cd agent && npm install --production &&
     cd ${REPO_DIR} && npm run build &&
+    if [ -d ${REPO_DIR}/agent-bot ]; then
+      mkdir -p /home/activeplay/agent-bot &&
+      rsync -a --delete --exclude=.env --exclude=node_modules ${REPO_DIR}/agent-bot/ /home/activeplay/agent-bot/ &&
+      cd /home/activeplay/agent-bot && npm install --production;
+    fi &&
     pm2 restart activeplay ap-agent ap-agent-bot
   `;
 
