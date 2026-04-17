@@ -1,5 +1,30 @@
 [
   {
+    "id": "dark-hours-debyutiruet-na-ps5-i-xbox-series-22-aprelya",
+    "slug": "dark-hours-debyutiruet-na-ps5-i-xbox-series-22-aprelya",
+    "title": "Dark Hours дебютирует на PS5 и Xbox Series 22 апреля",
+    "content": "Piece of Cake Studios готовится к выпуску кооперативного survival horror Dark Hours на консолях PlayStation 5 и Xbox Series 22 апреля 2024 года. Игра выйдет на PC 24 октября 2024 года и получила положительные отзывы. Цена на консольные версии составляет $14.99.\n\nDark Hours предлагает игрокам погрузиться в атмосферу ужаса, исследуя мрачные территории и сражаясь с разнообразными угрозами. Кооперативный режим позволяет объединиться с друзьями для более эффективного выживания. Игра доступна на платформах PS5, Xbox Series и PC, привлекая внимание своей уникальной атмосферой и интригующими механиками.\n\nPiece of Cake Studios ранее не была известна крупными проектами, но Dark Hours уже получила признание игроков и критиков на PC. Включение кооперативного режима добавляет игре ценность и позволяет ей выделяться на фоне конкурентов в жанре survival horror. Оценки на Metacritic пока не опубликованы, но положительные отзывы пользователей говорят сами за себя.",
+    "metaDescription": "Dark Hours выходит на PS5 и Xbox Series 22 апреля. Кооперативный survival horror от Piece of Cake Studios.",
+    "coverUrl": "/images/news/news-1776416529012-ls31.jpg",
+    "tags": [
+      "PS5",
+      "Xbox Series",
+      "Dark Hours"
+    ],
+    "category": "news",
+    "source": "N4G aggregator",
+    "sourceUrl": "http://newsboiler-www-website.azurewebsites.net/news/2687810/co-op-survival-horror-game-dark-hours-coming-to-ps5-xbox-series-on-april-22",
+    "publishedAt": "2026-04-17T09:24:42.031Z",
+    "gameId": null,
+    "relatedProduct": null,
+    "platform": "multi",
+    "ctaType": "general",
+    "ctaText": "Подписки от 1 250 ₽/мес",
+    "ctaLink": "/subscriptions",
+    "cta": null,
+    "cta2": null
+  },
+  {
     "id": "mouse-p-i-for-hire-debyutiroval-v-ps-store-dlya-ps5",
     "slug": "mouse-p-i-for-hire-debyutiroval-v-ps-store-dlya-ps5",
     "title": "Mouse: P.I. For Hire дебютировал в PS Store для PS5",
@@ -1595,27 +1620,6 @@
       "url": "/sale",
       "buttonText": "Купить Borderlands 4 →"
     },
-    "cta2": null
-  },
-  {
-    "id": "crimson-desert-patch-1-01-00",
-    "slug": "crimson-desert-vyshel-patch-1-01-00-s-novymi-mauntami-i-uluchsheniyami",
-    "title": "Crimson Desert: вышел патч 1.01.00 с новыми маунтами и улучшениями",
-    "content": "Для Crimson Desert вышло обновление 1.01.00 на PC. Главное: в игре появились пять новых легендарных маунтов. Их можно получить после выполнения определенных условий. Разработчики также добавили сундуки с ресурсами в Pywel.\n\nЕще одно важное нововведение: жетоны улучшения. С ними можно поднять уровень экипировки сразу до 4 стадии. Никаких дополнительных ресурсов не потребуется. Жетоны дают за выполнение основных и фракционных квестов. Появилась и функция быстрого создания предметов. Больше не нужно выбирать ингредиенты вручную.\n\nРазработчики добавили функцию перемещения всех выбранных предметов в личное хранилище. Преступления больше не снижают уровень вклада фракции, если вас не поймали.",
-    "metaDescription": "Патч 1.01.00 для Crimson Desert добавил новых маунтов, жетоны улучшения и исправил баланс.",
-    "coverUrl": "/images/news/news-1774796143853-imy7.jpg",
-    "tags": [
-      "Crimson Desert",
-      "патч",
-      "обновление"
-    ],
-    "category": "news",
-    "source": "Destructoid",
-    "sourceUrl": "",
-    "publishedAt": "2026-03-29T14:56:54.705Z",
-    "gameId": null,
-    "relatedProduct": null,
-    "cta": null,
     "cta2": null
   }
 ]
