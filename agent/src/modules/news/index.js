@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const { fetchAll } = require('./parser');
 const { rankNews } = require('./scorer');
+const { saveArticles, cleanup } = require('./db');
 const { translateAndRewrite } = require('./translator');
 const { sendPreview, savePending: savePendingToFile, loadQueue, saveQueue, executePublish } = require('./approval');
 
@@ -15,9 +16,14 @@ async function runNewsCycle(bot) {
   console.log(`[NEWS] ${rawNews.length} fresh articles`);
   if (rawNews.length === 0) return;
 
-  // 2. Топ-10 (берём 10, предлагаем 5, остальные — запас для "Предложить другую")
-  const top = rankNews(rawNews, 10);
+  // 2. Топ-10 с diversity (max 2 из одного источника), предлагаем 5, остальные — запас
+  const top = rankNews(rawNews, 10, 2);
   console.log(`[NEWS] Top 10 scored`);
+
+  // Сохранить топ-10 в SQLite для дедупа и аналитики
+  try { saveArticles(top, rawNews._cycleId || new Date().toISOString()); }
+  catch (e) { console.error('[NEWS] DB save:', e.message); }
+  try { cleanup(30); } catch {}
 
   // 3. Переводим первые 5
   const toTranslate = top.slice(0, 5);

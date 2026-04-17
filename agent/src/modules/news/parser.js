@@ -1,8 +1,13 @@
+// agent/src/modules/news/parser.js
+// Парсер новостей — v2
+// Изменения: кросс-цикловый дедуп через SQLite (db.js)
+
 const RssParser = require('rss-parser');
 const axios = require('axios');
 const { HttpsProxyAgent } = require('https-proxy-agent');
 const cheerio = require('cheerio');
 const sources = require('./sources');
+const { filterSeenArticles } = require('./db');
 
 const FETCH_TIMEOUT = 30000;
 const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36';
@@ -32,15 +37,13 @@ function axiosOpts(source, extra = {}) {
   };
 }
 
-// Strip BOM / HTML wrapper / leading whitespace before XML root.
-// Some servers (Bethesda, Ubisoft, Insider Gaming) prepend cruft that breaks rss-parser.
 function cleanXml(s) {
   if (!s || typeof s !== 'string') return s;
   const m = s.match(/<(\?xml|rss|feed|rdf:RDF)\b/i);
   return m ? s.slice(s.indexOf(m[0])) : s;
 }
 
-// Дедупликация по заголовку (нормализованному)
+// Нормализация заголовка для дедупа
 function normalizeTitle(title) {
   return (title || '')
     .toLowerCase()
@@ -72,9 +75,7 @@ async function fetchFulltext(url) {
       maxRedirects: 3,
     });
     const $ = cheerio.load(data);
-    // Убрать скрипты, стили, навигацию
     $('script, style, nav, header, footer, aside, .ad, .sidebar, .comments').remove();
-    // Искать основной контент по приоритету селекторов
     const selectors = ['article', '.post-content', '.entry-content', '.article-body', '.story-body', 'main'];
     for (const sel of selectors) {
       const content = $(sel).text().trim();
@@ -82,7 +83,6 @@ async function fetchFulltext(url) {
         return content.replace(/\s+/g, ' ').substring(0, 1500);
       }
     }
-    // Fallback: body text
     const body = $('body').text().trim().replace(/\s+/g, ' ');
     return body.length > 200 ? body.substring(0, 1500) : '';
   } catch {
@@ -91,8 +91,6 @@ async function fetchFulltext(url) {
 }
 
 // === RSS ===
-// Fetch via axios (full control over UA/proxy/timeout), then hand body to rss-parser.
-// Pre-cleans the body to strip BOM/HTML wrappers that otherwise crash parseString.
 async function fetchRSS(source) {
   const useProxy = source.proxy && proxyAgent;
   try {
@@ -142,7 +140,7 @@ async function fetchReddit(source) {
   }
 }
 
-// === Nitter (Twitter через Nitter) ===
+// === Nitter ===
 const NITTER_INSTANCES = [
   'nitter.privacydev.net',
   'nitter.poast.org',
@@ -173,7 +171,7 @@ async function fetchNitter(source) {
   return [];
 }
 
-// === Telegram (публичное web-превью) ===
+// === Telegram ===
 async function fetchTelegram(source) {
   try {
     const { data } = await axios.get(source.url, axiosOpts(source));
@@ -202,13 +200,13 @@ async function fetchTelegram(source) {
   }
 }
 
-// === Fetch All ===
+// === Fetch All (v2 — с кросс-цикловым дедупом) ===
 async function fetchAll() {
+  const cycleId = new Date().toISOString();
   const allArticles = [];
-  const seen = new Set();
+  const seen = new Set(); // внутри-цикловый дедуп (как раньше)
   const stats = { ok: 0, blocked: 0, dead: 0, timeout: 0, nitterDown: 0 };
 
-  // Batch по 10 для параллельного фетча
   const batchSize = 10;
   for (let i = 0; i < sources.length; i += batchSize) {
     const batch = sources.slice(i, i + batchSize);
@@ -227,7 +225,6 @@ async function fetchAll() {
 
       if (result.status !== 'fulfilled' || result.value.length === 0) {
         if (source.type === 'nitter') { stats.nitterDown++; continue; }
-        // Определяем тип ошибки из логов
         const errMsg = result.reason?.message || '';
         if (errMsg.includes('403')) stats.blocked++;
         else if (errMsg.includes('404')) stats.dead++;
@@ -246,16 +243,27 @@ async function fetchAll() {
         const ageHours = (Date.now() - new Date(article.pubDate).getTime()) / (1000 * 60 * 60);
         if (ageHours > 24) continue;
 
+        // Прикрепляем нормализованный заголовок для БД-дедупа
+        article._titleNormalized = key;
         allArticles.push(article);
       }
     }
   }
 
-  // Статистика источников
-  console.log(`[NEWS] Sources: ${stats.ok} OK, ${stats.blocked} blocked (403), ${stats.dead} dead (404), ${stats.timeout} timeout, ${stats.nitterDown} Nitter down`);
+  console.log(`[NEWS] Sources: ${stats.ok} OK, ${stats.blocked} blocked, ${stats.dead} dead, ${stats.timeout} timeout, ${stats.nitterDown} Nitter down`);
+
+  // Кросс-цикловый дедуп через SQLite (48ч окно)
+  let freshArticles;
+  try {
+    freshArticles = filterSeenArticles(allArticles, 48);
+    console.log(`[NEWS] Cross-cycle dedup: ${allArticles.length} → ${freshArticles.length} (removed ${allArticles.length - freshArticles.length} dupes)`);
+  } catch (err) {
+    console.error(`[NEWS] DB dedup failed (fallback): ${err.message}`);
+    freshArticles = allArticles;
+  }
 
   // Fulltext enrichment для статей с коротким описанием
-  const shortArticles = allArticles.filter(a => (a.description || '').length < 200 && a.link);
+  const shortArticles = freshArticles.filter(a => (a.description || '').length < 200 && a.link);
   if (shortArticles.length > 0) {
     console.log(`[NEWS] Fetching fulltext for ${shortArticles.length} short articles...`);
     const fulltextBatchSize = 5;
@@ -272,8 +280,12 @@ async function fetchAll() {
     console.log(`[NEWS] Fulltext: ${enriched}/${shortArticles.length} enriched`);
   }
 
-  console.log(`[NEWS] Total unique articles (24h): ${allArticles.length}`);
-  return allArticles;
+  console.log(`[NEWS] Total unique fresh articles: ${freshArticles.length}`);
+
+  // Прикрепляем cycleId для записи в БД после скоринга
+  freshArticles._cycleId = cycleId;
+
+  return freshArticles;
 }
 
 module.exports = { fetchAll, fetchRSS, fetchReddit, fetchNitter, fetchTelegram };

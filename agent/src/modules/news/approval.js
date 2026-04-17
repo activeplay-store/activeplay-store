@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const locks = require('../utils/locks');
+const { updateStatus } = require('./db');
 
 const PENDING_FILE = path.join(__dirname, '../../../data/pending-news.json');
 const QUEUE_FILE = path.join(__dirname, '../../../data/news-queue.json');
@@ -88,6 +89,10 @@ function setupApprovalHandlers(bot) {
   bot.action(/^news_reject_(.+)$/, async (ctx) => {
     const articleId = ctx.match[1];
     const pending = loadPending();
+    const article = pending.find(a => a.id === articleId);
+    if (article?._titleNormalized) {
+      try { updateStatus(article._titleNormalized, 'skipped'); } catch {}
+    }
     savePending(pending.filter(a => a.id !== articleId));
     await ctx.editMessageText('❌ Отклонено');
     await ctx.answerCbQuery('Отклонено');
@@ -98,6 +103,10 @@ function setupApprovalHandlers(bot) {
     const articleId = ctx.match[1];
     // Убрать текущую из pending
     const pending = loadPending();
+    const article = pending.find(a => a.id === articleId);
+    if (article?._titleNormalized) {
+      try { updateStatus(article._titleNormalized, 'skipped'); } catch {}
+    }
     savePending(pending.filter(a => a.id !== articleId));
 
     // Взять следующую из reserve-news.json
@@ -227,6 +236,11 @@ async function executePublish(bot, articleId) {
   // Запустить пайплайн v2
   const { runPipeline } = require('./pipeline');
   await runPipeline(article, targets, bot);
+
+  // Пометить как published в БД
+  if (article._titleNormalized) {
+    try { updateStatus(article._titleNormalized, 'published'); } catch {}
+  }
 
   // Убрать из pending (если статья была оттуда)
   if (source === 'pending') {
