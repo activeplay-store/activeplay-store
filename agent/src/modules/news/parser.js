@@ -71,7 +71,8 @@ async function fetchFulltext(url) {
   try {
     const { data } = await axios.get(url, {
       headers: { 'User-Agent': UA },
-      timeout: 8000,
+      timeout: 15000,
+      signal: AbortSignal.timeout(15000),
       maxRedirects: 3,
     });
     const $ = cheerio.load(data);
@@ -85,7 +86,8 @@ async function fetchFulltext(url) {
     }
     const body = $('body').text().trim().replace(/\s+/g, ' ');
     return body.length > 200 ? body.substring(0, 1500) : '';
-  } catch {
+  } catch (err) {
+    console.warn(`[FETCH] Timeout/error for ${url}: ${err.message}`);
     return '';
   }
 }
