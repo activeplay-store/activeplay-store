@@ -27,6 +27,11 @@ module.exports = [
   { id: 'psblog', name: 'PlayStation Blog', url: 'https://blog.playstation.com/feed/', type: 'rss', weight: 10, category: 'official' },
   { id: 'xboxwire', name: 'Xbox Wire', url: 'https://news.xbox.com/en-us/feed/', type: 'rss', weight: 8, category: 'official' },
 
+  // === ПАБЛИШЕРЫ ===
+  // Ubisoft news.ubisoft.com — SPA без RSS, проксируем через Google News.
+  // Cloudflare сайт не блокирует, поэтому fetchFulltext() сможет дотянуться до тел статей.
+  { id: 'ubisoft', name: 'Ubisoft (via Google News)', url: 'https://news.google.com/rss/search?q=site:news.ubisoft.com&hl=en-US&gl=US&ceid=US:en', type: 'rss', weight: 7, category: 'publisher' },
+
   // === REDDIT ===
   { id: 'reddit-leaks', name: 'r/GamingLeaksAndRumours', url: 'https://www.reddit.com/r/GamingLeaksAndRumours/hot.json', type: 'reddit', weight: 9, category: 'community' },
   { id: 'reddit-games', name: 'r/Games', url: 'https://www.reddit.com/r/Games/hot.json', type: 'reddit', weight: 9, category: 'community' },
