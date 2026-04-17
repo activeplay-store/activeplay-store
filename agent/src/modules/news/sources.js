@@ -2,14 +2,12 @@ module.exports = [
   // === ИГРОВЫЕ МЕДИАПОРТАЛЫ (RSS) ===
   { id: 'ign', name: 'IGN', url: 'https://feeds.feedburner.com/ign/all', type: 'rss', weight: 10, category: 'media' },
   { id: 'gamespot', name: 'GameSpot', url: 'https://www.gamespot.com/feeds/mashup/', type: 'rss', weight: 9, category: 'media' },
-  { id: 'kotaku', name: 'Kotaku', url: 'https://kotaku.com/rss', type: 'rss', weight: 9, category: 'media', proxy: true },
   { id: 'polygon', name: 'Polygon', url: 'https://www.polygon.com/rss/index.xml', type: 'rss', weight: 9, category: 'media', proxy: true },
   { id: 'eurogamer', name: 'Eurogamer', url: 'https://www.eurogamer.net/feed', type: 'rss', weight: 9, category: 'media' },
   { id: 'pcgamer', name: 'PC Gamer', url: 'https://www.pcgamer.com/rss/', type: 'rss', weight: 8, category: 'media' },
   { id: 'gamesradar', name: 'GamesRadar+', url: 'https://www.gamesradar.com/rss/', type: 'rss', weight: 8, category: 'media' },
   { id: 'theverge', name: 'The Verge', url: 'https://www.theverge.com/rss/index.xml', type: 'rss', weight: 8, category: 'media' },
   { id: 'vgc', name: 'VGC', url: 'https://www.videogameschronicle.com/feed', type: 'rss', weight: 9, category: 'media', proxy: true },
-  { id: 'insidergaming', name: 'Insider Gaming', url: 'https://insidergaming.com/feed', type: 'rss', weight: 10, category: 'media' },
   { id: 'destructoid', name: 'Destructoid', url: 'https://www.destructoid.com/feed/', type: 'rss', weight: 7, category: 'media' },
   { id: 'thegamer', name: 'TheGamer', url: 'https://www.thegamer.com/feed/', type: 'rss', weight: 7, category: 'media', proxy: true },
   { id: 'gamerant', name: 'Game Rant', url: 'https://gamerant.com/feed/', type: 'rss', weight: 7, category: 'media', proxy: true },
@@ -28,10 +26,6 @@ module.exports = [
   { id: 'psblog', name: 'PlayStation Blog', url: 'https://blog.playstation.com/feed/', type: 'rss', weight: 10, category: 'official' },
   { id: 'xboxwire', name: 'Xbox Wire', url: 'https://news.xbox.com/en-us/feed/', type: 'rss', weight: 8, category: 'official' },
 
-  // === ПАБЛИШЕРЫ ===
-  { id: 'ubisoft', name: 'Ubisoft News', url: 'https://news.ubisoft.com/feed', type: 'rss', weight: 7, category: 'publisher' },
-  { id: 'bethesda', name: 'Bethesda', url: 'https://bethesda.net/en/news/feed', type: 'rss', weight: 8, category: 'publisher' },
-
   // === REDDIT ===
   { id: 'reddit-leaks', name: 'r/GamingLeaksAndRumours', url: 'https://www.reddit.com/r/GamingLeaksAndRumours/hot.json', type: 'reddit', weight: 9, category: 'community' },
   { id: 'reddit-games', name: 'r/Games', url: 'https://www.reddit.com/r/Games/hot.json', type: 'reddit', weight: 9, category: 'community' },
@@ -40,8 +34,7 @@ module.exports = [
   { id: 'reddit-ps5deals', name: 'r/PS5Deals', url: 'https://www.reddit.com/r/PS5Deals/hot.json', type: 'reddit', weight: 8, category: 'deals' },
   { id: 'reddit-gamedeals', name: 'r/GameDeals', url: 'https://www.reddit.com/r/GameDeals/hot.json', type: 'reddit', weight: 7, category: 'deals' },
 
-  // === YOUTUBE / ПОДКАСТЫ ===
-  { id: 'yt-gamexplain', name: 'GameXplain', url: 'https://www.youtube.com/feeds/videos.xml?channel_id=UCfAPTv1LgeEWevG8X_6PUOQ', type: 'rss', weight: 6, category: 'media' },
+  // === ПОДКАСТЫ ===
   { id: 'podcast-natethehate', name: 'NateTheHate Podcast', url: 'https://feeds.buzzsprout.com/929602.rss', type: 'rss', weight: 8, category: 'insider' },
 
   // === ИНСАЙДЕРЫ ===
