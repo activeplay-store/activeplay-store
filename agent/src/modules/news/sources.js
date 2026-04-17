@@ -8,6 +8,7 @@ module.exports = [
   { id: 'gamesradar', name: 'GamesRadar+', url: 'https://www.gamesradar.com/rss/', type: 'rss', weight: 8, category: 'media' },
   { id: 'theverge', name: 'The Verge', url: 'https://www.theverge.com/rss/index.xml', type: 'rss', weight: 8, category: 'media' },
   { id: 'vgc', name: 'VGC', url: 'https://www.videogameschronicle.com/feed', type: 'rss', weight: 9, category: 'media', proxy: true },
+  { id: 'insider-gaming', name: 'Insider Gaming', url: 'https://insider-gaming.com/feed/', type: 'rss', weight: 10, category: 'media' },
   { id: 'destructoid', name: 'Destructoid', url: 'https://www.destructoid.com/feed/', type: 'rss', weight: 7, category: 'media' },
   { id: 'thegamer', name: 'TheGamer', url: 'https://www.thegamer.com/feed/', type: 'rss', weight: 7, category: 'media', proxy: true },
   { id: 'gamerant', name: 'Game Rant', url: 'https://gamerant.com/feed/', type: 'rss', weight: 7, category: 'media', proxy: true },
