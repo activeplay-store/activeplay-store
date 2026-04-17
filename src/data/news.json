@@ -1,5 +1,39 @@
 [
   {
+    "id": "replaced-ot-sad-cat-studios-uspeshnyy-debyut-kiberpank-platformera",
+    "slug": "replaced-ot-sad-cat-studios-uspeshnyy-debyut-kiberpank-platformera",
+    "title": "Replaced от Sad Cat Studios: успешный дебют киберпанк платформера",
+    "content": "Белорусская студия Sad Cat Studios выпустила свою новую игру Replaced, и она уже успела произвести фурор среди игроков. Релиз состоялся 14 апреля 2026 года, и с тех пор игра получила множество положительных отзывов. Команда разработчиков сообщила об этом в своём официальном Discord, где также поблагодарила игроков за поддержку и активное участие в жизни проекта.\n\nReplaced — киберпанк платформер в формате 2.5D, который отправляет игроков в альтернативную версию 80-х годов США, пережившую ядерную катастрофу. Главным героем выступает искусственный интеллект по имени Reach, оказавшийся в теле человека. Игра доступна на платформах PC, Xbox Series X/S и Xbox One. Выход был запланирован ещё в 2021 году, но из-за ряда переносов он состоялся только сейчас. Несмотря на успешный старт, разработчики признали необходимость дальнейших доработок и пообещали исправить все недочеты в ближайших обновлениях.\n\nReplaced выделяется на фоне других игр своей уникальной стилистикой и атмосферой, которая сочетает в себе элементы киберпанка и ретро-футуризма. Это первая крупная работа Sad Cat Studios, и она уже привлекла внимание критиков и игроков. Хотя точная оценка на Metacritic пока отсутствует, отзывы пользователей и критиков в целом положительные. Многие отмечают, что игра напоминает такие проекты, как Inside и Limbo, но с более сложной и насыщенной графикой.\n\nДля тех, кто хочет ознакомиться с новинками игровой индустрии, ActivePlay предлагает выгодные условия подписки. Воспользуйтесь возможностью оформить подписку на игровые сервисы от 1 250 ₽ в месяц и получите доступ к самым свежим и популярным играм. Подписка позволяет быстро и удобно опробовать широкий ассортимент игр на разных платформах.",
+    "metaDescription": "Replaced от Sad Cat Studios дебютировал с успехом. Киберпанк платформер в 2.5D о 80-х США на PC и Xbox. Подробности на сайте.",
+    "coverUrl": "/images/news/news-1776443953126-ymn5.jpg",
+    "tags": [
+      "Replaced",
+      "Sad Cat Studios",
+      "киберпанк",
+      "платформер",
+      "игровые новинки"
+    ],
+    "category": "news",
+    "source": "Eurogamer",
+    "sourceUrl": "https://www.eurogamer.net/despite-a-few-rough-edges-replaced-developer-sad-cat-studios-is-celebrating-the-sci-fi-platformers-strong-debut-success",
+    "publishedAt": "2026-04-17T16:46:10.193Z",
+    "gameId": null,
+    "relatedProduct": null,
+    "platform": "xbox",
+    "ctaType": "general",
+    "ctaText": "Подписки от 1 250 ₽/мес",
+    "ctaLink": "/subscriptions",
+    "cta": {
+      "name": "INSIDE",
+      "title": "Купить INSIDE",
+      "description": "Активация за 5 минут. Турецкий PS Store.",
+      "price": 650,
+      "oldPrice": 3050,
+      "buttonText": "Купить за 650 ₽ →"
+    },
+    "cta2": null
+  },
+  {
     "id": "pickmos-udalen-iz-steam-iz-za-obvineniy-v-plagiate",
     "slug": "pickmos-udalen-iz-steam-iz-za-obvineniy-v-plagiate",
     "title": "Pickmos удалён из Steam из-за обвинений в плагиате",
@@ -1601,35 +1635,6 @@
     "gameId": null,
     "relatedProduct": null,
     "cta": null,
-    "cta2": null
-  },
-  {
-    "id": "life-is-strange-reunion-pervye-ocenki-kritikov-vpechatlyayut",
-    "slug": "life-is-strange-reunion-pervye-ocenki-kritikov-vpechatlyayut",
-    "title": "Life is Strange: Reunion — первые оценки критиков впечатляют",
-    "content": "Life is Strange: Reunion получила первые оценки от критиков. Пока всё очень хорошо: на Metacritic у игры 85 баллов. OpenCritic даёт 83 балла и 100% рекомендаций. \n\nРелиз Reunion состоится 26 марта на PC, PS5 и Xbox Series X|S. Это новая часть интерактивной адвенчуры от Dontnod Entertainment. Игроков ждёт трогательная история, запоминающиеся персонажи и сложные моральные выборы.\n\nПо первым обзорам, Reunion может стать одной из лучших игр в серии. Ждём релиза и надеемся, что игра оправдает ожидания.",
-    "metaDescription": "Life is Strange: Reunion получила первые оценки. Критики в восторге от новой части интерактивной адвенчуры.",
-    "coverUrl": "/images/news/news-1774803675148-oxpw.jpg",
-    "tags": [
-      "Life is Strange",
-      "Reunion",
-      "обзор",
-      "оценки"
-    ],
-    "category": "review",
-    "source": "r/Games",
-    "sourceUrl": "https://www.reddit.com/r/Games/comments/1s6th46/life_is_strange_reunion_review_thread/",
-    "publishedAt": "2026-03-29T17:04:49.490Z",
-    "gameId": null,
-    "relatedProduct": null,
-    "cta": {
-      "gameId": "life-is-strange-reunion",
-      "title": "Купить Life is Strange: Reunion",
-      "description": "Активация за 5 минут. Турецкий PS Store.",
-      "price": 5400,
-      "url": "/sale",
-      "buttonText": "Купить за 5400 ₽ →"
-    },
     "cta2": null
   }
 ]
