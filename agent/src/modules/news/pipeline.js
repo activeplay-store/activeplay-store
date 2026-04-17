@@ -4,7 +4,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { translateAndRewrite, generateFullArticle, checkHeadline, cleanHeadline } = require('./translator');
+const { translateAndRewrite, generateFullArticle, checkHeadline, cleanHeadline, countParagraphs } = require('./translator');
 const { enrichArticle, findGameOnSite } = require('./enrichment');
 const { getNewsImage } = require('./imageGen');
 const { writeToSite, deployToSite, publishToTelegram, publishToVK, buildCtaData, buildProductCta, slugify } = require('./publisher');
@@ -95,7 +95,9 @@ async function runPipeline(article, targets, bot) {
     } else {
       console.log('[PIPELINE] Step 3: Generating full article...');
       // Add game-on-site context so LLM writes about buying the game, not subscription
-      let finalContext = enrichedContext || '';
+      let finalContext = enrichedContext
+        ? `ДОПОЛНИТЕЛЬНЫЙ КОНТЕКСТ (может содержать неточности) — приоритет у исходника статьи:\n${enrichedContext}`
+        : '';
       if (siteGame) {
         finalContext += `\nИГРА НА САЙТЕ ACTIVEPLAY: ${siteGame.name}, цена от ${siteGame.minPrice} руб. В 4-м абзаце пиши про покупку/предзаказ этой игры в ActivePlay, а НЕ про подписку PS Plus или Game Pass. Укажи цену.`;
         console.log(`[PIPELINE] Game on site: ${siteGame.name} (${siteGame.minPrice} RUB) \u2014 LLM will write game-specific funnel`);
@@ -224,8 +226,14 @@ async function runPipeline(article, targets, bot) {
         if (article.vk) article.vk.title = factResult.correctedTitle;
       }
       if (factResult.correctedText) {
-        console.log(`[PIPELINE] Text corrected: ${factResult.errors.length} fixes applied`);
-        article.site.text = factResult.correctedText;
+        const pars = countParagraphs(factResult.correctedText);
+        const len = factResult.correctedText.length;
+        if (pars >= 4 && len >= 1000) {
+          console.log(`[PIPELINE] Text corrected: ${factResult.errors.length} fixes applied`);
+          article.site.text = factResult.correctedText;
+        } else {
+          console.warn(`[FACTCHECK] correctedText rejected: paragraphs=${pars}, len=${len} — keeping Step 3 version`);
+        }
       }
       article.factCheckNotes = factResult.errors;
     }
