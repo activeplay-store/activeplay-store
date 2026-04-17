@@ -7,7 +7,7 @@ const path = require('path');
 const { translateAndRewrite, generateFullArticle, checkHeadline, cleanHeadline, countParagraphs } = require('./translator');
 const { enrichArticle, findGameOnSite } = require('./enrichment');
 const { getNewsImage } = require('./imageGen');
-const { writeToSite, deployToSite, publishToTelegram, publishToVK, buildCtaData, buildProductCta, slugify } = require('./publisher');
+const { writeToSite, deployToSite, publishToTelegram, publishToVK, buildCtaData, buildProductCta, findGamePrice, slugify } = require('./publisher');
 const { factCheckArticle } = require('./factCheck');
 const { chatCompletion } = require('../utils/aiClient');
 
@@ -285,6 +285,17 @@ async function runPipeline(article, targets, bot, opts = {}) {
           salePriceRUB: gameData.salePrice,
           hasSale: gameData.hasSale,
         });
+      }
+    }
+
+    // Fallback: искать игру по title+body через улучшенную findGamePrice.
+    // Даёт article.cta.name ДО Step 6.5 → LLM-регенерация 4-го абзаца сработает
+    // для случаев, когда enrichment и LLM не выставили siteGame/gameSlug.
+    if (!article.cta) {
+      const gp = findGamePrice(article.site?.title || '', article.site?.text || '');
+      if (gp) {
+        article.cta = buildCtaData(gp);
+        console.log(`[PIPELINE] Step 6: CTA fallback matched game: ${gp.name}`);
       }
     }
 

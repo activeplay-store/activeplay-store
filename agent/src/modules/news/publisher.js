@@ -161,51 +161,89 @@ function stripCategoryPrefix(title) {
 const GAMES_FILE = path.join(__dirname, '../../../data/games.json');
 const DLC_RE = /\b(dlc|дополнение|expansion|season pass|сезонный абонемент)\b/i;
 
+// Маркеры сравнения — если имя игры рядом с ними в body, это НЕ основная игра новости
+const COMPARISON_MARKERS = [
+  'как', 'похож', 'напоминает', 'в духе', 'подобн',
+  'наподобие', 'в стиле', 'аналог', 'сравни', 'типа',
+  'вроде', 'словно',
+];
+
+// Есть ли маркер сравнения в окне ±40 символов от имени
+function isComparison(text, name) {
+  const idx = text.indexOf(name);
+  if (idx === -1) return false;
+  const windowStart = Math.max(0, idx - 40);
+  const windowEnd = Math.min(text.length, idx + name.length + 40);
+  const window = text.slice(windowStart, windowEnd);
+  return COMPARISON_MARKERS.some(m => window.includes(m));
+}
+
+function buildPrice(game) {
+  const tr = game.prices?.TR?.editions?.[0];
+  if (!tr || !tr.clientPrice) return null;
+  return {
+    name: game.name,
+    priceTRY: tr.basePrice || tr.salePrice,
+    priceRUB: tr.clientPrice,
+    salePriceRUB: tr.clientSalePrice || null,
+    hasSale: !!tr.salePrice && tr.salePrice < tr.basePrice,
+  };
+}
+
 function findGamePrice(title, content) {
   try {
     const data = JSON.parse(fs.readFileSync(GAMES_FILE, 'utf-8'));
     const games = data.games || [];
-    const text = (title + ' ' + content).toLowerCase();
-    const isDlc = DLC_RE.test(text);
+    const titleLower = (title || '').toLowerCase();
+    const contentLower = (content || '').toLowerCase();
+    const isDlc = DLC_RE.test(titleLower + ' ' + contentLower);
 
+    // ПРИОРИТЕТ 1: матч в заголовке (exact name или shortName ≥6 символов)
     for (const game of games) {
-      const name = game.name?.toLowerCase();
+      const name = (game.name || '').toLowerCase();
       if (!name) continue;
-      // Точное вхождение названия или первых 3 слов
       const shortName = name.split(' ').slice(0, 3).join(' ');
-      if (text.includes(name) || text.includes(shortName)) {
-        const tr = game.prices?.TR?.editions?.[0];
-        if (tr && tr.clientPrice) {
-          return {
-            name: game.name,
-            priceTRY: tr.basePrice || tr.salePrice,
-            priceRUB: tr.clientPrice,
-            salePriceRUB: tr.clientSalePrice || null,
-            hasSale: !!tr.salePrice && tr.salePrice < tr.basePrice,
-          };
-        }
+      if (titleLower.includes(name)) {
+        const p = buildPrice(game);
+        if (p) return p;
+      }
+      if (shortName.length >= 6 && titleLower.includes(shortName)) {
+        const p = buildPrice(game);
+        if (p) return p;
       }
     }
 
-    // Для DLC — попробовать найти базовую игру (без суффикса DLC)
+    // ПРИОРИТЕТ 2: матч в body — полное name, не в сравнительной конструкции.
+    // shortName в body берём только если ≥6 символов (иначе Inside/Limbo/Hades ложатся на шум).
+    for (const game of games) {
+      const name = (game.name || '').toLowerCase();
+      if (!name) continue;
+      const shortName = name.split(' ').slice(0, 3).join(' ');
+      if (contentLower.includes(name) && !isComparison(contentLower, name)) {
+        const p = buildPrice(game);
+        if (p) return p;
+      }
+      if (
+        shortName.length >= 6 &&
+        contentLower.includes(shortName) &&
+        !isComparison(contentLower, shortName)
+      ) {
+        const p = buildPrice(game);
+        if (p) return p;
+      }
+    }
+
+    // Для DLC — попробовать найти базовую игру (без суффикса DLC) в title+body.
     if (isDlc) {
-      const cleaned = text
+      const cleaned = (titleLower + ' ' + contentLower)
         .replace(/dlc|дополнение|expansion|season pass|сезонный абонемент/gi, '')
         .replace(/\s+/g, ' ').trim();
       for (const game of games) {
-        const name = game.name?.toLowerCase();
+        const name = (game.name || '').toLowerCase();
         if (!name) continue;
         if (cleaned.includes(name)) {
-          const tr = game.prices?.TR?.editions?.[0];
-          if (tr && tr.clientPrice) {
-            return {
-              name: game.name,
-              priceTRY: tr.basePrice || tr.salePrice,
-              priceRUB: tr.clientPrice,
-              salePriceRUB: tr.clientSalePrice || null,
-              hasSale: !!tr.salePrice && tr.salePrice < tr.basePrice,
-            };
-          }
+          const p = buildPrice(game);
+          if (p) return p;
         }
       }
     }
