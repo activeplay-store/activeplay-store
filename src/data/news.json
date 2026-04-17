@@ -1,5 +1,39 @@
 [
   {
+    "id": "pickmos-udalen-iz-steam-iz-za-obvineniy-v-plagiate",
+    "slug": "pickmos-udalen-iz-steam-iz-za-obvineniy-v-plagiate",
+    "title": "Pickmos удалён из Steam из-за обвинений в плагиате",
+    "content": "Игра Pickmos, разработанная PocketGame и изэтот Networkgo, была временно удалена из Steam. Это произошло после обвинений в плагиате, касающихся механик и дизайна, схожих с Pokemon и Palworld. Издатель Networkgo заявил, что будет более активно участвовать в разработке, чтобы улучшить проект. Обновлённая версия игры должна стать более оригинальной и качественной.\n\nPickmos ранее была известна под названием Pickmon, однако разработчики решили изменить название, чтобы подчеркнуть уникальность проекта. Игра принадлежит к жанру, который сочетает элементы стратегии, казуальных игр и приключений. На этот момент игра доступна только на платформах PC и macOS, но точная дата её возвращения в магазин Steam пока не объявлена. Разработчики планируют переработать игру, учтя отзывы и пожелания игроков, чтобы избежать дальнейших обвинений.\n\nВажность этой ситуации заключается в том, что обвинения в плагиате могут серьёзно повлиять на репутацию разработчиков и издателей. В прошлом компаниям приходилось полностью пересматривать свои проекты, чтобы восстановить доверие игроков. Ранее PocketGame и Networkgo не участвовали в громких проектах, поэтому для них крайне важно доказать свою оригинальность. Сообщество игроков и критики ожидают, что обновлённая версия Pickmos предложит что-то новое и уникальное.\n\nЕсли вы ищете новые игры или подписки, то на сайте ActivePlay можно оформить подписку на сервисы, такие как PS Plus или Xbox Game Pass. Это позволит вам всегда быть в курсе последних новинок и получать доступ к множеству игр по выгодной цене. Подписки доступны от 1 250 ₽ в месяц, активация занимает всего 10 минут.",
+    "metaDescription": "Игра Pickmos временно удалена из Steam из-за обвинений в плагиате. PocketGame и Networkgo планируют переработать проект.",
+    "coverUrl": "/images/news/news-1776441773624-e5vo.jpg",
+    "tags": [
+      "Steam",
+      "PC",
+      "PocketGame",
+      "Networkgo",
+      "Pickmos"
+    ],
+    "category": "news",
+    "source": "GameSpot",
+    "sourceUrl": "https://www.gamespot.com/articles/pokemon-palworld-clone-pickmos-pulled-from-steam-as-publisher-promise-controversy-free-rework/1100-6539468/?ftag=CAD-01-10abi2f",
+    "publishedAt": "2026-04-17T16:09:06.540Z",
+    "gameId": null,
+    "relatedProduct": null,
+    "platform": "multi",
+    "ctaType": "general",
+    "ctaText": "Подписки от 1 250 ₽/мес",
+    "ctaLink": "/subscriptions",
+    "cta": {
+      "title": "Купить Palworld",
+      "description": "Активация за 5 минут. Турецкий PS Store.",
+      "price": 2650,
+      "oldPrice": 3150,
+      "url": "/sale",
+      "buttonText": "Купить за 2650 ₽ →"
+    },
+    "cta2": null
+  },
+  {
     "id": "final-fantasy-xiv-treyler-obnovleniya-7-5-i-data-vyhoda",
     "slug": "final-fantasy-xiv-treyler-obnovleniya-7-5-i-data-vyhoda",
     "title": "Final Fantasy XIV: трейлер обновления 7.5 и дата выхода",
@@ -1595,36 +1629,6 @@
       "price": 5400,
       "url": "/sale",
       "buttonText": "Купить за 5400 ₽ →"
-    },
-    "cta2": null
-  },
-  {
-    "id": "news-arc-raiders-flashpoint-2026",
-    "slug": "arc-raiders-flashpoint-update",
-    "title": "ARC Raiders выпускает крупное обновление Flashpoint",
-    "content": "<p>Кооперативный шутер ARC Raiders от Embark Studios готовится к крупному апдейту. Обновление Flashpoint выходит 31 марта и обещает серьёзно встряхнуть игру: новые квесты, враги, проекты, улучшения геймплея и качество жизни. По слухам, появится новый ARC-противник Bishop и локация Toxic Swamp. Плюс свежая косметика в магазине и проекты с эксклюзивными наградами.</p>\n<p>ARC Raiders — это PvE-шутер на 21 игрока, где команды выживают на Земле против агрессивных роботов ARC. Игра вышла в раннем доступе и за короткое время собрала 55 тысяч оценок в <a href=\"/sale\" class=\"text-[#00D4FF] hover:underline\">PS Store</a> со средним баллом 4.22 — цифра для мультиплеерного шутера отличная. Визуал на уровне, PS5 Pro Enhanced, и Embark активно обновляют контент.</p>\n<p>Обновление Flashpoint бесплатное для всех владельцев игры. А сама ARC Raiders сейчас идёт со скидкой 20% в PS Store Турция и Украина — через ActivePlay это примерно 3 050₽ вместо обычных 3 750₽. Акция до 9 апреля. Хороший момент зайти перед крупным апдейтом.</p>",
-    "metaDescription": "ARC Raiders получает крупное обновление Flashpoint 31 марта — новые квесты, враги и локации. Игра со скидкой 20% в PS Store.",
-    "coverUrl": "/images/covers/arc-raiders.jpg",
-    "tags": [
-      "ARC Raiders",
-      "Flashpoint",
-      "обновление",
-      "кооператив",
-      "PS5",
-      "скидки PS Store"
-    ],
-    "category": "news",
-    "source": "ActivePlay",
-    "sourceUrl": "",
-    "publishedAt": "2026-03-29T12:00:00.000Z",
-    "author": "ActivePlay",
-    "gameId": "arc-raiders",
-    "relatedProduct": null,
-    "cta": {
-      "gameId": "arc-raiders",
-      "title": "Купить ARC Raiders",
-      "url": "/sale",
-      "buttonText": "Скидка 20%. Турция и Украина. Активация за 5 минут."
     },
     "cta2": null
   }
