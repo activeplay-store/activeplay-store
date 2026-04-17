@@ -12,7 +12,7 @@ module.exports = [
   { id: 'insidergaming', name: 'Insider Gaming', url: 'https://insidergaming.com/feed', type: 'rss', weight: 10, category: 'media' },
   { id: 'destructoid', name: 'Destructoid', url: 'https://www.destructoid.com/feed/', type: 'rss', weight: 7, category: 'media' },
   { id: 'thegamer', name: 'TheGamer', url: 'https://www.thegamer.com/feed/', type: 'rss', weight: 7, category: 'media', proxy: true },
-  { id: 'gamerant', name: 'Game Rant', url: 'https://gamerant.com/feed/', type: 'rss', weight: 7, category: 'media' },
+  { id: 'gamerant', name: 'Game Rant', url: 'https://gamerant.com/feed/', type: 'rss', weight: 7, category: 'media', proxy: true },
   { id: 'vg247', name: 'VG247', url: 'https://www.vg247.com/feed', type: 'rss', weight: 7, category: 'media' },
   { id: 'rps', name: 'Rock Paper Shotgun', url: 'https://www.rockpapershotgun.com/feed', type: 'rss', weight: 7, category: 'media' },
   { id: 'gematsu', name: 'Gematsu', url: 'https://www.gematsu.com/feed', type: 'rss', weight: 8, category: 'media', proxy: true },
@@ -46,7 +46,7 @@ module.exports = [
 
   // === ИНСАЙДЕРЫ ===
   // Nitter: единственный живой публичный mirror (nitter.net). Если упадёт — поднять свой инстанс или искать рабочий mirror.
-  { id: 'kepler-l2', name: 'Kepler_L2 (chip leaks)', url: 'https://nitter.net/Kepler_L2/rss', type: 'rss', weight: 9, category: 'insider' },
+  { id: 'kepler-l2', name: 'Kepler_L2 (chip leaks)', url: 'https://nitter.net/Kepler_L2/rss', type: 'rss', weight: 9, category: 'insider', proxy: true },
 
   // === TELEGRAM (публичное web-превью) ===
   { id: 'tg-psprices', name: 'PSPrices RU', url: 'https://t.me/s/psprices_ru_ps4', type: 'telegram', weight: 8, category: 'deals' },
