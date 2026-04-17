@@ -309,7 +309,7 @@ async function getRAWGBySlug(slug) {
   }
 }
 
-async function searchRAWG(gameName) {
+async function searchRAWG(gameName, skipCache = false) {
   if (!gameName) return null;
   const clean = cleanGameName(gameName);
 
@@ -349,7 +349,7 @@ async function searchRAWG(gameName) {
       return null;
     }
 
-    if (!isImageRecentlyUsed(game.background_image)) {
+    if (skipCache || !isImageRecentlyUsed(game.background_image)) {
       console.log('[NEWS] RAWG found: "' + game.name + '" for query "' + clean + '"');
       return game.background_image;
     }
@@ -609,7 +609,7 @@ async function searchBingImages(query) {
 }
 
 // Основной поиск: Google → Bing → фильтрация
-async function searchWebImage(article, customQuery) {
+async function searchWebImage(article, customQuery, skipCache = false) {
   const query = customQuery || buildImageSearchQuery(article);
   console.log('[NEWS] Image search: "' + query + '"');
 
@@ -628,7 +628,7 @@ async function searchWebImage(article, customQuery) {
 
   // Фильтруем и валидируем
   for (const imgUrl of candidates) {
-    if (isImageRecentlyUsed(imgUrl)) continue;
+    if (!skipCache && isImageRecentlyUsed(imgUrl)) continue;
     const buf = await checkSourceImage(imgUrl);
     if (buf) {
       console.log('[NEWS] Web search found valid image: ' + imgUrl);
@@ -644,7 +644,7 @@ async function searchWebImage(article, customQuery) {
     console.log('[NEWS] Trying alt query: "' + altQuery + '"');
     const altResults = await searchBingImages(altQuery);
     for (const imgUrl of altResults) {
-      if (isImageRecentlyUsed(imgUrl)) continue;
+      if (!skipCache && isImageRecentlyUsed(imgUrl)) continue;
       const buf = await checkSourceImage(imgUrl);
       if (buf) {
         console.log('[NEWS] Alt search found: ' + imgUrl);
@@ -745,7 +745,7 @@ async function getNewsImage(article, opts = {}) {
     }
 
     // 3. Веб-поиск баннера
-    const webUrl = await searchWebImage(article);
+    const webUrl = await searchWebImage(article, undefined, skipCache);
     if (webUrl) {
       const webImg = await downloadAndResize(webUrl, filename);
       if (webImg) {
@@ -785,7 +785,7 @@ async function getNewsImage(article, opts = {}) {
 
     // 1b. Поиск по названию с валидацией релевантности
     if (!rawgUrl) {
-      rawgUrl = await searchRAWG(clean);
+      rawgUrl = await searchRAWG(clean, skipCache);
     }
 
     if (rawgUrl) {
@@ -797,11 +797,23 @@ async function getNewsImage(article, opts = {}) {
       }
     }
 
-    // 1c. Для игровых новостей — веб-поиск конкретной игры ДО og:image
-    // (og:image часто содержит логотип сайта-источника, а не картинку игры)
+    // 1c. og:image источника — приоритет перед Bing, т.к. при отсутствии RAWG
+    // Bing часто подсовывает нерелевантные «похожие» картинки (Pickmos → cyberpunk-арт).
+    // og:image от новостного сайта почти всегда релевантен.
+    const gameOgUrl = await fetchOgImage(article.sourceUrl || article.link);
+    if (gameOgUrl && !wasRecentlyUsed(gameOgUrl)) {
+      const gameOgImg = await downloadAndResize(gameOgUrl, filename);
+      if (gameOgImg) {
+        markImageUsed(gameOgUrl, article.id);
+        console.log('[NEWS] GAME: og:image from source for "' + clean + '"');
+        return gameOgImg;
+      }
+    }
+
+    // 1d. Веб-поиск конкретной игры (Bing). Только если og:image не сработал.
     const gameWebQuery = `${clean} game official key art wallpaper`;
     console.log('[NEWS] Game web search: "' + gameWebQuery + '"');
-    const gameWebUrl = await searchWebImage(article, gameWebQuery);
+    const gameWebUrl = await searchWebImage(article, gameWebQuery, skipCache);
     if (gameWebUrl) {
       const gameWebImg = await downloadAndResize(gameWebUrl, filename);
       if (gameWebImg) {
@@ -845,7 +857,7 @@ async function getNewsImage(article, opts = {}) {
     if (aiResult) return aiResult;
 
     // 2d. Веб-поиск (последний шанс перед заглушкой)
-    const webUrl = await searchWebImage(article);
+    const webUrl = await searchWebImage(article, undefined, skipCache);
     if (webUrl) {
       const webImg = await downloadAndResize(webUrl, filename);
       if (webImg) {
@@ -883,7 +895,7 @@ async function getNewsImage(article, opts = {}) {
   }
 
   // 4. Веб-поиск
-  const webUrl = await searchWebImage(article);
+  const webUrl = await searchWebImage(article, undefined, skipCache);
   if (webUrl) {
     const webImg = await downloadAndResize(webUrl, filename);
     if (webImg) {

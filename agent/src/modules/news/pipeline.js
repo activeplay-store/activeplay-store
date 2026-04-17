@@ -9,6 +9,7 @@ const { enrichArticle, findGameOnSite } = require('./enrichment');
 const { getNewsImage } = require('./imageGen');
 const { writeToSite, deployToSite, publishToTelegram, publishToVK, buildCtaData, buildProductCta, slugify } = require('./publisher');
 const { factCheckArticle } = require('./factCheck');
+const { chatCompletion } = require('../utils/aiClient');
 
 const STAGING_DIR = path.join(__dirname, '../../../data/news-staging');
 
@@ -314,6 +315,38 @@ async function runPipeline(article, targets, bot, opts = {}) {
     // Slug
     if (!article.slug) {
       article.slug = slugify(article.site.title);
+    }
+
+    // ═══ ШАГ 6.5: ПЕРЕГЕНЕРАЦИЯ 4-ГО АБЗАЦА С УЧЁТОМ НАЙДЕННОЙ ИГРЫ ═══
+    // Если в CTA появилась конкретная игра (из Step 6), 4-й абзац из Step 3
+    // ещё говорит про общую подписку — перепишем его под эту игру.
+    if (article.cta?.name && article.site?.text) {
+      try {
+        const ctaName = article.cta.name;
+        const ctaPrice = article.cta.price;
+        const systemPrompt = 'Ты редактор новости. Перепиши ПОСЛЕДНИЙ АБЗАЦ текста так, чтобы он естественно упоминал игру, найденную на сайте ActivePlay. Не писать про подписки. Упомянуть игру по названию, дать ощущение что её можно купить у нас. Без штампов "уникальный опыт" и т.п. 3-5 предложений. Верни только новый абзац, без пояснений.';
+        const userPrompt = `ТЕКУЩИЙ ТЕКСТ НОВОСТИ:\n${article.site.text}\n\nНАЙДЕНА ИГРА: ${ctaName}\nЦЕНА: ${ctaPrice} ₽`;
+        const newPara = await chatCompletion([
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: userPrompt },
+        ], { model: 'gpt-4o', temperature: 0.6, maxTokens: 600 });
+
+        if (newPara && newPara.trim()) {
+          const parts = article.site.text.split(/\n\n+/).filter(Boolean);
+          if (parts.length >= 4) {
+            parts[parts.length - 1] = newPara.trim();
+            const candidate = parts.join('\n\n');
+            if (countParagraphs(candidate) >= 4 && candidate.length >= 1000) {
+              article.site.text = candidate;
+              console.log(`[PIPELINE] 4th paragraph rewritten for "${ctaName}" (${ctaPrice} \u20BD)`);
+            } else {
+              console.warn(`[PIPELINE] 4th paragraph rewrite rejected: paragraphs=${countParagraphs(candidate)}, len=${candidate.length}`);
+            }
+          }
+        }
+      } catch (err) {
+        console.error(`[PIPELINE] 4th paragraph rewrite error: ${err.message}`);
+      }
     }
 
     // ═══ ШАГ 7: СБОРКА И ПУБЛИКАЦИЯ ═══

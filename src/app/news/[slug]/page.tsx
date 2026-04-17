@@ -8,6 +8,7 @@ import { dealsData } from '@/data/deals';
 const newsData = newsJson as unknown as NewsItem[];
 import { notFound } from 'next/navigation';
 import NewsArticleContent from './NewsArticleContent';
+import NewsCtaButton from './NewsCtaButton';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -177,9 +178,7 @@ export default async function NewsArticlePage({ params }: Props) {
                   {article.cta.oldPrice && <span className="text-gray-500 line-through text-lg">{typeof article.cta.oldPrice === 'number' ? `${article.cta.oldPrice.toLocaleString('ru-RU')} ₽` : article.cta.oldPrice}</span>}
                   {article.cta.discount && article.cta.discount > 0 && <span className="bg-red-500/20 text-red-400 px-2 py-1 rounded text-sm font-bold">-{article.cta.discount}%</span>}
                 </div>
-                <a href={article.cta.url} className="inline-block bg-cyan-500 hover:bg-cyan-400 text-black font-bold rounded-lg px-6 py-3 mt-4 transition-colors">
-                  {article.cta.buttonText || `${article.cta.title} →`}
-                </a>
+                <NewsCtaButton cta={article.cta} />
               </div>
             )}
 

@@ -220,11 +220,11 @@ function buildCtaData(gamePrice) {
   const price = gamePrice.hasSale ? gamePrice.salePriceRUB : gamePrice.priceRUB;
   return {
     gameId: gamePrice.gameId || undefined,
+    name: gamePrice.name,
     title: `Купить ${gamePrice.name}`,
     description: 'Активация за 5 минут. Турецкий PS Store.',
     price: price,
     oldPrice: gamePrice.hasSale ? gamePrice.priceRUB : undefined,
-    url: '/sale',
     buttonText: `Купить за ${price} ₽ →`,
   };
 }

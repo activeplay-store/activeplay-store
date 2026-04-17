@@ -2,11 +2,12 @@ export type NewsCategory = 'news' | 'hype' | 'insider' | 'rumor' | 'video' | 'gu
 
 export interface NewsCta {
   title: string;
+  name?: string;
   description?: string;
   price?: number | string;
   oldPrice?: number | string;
   discount?: number;
-  url: string;
+  url?: string;
   buttonText: string;
   gameId?: string;
 }
