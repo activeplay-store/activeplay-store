@@ -4,6 +4,7 @@ const ALL_GUIDES = [
   { slug: 'kak-kupit-ps-plus-iz-rossii', title: 'Как купить PS Plus из России', category: 'PlayStation' },
   { slug: 'ps-plus-essential-extra-deluxe-otlichiya', title: 'PS Plus Essential, Extra и Deluxe — отличия', category: 'PlayStation' },
   { slug: 'xbox-game-pass-kak-kupit-iz-rossii', title: 'Xbox Game Pass — тарифы и покупка', category: 'Xbox' },
+  { slug: 'kak-sozdat-akkaunt-xbox-iz-rossii-2026', title: 'Как создать аккаунт Xbox из России в 2026', category: 'Xbox' },
   { slug: 'kak-kupit-fc-points-iz-rossii', title: 'Как купить FC Points из России', category: 'EA FC' },
   { slug: 'ea-play-podpiska-kak-kupit', title: 'EA Play — подписка Electronic Arts', category: 'EA' },
 ];

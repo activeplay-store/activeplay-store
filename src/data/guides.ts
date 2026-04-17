@@ -202,5 +202,18 @@ export const guidesData: GuideItem[] = [
     readTime: '12 мин',
     tags: ['GTA 6', 'Rockstar Games', 'дата выхода', 'предзаказ', 'купить из России', 'PS5', 'Xbox'],
     sections: [],
+  },
+  {
+    id: 'g7',
+    slug: 'kak-sozdat-akkaunt-xbox-iz-rossii-2026',
+    title: 'Как создать аккаунт Xbox из России в 2026: гайд с нуля',
+    excerpt: 'Пошаговая регистрация учётки Microsoft для Xbox в 2026, выбор региона (Турция, Аргентина, Казахстан, США) и защита аккаунта через 2FA и passkey.',
+    coverUrl: '/images/guides/kak-sozdat-akkaunt-xbox.webp',
+    category: 'xbox',
+    date: '2026-04-18',
+    author: 'ActivePlay',
+    readTime: '10 мин',
+    tags: ['Xbox', 'Microsoft account', 'регион', '2FA', 'passkey', 'Казахстан', 'Турция'],
+    sections: [],
   }
 ];
