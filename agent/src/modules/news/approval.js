@@ -2,9 +2,20 @@ const fs = require('fs');
 const path = require('path');
 const locks = require('../utils/locks');
 const { updateStatus } = require('./db');
+const { chatCompletion, generateImage } = require('../utils/aiClient');
 
 const PENDING_FILE = path.join(__dirname, '../../../data/pending-news.json');
 const QUEUE_FILE = path.join(__dirname, '../../../data/news-queue.json');
+
+// ═══ STATE: временное хранилище для вариантов правки ═══
+// titleVariantsState: articleId → [v1, v2, v3] (3 варианта заголовка)
+const titleVariantsState = new Map();
+// editCmdState: chatId → articleId (ожидаем текстовую команду от этого chatId)
+const editCmdState = new Map();
+
+function getEditCmdState() {
+  return editCmdState;
+}
 
 function loadPending() {
   try { return JSON.parse(fs.readFileSync(PENDING_FILE, 'utf-8')); } catch { return []; }
@@ -121,6 +132,167 @@ function setupApprovalHandlers(bot) {
     await ctx.editMessageText('🔄 Заменена на другую');
   });
 
+  // ===== ПРАВКИ =====
+
+  // Заголовок: сгенерировать 3 варианта и показать на выбор
+  bot.action(/^news_edit_title_(.+)$/, async (ctx) => {
+    const articleId = ctx.match[1];
+    const pending = loadPending();
+    const article = pending.find(a => a.id === articleId);
+    if (!article) return ctx.answerCbQuery('Не найдена');
+
+    await ctx.answerCbQuery('Генерирую 3 варианта...');
+    try {
+      const variants = await generateTitleVariants(article);
+      if (!variants || variants.length < 3) {
+        return ctx.reply('❌ Не удалось сгенерировать варианты заголовка');
+      }
+      titleVariantsState.set(articleId, variants);
+
+      const buttons = variants.map((v, i) => ([{
+        text: `${i + 1}. ${(v || '').slice(0, 60)}`,
+        callback_data: `news_title_pick_${articleId}_${i}`,
+      }]));
+      buttons.push([{ text: '← Оставить текущий', callback_data: `news_back_${articleId}` }]);
+
+      await ctx.reply('✏️ Выберите вариант заголовка:', {
+        reply_markup: { inline_keyboard: buttons },
+      });
+    } catch (err) {
+      console.error('[NEWS] edit_title error:', err.message);
+      await ctx.reply(`❌ Ошибка: ${err.message.slice(0, 150)}`);
+    }
+  });
+
+  // Применить выбранный вариант заголовка
+  bot.action(/^news_title_pick_(.+)_(\d+)$/, async (ctx) => {
+    const articleId = ctx.match[1];
+    const idx = parseInt(ctx.match[2], 10);
+    const variants = titleVariantsState.get(articleId);
+    if (!variants || !variants[idx]) {
+      await ctx.answerCbQuery('Варианты устарели');
+      try { await ctx.deleteMessage(); } catch {}
+      return;
+    }
+
+    const pending = loadPending();
+    const article = pending.find(a => a.id === articleId);
+    if (!article) return ctx.answerCbQuery('Не найдена');
+
+    if (!article.site) article.site = {};
+    article.site.title = variants[idx];
+    if (article.telegram) article.telegram.title = variants[idx];
+    if (article.vk) article.vk.title = variants[idx];
+    savePending(pending);
+    titleVariantsState.delete(articleId);
+
+    await ctx.answerCbQuery('Заголовок обновлён');
+    try { await ctx.deleteMessage(); } catch {}
+    await sendPreview(bot, article);
+  });
+
+  // Отмена выбора заголовка — просто убрать меню вариантов
+  bot.action(/^news_back_(.+)$/, async (ctx) => {
+    const articleId = ctx.match[1];
+    titleVariantsState.delete(articleId);
+    try { await ctx.deleteMessage(); } catch {}
+    await ctx.answerCbQuery('Оставлен текущий');
+  });
+
+  // Картинка: перегенерировать (с лимитом 3)
+  bot.action(/^news_edit_image_(.+)$/, async (ctx) => {
+    const articleId = ctx.match[1];
+    const pending = loadPending();
+    const article = pending.find(a => a.id === articleId);
+    if (!article) return ctx.answerCbQuery('Не найдена');
+
+    article._imageRegenCount = (article._imageRegenCount || 0) + 1;
+    if (article._imageRegenCount > 3) {
+      return ctx.answerCbQuery('Лимит перегенераций исчерпан (3/3)');
+    }
+
+    await ctx.answerCbQuery(`Регенерирую картинку (${article._imageRegenCount}/3)...`);
+    try {
+      const { getNewsImage } = require('./imageGen');
+      let newUrl = await getNewsImage(article, { skipCache: true });
+      if (!newUrl) {
+        // Fallback DALL-E по заголовку
+        const prompt = `Gaming news illustration, 16:9, modern digital art, NO TEXT, topic: ${article.site?.title || article.title}`;
+        newUrl = await generateImage(prompt);
+      }
+      if (!newUrl) {
+        return ctx.reply('❌ Не удалось получить новую картинку');
+      }
+      article.imageUrl = newUrl;
+      savePending(pending);
+      await resendPreview(bot, ctx, article);
+    } catch (err) {
+      console.error('[NEWS] edit_image error:', err.message);
+      await ctx.reply(`❌ Ошибка картинки: ${err.message.slice(0, 150)}`);
+    }
+  });
+
+  // Переписать текст: прогнать Step 3 с повышенной temperature
+  bot.action(/^news_edit_text_(.+)$/, async (ctx) => {
+    const articleId = ctx.match[1];
+    const pending = loadPending();
+    const article = pending.find(a => a.id === articleId);
+    if (!article) return ctx.answerCbQuery('Не найдена');
+
+    await ctx.answerCbQuery('Переписываю текст (temp 0.85)...');
+    try {
+      const { generateFullArticle, countParagraphs } = require('./translator');
+      const { factCheckArticle } = require('./factCheck');
+      const result = await generateFullArticle(article, article.enrichedContext || '', { temperature: 0.85 });
+      if (!result?.site?.text) {
+        return ctx.reply('❌ Не удалось переписать текст');
+      }
+      const pars = countParagraphs(result.site.text);
+      if (pars < 4 || result.site.text.length < 1000) {
+        return ctx.reply(`❌ Новая версия не прошла guard (${pars} абзацев, ${result.site.text.length} знаков)`);
+      }
+
+      article.site.text = result.site.text;
+      if (result.site.title) article.site.title = result.site.title;
+      if (result.telegram?.text) article.telegram = result.telegram;
+      if (result.vk?.text) article.vk = result.vk;
+
+      // Прогнать через factCheck guard
+      const fc = await factCheckArticle(article);
+      if (fc?.hasErrors && fc.correctedText) {
+        const p2 = countParagraphs(fc.correctedText);
+        if (p2 >= 4 && fc.correctedText.length >= 1000) {
+          article.site.text = fc.correctedText;
+          if (fc.correctedTitle) article.site.title = fc.correctedTitle;
+          article.factCheckNotes = fc.errors;
+        }
+      }
+
+      savePending(pending);
+      await resendPreview(bot, ctx, article);
+    } catch (err) {
+      console.error('[NEWS] edit_text error:', err.message);
+      await ctx.reply(`❌ Ошибка: ${err.message.slice(0, 150)}`);
+    }
+  });
+
+  // Свободная команда: войти в режим ожидания текста
+  bot.action(/^news_edit_cmd_(.+)$/, async (ctx) => {
+    const articleId = ctx.match[1];
+    const chatId = ctx.chat.id;
+    const pending = loadPending();
+    if (!pending.find(a => a.id === articleId)) return ctx.answerCbQuery('Не найдена');
+
+    editCmdState.set(chatId, articleId);
+    await ctx.answerCbQuery('Жду команду');
+    await ctx.reply(
+      '💬 Напиши что поправить. Например:\n' +
+      '• «убери предложение про Sony»\n' +
+      '• «поменяй дату на 22 апреля»\n' +
+      '• «сделай заголовок короче»'
+    );
+  });
+
   // ===== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ =====
 
   async function handlePublish(ctx, articleId, targets) {
@@ -190,6 +362,14 @@ async function sendPreview(bot, article) {
     reply_markup: {
       inline_keyboard: [
         [
+          { text: '✏️ Заголовок', callback_data: `news_edit_title_${article.id}` },
+          { text: '🖼 Картинка', callback_data: `news_edit_image_${article.id}` },
+        ],
+        [
+          { text: '📝 Переписать текст', callback_data: `news_edit_text_${article.id}` },
+          { text: '💬 Команда', callback_data: `news_edit_cmd_${article.id}` },
+        ],
+        [
           { text: '🌐 Сайт', callback_data: `news_site_${article.id}` },
           { text: '📱 TG', callback_data: `news_tg_${article.id}` },
         ],
@@ -209,8 +389,17 @@ async function sendPreview(bot, article) {
   });
 }
 
-// Выполнить публикацию через пайплайн v2
-async function executePublish(bot, articleId) {
+// Общая функция переотправки превью после правки (удаляет старое, шлёт новое)
+async function resendPreview(bot, ctx, article) {
+  try { await ctx.deleteMessage(); } catch {}
+  await sendPreview(bot, article);
+}
+
+// Прямая публикация без повторного прогона pipeline.
+// Ожидает, что статья уже полностью подготовлена (runPipeline skipPublish:true прогоняется в runNewsCycle).
+async function executePublish(bot, articleId, explicitTargets = null) {
+  const ADMIN_ID = process.env.ADMIN_CHAT_ID;
+
   // Ищем статью в pending ИЛИ в queue (для отложенных публикаций)
   const pending = loadPending();
   let article = pending.find(a => a.id === articleId);
@@ -231,20 +420,54 @@ async function executePublish(bot, articleId) {
     return;
   }
 
-  const targets = article.targets || ['site'];
+  const targets = explicitTargets || article.targets || ['site'];
+  const startTime = Date.now();
 
-  // Запустить пайплайн v2
-  const { runPipeline } = require('./pipeline');
-  await runPipeline(article, targets, bot);
+  try {
+    const { writeToSite, deployToSite, publishToTelegram, publishToVK } = require('./publisher');
+    const { cleanHeadline } = require('./translator');
 
-  // Пометить как published в БД
-  if (article._titleNormalized) {
-    try { updateStatus(article._titleNormalized, 'published'); } catch {}
-  }
+    if (targets.includes('site')) {
+      if (article.site?.title) article.site.title = cleanHeadline(article.site.title);
+      if (article.title) article.title = cleanHeadline(article.title);
+      writeToSite([article]);
+      deployToSite();
+    }
+    if (targets.includes('telegram') && bot) {
+      await publishToTelegram(bot, article);
+    }
+    if (targets.includes('vk')) {
+      await publishToVK(article);
+    }
 
-  // Убрать из pending (если статья была оттуда)
-  if (source === 'pending') {
-    savePending(pending.filter(a => a.id !== articleId));
+    // Пометить как published в БД
+    if (article._titleNormalized) {
+      try { updateStatus(article._titleNormalized, 'published'); } catch {}
+    }
+
+    // Убрать из pending (если статья была оттуда)
+    if (source === 'pending') {
+      savePending(pending.filter(a => a.id !== articleId));
+    }
+
+    const elapsed = Math.round((Date.now() - startTime) / 1000);
+    console.log(`[NEWS] Published in ${elapsed}s: ${article.site?.title || article.title}`);
+
+    if (bot && ADMIN_ID) {
+      await bot.telegram.sendMessage(ADMIN_ID,
+        `\u2705 Опубликовано (${elapsed}с): ${article.site?.title || article.title}\n` +
+        `\ud83d\udce2 ${targets.join(' + ')}\n` +
+        `\ud83d\udd17 https://activeplay.games/news/${article.slug}`
+      ).catch(() => {});
+    }
+  } catch (err) {
+    console.error(`[NEWS] executePublish error: ${err.message}`);
+    if (bot && ADMIN_ID) {
+      await bot.telegram.sendMessage(ADMIN_ID,
+        `\u274c Ошибка публикации: ${err.message}\n\ud83d\udcf0 ${article.site?.title || article.title}`
+      ).catch(() => {});
+    }
+    throw err;
   }
 }
 
@@ -332,4 +555,115 @@ async function doRepublish(bot, ctx, slug, targets) {
 }
 
 
-module.exports = { setupApprovalHandlers, sendPreview, executePublish, loadPending, savePending, loadQueue, saveQueue, showRepublishMenu, setupRepublishHandlers };
+// ═══ AI ХЕЛПЕРЫ ДЛЯ ПРАВОК ═══
+
+// 3 варианта заголовка на выбор
+async function generateTitleVariants(article) {
+  const currentTitle = article.site?.title || article.title || '';
+  const text = article.site?.text || article.text || '';
+  const system = 'Дай 3 разных варианта заголовка для этой статьи. Разные стили: нейтральный информационный / с цифрой или датой / интригующий но без кликбейта. Правила: на русском, до 80 символов, кавычки «ёлочки», без КАПСА и восклицательных. Верни СТРОГО JSON массив из 3 строк (без backticks, без markdown).';
+  const user = `Заголовок текущий: ${currentTitle}\n\nТекст: ${(text || '').slice(0, 3000)}`;
+
+  const response = await chatCompletion([
+    { role: 'system', content: system },
+    { role: 'user', content: user },
+  ], { model: 'gpt-4o', temperature: 0.8, maxTokens: 400 });
+
+  const match = response.match(/\[[\s\S]*\]/);
+  if (!match) return null;
+  try {
+    const arr = JSON.parse(match[0]);
+    if (!Array.isArray(arr)) return null;
+    return arr.map(s => String(s || '').trim()).filter(Boolean).slice(0, 3);
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Обработка свободной команды пользователя: редактор точечно правит текст/заголовок.
+ * Вызывается из bot.on('text') когда chatId есть в editCmdState.
+ * Возвращает true при успехе, false при ошибке.
+ */
+async function handleEditCommand(bot, ctx, articleId, userText) {
+  const pending = loadPending();
+  const article = pending.find(a => a.id === articleId);
+  if (!article) {
+    await ctx.reply('❌ Новость не найдена в pending');
+    return false;
+  }
+
+  await ctx.reply('✍️ Применяю правку...');
+  try {
+    const system = 'Ты редактор новости. Пользователь дал команду на правку текста. Примени её точечно, сохрани структуру 4 абзаца через \\n\\n, сохрани факты. Если команда касается заголовка — поправь заголовок. Верни СТРОГО JSON (без backticks): { "title": "...", "text": "..." }.';
+    const user =
+      `ТЕКУЩИЙ ЗАГОЛОВОК: ${article.site?.title || ''}\n` +
+      `ТЕКУЩИЙ ТЕКСТ: ${article.site?.text || ''}\n\n` +
+      `КОМАНДА: ${userText}`;
+
+    const response = await chatCompletion([
+      { role: 'system', content: system },
+      { role: 'user', content: user },
+    ], { model: 'gpt-4o', temperature: 0.5, maxTokens: 3000 });
+
+    const match = response.match(/\{[\s\S]*\}/);
+    if (!match) {
+      await ctx.reply('❌ Не удалось распарсить ответ редактора');
+      return false;
+    }
+    const parsed = JSON.parse(match[0]);
+    if (!parsed.title && !parsed.text) {
+      await ctx.reply('❌ Редактор не вернул ни title, ни text');
+      return false;
+    }
+
+    const { countParagraphs } = require('./translator');
+    const { factCheckArticle } = require('./factCheck');
+
+    const oldText = article.site?.text || '';
+    if (!article.site) article.site = {};
+    if (parsed.title) article.site.title = parsed.title;
+    if (parsed.text) article.site.text = parsed.text;
+
+    // Guard: если текст менялся — проверяем абзацы/длину + фактчек
+    if (parsed.text && parsed.text !== oldText) {
+      const pars = countParagraphs(parsed.text);
+      if (pars < 4 || parsed.text.length < 1000) {
+        await ctx.reply(`⚠️ Новый текст не прошёл guard (${pars} абзацев, ${parsed.text.length} знаков). Возвращаю старый.`);
+        article.site.text = oldText;
+      } else {
+        const fc = await factCheckArticle(article);
+        if (fc?.hasErrors && fc.correctedText) {
+          const p2 = countParagraphs(fc.correctedText);
+          if (p2 >= 4 && fc.correctedText.length >= 1000) {
+            article.site.text = fc.correctedText;
+            if (fc.correctedTitle) article.site.title = fc.correctedTitle;
+            article.factCheckNotes = fc.errors;
+          }
+        }
+      }
+    }
+
+    savePending(pending);
+    await sendPreview(bot, article);
+    return true;
+  } catch (err) {
+    console.error('[NEWS] handleEditCommand error:', err.message);
+    await ctx.reply(`❌ Ошибка правки: ${err.message.slice(0, 200)}`);
+    return false;
+  }
+}
+
+module.exports = {
+  setupApprovalHandlers,
+  sendPreview,
+  executePublish,
+  loadPending,
+  savePending,
+  loadQueue,
+  saveQueue,
+  showRepublishMenu,
+  setupRepublishHandlers,
+  getEditCmdState,
+  handleEditCommand,
+};

@@ -438,10 +438,10 @@ function ensureParagraphs(text, targetParagraphs = 4) {
   return paragraphs.filter(Boolean).join('\n\n');
 }
 
-async function callAI(prompt, maxTokens = 4000) {
+async function callAI(prompt, maxTokens = 4000, temperature = 0.7) {
   return chatCompletion([
     { role: 'user', content: prompt },
-  ], { model: 'gpt-4o', maxTokens, temperature: 0.7 });
+  ], { model: 'gpt-4o', maxTokens, temperature });
 }
 
 // ═══ Построение промпта ═══
@@ -517,8 +517,9 @@ function countParagraphs(text) {
 }
 
 // ═══ Генерация с валидацией и retry (до 3 попыток �� обратной связью) ═══
-async function generateFullArticle(article, enrichedContext) {
+async function generateFullArticle(article, enrichedContext, options = {}) {
   const MAX_RETRIES = 2; // итого до 3 попыток
+  const temperature = typeof options.temperature === 'number' ? options.temperature : 0.7;
   let lastResult = null;
   const basePrompt = buildPrompt(article, enrichedContext);
 
@@ -535,7 +536,7 @@ async function generateFullArticle(article, enrichedContext) {
         prompt += '\n\nВНИМАНИЕ: предыдущий ответ не удалось распарсить. Ответь СТРОГО JSON без backticks. Минимум 1200 символов в site.text, 4 абзаца.';
       }
 
-      const text = await callAI(prompt);
+      const text = await callAI(prompt, 4000, temperature);
       const parsed = parseLLMResponse(text);
 
       if (!parsed) {

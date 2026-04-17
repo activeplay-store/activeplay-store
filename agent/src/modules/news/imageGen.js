@@ -27,7 +27,10 @@ function markImageUsed(url, articleId) {
   const recent = getRecentlyUsedImages(14);
   recent.push({ url, articleId, usedAt: Date.now() });
   try {
-    fs.writeFileSync(USED_IMAGES_FILE, JSON.stringify(recent, null, 2));
+    // Атомарная запись: tmp + rename. Защита от race при параллельной обработке нескольких статей.
+    const tmp = `${USED_IMAGES_FILE}.tmp.${process.pid}.${Date.now()}`;
+    fs.writeFileSync(tmp, JSON.stringify(recent, null, 2));
+    fs.renameSync(tmp, USED_IMAGES_FILE);
   } catch {}
 }
 
@@ -710,9 +713,12 @@ async function generateAiCover(article, filename) {
 // ГЛАВНАЯ ФУНКЦИЯ
 // ═══════════════════════════════════════════════
 
-async function getNewsImage(article) {
+async function getNewsImage(article, opts = {}) {
   const filename = article.id + '.jpg';
   const platform = article.platform || 'general';
+  const skipCache = !!opts.skipCache;
+  // При skipCache пропускаем проверку used-images: позволяем выбрать картинку заново.
+  const wasRecentlyUsed = (url) => skipCache ? false : isImageRecentlyUsed(url);
 
   // ═══ РАСПРОДАЖА/СКИДКИ ═══
   if (isSaleNews(article)) {
@@ -814,7 +820,7 @@ async function getNewsImage(article) {
 
     // 2a. og:image источника (у крупных сайтов обычно качественная)
     const ogUrl = await fetchOgImage(article.sourceUrl || article.link);
-    if (ogUrl && !isImageRecentlyUsed(ogUrl)) {
+    if (ogUrl && !wasRecentlyUsed(ogUrl)) {
       const ogImg = await downloadAndResize(ogUrl, filename);
       if (ogImg) {
         markImageUsed(ogUrl, article.id);
@@ -858,7 +864,7 @@ async function getNewsImage(article) {
 
   // 2. og:image с сайта-источника
   const ogUrl = await fetchOgImage(article.sourceUrl || article.link);
-  if (ogUrl && !isImageRecentlyUsed(ogUrl)) {
+  if (ogUrl && !wasRecentlyUsed(ogUrl)) {
     const ogImg = await downloadAndResize(ogUrl, filename);
     if (ogImg) {
       markImageUsed(ogUrl, article.id);

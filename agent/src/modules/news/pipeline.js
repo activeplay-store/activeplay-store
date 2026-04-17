@@ -53,13 +53,22 @@ function getFunnelText(article, siteGame) {
   return funnels[platform] || funnels.general;
 }
 
-async function runPipeline(article, targets, bot) {
+/**
+ * skipPublish=true: готовит статью целиком (Steps 1-6 включая enrichment,
+ * generateFullArticle, CTA, factCheck, image), но НЕ публикует на сайт/TG/VK,
+ * НЕ обновляет Essential catalog, НЕ шлёт admin-уведомления.
+ * Используется в runNewsCycle для подготовки финального превью.
+ *
+ * opts.onStep(stepName) — коллбэк прогресса: 'enrich' | 'generate' | 'headline' |
+ * 'factcheck' | 'image' | 'done'. Вызывается в начале каждого шага.
+ */
+async function runPipeline(article, targets, bot, opts = {}) {
   const ADMIN_ID = process.env.ADMIN_CHAT_ID;
   const startTime = Date.now();
 
   try {
     // Уведомить о начале
-    if (bot && ADMIN_ID) {
+    if (!opts.skipPublish && bot && ADMIN_ID) {
       await bot.telegram.sendMessage(ADMIN_ID, '\u23f3 Готовлю новость... ~1-2 минуты');
     }
 
@@ -82,6 +91,7 @@ async function runPipeline(article, targets, bot) {
 
     // ═══ ШАГ 2: СБОР ФАКТУРЫ ═══
     let step2Start = Date.now();
+    opts.onStep?.('enrich');
     console.log('[PIPELINE] Step 2: Enriching...');
     const { enrichedContext, siteGame } = await enrichArticle(article);
     article.enrichedContext = enrichedContext; // нужно для Step 4.5 (fact-check)
@@ -89,6 +99,7 @@ async function runPipeline(article, targets, bot) {
 
     // ═══ ШАГ 3: ГЕНЕРАЦИЯ ПОЛНОГО ТЕКСТА ═══
     let step3Start = Date.now();
+    opts.onStep?.('generate');
     // Если текст был отредактирован вручную (через голосовые команды) — НЕ перезаписывать
     if (article.manuallyEdited) {
       console.log('[PIPELINE] Step 3: SKIPPED \u2014 article was manually edited');
@@ -202,6 +213,7 @@ async function runPipeline(article, targets, bot) {
 
     // ═══ ШАГ 4: ПРОВЕРКА ЗАГОЛОВКА + ПРОВЕРКА ВНУТРЕННЕЙ ЛОГИКИ ТЕКСТА ═══
     let step4Start = Date.now();
+    opts.onStep?.('headline');
     console.log('[PIPELINE] Step 4: Checking headline + text logic...');
     const fullText = article.site?.text || '';
     const checkResult = await checkHeadline(article.site.title, fullText);
@@ -216,6 +228,7 @@ async function runPipeline(article, targets, bot) {
 
     // ═══ ШАГ 4.5: ФАКТ-ЧЕК (глубокая сверка с оригиналом + RAWG) ═══
     let step45Start = Date.now();
+    opts.onStep?.('factcheck');
     console.log('[PIPELINE] Step 4.5: Fact-checking...');
     const factResult = await factCheckArticle(article);
     if (factResult?.hasErrors && factResult.errors?.length > 0) {
@@ -241,6 +254,7 @@ async function runPipeline(article, targets, bot) {
 
     // ═══ ШАГ 5: КАРТИНКА ═══
     let step5Start = Date.now();
+    opts.onStep?.('image');
     console.log('[PIPELINE] Step 5: Getting image...');
     if (!article.imageUrl) {
       article.imageUrl = await getNewsImage(article);
@@ -303,44 +317,49 @@ async function runPipeline(article, targets, bot) {
     }
 
     // ═══ ШАГ 7: СБОРКА И ПУБЛИКАЦИЯ ═══
-    console.log('[PIPELINE] Step 7: Publishing...');
+    if (!opts.skipPublish) {
+      console.log('[PIPELINE] Step 7: Publishing...');
 
-    // a) Сохранить в staging
-    if (!fs.existsSync(STAGING_DIR)) fs.mkdirSync(STAGING_DIR, { recursive: true });
-    const stagingPath = path.join(STAGING_DIR, `${article.id}.json`);
-    fs.writeFileSync(stagingPath, JSON.stringify(article, null, 2));
+      // a) Сохранить в staging
+      if (!fs.existsSync(STAGING_DIR)) fs.mkdirSync(STAGING_DIR, { recursive: true });
+      const stagingPath = path.join(STAGING_DIR, `${article.id}.json`);
+      fs.writeFileSync(stagingPath, JSON.stringify(article, null, 2));
 
-    // b-f) Записать на сайт (backup + validation + write внутри writeToSite)
-    if (targets.includes('site')) {
-      if (article.site?.title) article.site.title = cleanHeadline(article.site.title);
-      if (article.title) article.title = cleanHeadline(article.title);
-      writeToSite([article]);
-      deployToSite();
-    }
+      // b-f) Записать на сайт (backup + validation + write внутри writeToSite)
+      if (targets.includes('site')) {
+        if (article.site?.title) article.site.title = cleanHeadline(article.site.title);
+        if (article.title) article.title = cleanHeadline(article.title);
+        writeToSite([article]);
+        deployToSite();
+      }
 
-    // g-h) Публикация в соцсети
-    if (targets.includes('telegram') && bot) {
-      await publishToTelegram(bot, article);
-    }
-    if (targets.includes('vk')) {
-      await publishToVK(article);
-    }
+      // g-h) Публикация в соцсети
+      if (targets.includes('telegram') && bot) {
+        await publishToTelegram(bot, article);
+      }
+      if (targets.includes('vk')) {
+        await publishToVK(article);
+      }
 
-    const elapsed = Math.round((Date.now() - startTime) / 1000);
-    console.log(`[PIPELINE] Done in ${elapsed}s: ${article.site.title}`);
+      const elapsed = Math.round((Date.now() - startTime) / 1000);
+      console.log(`[PIPELINE] Done in ${elapsed}s: ${article.site.title}`);
 
-    // i) Уведомить админа
-    if (bot && ADMIN_ID) {
-      const publishedTargets = targets.join(' + ');
-      await bot.telegram.sendMessage(ADMIN_ID,
-        `\u2705 Опубликовано (${elapsed}с): ${article.site.title}\n` +
-        `\ud83d\udce2 ${publishedTargets}\n` +
-        `\ud83d\udd17 https://activeplay.games/news/${article.slug}`
-      );
+      // i) Уведомить админа
+      if (bot && ADMIN_ID) {
+        const publishedTargets = targets.join(' + ');
+        await bot.telegram.sendMessage(ADMIN_ID,
+          `\u2705 Опубликовано (${elapsed}с): ${article.site.title}\n` +
+          `\ud83d\udce2 ${publishedTargets}\n` +
+          `\ud83d\udd17 https://activeplay.games/news/${article.slug}`
+        );
+      }
+    } else {
+      const elapsed = Math.round((Date.now() - startTime) / 1000);
+      console.log(`[PIPELINE] Prepared in ${elapsed}s (skipPublish): ${article.site.title}`);
     }
 
     // ═══ POST-PUBLISH: Обновить каталог Essential если это новость о бесплатных играх ═══
-    if (article.relatedProduct === 'ps-plus-essential') {
+    if (!opts.skipPublish && article.relatedProduct === 'ps-plus-essential') {
       try {
         const titleLower = (article.site?.title || '').toLowerCase();
         const isMonthlyGamesNews =
@@ -384,12 +403,13 @@ async function runPipeline(article, targets, bot) {
       }
     }
 
+    opts.onStep?.('done');
     return article;
   } catch (err) {
     const elapsed = Math.round((Date.now() - startTime) / 1000);
     console.error(`[PIPELINE] Error after ${elapsed}s:`, err);
 
-    if (bot && ADMIN_ID) {
+    if (!opts.skipPublish && bot && ADMIN_ID) {
       await bot.telegram.sendMessage(ADMIN_ID,
         `\u274c Ошибка публикации (${elapsed}с): ${err.message}\n` +
         `\ud83d\udcf0 ${article.site?.title || article.title}`

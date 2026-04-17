@@ -5,10 +5,35 @@ const { rankNews } = require('./scorer');
 const { saveArticles, cleanup } = require('./db');
 const { translateAndRewrite } = require('./translator');
 const { sendPreview, savePending: savePendingToFile, loadQueue, saveQueue, executePublish } = require('./approval');
+const { runPipeline } = require('./pipeline');
 
 const RESERVE_FILE = path.join(__dirname, '../../../data/reserve-news.json');
 
-async function runNewsCycle(bot) {
+const STEP_LABELS = {
+  enrich: '🔍 Обогащение фактами',
+  generate: '✍️ Генерация текста (4 абзаца)',
+  headline: '📰 Проверка заголовка',
+  factcheck: '✅ Фактчек',
+  image: '🖼 Картинка',
+  done: '✓ Готово',
+};
+
+function renderProgress(titles, statuses) {
+  const lines = ['\u23f3 Обработка ' + titles.length + ' новостей параллельно:', ''];
+  for (let i = 0; i < titles.length; i++) {
+    const title = (titles[i] || '').slice(0, 40);
+    const status = statuses[i] === 'error' ? '❌ Ошибка' : (STEP_LABELS[statuses[i]] || '⏳ Ожидание');
+    lines.push(`${i + 1}. ${title}${title.length >= 40 ? '...' : ''} — ${status}`);
+  }
+  return lines.join('\n');
+}
+
+/**
+ * Цикл новостей: парсинг → топ-5 → параллельный полный pipeline(skipPublish) → превью.
+ * options.chatId / options.messageId — если переданы, обновляем это сообщение прогрессом.
+ * Без options — тихий режим (cron).
+ */
+async function runNewsCycle(bot, options = {}) {
   console.log('[NEWS] === Starting news cycle ===');
 
   // 1. Парсим
@@ -25,7 +50,7 @@ async function runNewsCycle(bot) {
   catch (e) { console.error('[NEWS] DB save:', e.message); }
   try { cleanup(30); } catch {}
 
-  // 3. Переводим первые 5
+  // 3. Переводим первые 5 (Step 1 — перевод + базовый rewrite)
   const toTranslate = top.slice(0, 5);
   const translated = [];
 
@@ -39,17 +64,64 @@ async function runNewsCycle(bot) {
       };
       translated.push(enriched);
     }
-    // Пауза между запросами к Claude API
+    // Пауза между запросами к OpenAI
     await new Promise(r => setTimeout(r, 2000));
   }
 
-  console.log(`[NEWS] ${translated.length} translated, sending for approval`);
+  console.log(`[NEWS] ${translated.length} translated, running full pipeline in parallel`);
 
-  // 4. Сохранить в pending
-  savePendingToFile(translated);
+  // 4. Прогресс-стейт + debounce на editMessageText
+  const titles = translated.map(a => a.site?.title || a.title || '(без заголовка)');
+  const statuses = new Array(translated.length).fill('enrich');
+  const { chatId, messageId } = options;
 
-  // 5. Отправить превью Сергею
-  for (const article of translated) {
+  let pendingUpdate = false;
+  function scheduleRender() {
+    if (!chatId || !messageId || !bot) return;
+    if (pendingUpdate) return;
+    pendingUpdate = true;
+    setTimeout(() => {
+      bot.telegram.editMessageText(chatId, messageId, undefined, renderProgress(titles, statuses))
+        .catch(() => {});
+      pendingUpdate = false;
+    }, 2000);
+  }
+
+  function updateProgress(i, step) {
+    statuses[i] = step;
+    scheduleRender();
+  }
+
+  // 5. Параллельно прогнать полный pipeline с skipPublish:true
+  const results = await Promise.all(translated.map((article, i) =>
+    runPipeline(article, [], bot, {
+      skipPublish: true,
+      onStep: (step) => updateProgress(i, step),
+    }).then(
+      (prepared) => ({ ok: true, article: prepared }),
+      (err) => {
+        console.error(`[NEWS] Pipeline failed for "${titles[i]}": ${err.message}`);
+        statuses[i] = 'error';
+        scheduleRender();
+        return { ok: false, error: err.message };
+      }
+    )
+  ));
+
+  const prepared = results.filter(r => r.ok).map(r => r.article);
+  console.log(`[NEWS] ${prepared.length}/${translated.length} articles prepared, sending previews`);
+
+  // Финальный рендер прогресса (без debounce, чтобы гарантированно показать «Готово»)
+  if (chatId && messageId && bot) {
+    bot.telegram.editMessageText(chatId, messageId, undefined, renderProgress(titles, statuses))
+      .catch(() => {});
+  }
+
+  // 6. Сохранить в pending ГОТОВЫЕ статьи (1:1 финальный продукт)
+  savePendingToFile(prepared);
+
+  // 7. Отправить превью Сергею
+  for (const article of prepared) {
     await sendPreview(bot, article);
     await new Promise(r => setTimeout(r, 1000));
   }
