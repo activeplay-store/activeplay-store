@@ -149,6 +149,7 @@ const KNOWN_SLUGS = {
   'Split Fiction': 'split-fiction',
   'Assassins Creed Mirage': 'assassins-creed-mirage',
   'Assassin\'s Creed Mirage': 'assassins-creed-mirage',
+  'Mouse P.I. For Hire': 'mouse-p-i-for-hire',
 };
 
 // ═══════════════════════════════════════════════
@@ -323,14 +324,20 @@ async function searchRAWG(gameName) {
     const results = response.data?.results;
     if (!results || results.length === 0) return null;
 
-    // Проверяем что найденная игра реально похожа на запрос
+    // Строгая валидация релевантности результата RAWG
     const game = results.find(g => {
       if (!g.background_image) return false;
       const gName = g.name.toLowerCase();
       const qName = clean.toLowerCase();
-      // Имя игры должно содержать хотя бы одно ключевое слово из запроса
       const queryWords = qName.split(/\s+/).filter(w => w.length >= 3);
-      return queryWords.some(w => gName.includes(w));
+      if (queryWords.length === 0) return false;
+      if (queryWords.length === 1) {
+        // Однословный запрос: требуем exact match по имени (без пунктуации/регистра)
+        const normalize = s => s.replace(/[^\w]+/g, '').toLowerCase();
+        return normalize(gName) === normalize(qName);
+      }
+      // Многословный: ВСЕ значимые слова должны входить в имя игры
+      return queryWords.every(w => gName.includes(w));
     });
 
     if (!game) {
