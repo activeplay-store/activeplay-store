@@ -1,5 +1,32 @@
 [
   {
+    "id": "heroes-of-might-and-magic-olden-era-poluchila-novyy-treyler-pered-relizom",
+    "slug": "heroes-of-might-and-magic-olden-era-poluchila-novyy-treyler-pered-relizom",
+    "title": "Heroes of Might and Magic: Olden Era получила новый трейлер перед релизом",
+    "content": "Unfrozen Studio представила новый геймплейный трейлер игры Heroes of Might and Magic: Olden Era. Это первая новая игра в известной стратегической серии за последние 10 лет. Игроки смогут оценить её возможности уже 30 апреля 2026 года, когда игра выйдет в раннем доступе на платформе Steam. Трехминутный трейлер демонстрирует различные игровые фракции и доступен для просмотра на сайте издателя Hooded Horse.\n\nHeroes of Might and Magic: Olden Era — это стратегическая игра с элементами RPG, которая предложит игрокам сюжетную кампанию, режимы схваток, арену и мультиплеер. Разработчики обещают, что поклонники серии смогут погрузиться в атмосферу любимой игры и насладиться новыми механиками. Игра будет доступна для добавления в список желаемого на платформах Steam и Microsoft Store, что позволяет заранее подготовиться к её выходу.\n\nСерия Heroes of Might and Magic известна своими классическими играми, такими как Heroes of Might and Magic III и IV, которые оставили значительный след в жанре стратегий. Новый проект от Unfrozen Studio продолжает традиции серии, предлагая свежий взгляд на знакомую механику. Несмотря на отсутствие оценок на Metacritic, интерес игроков уже был подогрет, и многие ждут выхода этой игры с нетерпением.\n\nДля тех, кто хочет быть в курсе всех новинок и не упустить интересные проекты, ActivePlay предлагает оформить подписку на игровые сервисы. Подписки от 1 250 ₽/мес позволят вам получать доступ к новинкам и классическим играм, экономя ваше время и деньги.",
+    "metaDescription": "Unfrozen Studio выпустила трейлер Heroes of Might and Magic: Olden Era. Игра выйдет 30 апреля 2026 года в раннем доступе на Steam.",
+    "coverUrl": "/images/news/news-1776445348146-p37t.jpg",
+    "tags": [
+      "Steam",
+      "Heroes of Might and Magic",
+      "Unfrozen Studio",
+      "Стратегия",
+      "RPG"
+    ],
+    "category": "news",
+    "source": "RPG Site",
+    "sourceUrl": "https://www.rpgsite.net/news/20155-heroes-of-might-and-magic-olden-era-new-gameplay-homm",
+    "publishedAt": "2026-04-17T17:07:05.155Z",
+    "gameId": null,
+    "relatedProduct": null,
+    "platform": "pc",
+    "ctaType": "general",
+    "ctaText": "Подписки от 1 250 ₽/мес",
+    "ctaLink": "/subscriptions",
+    "cta": null,
+    "cta2": null
+  },
+  {
     "id": "replaced-ot-sad-cat-studios-uspeshnyy-debyut-kiberpank-platformera",
     "slug": "replaced-ot-sad-cat-studios-uspeshnyy-debyut-kiberpank-platformera",
     "title": "Replaced от Sad Cat Studios: успешный дебют киберпанк платформера",
@@ -1613,27 +1640,6 @@
     "ctaType": "deals",
     "ctaText": "Скидки на игры",
     "ctaLink": "/sale",
-    "cta": null,
-    "cta2": null
-  },
-  {
-    "id": "igrovye-novinki-xbox-vo-chto-poigrat-na-etoy-nedele",
-    "slug": "igrovye-novinki-xbox-vo-chto-poigrat-na-etoy-nedele",
-    "title": "Игровые новинки Xbox: во что поиграть на этой неделе",
-    "content": "Microsoft представила список игр, которые появятся на Xbox с 6 по 10 апреля. Игроков ждут проекты разных жанров: RPG, головоломки и другие. \n\nPeople of Note — музыкальная RPG с пошаговыми сражениями. Игрокам предстоит собрать группу музыкантов и добиться славы. Уникальная боевая система: каждое сражение — музыкальное представление.\n\nBeyond Words — необычная смесь стратегии и головоломки. От создателей GoldenEye и TimeSplitters. Игрокам предстоит составлять слова, открывать улучшения и решать головоломки.\n\nBytebond: Deluxe Edition — кооперативная головоломка для двоих. Разделенный экран и элементы Portal прилагаются. Цель: вернуть контроль над зараженным процессором.",
-    "metaDescription": "Новые игры для Xbox Series X|S, Xbox One и PC с 6 по 10 апреля. People of Note, Beyond Words, Bytebond: Deluxe Edition",
-    "coverUrl": "/images/news/news-1775293268808-xy2z.jpg",
-    "tags": [
-      "Xbox",
-      "новые игры",
-      "анонс"
-    ],
-    "category": "news",
-    "source": "Xbox Wire",
-    "sourceUrl": "https://news.xbox.com/en-us/2026/04/03/next-week-on-xbox-new-games-for-april-6-to-10/",
-    "publishedAt": "2026-04-04T19:59:56.620Z",
-    "gameId": null,
-    "relatedProduct": null,
     "cta": null,
     "cta2": null
   }
