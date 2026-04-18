@@ -1,5 +1,31 @@
 [
   {
+    "id": "rasprodazha-igr-ot-xbox-game-studios-v-steam-znachitelnye-skidki",
+    "slug": "rasprodazha-igr-ot-xbox-game-studios-v-steam-znachitelnye-skidki",
+    "title": "распродажа игр от Xbox Game Studios в Steam — значительные",
+    "content": "Акция от Xbox Game Studios в Steam в самом разгаре, и это ваш шанс приобрести популярные игры со значительными скидками. Распродажа предлагает разнообразные тайтлы, включая как известные франшизы, так и менее популярные, но не менее интересные проекты. Пока точные даты окончания распродажи не указаны, стоит поспешить, чтобы не упустить возможность пополнить свою игровую библиотеку по выгодным ценам.\n\nСреди популярных игр от Xbox Game Studios можно встретить такие хиты, как «Halo» и «Gears of War». Эти игры предлагают захватывающий геймплей, уникальные механики и возможность играть как на ПК через Steam, так и на консолях Xbox. Жанры игр разнообразны: от экшенов и RPG до стратегий, что позволяет каждому игроку найти что-то по душе. Скидки могут быть значительными и распространяются на широкий ассортимент игр от Xbox Game Studios.\n\nИсторически, такие распродажи от Xbox Game Studios всегда привлекали внимание игроков благодаря качеству и разнообразию предлагаемых игр. Многие игры от Xbox Game Studios имеют высокие оценки на Metacritic, что подтверждает их популярность и качество. Например, «Halo» и «Gears of War» остаются одними из самых высокооцененных серий в жанре шутеров. Это делает текущую распродажу особенно привлекательной для всех поклонников видеоигр.\n\nЕсли вы ищете выгодные предложения и хотите сэкономить на играх, стоит обратить внимание на акции в нашем магазине ActivePlay. Здесь собраны актуальные предложения на игры с различными скидками и подписками. На нашем сайте доступны различные предложения на игры, что позволяет вам получить доступ к широкому ассортименту игр и скидок.",
+    "metaDescription": "Акция от Xbox Game Studios в Steam подходит к завершению. Последний шанс приобрести игры со скидками.",
+    "coverUrl": "/images/news/news-1776517516942-is4w.jpg",
+    "tags": [
+      "Steam",
+      "Xbox Game Studios",
+      "распродажа",
+      "игры"
+    ],
+    "category": "news",
+    "source": "XboxEra (Shpeshal Nick)",
+    "sourceUrl": "https://playday.one/2026/04/18/the-xbox-game-studios-sale-is-live-now-on-steam/",
+    "publishedAt": "2026-04-18T14:02:14.130Z",
+    "gameId": null,
+    "relatedProduct": null,
+    "platform": "xbox",
+    "ctaType": "deals",
+    "ctaText": "Скидки PS Store",
+    "ctaLink": "/sale",
+    "cta": null,
+    "cta2": null
+  },
+  {
     "id": "30-luchshih-igr-ps-plus-extra-dlya-ps5-v-aprele-2026",
     "slug": "30-luchshih-igr-ps-plus-extra-dlya-ps5-v-aprele-2026",
     "title": "30 лучших игр PS Plus Extra для PS5 в апреле 2026",
@@ -1627,33 +1653,6 @@
     "platform": "xbox",
     "ctaType": "gamepass",
     "ctaText": "Xbox Game Pass",
-    "ctaLink": "/subscriptions",
-    "cta": null,
-    "cta2": null
-  },
-  {
-    "id": "neutron-hifi-dac-v1-podderzhka-playstation-5-s-novoy-proshivkoy",
-    "slug": "neutron-hifi-dac-v1-podderzhka-playstation-5-s-novoy-proshivkoy",
-    "title": "Neutron HiFi DAC V1: поддержка PlayStation 5 с новой прошивкой",
-    "content": "Neutron HiFi DAC V1 получил долгожданную поддержку PlayStation 4 и PlayStation 5. Ранее консоли Sony использовали устаревший стандарт UAC1. Многие современные ЦАПы попросту не работали или выдавали звук на неприемлемо низкой громкости.\n\nОбновление Firmware 69 решает эти проблемы. Теперь Neutron HiFi DAC V1 полноценно функционирует с PS4 и PS5.\n\nЧтобы воспользоваться улучшением, необходимо установить последнюю версию прошивки. Скачать её можно на официальном форуме Neutron.\n\nОформить PS Plus можно в ActivePlay от 1 250 ₽/мес. Активация за 10 минут, оплата в рублях.",
-    "metaDescription": "Neutron HiFi DAC V1 теперь совместим с PlayStation 5 благодаря новой прошивке. Узнайте, как обновить устройство и наслаждаться качественным звуком.",
-    "coverUrl": "/images/news/news-1775379649302-w95z.jpg",
-    "tags": [
-      "PS5",
-      "Neutron HiFi DAC V1",
-      "ЦАП",
-      "звук",
-      "обновление"
-    ],
-    "category": "news",
-    "source": "r/PS5",
-    "sourceUrl": "https://www.reddit.com/r/PS5/comments/1scyqa7/latest_firmware_69_makes_neutron_hifi_dac_v1/",
-    "publishedAt": "2026-04-05T09:58:21.448Z",
-    "gameId": null,
-    "relatedProduct": null,
-    "platform": "playstation",
-    "ctaType": "psplus",
-    "ctaText": "PS Plus от 1 250 ₽/мес",
     "ctaLink": "/subscriptions",
     "cta": null,
     "cta2": null
