@@ -96,7 +96,7 @@ export default function GuidesContent() {
                   className="group flex flex-col sm:flex-row rounded-xl border border-white/10 bg-white/[0.03] backdrop-blur-sm overflow-hidden transition-all duration-300 hover:border-[#00D4FF]/40 hover:shadow-[0_0_20px_rgba(0,212,255,0.08)] hover:-translate-y-0.5"
                 >
                   {/* Cover */}
-                  <div className="sm:w-[300px] sm:shrink-0 aspect-[3/2] overflow-hidden bg-[#0A1628]">
+                  <div className="sm:w-[300px] sm:shrink-0 aspect-video overflow-hidden bg-[#0A1628]">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={guide.coverUrl}

@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     images: [{
       url: 'https://activeplay.games/images/guides/kak-sozdat-akkaunt-xbox.webp',
       width: 1200,
-      height: 800,
+      height: 675,
       alt: 'Аккаунт Xbox из России 2026',
     }],
   },
