@@ -1,5 +1,31 @@
 [
   {
+    "id": "film-gears-of-war-devid-leych-podtverdil-plany-na-ekranizaciyu",
+    "slug": "film-gears-of-war-devid-leych-podtverdil-plany-na-ekranizaciyu",
+    "title": "Фильм Gears of War: Дэвид Лейч подтвердил планы на экранизацию",
+    "content": "Дэвид Лейч, режиссёр, объявил о продолжении работы над экранизацией Gears of War. По словам Лейча, сценарий, написанный Джоном Спэйтсом, находится в отличной форме. Netflix, которая приобрела права на экранизацию осенью 2022 года, полностью поддерживает проект. Игровая студия The Coalition, разработчик оригинальной игры, также активно участвует в процессе.\n\nФильм Gears of War обещает стать масштабным экшеном с элементами военной фантастики, что соответствует духу оригинальной игры. Игра Gears of War — это шутер от третьего лица, в котором игроки сражаются с ордами инопланетных врагов. Сюжет фильма разрабатывается Джоном Спэйтсом, известным своей работой над «Дюной», что обещает высококачественную адаптацию. Netflix планирует сделать эту экранизацию значимым проектом в своём каталоге.\n\nЗначимость экранизации Gears of War обусловлена популярностью игровой серии, начавшейся в 2006 году. Серия включает такие игры как Gears of War и Gears 5, которые получили положительные отзывы критиков, набрав 84/100 на Metacritic для Xbox One. The Coalition работает над новой игрой в серии Gears of War, что делает проект особенно интересным для фанатов. Проект вызывает большой интерес у поклонников жанра.\n\nЕсли вы хотите быть в курсе всех новинок и экранизаций, стоит рассмотреть подписку на стриминговые сервисы, а также игровые подписки. На ActivePlay вы можете оформить подписки от 1 250 ₽/мес и получить доступ к множеству игр и фильмов. Не упустите шанс быть в центре событий!",
+    "metaDescription": "Дэвид Лейч подтвердил продолжение работы над экранизацией Gears of War. Netflix и The Coalition поддерживают проект.",
+    "coverUrl": "/images/news/news-1776531901642-329h.jpg",
+    "tags": [
+      "Gears of War",
+      "Netflix",
+      "The Coalition",
+      "Дэвид Лейч"
+    ],
+    "category": "news",
+    "source": "Eurogamer",
+    "sourceUrl": "https://www.eurogamer.net/gears-of-war-film-director-insists-that-movie-will-happen",
+    "publishedAt": "2026-04-18T17:22:30.584Z",
+    "gameId": null,
+    "relatedProduct": null,
+    "platform": "xbox",
+    "ctaType": "general",
+    "ctaText": "Подписки от 1 250 ₽/мес",
+    "ctaLink": "/subscriptions",
+    "cta": null,
+    "cta2": null
+  },
+  {
     "id": "rasprodazha-igr-ot-xbox-game-studios-v-steam-znachitelnye-skidki",
     "slug": "rasprodazha-igr-ot-xbox-game-studios-v-steam-znachitelnye-skidki",
     "title": "распродажа игр от Xbox Game Studios в Steam — значительные",
@@ -1628,31 +1654,6 @@
     "platform": "playstation",
     "ctaType": "psplus",
     "ctaText": "PS Plus от 1 250 ₽/мес",
-    "ctaLink": "/subscriptions",
-    "cta": null,
-    "cta2": null
-  },
-  {
-    "id": "xbox-game-pass-nazvany-igry-kandidaty-na-vylet-v-mae-2026",
-    "slug": "xbox-game-pass-nazvany-igry-kandidaty-na-vylet-v-mae-2026",
-    "title": "Xbox Game Pass: названы игры-кандидаты на вылет в мае 2026",
-    "content": "Появились первые прогнозы о тайтлах, которые могут покинуть Xbox Game Pass в мае 2026 года. Microsoft пока не делала официальных анонсов. Лист основан на релизах, которые добавили в сервис в это же время год назад.\n\nMicrosoft обычно предупреждает об удалении игр за две недели. Игроки часто просят давать больше времени. Издатели иногда заключают сделки с Microsoft. Благодаря этому игры остаются в Game Pass даже после анонса об удалении.\n\nПока это только слухи и прогнозы. Точный список игр станет известен позже.\n\nОформить Xbox Game Pass можно в ActivePlay. Быстро, из России, оплата в рублях.",
-    "metaDescription": "Первые прогнозы о играх, которые могут покинуть Xbox Game Pass в мае 2026 года. Microsoft пока молчит, но кое-какие предположения уже есть.",
-    "coverUrl": "/images/news/news-1775384489218-osqo.jpg",
-    "tags": [
-      "Xbox Game Pass",
-      "игры",
-      "новости"
-    ],
-    "category": "rumor",
-    "source": "Pure Xbox",
-    "sourceUrl": "https://www.purexbox.com/news/2026/04/heres-what-might-leave-xbox-game-pass-in-may-2026",
-    "publishedAt": "2026-04-05T10:21:57.307Z",
-    "gameId": null,
-    "relatedProduct": null,
-    "platform": "xbox",
-    "ctaType": "gamepass",
-    "ctaText": "Xbox Game Pass",
     "ctaLink": "/subscriptions",
     "cta": null,
     "cta2": null
