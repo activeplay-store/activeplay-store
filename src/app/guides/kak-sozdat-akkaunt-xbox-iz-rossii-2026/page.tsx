@@ -8,10 +8,17 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
 
+function Flag({ code, alt }: { code: string; alt: string }) {
+  return (
+    /* eslint-disable-next-line @next/next/no-img-element */
+    <img src={`/flags/${code}.svg`} alt={alt} style={{ display:'inline-block', width:'1.2em', height:'0.9em', marginRight:'6px', verticalAlign:'middle' }} />
+  );
+}
+
 export const metadata: Metadata = {
   title: 'Как создать аккаунт Xbox из России в 2026 — гайд | ActivePlay',
   description: 'Пошаговая регистрация учётки Microsoft для Xbox в 2026, выбор региона (Турция, Аргентина, Казахстан, США) и защита аккаунта через 2FA и passkey.',
-  keywords: 'как создать аккаунт xbox, регистрация microsoft account, создать турецкий аккаунт xbox, xbox казахстан, сменить регион xbox, двухфакторная аутентификация microsoft, passkey microsoft, microsoft authenticator xbox, восстановить аккаунт microsoft, xbox game pass регион 2026',
+  keywords: 'как создать аккаунт xbox, регистрация аккаунта xbox, создать турецкий аккаунт xbox, xbox казахстан, сменить регион xbox, защита аккаунта xbox, двухфакторная аутентификация xbox, passkey xbox, восстановление аккаунта xbox, ошибки xbox 2026, xbox game pass регион 2026',
   openGraph: {
     title: 'Аккаунт Xbox из России в 2026: регистрация, регион, защита',
     description: 'Подробный гайд ActivePlay: как за 20 минут создать Microsoft-аккаунт, выбрать рабочий регион в 2026 и защитить учётку от угона.',
@@ -85,7 +92,7 @@ const faqSchema = {
     { '@type': 'Question', name: 'Как создать детский аккаунт Xbox без кредитки родителя?', acceptedAnswer: { '@type': 'Answer', text: 'Никак. Microsoft Family требует подтверждения родителя через кредитную карту с временным списанием $0.50 (возвращается). Это мера проверки возраста.' } },
     { '@type': 'Question', name: 'Что такое 30-day security waiting period?', acceptedAnswer: { '@type': 'Answer', text: 'При попытке сменить security-данные без доступа к действующему методу Microsoft применяет изменения через 30 дней. На старые контакты приходят уведомления с возможностью отменить операцию.' } },
     { '@type': 'Question', name: 'Почему passkey не всегда работает на Xbox Series X|S?', acceptedAnswer: { '@type': 'Answer', text: 'Microsoft Q&A от 17 октября 2025 признаёт: QR-flow passkey на консолях завершается нестабильно. Workaround — временно вернуть пароль, залогиниться на консоль, затем снова переключиться на passwordless.' } },
-    { '@type': 'Question', name: 'Какой регион самый безопасный для российского игрока в 2026?', acceptedAnswer: { '@type': 'Answer', text: 'Связка: аккаунт в США или глобальный регион, карта Казахстана (Bybit KZ, Kaspi), Microsoft Authenticator. Никакой volatility цен, KZ-карта принимается в большинстве регионов, аккаунт не попадает под чистки Турции и Аргентины.' } },
+    { '@type': 'Question', name: 'Какой регион самый безопасный для российского игрока в 2026?', acceptedAnswer: { '@type': 'Answer', text: 'Связка: аккаунт в США или глобальный регион, казахстанская банковская или виртуальная карта, Microsoft Authenticator. Никакой volatility цен, KZ-карта принимается в большинстве регионов, аккаунт не попадает под чистки Турции и Аргентины.' } },
   ],
 };
 
@@ -155,7 +162,7 @@ export default function GuideXboxAccount() {
               при регистрации с российского IP падает чаще, чем проходит.
             </p>
             <p className="text-gray-300 text-lg leading-relaxed mb-6">
-              При этом Икс Бокс как платформа никуда не делся. Консоли Series X и S работают,
+              При этом Икс Бокс как платформа никуда не делась. Консоли Series X и S работают,
               мультиплеер работает, ачивки идут. Нужна только грамотно собранная учётка
               Майкрософт, привязанная к рабочему региону и с правильной защитой. В 2026 году
               это делается не так, как в гайдах двухлетней давности — правила Microsoft менялись
@@ -206,7 +213,7 @@ export default function GuideXboxAccount() {
           <section className="py-12 border-b border-white/5">
             <Accent />
             <h2 className="font-rajdhani text-3xl md:text-4xl font-bold text-white mb-6">
-              Учётка Microsoft или Xbox-профиль — <span className="text-[#7FD97F]">что именно создаём</span>
+              Аккаунт Xbox или учётка Microsoft — <span className="text-[#7FD97F]">что именно создаём</span>
             </h2>
 
             <p className="text-gray-300 leading-relaxed mb-4">
@@ -244,7 +251,7 @@ export default function GuideXboxAccount() {
           <section className="py-12 border-b border-white/5">
             <Accent />
             <h2 className="font-rajdhani text-3xl md:text-4xl font-bold text-white mb-6">
-              Чек-лист <span className="text-[#7FD97F]">перед регистрацией</span>
+              Чек-лист перед регистрацией <span className="text-[#7FD97F]">аккаунта Xbox</span>
             </h2>
 
             <p className="text-gray-300 leading-relaxed mb-6">
@@ -288,7 +295,7 @@ export default function GuideXboxAccount() {
           <section className="py-12 border-b border-white/5">
             <Accent />
             <h2 className="font-rajdhani text-3xl md:text-4xl font-bold text-white mb-6">
-              Пошаговая регистрация учётки <span className="text-[#7FD97F]">Microsoft</span>
+              Пошаговая регистрация аккаунта Xbox через <span className="text-[#7FD97F]">Microsoft</span>
             </h2>
 
             <p className="text-gray-300 leading-relaxed mb-6">
@@ -370,11 +377,11 @@ export default function GuideXboxAccount() {
 
             <Callout type="info" label="Disposable-почты Microsoft блокирует полностью">
               <p>
-                Temp-mail, 10minutemail, guerrillamail и прочие одноразовые ящики отсекаются
-                на этапе валидации email. С 30 апреля 2026 Microsoft завершает финальное
-                ужесточение этой политики — даже «долгоиграющие» anonymous-провайдеры
-                (типа mail.tm) начнут отваливаться. Если хотите анонимности — создавайте
-                нормальный @outlook.com под вымышленным именем, это работает.
+                Temp-mail, 10minutemail, guerrillamail и прочие одноразовые ящики Microsoft
+                отсекает на этапе валидации email. Политика постепенно ужесточается — третьесторонние
+                провайдеры регулярно добавляются в чёрные списки без публичных анонсов. Если
+                хотите анонимности — создавайте нормальный @outlook.com под вымышленным именем,
+                это работает безотказно.
               </p>
             </Callout>
           </section>
@@ -383,7 +390,7 @@ export default function GuideXboxAccount() {
           <section className="py-12 border-b border-white/5">
             <Accent />
             <h2 className="font-rajdhani text-3xl md:text-4xl font-bold text-white mb-6">
-              Какой регион выбрать <span className="text-[#7FD97F]">в 2026</span> и как работает смена
+              Какой <span className="text-[#7FD97F]">регион Xbox</span> выбрать в 2026 и как работает смена
             </h2>
 
             <p className="text-gray-300 leading-relaxed mb-4">
@@ -398,8 +405,8 @@ export default function GuideXboxAccount() {
               приём зарубежных карт. Август-сентябрь 2024 — ограничения покупок в TR, AR, BR
               через сайт и на консолях. Главная волна — 30 сентября 2024: массовые «жёлтые
               плашки» на аккаунтах, которые светились из иностранных IP в дешёвых регионах.
-              Март 2025 — бессрочные баны за эксплойт VPN. Июль 2025 — в десяти странах
-              (TR, AR, IN, BR, CO, TW, ZA, NG, EG, CN) покупки стали доступны только картами
+              Март 2025 — бессрочные баны за эксплойт VPN. Июль 2025 — в семи странах
+              (TR, AR, IN, BR, CO, TW, ZA) покупки стали доступны только картами
               страны магазина.
             </p>
             <p className="text-gray-300 leading-relaxed mb-8">
@@ -427,15 +434,15 @@ export default function GuideXboxAccount() {
                 </thead>
                 <tbody className="text-gray-300">
                   <tr className="border-b border-white/5">
-                    <td className="py-3 px-4">🇹🇷 Турция</td>
-                    <td className="py-3 px-4">₺549–599</td>
-                    <td className="py-3 px-4">1 100–1 200</td>
+                    <td className="py-3 px-4"><Flag code="tr" alt="Турция"/>Турция</td>
+                    <td className="py-3 px-4">₺799</td>
+                    <td className="py-3 px-4">~1 600</td>
                     <td className="py-3 px-4 text-[#EF9F27]">Нужен</td>
                     <td className="py-3 px-4 text-[#E24B4A]">Только TR</td>
                     <td className="py-3 px-4 text-[#E24B4A]">Да, 3 волны</td>
                   </tr>
                   <tr className="border-b border-white/5">
-                    <td className="py-3 px-4">🇦🇷 Аргентина</td>
+                    <td className="py-3 px-4"><Flag code="ar" alt="Аргентина"/>Аргентина</td>
                     <td className="py-3 px-4">ARS 24 999</td>
                     <td className="py-3 px-4">~1 500</td>
                     <td className="py-3 px-4 text-[#EF9F27]">Нужен</td>
@@ -443,15 +450,15 @@ export default function GuideXboxAccount() {
                     <td className="py-3 px-4 text-[#E24B4A]">Да</td>
                   </tr>
                   <tr className="border-b border-white/5 bg-[#7FD97F]/[0.03]">
-                    <td className="py-3 px-4 font-semibold text-white">🇰🇿 Казахстан</td>
+                    <td className="py-3 px-4 font-semibold text-white"><Flag code="kz" alt="Казахстан"/>Казахстан</td>
                     <td className="py-3 px-4">нет стора</td>
-                    <td className="py-3 px-4">880–1 120*</td>
+                    <td className="py-3 px-4">—</td>
                     <td className="py-3 px-4 text-[#5DCAA5]">Часто нет</td>
                     <td className="py-3 px-4 text-[#5DCAA5]">Работает везде</td>
                     <td className="py-3 px-4 text-[#5DCAA5]">Не затронут</td>
                   </tr>
                   <tr className="border-b border-white/5">
-                    <td className="py-3 px-4">🇺🇸 США</td>
+                    <td className="py-3 px-4"><Flag code="us" alt="США"/>США</td>
                     <td className="py-3 px-4">$29.99</td>
                     <td className="py-3 px-4">~2 520</td>
                     <td className="py-3 px-4 text-[#EF9F27]">Нужен</td>
@@ -459,7 +466,7 @@ export default function GuideXboxAccount() {
                     <td className="py-3 px-4 text-[#5DCAA5]">Нет</td>
                   </tr>
                   <tr className="border-b border-white/5">
-                    <td className="py-3 px-4">🇮🇳 Индия</td>
+                    <td className="py-3 px-4"><Flag code="in" alt="Индия"/>Индия</td>
                     <td className="py-3 px-4">INR 1 389</td>
                     <td className="py-3 px-4">~1 375</td>
                     <td className="py-3 px-4 text-[#EF9F27]">Нужен</td>
@@ -467,7 +474,7 @@ export default function GuideXboxAccount() {
                     <td className="py-3 px-4 text-[#E24B4A]">Да</td>
                   </tr>
                   <tr>
-                    <td className="py-3 px-4">🇳🇬 Нигерия</td>
+                    <td className="py-3 px-4"><Flag code="ng" alt="Нигерия"/>Нигерия</td>
                     <td className="py-3 px-4">у реселлеров</td>
                     <td className="py-3 px-4">825–1 625</td>
                     <td className="py-3 px-4 text-[#EF9F27]">Нужен</td>
@@ -476,9 +483,6 @@ export default function GuideXboxAccount() {
                   </tr>
                 </tbody>
               </table>
-              <p className="text-xs text-gray-500 mt-3 px-4">
-                * Цена на готовые ключи Ultimate у казахстанских реселлеров (gamerz.kz, kaspi.kz).
-              </p>
             </div>
 
             <h3 className="font-rajdhani text-xl font-bold text-[#7FD97F] mt-10 mb-4">
@@ -494,11 +498,11 @@ export default function GuideXboxAccount() {
               Потом октябрь 2025 — локальная цена Ultimate выросла в 2–2.5 раза.
             </p>
             <p className="text-gray-300 leading-relaxed mb-4">
-              Сейчас апрельский 2026 Ultimate в Турции стоит ₺549–599 (≈1 100–1 200 ₽). Годовой
-              ключ на livecards.net — $189,29 (~15 900 ₽). Дешевле США, но всего процентов на 30,
-              а не в 3 раза. Чтобы это получить, нужен турецкий VPN, турецкая ininal или банковская
-              карта (Enpara, Akbank), и первый месяц «отмывки» аккаунта на турецком IP
-              без подозрительных действий.
+              Сейчас, на апрель 2026-го, Ultimate в Турции стоит ₺799/мес (по новой сетке
+              с 1 октября 2025). В долларовом эквиваленте это дешевле США примерно на 20–30%,
+              а не в 3 раза, как было до хайка. Чтобы получить эту цену, нужен турецкий VPN,
+              местная банковская или виртуальная карта, и первый месяц аккуратного поведения
+              на турецком IP без подозрительных действий.
             </p>
             <p className="text-gray-300 leading-relaxed">
               Турция в 2026 — для тех, кто понимает риски. Если аккаунт сожжёте, сгорят библиотека
@@ -517,34 +521,21 @@ export default function GuideXboxAccount() {
               жёлтая плашка мгновенно.
             </p>
             <p className="text-gray-300 leading-relaxed">
-              После хайка Аргентина в долларовом эквиваленте иногда выходит даже дороже США.
-              Единственная экономия — на готовых длинных ключах от Eneba или G2A. Свежих
-              аккаунтов под Аргентину в 2026 заводить нет смысла.
+              После хайка октября 2025 Аргентина в долларовом эквиваленте иногда выходит
+              даже дороже США. Свежих аккаунтов под Аргентину в 2026 заводить нет смысла.
             </p>
 
             <h3 className="font-rajdhani text-xl font-bold text-[#7FD97F] mt-10 mb-4">
               Казахстан: тихая гавань для платежей
             </h3>
 
-            <p className="text-gray-300 leading-relaxed mb-4">
-              Парадокс 2026 года. У Казахстана нет собственного Икс Бокс Стора и официального
-              Game Pass. Но казахстанская карта — Kaspi, Halyk, виртуалка Bybit KZ — по-прежнему
-              спокойно работает в глобальном регионе аккаунта Microsoft и во многих других
-              регионах, которые не заставляют показывать паспорт.
-            </p>
-            <p className="text-gray-300 leading-relaxed mb-4">
-              Чистки сентября 2024 и июля 2025 Казахстан почти не затронули. Microsoft не считает
-              KZ-карты «серыми», потому что формально у них никогда не было региональной привязки
-              к Xbox Store. Для российского игрока это значит: можно сделать аккаунт в США или
-              оставить глобальный регион, подтянуть к нему Kaspi или Bybit KZ и спокойно покупать
-              без VPN в большинстве случаев.
-            </p>
             <p className="text-gray-300 leading-relaxed">
-              Минус один: самого Game Pass в местной цене нет, придётся либо платить американские
-              $29.99, либо покупать казахстанские коды Ultimate у реселлеров (gamerz.kz, kaspi.kz,
-              technodom.kz) — Ultimate на 4 месяца там ≈ 19 800 ₸ (~3 500 ₽), на 7 месяцев ≈
-              32 000 ₸ (~5 700 ₽), выходит 815–880 ₽ в месяц. Дешевле Турции после хайка
-              и без рисков блокировки.
+              Парадокс 2026 года: у Казахстана нет собственного Xbox-стора и официального
+              Game Pass, но именно туда в последний год перешло много игроков из СНГ.
+              Причина — платёжная инфраструктура: казахстанские карты и виртуалки стабильно
+              работают в глобальном регионе аккаунта, не попадая под волны чисток сентября
+              2024 и июля 2025. Для российского игрока это один из самых спокойных вариантов
+              в 2026-м — без рисков блокировки, часто даже без VPN.
             </p>
 
             <h3 className="font-rajdhani text-xl font-bold text-[#7FD97F] mt-10 mb-4">
@@ -554,7 +545,7 @@ export default function GuideXboxAccount() {
             <p className="text-gray-300 leading-relaxed mb-4">
               США — самый надёжный и самый дорогой. Ultimate $29.99, годовых пакетов нет. Сюда
               перетекают те, кого выбило из Турции и Аргентины. Без US-карты работает только
-              пополнение через подарочные коды ($10–100 на kupikod, plati, ggsel). VPN всегда,
+              пополнение через подарочные коды номиналом $10–100. VPN всегда,
               иначе аккаунт маркируется как «возможно мигрированный из санкционного региона».
             </p>
             <p className="text-gray-300 leading-relaxed mb-4">
@@ -564,9 +555,9 @@ export default function GuideXboxAccount() {
               новыми аккаунтами смысла нет.
             </p>
             <p className="text-gray-300 leading-relaxed">
-              Нигерия — экзотика. Официального Game Pass на xbox.com/en-NG нет, реселлеры
-              продают коды ₦15 000–29 500. Антифрод детектирует nigerian-аккаунты агрессивно.
-              Не вариант для основного использования.
+              Нигерия — экзотика. Собственного локального Game Pass-стора нет.
+              Антифрод детектирует nigerian-аккаунты агрессивно. Не вариант для основного
+              использования.
             </p>
 
             <h3 className="font-rajdhani text-xl font-bold text-[#7FD97F] mt-10 mb-4">
@@ -578,22 +569,23 @@ export default function GuideXboxAccount() {
               страну или регион». Выбираем новую страну, подтверждаем. Есть нюансы.
             </p>
             <p className="text-gray-300 leading-relaxed mb-6">
-              Первое — после смены блокируется повторная смена на 3 месяца. Второе — деньги на
-              балансе не переносятся и сгорают. Не конвертируются, не возвращаются, просто
-              исчезают. Третье — купленные игры обычно остаются в библиотеке, но часть регионального
-              DLC и мультиплеерные сервисы могут стать недоступны (Microsoft прямо оговорил
-              это в обновлении соглашения 30 сентября 2024). Четвёртое — если на аккаунте
-              активная подписка из другого региона, смена заблокируется ошибкой
-              ConvBlockCurrencyCountryMismatch. Сначала ждём окончания или отменяем.
+              Первое — после смены блокируется повторная смена на 3 месяца. Второе — баланс
+              Microsoft Store не переносится между регионами. Деньги остаются привязаны к валюте
+              старого региона и становятся недоступны для покупок после переключения. Результат
+              для игрока тот же, что и потеря. Третье — купленные игры обычно остаются в библиотеке,
+              но часть регионального DLC и мультиплеерные сервисы могут стать недоступны
+              (Microsoft прямо оговорил это в обновлении соглашения 30 сентября 2024). Четвёртое —
+              если на аккаунте активная подписка из старого региона, покупки в новом блокируются
+              ошибкой ConvBlockCurrencyCountryMismatch. Сначала ждём окончания или отменяем.
             </p>
 
             <Callout type="danger" label="Баланс Microsoft Store при смене региона сгорает">
               <p>
                 Проверено всеми, у кого было $50+ на счету. Microsoft официально:
-                «funds on your balance are not refundable and will not transfer to the new region».
-                Перед сменой региона потратьте весь баланс подчистую — купите игру, продлите
-                подписку на максимум, купите MS-код и не активируйте. Что угодно, но не оставляйте
-                деньги в кошельке.
+                «We can&apos;t transfer money between regions». Баланс в старой валюте остаётся
+                на аккаунте, но становится неиспользуемым. Перед сменой региона потратьте весь
+                баланс подчистую — купите игру, продлите подписку на максимум, купите MS-код и
+                не активируйте. Что угодно, но не оставляйте деньги в кошельке.
               </p>
             </Callout>
 
@@ -601,7 +593,7 @@ export default function GuideXboxAccount() {
               <p>
                 Если при попытке покупки вы видите жёлтое сообщение «Your payment method doesn&apos;t
                 match the region» — Microsoft засёк несоответствие между IP, регионом аккаунта
-                и страной карты. В TR, AR, BR, IN, CO, ZA, NG, EG, TW, CN это равно блокировке
+                и страной карты. В TR, AR, BR, IN, CO, TW, ZA это равно блокировке
                 покупки. Снимается месяцем «отмывки»: заходим только с IP нужной страны, sign-out
                 со всех лишних устройств, меняем пароль, удаляем привязанные девайсы из списка.
                 Через 30 дней пробуем снова. Если плашка вернулась — аккаунт помечен перманентно,
@@ -623,7 +615,7 @@ export default function GuideXboxAccount() {
           <section className="py-12 border-b border-white/5">
             <Accent />
             <h2 className="font-rajdhani text-3xl md:text-4xl font-bold text-white mb-6">
-              Защита аккаунта: <span className="text-[#7FD97F]">2FA, passkey, Authenticator</span>
+              Защита аккаунта Xbox: <span className="text-[#7FD97F]">2FA, passkey, Authenticator</span>
             </h2>
 
             <p className="text-gray-300 leading-relaxed mb-6">
@@ -772,7 +764,7 @@ export default function GuideXboxAccount() {
           <section className="py-12 border-b border-white/5">
             <Accent />
             <h2 className="font-rajdhani text-3xl md:text-4xl font-bold text-white mb-6">
-              Восстановление доступа, <span className="text-[#7FD97F]">если всё сломалось</span>
+              Восстановление аккаунта Xbox, <span className="text-[#7FD97F]">если всё сломалось</span>
             </h2>
 
             <p className="text-gray-300 leading-relaxed mb-6">
@@ -840,7 +832,7 @@ export default function GuideXboxAccount() {
           <section className="py-12 border-b border-white/5">
             <Accent />
             <h2 className="font-rajdhani text-3xl md:text-4xl font-bold text-white mb-6">
-              Типичные <span className="text-[#7FD97F]">ошибки и коды</span> в 2026
+              Типичные <span className="text-[#7FD97F]">ошибки Xbox и коды</span> в 2026
             </h2>
 
             <p className="text-gray-300 leading-relaxed mb-6">
@@ -859,7 +851,7 @@ export default function GuideXboxAccount() {
                 { code: 'Sorry, something\'s wrong with your Microsoft account', desc: 'Смена пароля, 2FA-блок или угон', fix: 'support.xbox.com → сброс пароля, проверка 2FA, в тяжёлых случаях — ACSR' },
                 { code: 'Этот код страны не поддерживается', desc: 'Нельзя привязать номер для 2FA', fix: 'Использовать email вместо телефона, либо номер из рабочего списка стран (US, UK, DE, TR, KZ)' },
                 { code: 'Жёлтая плашка в корзине', desc: 'Несоответствие IP, региона и карты', fix: 'Месяц «отмывки» — заходить только с IP нужного региона, убрать чужие устройства, сменить пароль' },
-                { code: 'ConvBlockCurrencyCountryMismatch', desc: 'Активная подписка блокирует смену региона', fix: 'Отменить подписку или дождаться окончания, затем повторить смену региона' },
+                { code: 'ConvBlockCurrencyCountryMismatch', desc: 'Блокирует покупку в новом регионе при активной подписке из другого', fix: 'Отменить подписку или дождаться окончания, затем продолжать покупки в новом регионе' },
               ].map((err) => (
                 <div key={err.code} className="bg-white/[0.02] border border-white/[0.06] rounded-xl p-4">
                   <div className="font-mono text-sm font-semibold text-[#E24B4A] mb-1 break-all">{err.code}</div>
@@ -883,7 +875,7 @@ export default function GuideXboxAccount() {
           <section className="py-12 border-b border-white/5">
             <Accent />
             <h2 className="font-rajdhani text-3xl md:text-4xl font-bold text-white mb-6">
-              Первая настройка консоли <span className="text-[#7FD97F]">и gamertag</span>
+              Первая настройка <span className="text-[#7FD97F]">Xbox и gamertag</span>
             </h2>
 
             <p className="text-gray-300 leading-relaxed mb-4">
@@ -927,7 +919,7 @@ export default function GuideXboxAccount() {
                 { q: 'Как создать детский аккаунт Xbox без кредитки родителя?', a: 'Никак. Microsoft Family требует подтверждения родителя через кредитную карту с временным списанием $0.50 (возвращается). Это мера проверки возраста.' },
                 { q: 'Что такое 30-day security waiting period?', a: 'При попытке сменить security-данные без доступа к действующему методу Microsoft применяет изменения через 30 дней. На старые контакты приходят уведомления с возможностью отменить операцию.' },
                 { q: 'Почему passkey не всегда работает на Xbox Series X|S?', a: 'Microsoft Q&A от 17 октября 2025 признаёт: QR-flow passkey на консолях завершается нестабильно. Workaround — временно вернуть пароль, залогиниться на консоль, затем снова переключиться на passwordless.' },
-                { q: 'Какой регион самый безопасный для российского игрока в 2026?', a: 'Связка: аккаунт в США или глобальный регион, карта Казахстана (Bybit KZ, Kaspi), Microsoft Authenticator. Никакой volatility цен, KZ-карта принимается в большинстве регионов, аккаунт не попадает под чистки Турции и Аргентины.' },
+                { q: 'Какой регион самый безопасный для российского игрока в 2026?', a: 'Связка: аккаунт в США или глобальный регион, казахстанская банковская или виртуальная карта, Microsoft Authenticator. Никакой volatility цен, KZ-карта принимается в большинстве регионов, аккаунт не попадает под чистки Турции и Аргентины.' },
               ].map((item, i) => (
                 <details key={i} className="group bg-white/[0.02] border border-white/[0.06] rounded-xl overflow-hidden">
                   <summary className="cursor-pointer list-none p-5 flex items-center justify-between hover:bg-white/[0.02] transition-colors">
