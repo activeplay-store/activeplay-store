@@ -1,5 +1,32 @@
 [
   {
+    "id": "pragmata-stala-odnoy-iz-luchshih-igr-capcom-na-steam",
+    "slug": "pragmata-stala-odnoy-iz-luchshih-igr-capcom-na-steam",
+    "title": "Pragmata стала одной из лучших игр Capcom на Steam",
+    "content": "PRAGMATA, выпущенная на ПК 17 апреля 2026 года, стала настоящим хитом среди игр Capcom на платформе Steam. Игроки оценили её по достоинству, что подтверждают 97% положительных отзывов и впечатляющий рейтинг 93,87% на SteamDB. Игра немного уступает таким культовым проектам, как Resident Evil 4, который имеет рейтинг 96,11%.\n\nPRAGMATA — экшен, доступный на ПК, PlayStation 5 и Xbox Series S/X. Игроки управляют двумя персонажами: Хьюго и Дианой. Разработчики уделили особое внимание балансировке игровых механик, что и стало причиной задержек релиза. В результате, проект предлагает уникальный опыт взаимодействия с игровым миром, который был детально проработан и доработан до выхода. На момент выхода цена игры составляет 3 499 ₽.\n\nИгры Capcom всегда привлекали внимание своей проработанностью и качеством, и PRAGMATA не стала исключением. Эта игра продолжает традиции компании, которая ранее выпустила такие хиты, как Resident Evil Requiem. PRAGMATA заслужила множество положительных отзывов от критиков и игроков, что делает её одним из самых обсуждаемых проектов последнего времени.\n\nПогрузиться в мир новых игр и поддержать свои впечатления можно с помощью подписок на ActivePlay. Подписки начинаются от 1 250 ₽/мес, что позволяет вам получить доступ к самым свежим релизам на разных платформах. Не упустите возможность открыть для себя новые игровые горизонты!",
+    "metaDescription": "PRAGMATA стала одной из лучших игр Capcom на Steam с 97% положительных отзывов. Доступна на ПК, PS5 и Xbox Series.",
+    "coverUrl": "/images/news/news-1776574951834-iwm1.jpg",
+    "tags": [
+      "Capcom",
+      "PRAGMATA",
+      "Steam",
+      "PS5",
+      "Xbox"
+    ],
+    "category": "news",
+    "source": "Insider Gaming",
+    "sourceUrl": "https://insider-gaming.com/pragmata-is-one-of-capcoms-all-time-top-rated-steam-games/",
+    "publishedAt": "2026-04-19T08:02:07.561Z",
+    "gameId": null,
+    "relatedProduct": null,
+    "platform": "multi",
+    "ctaType": "general",
+    "ctaText": "Подписки от 1 250 ₽/мес",
+    "ctaLink": "/subscriptions",
+    "cta": null,
+    "cta2": null
+  },
+  {
     "id": "chto-playstation-nuzhno-ispravit-pered-vyhodom-ps6",
     "slug": "chto-playstation-nuzhno-ispravit-pered-vyhodom-ps6",
     "title": "Что PlayStation нужно исправить перед выходом PS6",
@@ -1633,40 +1660,5 @@
       "url": "/ps-plus-extra",
       "buttonText": "Подробнее →"
     }
-  },
-  {
-    "id": "resident-evil-4-grafika-ps5-pro-vs-ps5-polnyy-razbor",
-    "slug": "resident-evil-4-grafika-ps5-pro-vs-ps5-polnyy-razbor",
-    "title": "Resident Evil 4: Графика PS5 Pro vs PS5 - полный разбор!",
-    "content": "В сети появилось интересное сравнение графики Resident Evil 4. Энтузиасты сравнили версии игры, запущенные на PS5 и, предположительно, на PS5 Pro.\n\nРазница заметна благодаря технологии PSSR 2.0. Она делает изображение более четким и детализированным. Важно помнить: существование PS5 Pro официально не подтверждено. \n\nПоэтому относиться к этой информации стоит как к слуху. Resident Evil 4 – это ремейк культового хоррора от Capcom. Игра получила высокие оценки за графику и геймплей.\n\nОформить PS Plus можно в ActivePlay от 1 250 ₽/мес. Активация за 10 минут, оплата в рублях.",
-    "metaDescription": "Сравнение графики Resident Evil 4 на PS5 и PS5 Pro. Улучшения с технологией PSSR 2.0. Подробности и анализ.",
-    "coverUrl": "/images/news/news-1775388406761-svjl.jpg",
-    "tags": [
-      "Resident Evil 4",
-      "PS5 Pro",
-      "графика",
-      "PSSR 2.0",
-      "слухи"
-    ],
-    "category": "rumor",
-    "source": "r/PS5",
-    "sourceUrl": "https://youtu.be/MQwtitqiZKQ?si=JdNq-RLcaY_tnJ1X",
-    "publishedAt": "2026-04-05T11:27:14.995Z",
-    "gameId": null,
-    "relatedProduct": null,
-    "platform": "playstation",
-    "ctaType": "psplus",
-    "ctaText": "PS Plus от 1 250 ₽/мес",
-    "ctaLink": "/subscriptions",
-    "cta": {
-      "gameId": "resident-evil",
-      "title": "Купить Resident Evil",
-      "description": "Активация за 5 минут. Турецкий PS Store.",
-      "price": 950,
-      "oldPrice": 2350,
-      "url": "/sale",
-      "buttonText": "Купить за 950 ₽ →"
-    },
-    "cta2": null
   }
 ]
