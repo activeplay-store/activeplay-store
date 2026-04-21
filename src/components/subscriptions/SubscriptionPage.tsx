@@ -28,23 +28,27 @@ function GameCarousel({ games, planName }: { games: ShowcaseGame[]; planName?: s
   const scrollRef = useRef<HTMLDivElement>(null);
   const isPaused = useRef(false);
 
+  // Only auto-scroll / duplicate when the list is long enough to need looping.
+  // For short lists (≤ 8 games) the duplication just shows the same covers
+  // twice in a row, which looks like a bug.
+  const shouldLoop = games.length > 8;
+
   const scroll = useCallback(() => {
     const el = scrollRef.current;
-    if (!el || isPaused.current) return;
+    if (!el || isPaused.current || !shouldLoop) return;
     el.scrollLeft += 1;
-    // Loop: when scrolled past half (duplicated content), reset
     if (el.scrollLeft >= el.scrollWidth / 2) {
       el.scrollLeft = 0;
     }
-  }, []);
+  }, [shouldLoop]);
 
   useEffect(() => {
+    if (!shouldLoop) return;
     const id = setInterval(scroll, 30);
     return () => clearInterval(id);
-  }, [scroll]);
+  }, [scroll, shouldLoop]);
 
-  // Duplicate games for seamless loop
-  const looped = [...games, ...games];
+  const looped = shouldLoop ? [...games, ...games] : games;
 
   return (
     <div

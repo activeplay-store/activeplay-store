@@ -2251,6 +2251,52 @@ function getEssentialAvailableUntil(currentMonth) {
   return '';
 }
 
+async function fetchSonyPortraitByName(gameName) {
+  // Use PS Store tumbler search to find the product, then pull the
+  // PORTRAIT_BANNER (box art) from its concept page. This is the
+  // authoritative cover for PS games — better than RAWG screenshots.
+  try {
+    const searchRes = await fetch(
+      'https://store.playstation.com/store/api/chihiro/00_09_000/tumbler/TR/en/999/' +
+      encodeURIComponent(gameName) + '?suggested_size=5&mode=game',
+      { signal: AbortSignal.timeout(10000), headers: { 'User-Agent': config.parsers.userAgent } }
+    );
+    if (!searchRes.ok) return null;
+    const searchData = await searchRes.json();
+    const nameLower = gameName.toLowerCase();
+    const gameSlug = slugify(gameName);
+    const candidates = (searchData.links || [])
+      .filter(l => l.name && (
+        slugify(l.name) === gameSlug ||
+        l.name.toLowerCase().includes(nameLower) ||
+        (nameLower.includes(l.name.toLowerCase()) && l.name.length > 10)
+      ))
+      .map(l => {
+        let score = 0;
+        if (slugify(l.name) === gameSlug) score += 100;
+        if (l.game_contentType === 'Full Game' || l.game_contentType === 'FULL_GAME') score += 50;
+        const ln = l.name.toLowerCase();
+        if (ln.includes('dlc') || ln.includes('add-on') || ln.includes('pack') || ln.includes('points') || ln.includes('coins')) score -= 30;
+        return { id: l.id, score };
+      })
+      .sort((a, b) => b.score - a.score);
+    for (const c of candidates.slice(0, 3)) {
+      await new Promise(r => setTimeout(r, 400));
+      const url = `https://store.playstation.com/en-tr/product/${c.id}`;
+      const res = await fetch(url, {
+        headers: { 'User-Agent': config.parsers.userAgent },
+        signal: AbortSignal.timeout(12000),
+        redirect: 'follow',
+      });
+      if (!res.ok) continue;
+      const html = await res.text();
+      const m = html.match(/PORTRAIT_BANNER"[^}]*?"url":"(https:\/\/image\.api\.playstation\.com[^"]+)"/);
+      if (m) return m[1];
+    }
+  } catch {}
+  return null;
+}
+
 async function ensureCoverImage(gameName, gameSlug) {
   const coversDir = path.join(REPO_ROOT, 'public', 'images', 'covers');
   const coverPath = path.join(coversDir, gameSlug + '.jpg');
@@ -2264,18 +2310,21 @@ async function ensureCoverImage(gameName, gameSlug) {
 
     let imageUrl = null;
 
-    // 1. Known slug fast-path
-    const knownSlug = findKnownSlug(gameName);
-    if (knownSlug) {
-      imageUrl = await getRAWGBySlug(knownSlug);
+    // 1. PS Store PORTRAIT_BANNER — authoritative box art for PS games
+    imageUrl = await fetchSonyPortraitByName(gameName);
+
+    // 2. Known-slug RAWG fast-path
+    if (!imageUrl) {
+      const knownSlug = findKnownSlug(gameName);
+      if (knownSlug) imageUrl = await getRAWGBySlug(knownSlug);
     }
 
-    // 2. RAWG full-name search
+    // 3. RAWG full-name search
     if (!imageUrl) {
       imageUrl = await searchRAWG(gameName);
     }
 
-    // 3. RAWG retries with stripped suffixes (Football Manager 26 Console → Football Manager 26)
+    // 4. RAWG retries with stripped suffixes (Football Manager 26 Console → Football Manager 26)
     if (!imageUrl) {
       const variants = new Set();
       const stripped = gameName
@@ -2293,7 +2342,7 @@ async function ensureCoverImage(gameName, gameSlug) {
       }
     }
 
-    // 4. Last-resort: OG image from PS Store concept page
+    // 5. Last-resort: OG image from PS Store concept page
     if (!imageUrl) {
       try { imageUrl = await fetchOgImage(gameSlug); } catch {}
     }
