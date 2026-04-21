@@ -180,6 +180,19 @@ async function checkExtra() {
     return { changed: false, skipped: true, reason: 'too_few_games', count };
   }
 
+  // Guard against truncated scrapes: if fresh count drops by >30% from previous,
+  // reject the write. A page failure inside fetchCategory silently returns partial
+  // data, which would otherwise nuke hundreds of games via the merge logic below.
+  const prevCount = current.games?.length || 0;
+  if (prevCount >= 100 && freshGames.length < prevCount * 0.7) {
+    console.error(`${PREFIX} Extra: count drop ${prevCount} → ${freshGames.length} (>30%), возможна обрезка скрейпа, не обновляю.`);
+    try {
+      await notifier.sendAlert('catalog_suspicious',
+        `⚠️ Extra: провал с ${prevCount} до ${freshGames.length} игр (>30%). Скрейп похоже обрезан, старые данные сохранены.`);
+    } catch {}
+    return { changed: false, skipped: true, reason: 'suspicious_drop', count: freshGames.length, prevCount };
+  }
+
   const currentIds = new Set(current.games.map(g => g.id));
   const freshIds = new Set(freshGames.map(g => g.id));
 
@@ -239,6 +252,16 @@ async function checkClassics() {
         `⚠️ Classics: Sony вернула ${count} игр (ожидается 400+). Старые данные сохранены.`);
     } catch {}
     return { changed: false, skipped: true, reason: 'too_few_games', count };
+  }
+
+  const prevCount = current.games?.length || 0;
+  if (prevCount >= 100 && freshGames.length < prevCount * 0.7) {
+    console.error(`${PREFIX} Classics: count drop ${prevCount} → ${freshGames.length} (>30%), возможна обрезка скрейпа, не обновляю.`);
+    try {
+      await notifier.sendAlert('catalog_suspicious',
+        `⚠️ Classics: провал с ${prevCount} до ${freshGames.length} игр (>30%). Скрейп похоже обрезан, старые данные сохранены.`);
+    } catch {}
+    return { changed: false, skipped: true, reason: 'suspicious_drop', count: freshGames.length, prevCount };
   }
 
   const currentIds = new Set(current.games.map(g => g.id));
