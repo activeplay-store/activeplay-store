@@ -1,5 +1,37 @@
 [
   {
+    "id": "saros-novaya-igra-dlya-ps5-predlagaet-uluchshennyy-geympley",
+    "slug": "saros-novaya-igra-dlya-ps5-predlagaet-uluchshennyy-geympley",
+    "title": "Saros: новая игра для PS5 предлагает улучшенный геймплей",
+    "content": "Стало известно, что игра Saros, разработанная известной студией в жанре roguelike, готовится к релизу на платформе PS5 и PS5 Pro. Точная дата выхода намечена на 30 апреля 2026 года. Издателем выступает крупная компания, специализирующаяся на выпуске игр для консолей.\n\nSaros — экшен-шутер с элементами roguelike, который, как ожидается, предложит игрокам более глубокий сюжет и улучшенную графику по сравнению с Returnal. Игра будет доступна исключительно на платформах PS5 и PS5 Pro и предложит новый уровень погружения благодаря расширенному контенту, на что указывают большие размеры загрузки. Стоимость игры составляет 6 300 ₽, и она уже доступна для предзаказа.\n\nРазработчики Saros известны своими предыдущими проектами в жанре roguelike, что вызывает уверенность в качестве новой игры. Критики и игроки возлагают большие надежды на Saros, ожидая от неё уникальных игровых механик и нового взгляда на жанр. Возможно, игра станет частью неофициальной серии, вдохновлённой Returnal, но с абсолютно уникальными особенностями и подходом.\n\nПользователи могут оформить предзаказ на Saros и стать одними из первых, кто оценит все нововведения и погрузится в мир новой игры. На сайте ActivePlay Saros доступна по цене 8 850 ₽, предоставляя возможность испытать её уникальные механики и сюжет. Не упустите шанс окунуться в захватывающие приключения Saros уже с 30 апреля.",
+    "metaDescription": "Saros: новая игра для PS5 от известной студии в жанре roguelike. Улучшенная графика, глубокий сюжет и уникальные механики.",
+    "coverUrl": "/images/news/news-1776762173811-k1wb.jpg",
+    "tags": [
+      "PS5",
+      "Sony",
+      "PS Store"
+    ],
+    "category": "news",
+    "source": "N4G aggregator",
+    "sourceUrl": "http://newsboiler-www-website.azurewebsites.net/news/2687990/saros-hands-on-preview-coming-back-stronger-console-creatures",
+    "publishedAt": "2026-04-21T09:53:03.084Z",
+    "gameId": "saros",
+    "relatedProduct": null,
+    "platform": "playstation",
+    "ctaType": "deals",
+    "ctaText": "Купить SAROS от 6 300 ₽",
+    "ctaLink": "/item/saros",
+    "cta": {
+      "gameId": "saros",
+      "name": "SAROS",
+      "title": "Купить SAROS",
+      "description": "Активация за 5 минут. Турецкий PS Store.",
+      "price": 8850,
+      "buttonText": "Купить за 8850 ₽ →"
+    },
+    "cta2": null
+  },
+  {
     "id": "games-leaving-ps-plus-in-may-2026-confirmed",
     "slug": "games-leaving-ps-plus-in-may-2026-confirmed",
     "title": "Games Leaving PS Plus in May 2026 Confirmed",
@@ -1606,40 +1638,6 @@
     "ctaText": "PS Plus от 1 250 ₽/мес",
     "ctaLink": "/subscriptions",
     "cta": null,
-    "cta2": null
-  },
-  {
-    "id": "playstation-store-mlb-26-i-crimson-desert-hity-marta-2026",
-    "slug": "playstation-store-mlb-26-i-crimson-desert-hity-marta-2026",
-    "title": "PlayStation Store: MLB 26 и Crimson Desert – хиты марта 2026",
-    "content": "Sony опубликовала топ загрузок PlayStation Store за март 2026. В Европе безоговорочным лидером стала Crimson Desert — экшен-RPG от Pearl Abyss. Игра обошла все новинки месяца и заняла первое место в европейском чарте. В Азии Crimson Desert тоже на первой строчке. В США лидирует бейсбольный симулятор MLB The Show 26.\n\nCrimson Desert — амбициозный проект от создателей Black Desert. Открытый мир, масштабные сражения и кинематографичный сюжет привлекли миллионы игроков. Европейская аудитория особенно оценила боевую систему и визуальную часть. Pearl Abyss продолжает выпускать патчи — последнее обновление улучшило графику на PS5 Pro.\n\nПримечательно, что Sony не раскрывает точных цифр продаж, ограничиваясь рейтингом. Но попадание Crimson Desert на первое место сразу в двух регионах говорит о серьёзном коммерческом успехе. Игра уверенно закрепилась среди главных хитов 2026 года.",
-    "metaDescription": "Crimson Desert возглавила топ загрузок PS Store в Европе и Азии за март 2026. Подробности европейского чарта и где купить игру.",
-    "coverUrl": "/images/covers/crimson-desert-new.jpg",
-    "tags": [
-      "PS5",
-      "PS Store",
-      "Crimson Desert",
-      "Европа",
-      "Топ загрузок"
-    ],
-    "category": "news",
-    "source": "PlayStation Blog",
-    "sourceUrl": "https://blog.playstation.com/2026/04/05/20260406-top/",
-    "publishedAt": "2026-04-06T09:12:55.677Z",
-    "gameId": null,
-    "relatedProduct": null,
-    "platform": "playstation",
-    "ctaType": "psplus",
-    "ctaText": "PS Plus от 1 250 ₽/мес",
-    "ctaLink": "/subscriptions",
-    "cta": {
-      "gameId": "crimson-desert",
-      "title": "Crimson Desert",
-      "description": "PS5. Активация за 10 минут через турецкий PS Store.",
-      "price": 7300,
-      "url": "/sale",
-      "buttonText": "Купить за 7 300 ₽ →"
-    },
     "cta2": null
   }
 ]
