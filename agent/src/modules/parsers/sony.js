@@ -69,23 +69,55 @@ async function sonyGraphQL(operationName, variables, regionCode) {
 }
 
 /**
- * Получить список игр из категории с пагинацией
+ * Получить список игр из категории с пагинацией (таймаут 30с + retry до 2 раз).
+ * При хроническом таймауте возвращает уже собранные страницы вместо throw.
  */
 async function fetchCategory(regionCode, categoryId, maxPages = 10) {
   const allProducts = [];
   let offset = 0;
   const size = config.parsers.sony.pageSize || 24;
+  const HARD_MAX_PAGES = 30;
+  const effectiveMaxPages = Math.min(maxPages, HARD_MAX_PAGES);
+  const PAGE_TIMEOUT_MS = 30000;
+  const MAX_ATTEMPTS = 3;
+  const RETRY_DELAY_MS = 3000;
+  let totalCount = null;
 
-  for (let page = 0; page < maxPages; page++) {
-    console.log(`[Sony] ${regionCode} категория стр.${page + 1} (offset=${offset})...`);
+  for (let page = 0; page < effectiveMaxPages; page++) {
+    let data = null;
+    const pageStart = Date.now();
 
-    const data = await sonyGraphQL('categoryGridRetrieve', {
-      id: categoryId,
-      pageArgs: { size, offset },
-      sortBy: null,
-      filterBy: [],
-      facetOptions: []
-    }, regionCode);
+    for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+      try {
+        data = await Promise.race([
+          sonyGraphQL('categoryGridRetrieve', {
+            id: categoryId,
+            pageArgs: { size, offset },
+            sortBy: null,
+            filterBy: [],
+            facetOptions: []
+          }, regionCode),
+          new Promise((_, reject) =>
+            setTimeout(() => reject(new Error('page timeout (30s)')), PAGE_TIMEOUT_MS)
+          )
+        ]);
+        break;
+      } catch (err) {
+        if (attempt < MAX_ATTEMPTS) {
+          console.log(`[Sony] Category ${categoryId} region ${regionCode} page ${page + 1} attempt ${attempt} failed: ${err.message}, retrying in ${RETRY_DELAY_MS}ms...`);
+          await sleep(RETRY_DELAY_MS);
+        } else {
+          console.log(`[Sony] Category ${categoryId} region ${regionCode} page ${page + 1} attempt ${attempt} failed: ${err.message}`);
+        }
+      }
+    }
+
+    const pageMs = Date.now() - pageStart;
+
+    if (!data) {
+      console.log(`[Sony] Page ${page + 1} failed after 3 retries, returning partial data (${allProducts.length} products collected)`);
+      return allProducts;
+    }
 
     if (!data?.data?.categoryGridRetrieve?.products) break;
 
@@ -94,9 +126,14 @@ async function fetchCategory(regionCode, categoryId, maxPages = 10) {
 
     allProducts.push(...products);
 
-    const totalCount = data.data.categoryGridRetrieve.totalCount;
+    if (totalCount === null) {
+      totalCount = data.data.categoryGridRetrieve.totalCount;
+    }
+    const estTotalPages = totalCount ? Math.ceil(totalCount / size) : '?';
+    console.log(`[Sony] Category ${categoryId} region ${regionCode} page ${page + 1}/${estTotalPages} fetched in ${pageMs}ms (${products.length} products)`);
+
     offset += size;
-    if (offset >= totalCount) break;
+    if (totalCount && offset >= totalCount) break;
 
     await sleep(config.parsers.politenessDelay);
   }
