@@ -2378,6 +2378,101 @@ async function generateEssentialShowcase() {
   return { written: true, pushed, count: games.length, month: monthName };
 }
 
+const EXTRA_CATALOG_JSON = path.join(__dirname, '..', '..', 'data', 'catalogs', 'extra.json');
+
+async function generateExtraShowcase() {
+  console.log(PREFIX + ' === Генерация Extra newReleases ===');
+
+  let catalog;
+  try {
+    catalog = JSON.parse(fs.readFileSync(EXTRA_CATALOG_JSON, 'utf8'));
+  } catch (err) {
+    console.error(PREFIX + ' Не удалось прочитать extra.json: ' + err.message);
+    return { written: false, pushed: false };
+  }
+
+  const games = (catalog.games || []).filter(g => g.addedAt);
+  if (games.length === 0) {
+    console.log(PREFIX + ' Extra — нет игр с addedAt, пропускаем');
+    return { written: false, pushed: false };
+  }
+
+  // Pick "new this month"; fall back to the most recent month that has ≥5 games
+  const now = new Date();
+  const ym = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+  const currentYM = ym(now);
+
+  let targetYM = currentYM;
+  let newGames = games.filter(g => g.addedAt.startsWith(currentYM));
+
+  if (newGames.length < 5) {
+    const monthsSeen = [...new Set(games.map(g => g.addedAt.slice(0, 7)))].sort().reverse();
+    for (const m of monthsSeen) {
+      const candidates = games.filter(g => g.addedAt.startsWith(m));
+      if (candidates.length >= 5) {
+        newGames = candidates;
+        targetYM = m;
+        break;
+      }
+    }
+  }
+
+  newGames.sort((a, b) => (b.addedAt || '').localeCompare(a.addedAt || ''));
+  newGames = newGames.slice(0, 15);
+
+  if (newGames.length === 0) {
+    console.log(PREFIX + ' Extra — нет кандидатов, пропускаем');
+    return { written: false, pushed: false };
+  }
+
+  const [yearStr, monthStr] = targetYM.split('-');
+  const monthLabel = `${MONTH_NAMES_RU[parseInt(monthStr, 10) - 1]} ${yearStr}`;
+
+  for (const g of newGames) {
+    await ensureCoverImage(g.name, slugify(g.name));
+  }
+
+  const psplusPath = path.join(REPO_ROOT, PSPLUS_FILE);
+  let content;
+  try {
+    content = fs.readFileSync(psplusPath, 'utf8');
+  } catch (err) {
+    console.error(PREFIX + ' Не удалось прочитать psplus.ts: ' + err.message);
+    return { written: false, pushed: false };
+  }
+
+  const gamesLines = newGames.map(g => {
+    const slug = slugify(g.name);
+    return `          { title: ${JSON.stringify(g.name)}, image: '/images/covers/${slug}.jpg' },`;
+  }).join('\n');
+
+  const newReleasesBlock =
+    `newReleases: {\n` +
+    `        month: '${monthLabel}',\n` +
+    `        games: [\n` +
+    gamesLines + '\n' +
+    `        ],\n` +
+    `      }`;
+
+  const regex = /newReleases:\s*\{[\s\S]*?games:\s*\[[\s\S]*?\],\s*\}/;
+  if (!regex.test(content)) {
+    console.error(PREFIX + ' Не найден блок newReleases в psplus.ts');
+    return { written: false, pushed: false };
+  }
+
+  const updated = content.replace(regex, newReleasesBlock);
+  if (updated === content) {
+    console.log(PREFIX + ' Extra newReleases — без изменений');
+    return { written: false, pushed: false, count: newGames.length, month: monthLabel };
+  }
+
+  fs.writeFileSync(psplusPath, updated, 'utf8');
+  console.log(PREFIX + ' ✅ psplus.ts.extra.newReleases обновлён: ' + newGames.length + ' игр, ' + monthLabel);
+
+  queueDeploy([PSPLUS_FILE, 'public/images/covers/']);
+  return { written: true, pushed: true, count: newGames.length, month: monthLabel };
+}
+
 // ── Export ───────────────────────────────────────────────────────────────
 
 module.exports = {
@@ -2387,5 +2482,6 @@ module.exports = {
   generateHotReleases,
   generateTopSellers,
   generateEssentialShowcase,
+  generateExtraShowcase,
   repoRoot: REPO_ROOT,
 };

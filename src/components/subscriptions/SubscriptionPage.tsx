@@ -254,13 +254,12 @@ function TrialsCatalog() {
   const filtered = sorted.filter((g) => !search || g.title.toLowerCase().includes(search.toLowerCase()));
   const isSearching = search.length > 0;
   const showExpanded = expanded || isSearching;
-  const formattedDate = trialsData.lastUpdated.split('-').reverse().join('.');
 
   return (
     <section className="relative z-10 py-12 sm:py-16 px-4 sm:px-6" style={{ background: 'rgba(10,21,37,0.5)' }}>
       <div className="max-w-6xl mx-auto">
         <h2 className="text-3xl sm:text-4xl font-bold font-display text-center mb-4">Полный список Game Trials — {trialsData.totalGames} пробные версии для PS5 и PS4</h2>
-        <p className="text-sm text-center mb-8" style={{ color: 'rgba(255,255,255,0.6)' }}>Последнее обновление: {formattedDate}</p>
+        <p className="text-sm text-center mb-8" style={{ color: 'rgba(255,255,255,0.6)' }}>Список ведётся нашей командой. Обновляется при появлении новых trials.</p>
         <div className="rounded-2xl p-6 sm:p-8 mb-6" style={{ background: 'rgba(15,23,42,0.5)' }}>
           <input type="text" placeholder="Найти пробную версию..." value={search} onChange={(e) => setSearch(e.target.value)}
             className="w-full min-h-[44px] px-4 py-2 rounded-xl text-sm text-white placeholder-white/30 bg-white/[0.06] border border-white/[0.1] focus:outline-none focus:ring-2 focus:ring-cyan-400/50 mb-4" />

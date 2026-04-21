@@ -208,6 +208,16 @@ async function checkExtra() {
     games: merged,
   });
 
+  try {
+    const siteWriter = require('./siteWriter');
+    const showcase = await siteWriter.generateExtraShowcase();
+    if (showcase.written) {
+      console.log(`${PREFIX} Extra showcase обновлён: ${showcase.count} игр, ${showcase.month}`);
+    }
+  } catch (err) {
+    console.error(`${PREFIX} Extra showcase ошибка: ${err.message}`);
+  }
+
   return { changed: true, added, removed };
 }
 
