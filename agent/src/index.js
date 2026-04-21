@@ -97,24 +97,22 @@ async function updateRates() {
       const changeSummary = result.changes.map(c => `${c.code}: ${c.from}->${c.to}`).join(', ');
       console.log(`[Rates] Triggered full site regen after rate change (${changeSummary})`);
 
-      // Курс изменился — пересчитать deals.ts
-      try {
-        const writeResult = await siteWriter.generateAndWrite();
-        if (writeResult.written) {
-          console.log(`[Agent] deals.ts пересчитан после изменения курса: ${writeResult.gamesCount} игр`);
+      const tasks = [
+        ['deals',       () => siteWriter.generateAndWrite()],
+        ['preorders',   () => siteWriter.generatePreorders()],
+        ['hotReleases', () => siteWriter.generateHotReleases()],
+        ['topSellers',  () => siteWriter.generateTopSellers()],
+      ];
+      for (const [name, fn] of tasks) {
+        try {
+          const r = await fn();
+          console.log(`[Rates] ${name} regenerated:`, r && (r.written !== undefined || r.count !== undefined) ? r : 'ok');
+        } catch (err) {
+          console.error(`[Rates] ${name} regen FAILED: ${err.message}`);
+          try {
+            await notifier.sendAlert('regen_error', `Пересчёт ${name} упал: ${err.message}`);
+          } catch {}
         }
-      } catch (err) {
-        console.log(`[Agent] SiteWriter после курса: ${err.message}`);
-      }
-
-      // И перегенерировать preorders.ts (чтобы clientPrice пересчитался)
-      try {
-        const preorderResult = await siteWriter.generatePreorders();
-        if (preorderResult && preorderResult.written) {
-          console.log(`[Agent] preorders.ts пересчитан после изменения курса: ${preorderResult.count} игр`);
-        }
-      } catch (err) {
-        console.log(`[Agent] Preorders после курса: ${err.message}`);
       }
     }
     lastUpdate = new Date().toISOString();

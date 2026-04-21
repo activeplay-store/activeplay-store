@@ -1681,14 +1681,12 @@ async function generateHotReleases() {
 
     if (g.prices?.TR?.editions) {
       for (const ed of g.prices.TR.editions) {
-        let price = ed.baseClientPrice || ed.clientPrice || ed.clientSalePrice;
-        // Fallback: calculate from raw price (basePrice or priceTRY from preorders)
-        if (!price) {
-          const rawPrice = ed.basePrice || ed.priceTRY;
-          if (rawPrice) {
-            try { price = pricing.calculatePrice(rawPrice, 'TR').clientPrice; } catch {}
-          }
+        let price;
+        const rawPrice = ed.basePrice || ed.priceTRY;
+        if (rawPrice) {
+          try { price = pricing.calculatePrice(rawPrice, 'TR').clientPrice; } catch {}
         }
+        if (!price) price = ed.baseClientPrice || ed.clientPrice || ed.clientSalePrice;
         if (price) {
           editionsTr.push({ name: ed.name || 'Standard', priceRUB: price });
         }
@@ -1696,14 +1694,12 @@ async function generateHotReleases() {
     }
     if (g.prices?.UA?.editions) {
       for (const ed of g.prices.UA.editions) {
-        let price = ed.baseClientPrice || ed.clientPrice || ed.clientSalePrice;
-        // Fallback: calculate from raw price (basePrice or priceUAH from preorders)
-        if (!price) {
-          const rawPrice = ed.basePrice || ed.priceUAH;
-          if (rawPrice) {
-            try { price = pricing.calculatePrice(rawPrice, 'UA').clientPrice; } catch {}
-          }
+        let price;
+        const rawPrice = ed.basePrice || ed.priceUAH;
+        if (rawPrice) {
+          try { price = pricing.calculatePrice(rawPrice, 'UA').clientPrice; } catch {}
         }
+        if (!price) price = ed.baseClientPrice || ed.clientPrice || ed.clientSalePrice;
         if (price) {
           editionsUa.push({ name: ed.name || 'Standard', priceRUB: price });
         }
@@ -2024,22 +2020,24 @@ async function generateTopSellers(gameList) {
       console.log(PREFIX + '   Скидка найдена: ' + name + ' → ' + deal.name + ' | TR=' + priceTR + ', UA=' + priceUA);
     }
 
-    // Если скидки нет — обычная цена из games.json
+    // Если скидки нет — обычная цена из games.json (live recalc from raw, fallback to cached)
     if (priceTR === 0 && found?.prices?.TR?.editions) {
       for (const ed of found.prices.TR.editions) {
-        let cp = ed.baseClientPrice || ed.clientPrice || ed.clientSalePrice;
-        if (!cp && ed.basePrice) {
+        let cp;
+        if (ed.basePrice) {
           try { cp = pricing.calculatePrice(ed.basePrice, 'TR').clientPrice; } catch {}
         }
+        if (!cp) cp = ed.baseClientPrice || ed.clientPrice || ed.clientSalePrice;
         if (cp > 0 && (priceTR === 0 || cp < priceTR)) priceTR = cp;
       }
     }
     if (priceUA === 0 && found?.prices?.UA?.editions) {
       for (const ed of found.prices.UA.editions) {
-        let cp = ed.baseClientPrice || ed.clientPrice || ed.clientSalePrice;
-        if (!cp && ed.basePrice) {
+        let cp;
+        if (ed.basePrice) {
           try { cp = pricing.calculatePrice(ed.basePrice, 'UA').clientPrice; } catch {}
         }
+        if (!cp) cp = ed.baseClientPrice || ed.clientPrice || ed.clientSalePrice;
         if (cp > 0 && (priceUA === 0 || cp < priceUA)) priceUA = cp;
       }
     }
