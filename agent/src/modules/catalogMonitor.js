@@ -10,6 +10,16 @@ const CATALOG_UUIDS = {
   classics: '8056ad23-7f30-485c-a628-b99f9d5aec5d',      // Deluxe Classics
 };
 
+let SW_CONFIG = {};
+try { SW_CONFIG = require('../config').siteWriter || {}; } catch {}
+const REPO_ROOT = SW_CONFIG.repoRoot || '/var/www/activeplay-store';
+const SITE_CATALOG_MAP = {
+  extra: 'catalog-extra.json',
+  classics: 'catalog-classics.json',
+  trials: 'catalog-trials.json',
+  eaplay: 'catalog-eaplay.json',
+};
+
 // ── Helpers ─────────────────────────────────────────────────────────────
 
 function ensureDir() {
@@ -28,11 +38,37 @@ function loadCatalog(name) {
   }
 }
 
+function toSiteCatalog(data) {
+  const lastUpdated = (data.updatedAt || new Date().toISOString()).split('T')[0];
+  const games = (data.games || [])
+    .map(g => ({
+      title: g.name || g.title || '',
+      platform: Array.isArray(g.platforms) ? g.platforms : (Array.isArray(g.platform) ? g.platform : ['PS5']),
+    }))
+    .filter(g => g.title)
+    .sort((a, b) => a.title.localeCompare(b.title, 'en'));
+  return { lastUpdated, totalGames: games.length, games };
+}
+
+function syncToSite(name, data) {
+  const fileName = SITE_CATALOG_MAP[name];
+  if (!fileName) return;
+  const siteDataPath = path.join(REPO_ROOT, 'src', 'data', fileName);
+  try {
+    const transformed = toSiteCatalog(data);
+    fs.writeFileSync(siteDataPath, JSON.stringify(transformed, null, 2) + '\n', 'utf8');
+    console.log(`${PREFIX} Sync → site: ${fileName} (${transformed.totalGames} игр, ${transformed.lastUpdated})`);
+  } catch (err) {
+    console.error(`${PREFIX} Sync → site failed for ${name}: ${err.message}`);
+  }
+}
+
 function saveCatalog(name, data) {
   ensureDir();
   const filePath = path.join(DATA_DIR, `${name}.json`);
   fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf8');
   console.log(`${PREFIX} ${name} сохранён: ${data.games.length} игр`);
+  syncToSite(name, data);
 }
 
 function getCurrentMonth() {
