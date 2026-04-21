@@ -263,8 +263,11 @@ async function checkClassics() {
 // ── Stubs ───────────────────────────────────────────────────────────────
 
 async function checkTrials() {
-  console.log(`${PREFIX} Game Trials — проверка (заглушка)`);
-  return { changed: false };
+  // Sony categoryGridRetrieve rejects "game-trials" (Invalid args); no UUID
+  // maps to the Trials category. List is curated manually via src/data/
+  // catalog-trials.json — do not overwrite.
+  console.log(`${PREFIX} Game Trials: источник не подключён, данные не обновляю`);
+  return { changed: false, notImplemented: true };
 }
 
 async function checkEAPlay() {
