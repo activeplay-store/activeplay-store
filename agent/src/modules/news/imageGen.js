@@ -915,7 +915,7 @@ async function getNewsImage(article, opts = {}) {
 }
 
 module.exports = {
-  getNewsImage, checkSourceImage, searchRAWG, resizeImage, extractGameName,
+  getNewsImage, checkSourceImage, searchRAWG, getRAWGBySlug, resizeImage, extractGameName,
   isJunkImage, getFallbackImage, fetchOgImage, searchWebImage, generateAiCover,
   cleanGameName, findKnownSlug, isServiceTitle, KNOWN_SLUGS,
 };
