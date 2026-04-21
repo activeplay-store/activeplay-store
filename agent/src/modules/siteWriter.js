@@ -2389,4 +2389,5 @@ module.exports = {
   generateHotReleases,
   generateTopSellers,
   generateEssentialShowcase,
+  repoRoot: REPO_ROOT,
 };

@@ -19,6 +19,8 @@ process.on('unhandledRejection', (reason) => {
 require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') });
 
 const http = require('http');
+const fs = require('fs');
+const path = require('path');
 const cron = require('node-cron');
 const { Telegraf } = require('telegraf');
 const config = require('./config');
@@ -81,8 +83,20 @@ async function updateRates() {
     if (result.rates) {
       console.log(`[Курсы] ${formatRatesLog(result.rates)} | Источник: ${result.source || 'cache'}`);
     }
+    // Копируем rates.json в public/ для калькулятора (делаем всегда, не только при изменении)
+    try {
+      const ratesSrc = config.ratesFile;
+      const ratesDst = path.join(siteWriter.repoRoot || '/var/www/activeplay-store', 'public', 'agent-rates.json');
+      fs.copyFileSync(ratesSrc, ratesDst);
+    } catch (err) {
+      console.log(`[Курсы] Не удалось скопировать rates.json в public: ${err.message}`);
+    }
+
     if (result.changed && result.changes.length > 0) {
       console.log(`[Курсы] Изменение: ${result.changes.map(c => `${c.code} ${c.from} -> ${c.to}`).join(', ')}`);
+      const changeSummary = result.changes.map(c => `${c.code}: ${c.from}->${c.to}`).join(', ');
+      console.log(`[Rates] Triggered full site regen after rate change (${changeSummary})`);
+
       // Курс изменился — пересчитать deals.ts
       try {
         const writeResult = await siteWriter.generateAndWrite();
@@ -91,6 +105,16 @@ async function updateRates() {
         }
       } catch (err) {
         console.log(`[Agent] SiteWriter после курса: ${err.message}`);
+      }
+
+      // И перегенерировать preorders.ts (чтобы clientPrice пересчитался)
+      try {
+        const preorderResult = await siteWriter.generatePreorders();
+        if (preorderResult && preorderResult.written) {
+          console.log(`[Agent] preorders.ts пересчитан после изменения курса: ${preorderResult.count} игр`);
+        }
+      } catch (err) {
+        console.log(`[Agent] Preorders после курса: ${err.message}`);
       }
     }
     lastUpdate = new Date().toISOString();
