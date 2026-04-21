@@ -2391,7 +2391,10 @@ async function generateExtraShowcase() {
     return { written: false, pushed: false };
   }
 
-  const games = (catalog.games || []).filter(g => g.addedAt);
+  // Sony category feed sometimes contains DLC, currency packs and free samples.
+  // Exclude them from the "new releases" showcase.
+  const GARBAGE_RX = /free sample|sample set|\(CC\)\s*$|^\d+\s+.*(coins?|points?|bucks|credits?|gems?|tokens?)|season pass|dlc pack|currency pack/i;
+  const games = (catalog.games || []).filter(g => g.addedAt && !GARBAGE_RX.test(g.name));
   if (games.length === 0) {
     console.log(PREFIX + ' Extra — нет игр с addedAt, пропускаем');
     return { written: false, pushed: false };
@@ -2405,11 +2408,11 @@ async function generateExtraShowcase() {
   let targetYM = currentYM;
   let newGames = games.filter(g => g.addedAt.startsWith(currentYM));
 
-  if (newGames.length < 5) {
+  if (newGames.length === 0) {
     const monthsSeen = [...new Set(games.map(g => g.addedAt.slice(0, 7)))].sort().reverse();
     for (const m of monthsSeen) {
       const candidates = games.filter(g => g.addedAt.startsWith(m));
-      if (candidates.length >= 5) {
+      if (candidates.length > 0) {
         newGames = candidates;
         targetYM = m;
         break;
