@@ -114,7 +114,7 @@ function GameCatalog({ games, filters, title }: { games: EAPlayGame[]; filters: 
   return (
     <div className="rounded-2xl py-12 sm:py-16 px-4 sm:px-8" style={{ background: 'rgba(10,21,37,0.5)' }}>
       <h2 className="text-2xl sm:text-3xl font-bold font-display text-center mb-2" style={{ fontStyle: 'normal' }}>{title}</h2>
-      <p className="text-sm text-center mb-8" style={{ color: 'rgba(255,255,255,0.6)' }}>Каталог обновляется раз в месяц</p>
+      <p className="text-sm text-center mb-8" style={{ color: 'rgba(255,255,255,0.6)' }}>Список ведётся нашей командой. Обновляется при появлении новых игр в EA Play.</p>
       <div className="rounded-2xl p-6 sm:p-8 mb-6" style={{ background: 'rgba(15,23,42,0.5)' }}>
         <div className="flex flex-col sm:flex-row gap-4 mb-4">
           <input type="text" placeholder="Найти игру в каталоге..." value={search} onChange={e => setSearch(e.target.value)} className="flex-1 min-h-[44px] px-4 py-2 rounded-xl text-sm text-white placeholder-white/30 bg-white/[0.06] border border-white/[0.1] focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-transparent" />

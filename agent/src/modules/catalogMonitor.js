@@ -271,8 +271,10 @@ async function checkTrials() {
 }
 
 async function checkEAPlay() {
-  console.log(`${PREFIX} EA Play — проверка (заглушка)`);
-  return { changed: false };
+  // EA Play does not expose a public categoryGrid UUID reachable from
+  // fetchCategoryGames. src/data/catalog-eaplay.json stays manual.
+  console.log(`${PREFIX} EA Play: источник не подключён, данные не обновляю`);
+  return { changed: false, notImplemented: true };
 }
 
 // ── Check all ───────────────────────────────────────────────────────────
