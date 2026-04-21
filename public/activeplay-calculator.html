@@ -157,6 +157,13 @@
   .rate-label span { color: #7090b0; font-size: 13px; }
   .rate-value { color: #00d4ff; font-weight: 700; font-size: 18px; }
   .rate-suffix { color: #4a6080; font-size: 13px; font-weight: 400; }
+  .rate-meta {
+    margin-top: 8px;
+    font-size: 11px;
+    color: #4a6080;
+    text-align: right;
+  }
+  .rate-meta.warning { color: #ffa040; }
 
   input[type=range] {
     -webkit-appearance: none;
@@ -352,13 +359,14 @@
 
   <div class="rate-block">
     <div class="rate-label">
-      <span id="rate-label">Курс ЦБ TRY</span>
+      <span id="rate-label">Внутренний курс TRY</span>
       <div>
         <span class="rate-value" id="rate-display">2.00</span>
         <span class="rate-suffix"> ₽</span>
       </div>
     </div>
     <input type="range" id="rate-slider" min="1.50" max="3.50" step="0.01" value="2.00" oninput="onRateChange(this.value)">
+    <div class="rate-meta" id="rate-meta">Курс не получен — используется дефолтный</div>
   </div>
 
   <div class="input-block">
@@ -438,6 +446,7 @@ function updateDots() {
 function showApp() {
   document.getElementById('pin-screen').classList.add('hidden');
   document.getElementById('app').classList.remove('hidden');
+  fetchAgentRates();
 }
 
 window.addEventListener('DOMContentLoaded', checkSavedPin);
@@ -473,6 +482,72 @@ const REF = { TR: 2.00, UA: 2.01 };
 const COMMISSION = 250;
 let region = 'TR';
 let rates = { TR: 2.00, UA: 2.01 };
+let ratesMeta = { TR: null, UA: null };
+let ratesFetched = false;
+
+function formatUpdatedAt(iso) {
+  try {
+    const d = new Date(iso);
+    if (isNaN(d.getTime())) return iso;
+    const dd = String(d.getDate()).padStart(2, '0');
+    const mm = String(d.getMonth() + 1).padStart(2, '0');
+    const hh = String(d.getHours()).padStart(2, '0');
+    const mi = String(d.getMinutes()).padStart(2, '0');
+    return `${dd}.${mm} ${hh}:${mi}`;
+  } catch {
+    return iso || '—';
+  }
+}
+
+function updateRateMeta() {
+  const meta = document.getElementById('rate-meta');
+  if (!meta) return;
+  if (!ratesFetched) {
+    meta.className = 'rate-meta warning';
+    meta.textContent = 'Курс не получен — используется дефолтный';
+    return;
+  }
+  const m = ratesMeta[region];
+  if (!m) {
+    meta.className = 'rate-meta warning';
+    meta.textContent = 'Курс не получен — используется дефолтный';
+    return;
+  }
+  meta.className = 'rate-meta';
+  meta.textContent = `ЦБ РФ: ${m.cbr}₽ · обновлено ${formatUpdatedAt(m.updatedAt)}`;
+}
+
+async function fetchAgentRates() {
+  try {
+    const res = await fetch('/agent-rates.json', { cache: 'no-store' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    const updatedAt = data.updatedAt;
+    const mapping = { TR: 'TRY', UA: 'UAH' };
+    let anySet = false;
+    for (const reg of ['TR', 'UA']) {
+      const code = mapping[reg];
+      const r = data.rates && data.rates[code];
+      if (r && r.internal > 0) {
+        rates[reg] = r.internal;
+        ratesMeta[reg] = { cbr: r.cbr, updatedAt };
+        anySet = true;
+      }
+    }
+    ratesFetched = anySet;
+  } catch (err) {
+    ratesFetched = false;
+  }
+  const slider = document.getElementById('rate-slider');
+  const display = document.getElementById('rate-display');
+  if (slider && display) {
+    slider.value = rates[region];
+    display.textContent = rates[region].toFixed(2);
+  }
+  tiersCache = { TR: null, UA: null };
+  updateRateMeta();
+  calculate();
+}
 
 function interp(mid, anchors) {
   if (mid <= anchors[0][0]) return anchors[0][1];
@@ -521,11 +596,12 @@ function setRegion(r) {
   document.getElementById('btn-tr').className = 'region-btn' + (r==='TR' ? ' active' : '');
   document.getElementById('btn-ua').className = 'region-btn' + (r==='UA' ? ' active' : '');
   const cur = region === 'TR' ? 'TRY' : 'UAH';
-  document.getElementById('rate-label').textContent = 'Курс ЦБ ' + cur;
+  document.getElementById('rate-label').textContent = 'Внутренний курс ' + cur;
   document.getElementById('input-label').textContent = 'Цена товара в ' + cur;
   document.getElementById('wallet-label').textContent = 'На кошельке (' + cur + '):';
   document.getElementById('rate-slider').value = rates[region];
   document.getElementById('rate-display').textContent = rates[region].toFixed(2);
+  updateRateMeta();
   calculate();
 }
 
