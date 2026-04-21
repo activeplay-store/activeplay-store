@@ -119,8 +119,8 @@ function getCoefficient(priceForeign, region) {
   const currentRate = getCurrentRate(region);
   const baseCourse = regionData.baseCourse;
 
-  // Адаптация: базовый_курс / текущий_курс
-  const adjusted = Math.round(baseCoeff * (baseCourse / currentRate) * 100) / 100;
+  // Адаптация: текущий_курс / базовый_курс (совпадает с активплейским калькулятором)
+  const adjusted = Math.round(baseCoeff * (currentRate / baseCourse) * 100) / 100;
 
   return adjusted;
 }
@@ -139,7 +139,7 @@ function calculatePrice(priceForeign, region) {
   const baseCoeff = getBaseCoefficient(priceForeign, regionData.anchors);
 
   // Адаптация коэффициента
-  const adjusted = Math.round(baseCoeff * (baseCourse / currentRate) * 100) / 100;
+  const adjusted = Math.round(baseCoeff * (currentRate / baseCourse) * 100) / 100;
 
   // Цена клиенту (округление вверх до 50₽)
   const rawPrice = priceForeign * adjusted;
