@@ -1,5 +1,35 @@
 [
   {
+    "id": "games-leaving-ps-plus-in-may-2026-confirmed",
+    "slug": "games-leaving-ps-plus-in-may-2026-confirmed",
+    "title": "Games Leaving PS Plus in May 2026 Confirmed",
+    "content": "Sony официально объявила, что в мае 2026 года из подписок PS Plus Extra и Premium исчезнут несколько игр, включая популярные проекты Sand Land и Soul Hackers 2. Эти игры будут доступны для подписчиков до конца апреля 2026 года, поэтому игрокам стоит поторопиться, чтобы успеть насладиться ими до их удаления.\n\nSand Land — это приключенческая игра от Bandai Namco Entertainment, основанная на манге Акиры Ториямы. Игроков ждёт захватывающий открытый мир и уникальные персонажи. Soul Hackers 2, разработанная Atlus, — частью знаменитой серии Shin Megami Tensei и вышла 26 августа 2022 года. Обе игры доступны на PlayStation 4 и PlayStation 5, что делает их доступными для широкой аудитории.\n\nУдаление игр из PS Plus может значительно снизить их популярность и продажи в будущем. Soul Hackers 2 получила оценку 76 из 100 на Metacritic, что демонстрирует её высокое качество. Исторически, такие изменения в подписках часто влияют на интерес к играм, поскольку игроки теряют возможность доступа к ним без дополнительных затрат.\n\nЧтобы не пропустить возможность играть в лучшие игры по подписке, оформите PS Plus Extra в ActivePlay. Подписка доступна от 1 250 ₽ в месяц, что даёт доступ к огромному каталогу игр на PlayStation. Не упустите шанс наслаждаться качественными тайтлами каждый месяц.",
+    "metaDescription": "Sony удаляет Sand Land и Soul Hackers 2 из PS Plus в мае 2026. Успейте сыграть до конца апреля.",
+    "coverUrl": "/images/news/news-1776747796874-ut5w.jpg",
+    "tags": [
+      "PS5",
+      "Sony",
+      "PS Store"
+    ],
+    "category": "news",
+    "source": "PlayStation LifeStyle",
+    "sourceUrl": "https://www.playstationlifestyle.net/2026/04/20/games-leaving-ps-plus-extra-premium-may-2026/",
+    "publishedAt": "2026-04-21T08:33:15.868Z",
+    "gameId": null,
+    "relatedProduct": "ps-plus-extra",
+    "platform": "playstation",
+    "ctaType": "psplus",
+    "ctaText": "PS Plus от 1 250 ₽/мес",
+    "ctaLink": "/subscriptions",
+    "cta": null,
+    "cta2": {
+      "title": "PS Plus Extra",
+      "description": "Каталог из 400+ игр",
+      "url": "/ps-plus-extra",
+      "buttonText": "Подробнее →"
+    }
+  },
+  {
     "id": "aprelskie-i-mayskie-novinki-v-xbox-game-pass",
     "slug": "aprelskie-i-mayskie-novinki-v-xbox-game-pass",
     "title": "Апрельские и майские новинки в Xbox Game Pass",
@@ -1611,44 +1641,5 @@
       "buttonText": "Купить за 7 300 ₽ →"
     },
     "cta2": null
-  },
-  {
-    "id": "starfield-na-ps5-russkaya-lokalizaciya-cherez-creations-eto-realno",
-    "slug": "starfield-na-ps5-russkaya-lokalizaciya-cherez-creations-eto-realno",
-    "title": "Starfield на PS5: русская локализация через Creations — это реально",
-    "content": "Владельцы PS5-версии Starfield могут получить неофициальную русскую локализацию. Об этом стало известно из информации PlayStation Store. Локализация, вероятно, будет добавлена через систему Creations, аналогично Xbox. Игрокам придётся дождаться поддержки PlayStation в Creations и адаптации мода.\n\nStarfield, разработанная Bethesda Game Studios, вышла 6 сентября 2023 года. Это RPG в открытом мире с элементами приключения, доступная сейчас на PC и Xbox Series S/X. Metacritic оценил игру в 88 баллов. Цена Starfield на ActivePlay составляет 4300 ₽. Игрокам предстоит исследовать космос, выполнять задания и развивать персонажа.\n\nВозможность добавления русской локализации через Creations важна для русскоязычного сообщества. Игры Bethesda, такие как Skyrim и Fallout 4, получили огромную популярность благодаря модам. Отсутствие официальной русской локализации часто компенсируется усилиями фанатов. Аналогичный подход используется в Fallout 76, где моды добавляют новые возможности.\n\nПока неизвестно, как быстро появится русская локализация и насколько полной она будет. Для доступа к другим топовым играм на PS5 оформите подписку PS Plus. В ActivePlay подписка PS Plus Extra доступна от 1 250 ₽/мес. 52 000+ клиентов уже выбрали нас с 2022 года.",
-    "metaDescription": "Русская локализация Starfield на PS5 может появиться через систему Creations. Ждём поддержку PlayStation и адаптацию мода. Подписка PS Plus от 1 250 ₽/мес.",
-    "coverUrl": "/images/news/news-1775420098809-wnga.jpg",
-    "tags": [
-      "PS5",
-      "Starfield",
-      "Локализация",
-      "Creations",
-      "Моды"
-    ],
-    "category": "news",
-    "source": "PlayStation Store",
-    "sourceUrl": "https://t.me/xplaystore/15506",
-    "publishedAt": "2026-04-05T20:16:01.567Z",
-    "gameId": "starfield",
-    "relatedProduct": "ps-plus-extra",
-    "platform": "playstation",
-    "ctaType": "psplus",
-    "ctaText": "PS Plus от 1 250 ₽/мес",
-    "ctaLink": "/subscriptions",
-    "cta": {
-      "gameId": "starfield",
-      "title": "Купить Starfield",
-      "description": "Активация за 5 минут. Турецкий PS Store.",
-      "price": 4300,
-      "url": "/sale",
-      "buttonText": "Купить за 4300 ₽ →"
-    },
-    "cta2": {
-      "title": "PS Plus Extra",
-      "description": "Каталог из 400+ игр",
-      "url": "/ps-plus-extra",
-      "buttonText": "Подробнее →"
-    }
   }
 ]
