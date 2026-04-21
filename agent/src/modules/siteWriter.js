@@ -2257,23 +2257,45 @@ async function ensureCoverImage(gameName, gameSlug) {
 
   if (fs.existsSync(coverPath)) return true;
 
-  // Try to download from RAWG
   try {
-    const { searchRAWG, getRAWGBySlug, findKnownSlug } = require('./news/imageGen');
+    const { searchRAWG, getRAWGBySlug, findKnownSlug, fetchOgImage } = require('./news/imageGen');
     const axios = require('axios');
     const sharp = require('sharp');
 
     let imageUrl = null;
 
-    // Try known slug first
+    // 1. Known slug fast-path
     const knownSlug = findKnownSlug(gameName);
     if (knownSlug) {
       imageUrl = await getRAWGBySlug(knownSlug);
     }
 
-    // Fallback to search
+    // 2. RAWG full-name search
     if (!imageUrl) {
       imageUrl = await searchRAWG(gameName);
+    }
+
+    // 3. RAWG retries with stripped suffixes (Football Manager 26 Console → Football Manager 26)
+    if (!imageUrl) {
+      const variants = new Set();
+      const stripped = gameName
+        .replace(/\s*:\s*.+$/, '')                                   // drop subtitle after colon
+        .replace(/\s*(?:Console|Complete|Deluxe|Standard|Ultimate|Digital|Definitive|Enhanced|Remastered|Director's\s*Cut|Edition).*$/i, '')
+        .replace(/\s*\((?:PS4|PS5|Console|Digital)\)\s*$/i, '')
+        .trim();
+      if (stripped && stripped !== gameName) variants.add(stripped);
+      // also try first 3 significant words
+      const words = gameName.split(/\s+/).slice(0, 3).join(' ');
+      if (words && words !== gameName) variants.add(words);
+      for (const v of variants) {
+        imageUrl = await searchRAWG(v);
+        if (imageUrl) break;
+      }
+    }
+
+    // 4. Last-resort: OG image from PS Store concept page
+    if (!imageUrl) {
+      try { imageUrl = await fetchOgImage(gameSlug); } catch {}
     }
 
     if (imageUrl) {
@@ -2285,7 +2307,6 @@ async function ensureCoverImage(gameName, gameSlug) {
 
       if (!fs.existsSync(coversDir)) fs.mkdirSync(coversDir, { recursive: true });
 
-      // Cover images: portrait 3:4 ratio, 400x533
       await sharp(Buffer.from(response.data))
         .resize(400, 533, { fit: 'cover', position: 'center' })
         .jpeg({ quality: 85 })
@@ -2294,6 +2315,7 @@ async function ensureCoverImage(gameName, gameSlug) {
       console.log(PREFIX + ' Обложка скачана: ' + gameSlug + '.jpg');
       return true;
     }
+    console.warn(PREFIX + ' Обложка не найдена: ' + gameSlug);
   } catch (err) {
     console.error(PREFIX + ' Ошибка скачивания обложки ' + gameSlug + ': ' + err.message);
   }
