@@ -1,5 +1,5 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-04-19T09:00:45.459Z
+// Обновлено: 2026-04-21T14:55:58.500Z
 // Горящих новинок: 4
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
@@ -41,56 +41,12 @@ export const hotReleases: HotRelease[] = [
     totalScore: 6.2,
     editions: {
       tr: [
-        { name: "Standard", priceRUB: 6300 },
-        { name: "Deluxe", priceRUB: 7250 },
+        { name: "Standard", priceRUB: 6750 },
+        { name: "Deluxe", priceRUB: 7750 },
       ],
       ua: [
-        { name: "Standard", priceRUB: 5000 },
-        { name: "Deluxe", priceRUB: 5450 },
-      ],
-    },
-  },
-  {
-    id: "the-occultist",
-    title: "The Occultist",
-    slug: "the-occultist",
-    description: "Хоррор от Daedalic. Мистический маятник",
-    releaseDate: "8 апреля 2026",
-    metacritic: 66,
-    genre: "Приключения",
-    platforms: ["PS5"],
-    cover: "https://image.api.playstation.com/vulcan/ap/rnd/202408/0109/1a0d7fdc724c04debb886c4421d4db4199a771f8dfe22ae1.jpg",
-    hypeScore: 2,
-    totalScore: 5.1,
-    editions: {
-      tr: [
-        { name: "Standard", priceRUB: 3650 },
-      ],
-      ua: [
-        { name: "Standard", priceRUB: 3250 },
-      ],
-    },
-  },
-  {
-    id: "starfield",
-    title: "Starfield",
-    slug: "starfield",
-    description: "Космическая RPG от Bethesda. 1000+ планет",
-    releaseDate: "7 апреля 2026",
-    metacritic: 0,
-    genre: "Экшен",
-    platforms: ["PS5"],
-    cover: "https://image.api.playstation.com/vulcan/ap/rnd/202603/0401/18b516e759613304c7efc7bcd3c134d6bfb5380d655df9be.jpg",
-    hypeScore: 3,
-    totalScore: 5,
-    editions: {
-      tr: [
-        { name: "Standard", priceRUB: 4250 },
-        { name: "Premium", priceRUB: 5550 },
-      ],
-      ua: [
-        { name: "Standard", priceRUB: 4400 },
-        { name: "Premium", priceRUB: 5700 },
+        { name: "Standard", priceRUB: 5350 },
+        { name: "Deluxe", priceRUB: 5800 },
       ],
     },
   },
@@ -108,10 +64,52 @@ export const hotReleases: HotRelease[] = [
     totalScore: 5,
     editions: {
       tr: [
-        { name: "Standard", priceRUB: 6300 },
+        { name: "Standard", priceRUB: 6750 },
       ],
       ua: [
-        { name: "Standard", priceRUB: 5000 },
+        { name: "Standard", priceRUB: 5350 },
+      ],
+    },
+  },
+  {
+    id: "the-occultist",
+    title: "The Occultist",
+    slug: "the-occultist",
+    description: "Хоррор от Daedalic. Мистический маятник",
+    releaseDate: "8 апреля 2026",
+    metacritic: 66,
+    genre: "Приключения",
+    platforms: ["PS5"],
+    cover: "https://image.api.playstation.com/vulcan/ap/rnd/202408/0109/1a0d7fdc724c04debb886c4421d4db4199a771f8dfe22ae1.jpg",
+    hypeScore: 1,
+    totalScore: 4.7,
+    editions: {
+      tr: [
+        { name: "Standard", priceRUB: 3900 },
+      ],
+      ua: [
+        { name: "Standard", priceRUB: 3450 },
+      ],
+    },
+  },
+  {
+    id: "jay-and-silent-bob-chronic-blunt-punch",
+    title: "Jay and Silent Bob: Chronic Blunt Punch",
+    slug: "jay-and-silent-bob-chronic-blunt-punch",
+    description: "Beat 'em up от Interabang. Кооп-аркада",
+    releaseDate: "20 апреля 2026",
+    metacritic: 0,
+    genre: "Аркада",
+    platforms: ["PS5"],
+    cover: "https://image.api.playstation.com/vulcan/ap/rnd/202603/2417/cbb7c65a786cca846fe8be3bf5bf609457a36b8a5469f087.jpg",
+    hypeScore: 1,
+    totalScore: 4.2,
+    editions: {
+      tr: [
+        { name: "Standard", priceRUB: 2850 },
+      ],
+      ua: [
+        { name: "Standard", priceRUB: 2850 },
       ],
     },
   },
