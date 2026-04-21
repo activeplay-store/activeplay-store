@@ -2471,24 +2471,42 @@ async function generateExtraShowcase() {
     return { written: false, pushed: false };
   }
 
-  // Pick "new this month"; fall back to the most recent month that has ≥5 games
+  // Skip bulk-seed / bulk-restore dates: any addedAt that shares the date with
+  // >BULK_DATE_THRESHOLD other games is almost certainly a mass import, not a
+  // real monthly Sony release. Sony announces ~10-15 games per month.
+  const BULK_DATE_THRESHOLD = 25;
+  const dateHist = {};
+  for (const g of games) {
+    const d = g.addedAt.slice(0, 10);
+    dateHist[d] = (dateHist[d] || 0) + 1;
+  }
+  const bulkDates = new Set(Object.entries(dateHist).filter(([, c]) => c > BULK_DATE_THRESHOLD).map(([d]) => d));
+  const signalGames = games.filter(g => !bulkDates.has(g.addedAt.slice(0, 10)));
+
+  // Pick "new this month" from signal-only games; fall back to the most recent
+  // month that actually has signal additions.
   const now = new Date();
   const ym = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
   const currentYM = ym(now);
 
   let targetYM = currentYM;
-  let newGames = games.filter(g => g.addedAt.startsWith(currentYM));
+  let newGames = signalGames.filter(g => g.addedAt.startsWith(currentYM));
 
   if (newGames.length === 0) {
-    const monthsSeen = [...new Set(games.map(g => g.addedAt.slice(0, 7)))].sort().reverse();
+    const monthsSeen = [...new Set(signalGames.map(g => g.addedAt.slice(0, 7)))].sort().reverse();
     for (const m of monthsSeen) {
-      const candidates = games.filter(g => g.addedAt.startsWith(m));
+      const candidates = signalGames.filter(g => g.addedAt.startsWith(m));
       if (candidates.length > 0) {
         newGames = candidates;
         targetYM = m;
         break;
       }
     }
+  }
+
+  if (newGames.length === 0) {
+    console.log(PREFIX + ' Extra — нет реальных месячных добавлений (всё — bulk-даты), оставляю текущий newReleases как есть');
+    return { written: false, pushed: false, reason: 'no_signal_additions', bulkDates: [...bulkDates] };
   }
 
   newGames.sort((a, b) => (b.addedAt || '').localeCompare(a.addedAt || ''));
