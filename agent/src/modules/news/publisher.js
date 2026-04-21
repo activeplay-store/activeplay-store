@@ -8,6 +8,13 @@ const NEWS_JSON = path.join(SITE_ROOT, 'src/data/news.json');
 const NEWS_ARCHIVE = path.join(__dirname, '../../../data/news-archive.json');
 const CHANNEL_ID = '@PS_PLUS_RUS';
 
+function isRussianText(text) {
+  if (!text) return false;
+  const cyrillic = (text.match(/[а-яё]/gi) || []).length;
+  const latin = (text.match(/[a-z]/gi) || []).length;
+  return cyrillic > latin;
+}
+
 async function publishToTelegram(bot, article) {
   const tg = article.telegram || {};
   const text = `📰 *${tg.title || article.title}*\n\n${tg.text || article.text}`;
@@ -378,7 +385,14 @@ function writeToSite(newArticles) {
   }
 
   // 3. Подготовить новые записи
-  const prepared = newArticles.map(a => {
+  const prepared = newArticles.filter(a => {
+    const titleCandidate = stripCategoryPrefix(a.site?.title || a.title || '');
+    if (!isRussianText(titleCandidate)) {
+      console.error(`[Publisher] Article ${a.id || a.slug || titleCandidate} has non-Russian title, skipping publication: "${titleCandidate}"`);
+      return false;
+    }
+    return true;
+  }).map(a => {
     const cleanTitle = stripCategoryPrefix(a.site?.title || a.title);
     const bodyText = stripHtml(a.site?.text || a.text || a.content || '');
 

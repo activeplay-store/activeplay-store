@@ -13,6 +13,13 @@ const { chatCompletion } = require('../utils/aiClient');
 
 const STAGING_DIR = path.join(__dirname, '../../../data/news-staging');
 
+function isRussian(text) {
+  if (!text) return false;
+  const cyrillic = (text.match(/[а-яё]/gi) || []).length;
+  const latin = (text.match(/[a-z]/gi) || []).length;
+  return cyrillic > latin;
+}
+
 function getFunnelText(article, siteGame) {
   const text = (article.site?.text || article.text || '').toLowerCase();
   const title = (article.site?.title || article.title || '').toLowerCase();
@@ -233,18 +240,26 @@ async function runPipeline(article, targets, bot, opts = {}) {
     console.log('[PIPELINE] Step 4.5: Fact-checking...');
     const factResult = await factCheckArticle(article);
     if (factResult?.hasErrors && factResult.errors?.length > 0) {
-      if (factResult.correctedTitle) {
-        console.log(`[PIPELINE] Title fixed: "${article.site.title}" \u2192 "${factResult.correctedTitle}"`);
-        article.site.title = factResult.correctedTitle;
-        if (article.telegram) article.telegram.title = factResult.correctedTitle;
-        if (article.vk) article.vk.title = factResult.correctedTitle;
+      if (factResult.correctedTitle && factResult.correctedTitle !== article.site.title) {
+        if (isRussian(article.site.title) && !isRussian(factResult.correctedTitle)) {
+          console.warn(`[PIPELINE] Factcheck revert rejected (RU\u2192EN): "${article.site.title}" / "${factResult.correctedTitle}"`);
+        } else {
+          console.log(`[PIPELINE] Title fixed: "${article.site.title}" \u2192 "${factResult.correctedTitle}"`);
+          article.site.title = factResult.correctedTitle;
+          if (article.telegram) article.telegram.title = factResult.correctedTitle;
+          if (article.vk) article.vk.title = factResult.correctedTitle;
+        }
       }
       if (factResult.correctedText) {
         const pars = countParagraphs(factResult.correctedText);
         const len = factResult.correctedText.length;
         if (pars >= 4 && len >= 1000) {
-          console.log(`[PIPELINE] Text corrected: ${factResult.errors.length} fixes applied`);
-          article.site.text = factResult.correctedText;
+          if (isRussian(article.site.text) && !isRussian(factResult.correctedText)) {
+            console.warn(`[PIPELINE] Factcheck text revert rejected (RU\u2192EN) for "${article.site.title}"`);
+          } else {
+            console.log(`[PIPELINE] Text corrected: ${factResult.errors.length} fixes applied`);
+            article.site.text = factResult.correctedText;
+          }
         } else {
           console.warn(`[FACTCHECK] correctedText rejected: paragraphs=${pars}, len=${len} — keeping Step 3 version`);
         }
