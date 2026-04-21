@@ -168,7 +168,17 @@ async function checkExtra() {
 
   console.log(`${PREFIX} Extra — парсинг каталога...`);
   const freshGames = await sony.fetchCategoryGames(CATALOG_UUIDS.gameCatalog, 'TR');
-  console.log(`${PREFIX} Extra — получено ${freshGames.length} игр`);
+  console.log(`${PREFIX} Extra — получено ${freshGames?.length || 0} игр`);
+
+  if (!freshGames || freshGames.length < 100) {
+    const count = freshGames?.length || 0;
+    console.error(`${PREFIX} Extra: Sony вернула ${count} игр (ожидается 400+), не обновляю.`);
+    try {
+      await notifier.sendAlert('catalog_suspicious',
+        `⚠️ Extra: Sony вернула ${count} игр (ожидается 400+). Старые данные сохранены.`);
+    } catch {}
+    return { changed: false, skipped: true, reason: 'too_few_games', count };
+  }
 
   const currentIds = new Set(current.games.map(g => g.id));
   const freshIds = new Set(freshGames.map(g => g.id));
@@ -209,7 +219,17 @@ async function checkClassics() {
 
   console.log(`${PREFIX} Classics — парсинг каталога...`);
   const freshGames = await sony.fetchCategoryGames(CATALOG_UUIDS.classics, 'TR');
-  console.log(`${PREFIX} Classics — получено ${freshGames.length} игр`);
+  console.log(`${PREFIX} Classics — получено ${freshGames?.length || 0} игр`);
+
+  if (!freshGames || freshGames.length < 100) {
+    const count = freshGames?.length || 0;
+    console.error(`${PREFIX} Classics: Sony вернула ${count} игр (ожидается 400+), не обновляю.`);
+    try {
+      await notifier.sendAlert('catalog_suspicious',
+        `⚠️ Classics: Sony вернула ${count} игр (ожидается 400+). Старые данные сохранены.`);
+    } catch {}
+    return { changed: false, skipped: true, reason: 'too_few_games', count };
+  }
 
   const currentIds = new Set(current.games.map(g => g.id));
   const freshIds = new Set(freshGames.map(g => g.id));

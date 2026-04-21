@@ -578,6 +578,18 @@ async function main() {
     catch (err) { console.error('[Cron] Каталоги 22:00:', err.message); }
   }, { timezone: 'Europe/Moscow' });
 
+  // Ежедневный пинг Extra + Classics: 21:00 МСК (страховка от обновлений вне календаря)
+  cron.schedule('0 21 * * *', async () => {
+    console.log('[Catalog] Daily ping: Extra + Classics');
+    try {
+      const extra = await catalogMonitor.checkExtra();
+      const classics = await catalogMonitor.checkClassics();
+      console.log('[Catalog] Daily result:', { extra, classics });
+    } catch (err) {
+      console.error('[Catalog] Daily ping failed:', err.message);
+    }
+  }, { timezone: 'Europe/Moscow' });
+
   // Предзаказы: каждые 3 часа (фильтр по releaseDate снимает вышедшие игры)
   cron.schedule('0 */3 * * *', async () => {
     console.log('[Cron] Обновление предзаказов (каждые 3ч)...');
