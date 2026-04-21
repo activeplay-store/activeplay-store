@@ -556,6 +556,20 @@ async function main() {
     catch (err) { console.error('[Cron] Каталоги 22:00:', err.message); }
   }, { timezone: 'Europe/Moscow' });
 
+  // Предзаказы: каждые 3 часа (фильтр по releaseDate снимает вышедшие игры)
+  cron.schedule('0 */3 * * *', async () => {
+    console.log('[Cron] Обновление предзаказов (каждые 3ч)...');
+    try {
+      const result = await siteWriter.generatePreorders();
+      if (result && result.written) {
+        console.log(`[Agent] preorders.ts обновлён (cron 3ч): ${result.count} предзаказов`);
+      }
+    } catch (err) {
+      console.error('[Cron] generatePreorders failed:', err);
+      notifier.sendAlert('preorders_error', `generatePreorders упал: ${err.message}`);
+    }
+  }, { timezone: 'Europe/Moscow' });
+
   // Горящие новинки: 12:00 МСК (дополнительный прогон для свежих хайп-данных)
   cron.schedule('0 12 * * *', async () => {
     console.log('[Cron] Обновление горящих новинок (12:00)...');
@@ -601,6 +615,7 @@ async function main() {
   console.log('  Парсинг скидок: 3:00 МСК ежедневно');
   console.log('  Курс ЦБ: 10:00 и 17:00 МСК');
   console.log('  Топ-продаж: 6:00 МСК ежедневно');
+  console.log('  Предзаказы: каждые 3 часа (0,3,6,9,12,15,18,21 МСК)');
   console.log('  Горящие новинки: 3:00 и 12:00 МСК');
   console.log('  Новости: 8:00, 12:00, 16:00, 20:00 МСК');
   console.log('  Анонсы каталогов: 18:00 МСК (по календарю)');

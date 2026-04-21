@@ -958,7 +958,18 @@ async function enrichWithRawg(games) {
 function generatePreordersTs(games) {
   const preorders = [];
 
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  let droppedReleased = 0;
+
   for (const game of games) {
+    if (game.releaseDate) {
+      const rd = new Date(game.releaseDate);
+      if (!isNaN(rd.getTime()) && rd < today) {
+        droppedReleased++;
+        continue;
+      }
+    }
     const name = cleanGameName(cleanName(game.name));
     const slug = game.id || slugify(name);
     const platforms = parsePlatforms(game.platform);
@@ -1006,6 +1017,8 @@ function generatePreordersTs(games) {
 
     preorders.push({ id: slug, name, platforms, coverUrl, releaseDate, genre, description, editions });
   }
+
+  console.log(PREFIX + ' Preorders filter: removed ' + droppedReleased + ' released games, kept ' + preorders.length);
 
   preorders.sort((a, b) => {
     if (a.releaseDate && b.releaseDate) return a.releaseDate.localeCompare(b.releaseDate);
