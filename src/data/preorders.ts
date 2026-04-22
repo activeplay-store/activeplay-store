@@ -1,5 +1,5 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-04-22T15:05:03.296Z
+// Обновлено: 2026-04-22T18:05:32.264Z
 // Предзаказов: 26
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
@@ -36,7 +36,7 @@ export const preorderData: PreorderGame[] = [
         { name: "Standard", clientPrice: 4700 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 4000 },
+        { name: "Standard", clientPrice: 4050 },
       ],
     },
   },
@@ -63,8 +63,8 @@ export const preorderData: PreorderGame[] = [
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202603/2600/9b613ce65ca534cfe6f1a117217d105b56ab60bd74c7322e.jpg",
     releaseDate: "2026-04-23",
-    genre: "",
-    description: "",
+    genre: "Экшен",
+    description: "Ready to die? Experience the newest brutal action game from",
     editions: {
       TR: [
         { name: "Standard", clientPrice: 3050 },
@@ -85,13 +85,13 @@ export const preorderData: PreorderGame[] = [
     editions: {
       TR: [
         { name: "Standard", clientPrice: 3750 },
-        { name: "Deluxe", clientPrice: 5200 },
-        { name: "Ultimate", clientPrice: 7600 },
+        { name: "Deluxe", clientPrice: 5250 },
+        { name: "Ultimate", clientPrice: 7650 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 4350 },
-        { name: "Deluxe", clientPrice: 6000 },
-        { name: "Ultimate", clientPrice: 8550 },
+        { name: "Standard", clientPrice: 4400 },
+        { name: "Deluxe", clientPrice: 6050 },
+        { name: "Ultimate", clientPrice: 8650 },
       ],
     },
   },
@@ -106,10 +106,10 @@ export const preorderData: PreorderGame[] = [
     editions: {
       TR: [
         { name: "Standard", clientPrice: 7350 },
-        { name: "Digital Deluxe", clientPrice: 8100 },
+        { name: "Digital Deluxe", clientPrice: 8150 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 5350 },
+        { name: "Standard", clientPrice: 5400 },
       ],
     },
   },
@@ -126,7 +126,7 @@ export const preorderData: PreorderGame[] = [
         { name: "Standard", clientPrice: 6450 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 4900 },
+        { name: "Standard", clientPrice: 5000 },
       ],
     },
   },
@@ -177,7 +177,7 @@ export const preorderData: PreorderGame[] = [
         { name: "Deluxe", clientPrice: 6450 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 4350 },
+        { name: "Standard", clientPrice: 4400 },
       ],
     },
   },
@@ -191,7 +191,7 @@ export const preorderData: PreorderGame[] = [
     description: "In Bound, the player takes on the role of a dancing lady in",
     editions: {
       TR: [
-        { name: "Standard", clientPrice: 3200 },
+        { name: "Standard", clientPrice: 3250 },
       ],
       UA: [
         { name: "Deluxe", clientPrice: 3400 },
@@ -204,11 +204,11 @@ export const preorderData: PreorderGame[] = [
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202604/0807/507f1267c6b33c410dee46185e9ae09fd59f6dc79920a64c.png",
     releaseDate: "2026-05-11",
-    genre: "",
-    description: "",
+    genre: "Стратегия",
+    description: "In this hybrid RPG/idol simulation, five idols wield Sound W",
     editions: {
       TR: [
-        { name: "Standard", clientPrice: 3200 },
+        { name: "Standard", clientPrice: 3250 },
       ],
       UA: [
         { name: "Standard", clientPrice: 2950 },
@@ -228,7 +228,7 @@ export const preorderData: PreorderGame[] = [
         { name: "Standard", clientPrice: 4700 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 4000 },
+        { name: "Standard", clientPrice: 4050 },
       ],
     },
   },
@@ -243,10 +243,10 @@ export const preorderData: PreorderGame[] = [
     editions: {
       TR: [
         { name: "Standard", clientPrice: 6450 },
-        { name: "Deluxe", clientPrice: 8100 },
+        { name: "Deluxe", clientPrice: 8150 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 4900 },
+        { name: "Standard", clientPrice: 5000 },
       ],
     },
   },
@@ -256,11 +256,11 @@ export const preorderData: PreorderGame[] = [
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202512/0516/166e320836e1eaa2655e08f771a89010ffea1c5dfcd331ea.png",
     releaseDate: "2026-05-20",
-    genre: "",
-    description: "",
+    genre: "Экшен",
+    description: "After strange disappearances hit Tokyo’s population, it’s up",
     editions: {
       TR: [
-        { name: "Standard", clientPrice: 3200 },
+        { name: "Standard", clientPrice: 3250 },
       ],
       UA: [
         { name: "Standard", clientPrice: 2950 },
@@ -308,7 +308,7 @@ export const preorderData: PreorderGame[] = [
         { name: "Standard", clientPrice: 2800 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 2650 },
+        { name: "Standard", clientPrice: 2700 },
       ],
     },
   },
@@ -322,7 +322,7 @@ export const preorderData: PreorderGame[] = [
     description: "Nickelodeon All-Star Brawl, is a new platform fighting game",
     editions: {
       TR: [
-        { name: "Standard", clientPrice: 3200 },
+        { name: "Standard", clientPrice: 3250 },
       ],
       UA: [
         { name: "Standard", clientPrice: 2950 },
@@ -335,7 +335,7 @@ export const preorderData: PreorderGame[] = [
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202510/1009/103bc5118f4ca8bb6d93d83e06367628a77e94c692e039bb.png",
     releaseDate: "2026-05-27",
-    genre: "",
+    genre: "Приключения",
     description: "Wuxia-RPG. 20 концовок, два режима боя",
     editions: {
       TR: [
@@ -344,7 +344,7 @@ export const preorderData: PreorderGame[] = [
       ],
       UA: [
         { name: "Standard", clientPrice: 3150 },
-        { name: "Deluxe", clientPrice: 3700 },
+        { name: "Deluxe", clientPrice: 3750 },
       ],
     },
   },
@@ -358,10 +358,10 @@ export const preorderData: PreorderGame[] = [
     description: "The Kingdom of Myrtana has been invaded by an implacable hor",
     editions: {
       TR: [
-        { name: "Standard", clientPrice: 5550 },
+        { name: "Standard", clientPrice: 5600 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 4500 },
+        { name: "Standard", clientPrice: 4600 },
       ],
     },
   },
@@ -371,7 +371,7 @@ export const preorderData: PreorderGame[] = [
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202601/1912/b5a499582e76829925ef74ec1b9b11b7068c93267dfb429b.jpg",
     releaseDate: "2026-06-17",
-    genre: "",
+    genre: "Приключения",
     description: "HD-2D RPG от Square Enix. В стиле Zelda",
     editions: {
       TR: [
@@ -379,8 +379,8 @@ export const preorderData: PreorderGame[] = [
         { name: "Digital Deluxe", clientPrice: 7350 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 4900 },
-        { name: "Digital Deluxe", clientPrice: 5350 },
+        { name: "Standard", clientPrice: 5000 },
+        { name: "Digital Deluxe", clientPrice: 5400 },
       ],
     },
   },
@@ -394,12 +394,12 @@ export const preorderData: PreorderGame[] = [
     description: "3D-файтинг от Team NINJA. 29 бойцов на PS5",
     editions: {
       TR: [
-        { name: "Standard", clientPrice: 3950 },
+        { name: "Standard", clientPrice: 4000 },
         { name: "Deluxe", clientPrice: 6450 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 3800 },
-        { name: "Deluxe", clientPrice: 5600 },
+        { name: "Standard", clientPrice: 3850 },
+        { name: "Deluxe", clientPrice: 5650 },
       ],
     },
   },
@@ -414,13 +414,13 @@ export const preorderData: PreorderGame[] = [
     editions: {
       TR: [
         { name: "Standard", clientPrice: 6450 },
-        { name: "Deluxe", clientPrice: 8100 },
-        { name: "Ultimate", clientPrice: 9750 },
+        { name: "Deluxe", clientPrice: 8150 },
+        { name: "Ultimate", clientPrice: 9850 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 4900 },
-        { name: "Deluxe", clientPrice: 5800 },
-        { name: "Ultimate", clientPrice: 6650 },
+        { name: "Standard", clientPrice: 5000 },
+        { name: "Deluxe", clientPrice: 5850 },
+        { name: "Ultimate", clientPrice: 6700 },
       ],
     },
   },
@@ -428,18 +428,18 @@ export const preorderData: PreorderGame[] = [
     id: "beast-of-reincarnation",
     name: "Beast of Reincarnation",
     platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202603/2622/90ec8c84dd460708d922d6693ef8c61b3b0443db0b636b23.png",
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202602/1300/d14826b1fb3d85ca04a986caeb9372a05d5431c7b20481e5.png",
     releaseDate: "2026-08-04",
     genre: "Экшен",
     description: "Post-apocalyptic Japan lies in ruins and teeming with monstr",
     editions: {
       TR: [
         { name: "Standard", clientPrice: 5100 },
-        { name: "Digital Deluxe", clientPrice: 6000 },
+        { name: "Digital Deluxe", clientPrice: 6050 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 4500 },
-        { name: "Digital Deluxe", clientPrice: 5350 },
+        { name: "Standard", clientPrice: 4600 },
+        { name: "Digital Deluxe", clientPrice: 5400 },
       ],
     },
   },
@@ -454,11 +454,11 @@ export const preorderData: PreorderGame[] = [
     editions: {
       TR: [
         { name: "Standard", clientPrice: 6450 },
-        { name: "Digital Deluxe", clientPrice: 8500 },
-        { name: "Ultimate", clientPrice: 9750 },
+        { name: "Digital Deluxe", clientPrice: 8550 },
+        { name: "Ultimate", clientPrice: 9850 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 4900 },
+        { name: "Standard", clientPrice: 5000 },
       ],
     },
   },
@@ -475,7 +475,7 @@ export const preorderData: PreorderGame[] = [
         { name: "Standard", clientPrice: 4700 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 4000 },
+        { name: "Standard", clientPrice: 4050 },
       ],
     },
   },
