@@ -1,5 +1,5 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-04-22T18:05:32.264Z
+// Обновлено: 2026-04-22T21:04:29.277Z
 // Предзаказов: 26
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
@@ -63,8 +63,8 @@ export const preorderData: PreorderGame[] = [
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202603/2600/9b613ce65ca534cfe6f1a117217d105b56ab60bd74c7322e.jpg",
     releaseDate: "2026-04-23",
-    genre: "Экшен",
-    description: "Ready to die? Experience the newest brutal action game from",
+    genre: "",
+    description: "",
     editions: {
       TR: [
         { name: "Standard", clientPrice: 3050 },
@@ -204,8 +204,8 @@ export const preorderData: PreorderGame[] = [
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202604/0807/507f1267c6b33c410dee46185e9ae09fd59f6dc79920a64c.png",
     releaseDate: "2026-05-11",
-    genre: "Стратегия",
-    description: "In this hybrid RPG/idol simulation, five idols wield Sound W",
+    genre: "",
+    description: "",
     editions: {
       TR: [
         { name: "Standard", clientPrice: 3250 },
@@ -256,8 +256,8 @@ export const preorderData: PreorderGame[] = [
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202512/0516/166e320836e1eaa2655e08f771a89010ffea1c5dfcd331ea.png",
     releaseDate: "2026-05-20",
-    genre: "Экшен",
-    description: "After strange disappearances hit Tokyo’s population, it’s up",
+    genre: "",
+    description: "",
     editions: {
       TR: [
         { name: "Standard", clientPrice: 3250 },
@@ -335,7 +335,7 @@ export const preorderData: PreorderGame[] = [
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202510/1009/103bc5118f4ca8bb6d93d83e06367628a77e94c692e039bb.png",
     releaseDate: "2026-05-27",
-    genre: "Приключения",
+    genre: "",
     description: "Wuxia-RPG. 20 концовок, два режима боя",
     editions: {
       TR: [
@@ -371,7 +371,7 @@ export const preorderData: PreorderGame[] = [
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202601/1912/b5a499582e76829925ef74ec1b9b11b7068c93267dfb429b.jpg",
     releaseDate: "2026-06-17",
-    genre: "Приключения",
+    genre: "",
     description: "HD-2D RPG от Square Enix. В стиле Zelda",
     editions: {
       TR: [
@@ -428,7 +428,7 @@ export const preorderData: PreorderGame[] = [
     id: "beast-of-reincarnation",
     name: "Beast of Reincarnation",
     platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202602/1300/d14826b1fb3d85ca04a986caeb9372a05d5431c7b20481e5.png",
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202603/2622/90ec8c84dd460708d922d6693ef8c61b3b0443db0b636b23.png",
     releaseDate: "2026-08-04",
     genre: "Экшен",
     description: "Post-apocalyptic Japan lies in ruins and teeming with monstr",
