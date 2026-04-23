@@ -1,6 +1,6 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-04-23T15:04:33.907Z
-// Предзаказов: 24
+// Обновлено: 2026-04-23T18:04:51.966Z
+// Предзаказов: 25
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
 export interface PreorderEdition {
@@ -38,9 +38,9 @@ export const preorderData: PreorderGame[] = [
         { name: "Ultimate", clientPrice: 7650 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 4400 },
+        { name: "Standard", clientPrice: 4350 },
         { name: "Deluxe", clientPrice: 6050 },
-        { name: "Ultimate", clientPrice: 8650 },
+        { name: "Ultimate", clientPrice: 8550 },
       ],
     },
   },
@@ -75,7 +75,7 @@ export const preorderData: PreorderGame[] = [
         { name: "Standard", clientPrice: 6450 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 5000 },
+        { name: "Standard", clientPrice: 4950 },
       ],
     },
   },
@@ -126,7 +126,7 @@ export const preorderData: PreorderGame[] = [
         { name: "Deluxe", clientPrice: 6450 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 4400 },
+        { name: "Standard", clientPrice: 4350 },
       ],
     },
   },
@@ -177,7 +177,7 @@ export const preorderData: PreorderGame[] = [
         { name: "Standard", clientPrice: 4700 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 4050 },
+        { name: "Standard", clientPrice: 4000 },
       ],
     },
   },
@@ -195,7 +195,7 @@ export const preorderData: PreorderGame[] = [
         { name: "Deluxe", clientPrice: 8150 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 5000 },
+        { name: "Standard", clientPrice: 4950 },
       ],
     },
   },
@@ -257,7 +257,7 @@ export const preorderData: PreorderGame[] = [
         { name: "Standard", clientPrice: 2800 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 2700 },
+        { name: "Standard", clientPrice: 2650 },
       ],
     },
   },
@@ -293,7 +293,7 @@ export const preorderData: PreorderGame[] = [
       ],
       UA: [
         { name: "Standard", clientPrice: 3150 },
-        { name: "Deluxe", clientPrice: 3750 },
+        { name: "Deluxe", clientPrice: 3700 },
       ],
     },
   },
@@ -310,7 +310,7 @@ export const preorderData: PreorderGame[] = [
         { name: "Standard", clientPrice: 5600 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 4600 },
+        { name: "Standard", clientPrice: 4550 },
       ],
     },
   },
@@ -328,7 +328,7 @@ export const preorderData: PreorderGame[] = [
         { name: "Digital Deluxe", clientPrice: 7350 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 5000 },
+        { name: "Standard", clientPrice: 4950 },
         { name: "Digital Deluxe", clientPrice: 5400 },
       ],
     },
@@ -347,8 +347,27 @@ export const preorderData: PreorderGame[] = [
         { name: "Deluxe", clientPrice: 6450 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 3850 },
-        { name: "Deluxe", clientPrice: 5650 },
+        { name: "Standard", clientPrice: 3800 },
+        { name: "Deluxe", clientPrice: 5600 },
+      ],
+    },
+  },
+  {
+    id: "assassin-s-creed-black-flag-resynced",
+    name: "Assassin's Creed Black Flag Resynced",
+    platforms: ["PS5"],
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202603/1215/6cb70c1a621d4e6d437b95ebe9eaed83cd78d358c13fe3af.jpg",
+    releaseDate: "2026-07-08",
+    genre: "Экшен",
+    description: "Assasin's Creed IV: Black Flag is a pirate game. Being the f",
+    editions: {
+      TR: [
+        { name: "Standard", clientPrice: 4600 },
+        { name: "Deluxe", clientPrice: 5350 },
+      ],
+      UA: [
+        { name: "Standard", clientPrice: 4550 },
+        { name: "Deluxe", clientPrice: 5200 },
       ],
     },
   },
@@ -367,9 +386,9 @@ export const preorderData: PreorderGame[] = [
         { name: "Ultimate", clientPrice: 9850 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 5000 },
+        { name: "Standard", clientPrice: 4950 },
         { name: "Deluxe", clientPrice: 5850 },
-        { name: "Ultimate", clientPrice: 6700 },
+        { name: "Ultimate", clientPrice: 6650 },
       ],
     },
   },
@@ -387,7 +406,7 @@ export const preorderData: PreorderGame[] = [
         { name: "Digital Deluxe", clientPrice: 6050 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 4600 },
+        { name: "Standard", clientPrice: 4550 },
         { name: "Digital Deluxe", clientPrice: 5400 },
       ],
     },
@@ -407,7 +426,7 @@ export const preorderData: PreorderGame[] = [
         { name: "Ultimate", clientPrice: 9850 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 5000 },
+        { name: "Standard", clientPrice: 4950 },
       ],
     },
   },
@@ -424,7 +443,7 @@ export const preorderData: PreorderGame[] = [
         { name: "Standard", clientPrice: 4700 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 4050 },
+        { name: "Standard", clientPrice: 4000 },
       ],
     },
   },
@@ -441,7 +460,7 @@ export const preorderData: PreorderGame[] = [
         { name: "Standard", clientPrice: 4700 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 4050 },
+        { name: "Standard", clientPrice: 4000 },
       ],
     },
   },
