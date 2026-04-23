@@ -1,6 +1,6 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-04-23T12:04:37.506Z
-// Предзаказов: 27
+// Обновлено: 2026-04-23T15:04:33.907Z
+// Предзаказов: 24
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
 export interface PreorderEdition {
@@ -23,54 +23,6 @@ export interface PreorderGame {
 }
 
 export const preorderData: PreorderGame[] = [
-  {
-    id: "sudden-strike-5",
-    name: "Sudden Strike 5",
-    platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202507/0908/7b0b79a9f9a6be5c537543568960526e148af5c5ae1e5696.jpg",
-    releaseDate: "2026-04-23",
-    genre: "Стратегия",
-    description: "Стратегия от KITE Games. Бои ВМВ, 300+ юнитов",
-    editions: {
-      TR: [
-        { name: "Standard", clientPrice: 4700 },
-      ],
-    },
-  },
-  {
-    id: "kiln",
-    name: "Kiln",
-    platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202601/1521/6ddb729cc5b302cc14463f57497d715eef4772fae6886a4e.jpg",
-    releaseDate: "2026-04-23",
-    genre: "",
-    description: "",
-    editions: {
-      TR: [
-        { name: "Standard", clientPrice: 2300 },
-      ],
-      UA: [
-        { name: "Standard", clientPrice: 1950 },
-      ],
-    },
-  },
-  {
-    id: "kiln-fired-up-edition",
-    name: "Kiln Fired Up Edition",
-    platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202603/2600/9b613ce65ca534cfe6f1a117217d105b56ab60bd74c7322e.jpg",
-    releaseDate: "2026-04-23",
-    genre: "Экшен",
-    description: "Ready to die? Experience the newest brutal action game from",
-    editions: {
-      TR: [
-        { name: "Standard", clientPrice: 3050 },
-      ],
-      UA: [
-        { name: "Standard", clientPrice: 2850 },
-      ],
-    },
-  },
   {
     id: "diablo-iv-lord-of-hatred",
     name: "Diablo IV: Lord of Hatred",
