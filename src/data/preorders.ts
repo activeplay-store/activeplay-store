@@ -1,5 +1,5 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-04-23T03:04:36.968Z
+// Обновлено: 2026-04-23T06:04:54.267Z
 // Предзаказов: 26
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
@@ -96,6 +96,24 @@ export const preorderData: PreorderGame[] = [
     },
   },
   {
+    id: "saros",
+    name: "SAROS",
+    platforms: ["PS5"],
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202512/0216/559cda0aac5db568f4d5ab40f73ad0c45416c58ee852e673.jpg",
+    releaseDate: "2026-04-27",
+    genre: "Экшен",
+    description: "Рогалик-шутер от Housemarque. Щит из пуль",
+    editions: {
+      TR: [
+        { name: "Standard", clientPrice: 7350 },
+        { name: "Digital Deluxe", clientPrice: 8150 },
+      ],
+      UA: [
+        { name: "Standard", clientPrice: 5400 },
+      ],
+    },
+  },
+  {
     id: "motogp26",
     name: "MotoGP 26",
     platforms: ["PS5"],
@@ -126,24 +144,6 @@ export const preorderData: PreorderGame[] = [
       ],
       UA: [
         { name: "Standard", clientPrice: 3250 },
-      ],
-    },
-  },
-  {
-    id: "saros",
-    name: "SAROS",
-    platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202512/0216/559cda0aac5db568f4d5ab40f73ad0c45416c58ee852e673.jpg",
-    releaseDate: "2026-04-29",
-    genre: "Экшен",
-    description: "Рогалик-шутер от Housemarque. Щит из пуль",
-    editions: {
-      TR: [
-        { name: "Standard", clientPrice: 7350 },
-        { name: "Digital Deluxe", clientPrice: 8150 },
-      ],
-      UA: [
-        { name: "Standard", clientPrice: 5400 },
       ],
     },
   },
@@ -468,7 +468,7 @@ export const preorderData: PreorderGame[] = [
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202601/2903/492bf059e5c7ed0ffacd99a444a093d2a785b0cff7fe901e.jpg",
     releaseDate: "2026-08-26",
-    genre: "Экшен",
+    genre: "",
     description: "Стелс от Konami. MGS4 + Peace Walker",
     editions: {
       TR: [
