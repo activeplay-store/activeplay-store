@@ -1,6 +1,6 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-04-23T06:04:54.267Z
-// Предзаказов: 26
+// Обновлено: 2026-04-23T09:04:42.050Z
+// Предзаказов: 27
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
 export interface PreorderEdition {
@@ -468,8 +468,25 @@ export const preorderData: PreorderGame[] = [
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202601/2903/492bf059e5c7ed0ffacd99a444a093d2a785b0cff7fe901e.jpg",
     releaseDate: "2026-08-26",
-    genre: "",
+    genre: "Экшен",
     description: "Стелс от Konami. MGS4 + Peace Walker",
+    editions: {
+      TR: [
+        { name: "Standard", clientPrice: 4700 },
+      ],
+      UA: [
+        { name: "Standard", clientPrice: 4050 },
+      ],
+    },
+  },
+  {
+    id: "brigandine-abyss",
+    name: "Brigandine Abyss",
+    platforms: ["PS5"],
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202602/0500/fec32977d055a076022ac101496d414d5157e4bce5690753.jpg",
+    releaseDate: "2026-08-26",
+    genre: "Платформер",
+    description: "Neon Abyss is a frantic roguelike action platformer features",
     editions: {
       TR: [
         { name: "Standard", clientPrice: 4700 },
