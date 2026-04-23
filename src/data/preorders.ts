@@ -1,5 +1,5 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-04-23T00:04:40.708Z
+// Обновлено: 2026-04-23T03:04:36.968Z
 // Предзаказов: 26
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
@@ -96,24 +96,6 @@ export const preorderData: PreorderGame[] = [
     },
   },
   {
-    id: "saros",
-    name: "SAROS",
-    platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202512/0216/559cda0aac5db568f4d5ab40f73ad0c45416c58ee852e673.jpg",
-    releaseDate: "2026-04-27",
-    genre: "Экшен",
-    description: "Рогалик-шутер от Housemarque. Щит из пуль",
-    editions: {
-      TR: [
-        { name: "Standard", clientPrice: 7350 },
-        { name: "Digital Deluxe", clientPrice: 8150 },
-      ],
-      UA: [
-        { name: "Standard", clientPrice: 5400 },
-      ],
-    },
-  },
-  {
     id: "motogp26",
     name: "MotoGP 26",
     platforms: ["PS5"],
@@ -144,6 +126,24 @@ export const preorderData: PreorderGame[] = [
       ],
       UA: [
         { name: "Standard", clientPrice: 3250 },
+      ],
+    },
+  },
+  {
+    id: "saros",
+    name: "SAROS",
+    platforms: ["PS5"],
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202512/0216/559cda0aac5db568f4d5ab40f73ad0c45416c58ee852e673.jpg",
+    releaseDate: "2026-04-29",
+    genre: "Экшен",
+    description: "Рогалик-шутер от Housemarque. Щит из пуль",
+    editions: {
+      TR: [
+        { name: "Standard", clientPrice: 7350 },
+        { name: "Digital Deluxe", clientPrice: 8150 },
+      ],
+      UA: [
+        { name: "Standard", clientPrice: 5400 },
       ],
     },
   },
