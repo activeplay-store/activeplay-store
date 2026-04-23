@@ -1,5 +1,5 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-04-23T09:04:42.050Z
+// Обновлено: 2026-04-23T12:04:37.506Z
 // Предзаказов: 27
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
@@ -34,9 +34,6 @@ export const preorderData: PreorderGame[] = [
     editions: {
       TR: [
         { name: "Standard", clientPrice: 4700 },
-      ],
-      UA: [
-        { name: "Standard", clientPrice: 4050 },
       ],
     },
   },
