@@ -1,5 +1,5 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-04-23T18:04:51.966Z
+// Обновлено: 2026-04-24T06:04:42.442Z
 // Предзаказов: 25
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
@@ -356,7 +356,7 @@ export const preorderData: PreorderGame[] = [
     id: "assassin-s-creed-black-flag-resynced",
     name: "Assassin's Creed Black Flag Resynced",
     platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202603/1215/6cb70c1a621d4e6d437b95ebe9eaed83cd78d358c13fe3af.jpg",
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202603/1215/866aea007130d2610c97731cd33f6c725181924cbc8154dd.jpg",
     releaseDate: "2026-07-08",
     genre: "Экшен",
     description: "Assasin's Creed IV: Black Flag is a pirate game. Being the f",
