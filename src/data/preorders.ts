@@ -1,6 +1,6 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-04-25T03:04:30.632Z
-// Предзаказов: 25
+// Обновлено: 2026-04-25T12:04:57.633Z
+// Предзаказов: 26
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
 export interface PreorderEdition {
@@ -461,6 +461,21 @@ export const preorderData: PreorderGame[] = [
       ],
       UA: [
         { name: "Standard", clientPrice: 4050 },
+      ],
+    },
+  },
+  {
+    id: "crymelight",
+    name: "CRYMELIGHT",
+    platforms: ["PS5"],
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202604/0205/baf360b1f72f1d88b1da64a7f89b20efacfb8be7806f243a.png",
+    releaseDate: "2026-11-04",
+    genre: "",
+    description: "",
+    editions: {
+      TR: [
+        { name: "Standard", clientPrice: 2400 },
+        { name: "Deluxe", clientPrice: 4000 },
       ],
     },
   },
