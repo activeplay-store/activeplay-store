@@ -1,5 +1,5 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-04-21T14:55:58.500Z
+// Обновлено: 2026-04-25T09:00:48.924Z
 // Горящих новинок: 4
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
@@ -41,75 +41,75 @@ export const hotReleases: HotRelease[] = [
     totalScore: 6.2,
     editions: {
       tr: [
-        { name: "Standard", priceRUB: 6750 },
-        { name: "Deluxe", priceRUB: 7750 },
+        { name: "Standard", priceRUB: 5650 },
+        { name: "Deluxe", priceRUB: 6500 },
       ],
       ua: [
-        { name: "Standard", priceRUB: 5350 },
-        { name: "Deluxe", priceRUB: 5800 },
+        { name: "Standard", priceRUB: 4600 },
+        { name: "Deluxe", priceRUB: 5000 },
       ],
     },
   },
   {
-    id: "cthulhu-the-cosmic-abyss-r-lyeh-edition",
-    title: "Cthulhu: The Cosmic Abyss - R'lyeh Edition",
-    slug: "cthulhu-the-cosmic-abyss-r-lyeh-edition",
-    description: "Хоррор от Big Bad Wolf. Лавкрафт, Р'льех",
-    releaseDate: "16 апреля 2026",
-    metacritic: 78,
-    genre: "Платформер",
+    id: "tides-of-tomorrow",
+    title: "Tides of Tomorrow",
+    slug: "tides-of-tomorrow",
+    description: "Приключение от DigixArt. Решения онлайн",
+    releaseDate: "22 апреля 2026",
+    metacritic: 81,
+    genre: "Инди",
     platforms: ["PS5"],
-    cover: "https://image.api.playstation.com/vulcan/ap/rnd/202601/2013/e8cc34b3e9fc782c62214c44aa4ad60242defb0e24e31ce0.jpg",
+    cover: "https://image.api.playstation.com/vulcan/ap/rnd/202506/0502/83edea47457e08b4d5be5b6a38567d5ea8bfcb297e0ccba2.jpg",
+    hypeScore: 2,
+    totalScore: 5.5,
+    editions: {
+      tr: [
+        { name: "Standard", priceRUB: 3250 },
+      ],
+      ua: [
+        { name: "Standard", priceRUB: 3000 },
+      ],
+    },
+  },
+  {
+    id: "kiln-fired-up-edition",
+    title: "Kiln Fired Up Edition",
+    slug: "kiln-fired-up-edition",
+    description: "",
+    releaseDate: "23 апреля 2026",
+    metacritic: 84,
+    genre: "Экшен",
+    platforms: ["PS5"],
+    cover: "https://image.api.playstation.com/vulcan/ap/rnd/202603/2600/9b613ce65ca534cfe6f1a117217d105b56ab60bd74c7322e.jpg",
+    hypeScore: 1,
+    totalScore: 5.2,
+    editions: {
+      tr: [
+        { name: "Standard", priceRUB: 3050 },
+      ],
+      ua: [
+        { name: "Standard", priceRUB: 2850 },
+      ],
+    },
+  },
+  {
+    id: "sudden-strike-5",
+    title: "Sudden Strike 5",
+    slug: "sudden-strike-5",
+    description: "Стратегия от KITE Games. Бои ВМВ, 300+ юнитов",
+    releaseDate: "23 апреля 2026",
+    metacritic: 77,
+    genre: "Стратегия",
+    platforms: ["PS5"],
+    cover: "https://image.api.playstation.com/vulcan/ap/rnd/202507/0908/7b0b79a9f9a6be5c537543568960526e148af5c5ae1e5696.jpg",
     hypeScore: 1,
     totalScore: 5,
     editions: {
       tr: [
-        { name: "Standard", priceRUB: 6750 },
+        { name: "Standard", priceRUB: 4750 },
       ],
       ua: [
-        { name: "Standard", priceRUB: 5350 },
-      ],
-    },
-  },
-  {
-    id: "the-occultist",
-    title: "The Occultist",
-    slug: "the-occultist",
-    description: "Хоррор от Daedalic. Мистический маятник",
-    releaseDate: "8 апреля 2026",
-    metacritic: 66,
-    genre: "Приключения",
-    platforms: ["PS5"],
-    cover: "https://image.api.playstation.com/vulcan/ap/rnd/202408/0109/1a0d7fdc724c04debb886c4421d4db4199a771f8dfe22ae1.jpg",
-    hypeScore: 1,
-    totalScore: 4.7,
-    editions: {
-      tr: [
-        { name: "Standard", priceRUB: 3900 },
-      ],
-      ua: [
-        { name: "Standard", priceRUB: 3450 },
-      ],
-    },
-  },
-  {
-    id: "jay-and-silent-bob-chronic-blunt-punch",
-    title: "Jay and Silent Bob: Chronic Blunt Punch",
-    slug: "jay-and-silent-bob-chronic-blunt-punch",
-    description: "Beat 'em up от Interabang. Кооп-аркада",
-    releaseDate: "20 апреля 2026",
-    metacritic: 0,
-    genre: "Аркада",
-    platforms: ["PS5"],
-    cover: "https://image.api.playstation.com/vulcan/ap/rnd/202603/2417/cbb7c65a786cca846fe8be3bf5bf609457a36b8a5469f087.jpg",
-    hypeScore: 1,
-    totalScore: 4.2,
-    editions: {
-      tr: [
-        { name: "Standard", priceRUB: 2850 },
-      ],
-      ua: [
-        { name: "Standard", priceRUB: 2850 },
+        { name: "Standard", priceRUB: 4750 },
       ],
     },
   },
