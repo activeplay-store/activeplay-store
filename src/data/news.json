@@ -1,5 +1,35 @@
 [
   {
+    "id": "novoe-dopolnenie-final-fantasy-xiv-evercold-anonsirovano-na-festivale",
+    "slug": "novoe-dopolnenie-final-fantasy-xiv-evercold-anonsirovano-na-festivale",
+    "title": "новое дополнение final fantasy xiv: evercold анонсировано на фестивале",
+    "content": "На фестивале Final Fantasy XIV в Северной Америке было анонсировано новое дополнение Evercold. Об этом сообщил директор игры Наоки Ёсида. Дополнение — частью саги Godless Realms, где игроки выступят в роли Воина Света. Их задача — предотвратить замерзание Четвёртого Отражения.\n\nFinal Fantasy XIV — это популярная MMORPG от Square Enix, доступная на платформах PC, PlayStation 4 и PlayStation 5. В новом дополнении Evercold игроки продолжат приключения в мире, наполненном магией и эпическими сражениями. Основной задачей станет борьба с силами, угрожающими замерзанием целого мира. Пока неизвестно, когда именно выйдет дополнение, но оно обещает стать важной частью общей истории. Стоимость дополнений и их доступность на платформах уточняются.\n\nSquare Enix уже не первый раз сталкивается с проблемами в выборе названий для своих проектов. Например, предыдущие дополнения, такие как Stormblood и Shadowbringers, также имели альтернативные названия. Final Fantasy XIV, выпущенная в 2010 году, имеет рейтинг 82 на Metacritic и продолжает оставаться одной из самых популярных MMORPG на рынке. Игроки и критики высоко оценили её за глубокий лор и проработанный геймплей.\n\nПодписка PS Plus открывает доступ к множеству игр, включая Final Fantasy XIV. Оформить подписку PS Plus можно на сайте ActivePlay от 1 250 ₽/мес. Это позволяет оставаться в курсе всех новинок и вовремя получать доступ к новым дополнениям и контенту.",
+    "metaDescription": "Новое дополнение Final Fantasy XIV: Evercold анонсировано. Узнайте подробности о сюжете, платформе и подписке PS Plus.",
+    "coverUrl": "/images/news/news-1777136587095-n41t.jpg",
+    "tags": [
+      "PS5",
+      "Sony",
+      "PS Store"
+    ],
+    "category": "news",
+    "source": "GameSpot",
+    "sourceUrl": "https://www.gamespot.com/articles/final-fantasy-xivs-biggest-expansions-almost-had-very-different-names-heres-what-they-were/1100-6539625/?ftag=CAD-01-10abi2f",
+    "publishedAt": "2026-04-25T17:13:44.782Z",
+    "gameId": null,
+    "relatedProduct": "ps-plus-extra",
+    "platform": "playstation",
+    "ctaType": "psplus",
+    "ctaText": "PS Plus от 1 250 ₽/мес",
+    "ctaLink": "/subscriptions",
+    "cta": null,
+    "cta2": {
+      "title": "PS Plus Extra",
+      "description": "Каталог из 400+ игр",
+      "url": "/ps-plus-extra",
+      "buttonText": "Подробнее →"
+    }
+  },
+  {
     "id": "igra-saros-poluchila-9-25-ot-game-informer-chto-eto-znachit",
     "slug": "igra-saros-poluchila-9-25-ot-game-informer-chto-eto-znachit",
     "title": "Игра Saros получила 9.25 от Game Informer: что это значит",
@@ -1614,38 +1644,6 @@
       "url": "/sale",
       "buttonText": "Купить за 5300 ₽ →"
     },
-    "cta2": {
-      "title": "PS Plus Extra",
-      "description": "Каталог из 400+ игр",
-      "url": "/ps-plus-extra",
-      "buttonText": "Подробнее →"
-    }
-  },
-  {
-    "id": "sony-peredelaet-playstation-store-gryadut-bolshie-peremeny",
-    "slug": "sony-peredelaet-playstation-store-gryadut-bolshie-peremeny",
-    "title": "Sony переделает playstation store — грядут большие перемены",
-    "content": "Появились слухи о грядущей масштабной переработке PlayStation Store и онлайн-сервисов Sony. Компания активно ищет опытного серверного инженера для развития PlayStation Network. Особое внимание в новой версии уделят улучшению голосового чата и кроссплатформенности. Об этом сообщили инсайдеры на форуме r/PS5.\n\nSony планирует создать новую серверную архитектуру практически с нуля. Разработчиков не станут ограничивать рамками существующей системы, что является хорошей новостью. Это указывает на серьёзную перестройку всего сервиса, а не просто косметическое обновление. В описании вакансии особо подчёркивается кроссплатформенность будущего PSN.\n\nУлучшение кроссплатформенности позволит сервисам PlayStation более эффективно взаимодействовать с другими платформами. Это может означать интеграцию с PC, мобильными устройствами и даже Nintendo Switch. Не исключено, что масштабный проект нацелен на подготовку к следующему поколению консолей PlayStation, которое ожидается в 2028 году или позже. Текущая архитектура, вероятно, устарела.\n\nОбновлённый PlayStation Store с улучшенным голосовым чатом станет отличным дополнением к подписке PS Plus. Каталог PS Plus Extra предлагает сотни игр для PS4 и PS5. Оформить подписку PS Plus можно в ActivePlay от 1 250 ₽/мес. 52 000+ клиентов уже оценили преимущества нашего сервиса с 2022 года.",
-    "metaDescription": "Sony планирует масштабную переработку PlayStation Store и PSN. Улучшат голосовой чат и кроссплатформенность. Подробности на ActivePlay.",
-    "coverUrl": "/images/news/ps-store-redesign.jpg",
-    "tags": [
-      "PS5",
-      "Sony",
-      "PS Store",
-      "PS Plus",
-      "PlayStation Network"
-    ],
-    "category": "news",
-    "source": "r/PS5",
-    "sourceUrl": "https://gameobserver.com/sony-may-be-preparing-a-major-playstation-store-overhaul/",
-    "publishedAt": "2026-04-08T11:24:03.874Z",
-    "gameId": null,
-    "relatedProduct": "ps-plus-extra",
-    "platform": "playstation",
-    "ctaType": "psplus",
-    "ctaText": "PS Plus от 1 250 ₽/мес",
-    "ctaLink": "/subscriptions",
-    "cta": null,
     "cta2": {
       "title": "PS Plus Extra",
       "description": "Каталог из 400+ игр",
