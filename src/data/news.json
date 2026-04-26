@@ -1,5 +1,35 @@
 [
   {
+    "id": "ufc-6-data-reliza-i-detali-anonsa-ot-ea-sports",
+    "slug": "ufc-6-data-reliza-i-detali-anonsa-ot-ea-sports",
+    "title": "UFC 6: дата релиза и детали анонса от EA Sports",
+    "content": "Инсайдер Billbil-Kun сообщил, что UFC 6 будет представлена на следующей неделе. Официальный релиз игры запланирован на 19 июня для консолей PS5 и Xbox. Версия для ПК также разрабатывается, но точная дата выхода пока не известна. Эта информация вызвала ажиотаж на форуме r/GamingLeaksAndRumours.\n\nUFC 6 — это новое поколение спортивного симулятора от EA Sports, продолжающее серию игр Ultimate Fighting Championship. Игра будет доступна на платформах PS5 и Xbox, а также на ПК в будущем. Жанр проекта — спортивный симулятор смешанных единоборств (ММА), который предлагает реалистичную физику и анимацию, улучшенные механики боя и расширенные возможности кастомизации бойцов.\n\nСерия включает такие игры как UFC 4. EA Sports зарекомендовала себя как ведущий разработчик в жанре спортивных игр. Игроки ожидают улучшений в графике и механике по сравнению с предыдущими играми серии.\n\nЕсли вы хотите быть в курсе всех новинок и релизов, оформите подписку PS Plus от 1 250 ₽/мес на ActivePlay. Это даст вам доступ к сотням игр, включая эксклюзивы для PS5, а также позволит вовремя оценить новые релизы, такие как UFC 6.",
+    "metaDescription": "UFC 6 от EA Sports выходит 19 июня на PS5 и Xbox. Узнайте подробности анонса и платформы.",
+    "coverUrl": "/images/news/news-1777222978421-217r.jpg",
+    "tags": [
+      "PS5",
+      "Sony",
+      "PS Store"
+    ],
+    "category": "news",
+    "source": "r/GamingLeaksAndRumours",
+    "sourceUrl": "https://www.reddit.com/r/GamingLeaksAndRumours/comments/1swb1mv/ufc_6_reveal_next_week_and_release_date_is_june/",
+    "publishedAt": "2026-04-26T17:17:36.632Z",
+    "gameId": null,
+    "relatedProduct": "ea-play",
+    "platform": "playstation",
+    "ctaType": "psplus",
+    "ctaText": "PS Plus от 1 250 ₽/мес",
+    "ctaLink": "/subscriptions",
+    "cta": null,
+    "cta2": {
+      "title": "EA Play",
+      "description": "Все игры EA по подписке",
+      "url": "/ea-play",
+      "buttonText": "Подробнее →"
+    }
+  },
+  {
     "id": "novoe-dopolnenie-final-fantasy-xiv-evercold-anonsirovano-na-festivale",
     "slug": "novoe-dopolnenie-final-fantasy-xiv-evercold-anonsirovano-na-festivale",
     "title": "новое дополнение final fantasy xiv: evercold анонсировано на фестивале",
@@ -1611,44 +1641,5 @@
       "buttonText": "Купить за 800 ₽ →"
     },
     "cta2": null
-  },
-  {
-    "id": "state-of-play-sony-pokazhet-igry-do-iyunya-2026-insayd",
-    "slug": "state-of-play-sony-pokazhet-igry-do-iyunya-2026-insayd",
-    "title": "State of Play: Sony покажет игры до июня 2026",
-    "content": "Инсайдер NateTheHate поделился информацией о готовящейся презентации State of Play. По его данным, новое мероприятие от Sony стоит ожидать до конца июня 2026 года. Точная дата показа пока не разглашается, но анонс может произойти в ближайшие недели. Этой весной Sony планирует представить несколько крупных проектов.\n\n State of Play — это онлайн-презентация, на которой Sony демонстрирует новые игры и обновления для PlayStation. Игроки надеются увидеть анонсы, связанные с Marvel's Wolverine от Insomniac Games. Также многие ждут новостей о новом проекте Кори Барлога, известного по God of War. Вероятно, покажут и другие проекты от внутренних студий PlayStation.\n\n Презентации State of Play важны для фанатов PlayStation, так как позволяют узнать о будущих релизах и обновлениях. Предыдущие мероприятия часто содержали неожиэтот анонсы и трейлеры. Например, на State of Play в сентябре 2024 года показали геймплейный трейлер Marvel's Spider-Man 2. Ожидания от предстоящей презентации высоки, игроки надеются на громкие анонсы.\n\n С подпиской PS Plus вы всегда будете в курсе всех новинок PlayStation. Каталог PS Plus Extra включает сотни игр, доступных для загрузки. Оформить подписку PS Plus можно в ActivePlay от 1 250 ₽/мес. 52 000+ клиентов с 2022 года.",
-    "metaDescription": "Инсайдер сообщает о State of Play до июня. Ждем анонсы Wolverine и новой игры Кори Барлога. Подписка PS Plus в ActivePlay.",
-    "coverUrl": "/images/news/state-of-play-banner.jpg",
-    "tags": [
-      "PS5",
-      "Sony",
-      "State of Play",
-      "Wolverine",
-      "Кори Барлог"
-    ],
-    "category": "insider",
-    "source": "r/PS5",
-    "sourceUrl": "https://xcancel.com/natethehate2/status/2041714256748413156?s=46",
-    "publishedAt": "2026-04-08T15:20:40.982Z",
-    "gameId": null,
-    "relatedProduct": "ps-plus-extra",
-    "platform": "playstation",
-    "ctaType": "psplus",
-    "ctaText": "PS Plus от 1 250 ₽/мес",
-    "ctaLink": "/subscriptions",
-    "cta": {
-      "title": "Купить God of War Ragnarök",
-      "description": "Активация за 5 минут. Турецкий PS Store.",
-      "price": 5300,
-      "oldPrice": 9350,
-      "url": "/sale",
-      "buttonText": "Купить за 5300 ₽ →"
-    },
-    "cta2": {
-      "title": "PS Plus Extra",
-      "description": "Каталог из 400+ игр",
-      "url": "/ps-plus-extra",
-      "buttonText": "Подробнее →"
-    }
   }
 ]
