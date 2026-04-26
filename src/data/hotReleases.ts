@@ -1,5 +1,5 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-04-25T09:00:48.924Z
+// Обновлено: 2026-04-26T09:00:56.553Z
 // Горящих новинок: 4
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
@@ -37,8 +37,8 @@ export const hotReleases: HotRelease[] = [
     genre: "Экшен",
     platforms: ["PS5"],
     cover: "https://image.api.playstation.com/vulcan/ap/rnd/202511/2605/b7ec5836e23affe26c8ad00124a1eddddab5e1bad456c03e.jpg",
-    hypeScore: 6,
-    totalScore: 6.2,
+    hypeScore: 7,
+    totalScore: 6.6,
     editions: {
       tr: [
         { name: "Standard", priceRUB: 5650 },
@@ -47,27 +47,6 @@ export const hotReleases: HotRelease[] = [
       ua: [
         { name: "Standard", priceRUB: 4600 },
         { name: "Deluxe", priceRUB: 5000 },
-      ],
-    },
-  },
-  {
-    id: "tides-of-tomorrow",
-    title: "Tides of Tomorrow",
-    slug: "tides-of-tomorrow",
-    description: "Приключение от DigixArt. Решения онлайн",
-    releaseDate: "22 апреля 2026",
-    metacritic: 81,
-    genre: "Инди",
-    platforms: ["PS5"],
-    cover: "https://image.api.playstation.com/vulcan/ap/rnd/202506/0502/83edea47457e08b4d5be5b6a38567d5ea8bfcb297e0ccba2.jpg",
-    hypeScore: 2,
-    totalScore: 5.5,
-    editions: {
-      tr: [
-        { name: "Standard", priceRUB: 3250 },
-      ],
-      ua: [
-        { name: "Standard", priceRUB: 3000 },
       ],
     },
   },
@@ -89,6 +68,27 @@ export const hotReleases: HotRelease[] = [
       ],
       ua: [
         { name: "Standard", priceRUB: 2850 },
+      ],
+    },
+  },
+  {
+    id: "tides-of-tomorrow",
+    title: "Tides of Tomorrow",
+    slug: "tides-of-tomorrow",
+    description: "Приключение от DigixArt. Решения онлайн",
+    releaseDate: "22 апреля 2026",
+    metacritic: 81,
+    genre: "Инди",
+    platforms: ["PS5"],
+    cover: "https://image.api.playstation.com/vulcan/ap/rnd/202506/0502/83edea47457e08b4d5be5b6a38567d5ea8bfcb297e0ccba2.jpg",
+    hypeScore: 1,
+    totalScore: 5.1,
+    editions: {
+      tr: [
+        { name: "Standard", priceRUB: 3250 },
+      ],
+      ua: [
+        { name: "Standard", priceRUB: 3000 },
       ],
     },
   },
