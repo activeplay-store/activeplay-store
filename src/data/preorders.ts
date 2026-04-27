@@ -1,5 +1,5 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-04-26T06:04:33.463Z
+// Обновлено: 2026-04-27T06:04:43.168Z
 // Предзаказов: 26
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
@@ -375,7 +375,7 @@ export const preorderData: PreorderGame[] = [
     id: "echoes-of-aincrad",
     name: "Echoes of Aincrad",
     platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202602/1808/9d1ce6fb150d8ee13d279d08835e7c19cefc4d34ef1d6978.jpg",
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202602/1907/db819d43d83148bec96dbaebc3daed099761432296eff166.jpg",
     releaseDate: "2026-07-09",
     genre: "Экшен-RPG",
     description: "RPG по Sword Art Online. Замок Айнкрад",
