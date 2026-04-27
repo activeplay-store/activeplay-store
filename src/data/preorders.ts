@@ -1,6 +1,6 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-04-27T18:05:22.957Z
-// Предзаказов: 27
+// Обновлено: 2026-04-27T21:04:27.954Z
+// Предзаказов: 25
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
 export interface PreorderEdition {
@@ -24,45 +24,6 @@ export interface PreorderGame {
 
 export const preorderData: PreorderGame[] = [
   {
-    id: "diablo-iv-lord-of-hatred",
-    name: "Diablo IV: Lord of Hatred",
-    platforms: ["PS5","PS4"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202511/1201/0aa045b07431038b0f1a5dfd8d0ca532868b95a149496693.png",
-    releaseDate: "2026-04-27",
-    genre: "Экшен-RPG",
-    description: "RPG-DLC от Blizzard. Паладин и Чернокнижник",
-    editions: {
-      TR: [
-        { name: "Standard", clientPrice: 3750 },
-        { name: "Deluxe", clientPrice: 5300 },
-        { name: "Ultimate", clientPrice: 7700 },
-      ],
-      UA: [
-        { name: "Standard", clientPrice: 4450 },
-        { name: "Deluxe", clientPrice: 6100 },
-        { name: "Ultimate", clientPrice: 8700 },
-      ],
-    },
-  },
-  {
-    id: "saros",
-    name: "SAROS",
-    platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202512/0216/559cda0aac5db568f4d5ab40f73ad0c45416c58ee852e673.jpg",
-    releaseDate: "2026-04-27",
-    genre: "Экшен",
-    description: "Рогалик-шутер от Housemarque. Щит из пуль",
-    editions: {
-      TR: [
-        { name: "Standard", clientPrice: 7400 },
-        { name: "Digital Deluxe", clientPrice: 8200 },
-      ],
-      UA: [
-        { name: "Standard", clientPrice: 5450 },
-      ],
-    },
-  },
-  {
     id: "motogp26",
     name: "MotoGP 26",
     platforms: ["PS5"],
@@ -72,10 +33,10 @@ export const preorderData: PreorderGame[] = [
     description: "Мотогонки от Milestone. Реальные рейтинги",
     editions: {
       TR: [
-        { name: "Standard", clientPrice: 6500 },
+        { name: "Standard", clientPrice: 6450 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 5000 },
+        { name: "Standard", clientPrice: 4950 },
       ],
     },
   },
@@ -92,24 +53,42 @@ export const preorderData: PreorderGame[] = [
         { name: "Standard", clientPrice: 3600 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 3300 },
+        { name: "Standard", clientPrice: 3250 },
       ],
     },
   },
   {
-    id: "magin-the-rat-project-stories-essence-edition",
-    name: "Magin: The Rat Project Stories Essence Edition",
+    id: "saros",
+    name: "SAROS",
     platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202602/1810/516a4c9f55826f986befa072858d1314ea05806d26708e40.png",
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202512/0216/559cda0aac5db568f4d5ab40f73ad0c45416c58ee852e673.jpg",
     releaseDate: "2026-04-29",
-    genre: "Платформер",
-    description: "Stories: The Path of Destinies is an action RPG developed by",
+    genre: "Экшен",
+    description: "Рогалик-шутер от Housemarque. Щит из пуль",
     editions: {
       TR: [
-        { name: "Standard", clientPrice: 3250 },
+        { name: "Standard", clientPrice: 7350 },
+        { name: "Digital Deluxe", clientPrice: 8150 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 3050 },
+        { name: "Standard", clientPrice: 5400 },
+      ],
+    },
+  },
+  {
+    id: "magin-the-rat-project-stories",
+    name: "Magin: The Rat Project Stories",
+    platforms: ["PS5"],
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202602/1809/ac344c7cdb7f1f6130a0048033a1686c9e671c0040f8a5c7.png",
+    releaseDate: "2026-04-29",
+    genre: "Карточная RPG",
+    description: "Deck-builder от Daedalic. Эмоции и карты",
+    editions: {
+      TR: [
+        { name: "Standard", clientPrice: 2400 },
+      ],
+      UA: [
+        { name: "Standard", clientPrice: 2250 },
       ],
     },
   },
@@ -123,27 +102,10 @@ export const preorderData: PreorderGame[] = [
     description: "2D-файтинг от Skybound. 3v3 бои Invincible",
     editions: {
       TR: [
-        { name: "Standard", clientPrice: 4750 },
+        { name: "Standard", clientPrice: 4700 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 4450 },
-      ],
-    },
-  },
-  {
-    id: "bus-bound",
-    name: "Bus Bound",
-    platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202602/0909/efad045c4766c0944329abc8ca80a585decde5fe214f3349.png",
-    releaseDate: "2026-04-30",
-    genre: "Экшен",
-    description: "In Bound, the player takes on the role of a dancing lady in",
-    editions: {
-      TR: [
-        { name: "Standard", clientPrice: 3250 },
-      ],
-      UA: [
-        { name: "Standard", clientPrice: 3000 },
+        { name: "Standard", clientPrice: 4350 },
       ],
     },
   },
@@ -160,7 +122,7 @@ export const preorderData: PreorderGame[] = [
         { name: "Standard", clientPrice: 3250 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 3000 },
+        { name: "Standard", clientPrice: 2950 },
       ],
     },
   },
@@ -174,10 +136,10 @@ export const preorderData: PreorderGame[] = [
     description: "Хоррор от Supermassive. Мимики в космосе",
     editions: {
       TR: [
-        { name: "Standard", clientPrice: 4750 },
+        { name: "Standard", clientPrice: 4700 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 4050 },
+        { name: "Standard", clientPrice: 4000 },
       ],
     },
   },
@@ -191,11 +153,11 @@ export const preorderData: PreorderGame[] = [
     description: "Адвенчура от TT Games. Открытый Готэм",
     editions: {
       TR: [
-        { name: "Standard", clientPrice: 6500 },
-        { name: "Deluxe", clientPrice: 8200 },
+        { name: "Standard", clientPrice: 6450 },
+        { name: "Deluxe", clientPrice: 8150 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 5000 },
+        { name: "Standard", clientPrice: 4950 },
       ],
     },
   },
@@ -212,21 +174,7 @@ export const preorderData: PreorderGame[] = [
         { name: "Standard", clientPrice: 3250 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 3000 },
-      ],
-    },
-  },
-  {
-    id: "bubsy-4d",
-    name: "Bubsy 4D",
-    platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202508/1222/2ecf79cd82dd87ef94fea0b917f0e6c1b147533a1681bc7b.jpg",
-    releaseDate: "2026-05-22",
-    genre: "Платформер",
-    description: "Join Bubsy on an intergalactic, platforming adventure! The i",
-    editions: {
-      TR: [
-        { name: "Standard", clientPrice: 2400 },
+        { name: "Standard", clientPrice: 2950 },
       ],
     },
   },
@@ -240,7 +188,7 @@ export const preorderData: PreorderGame[] = [
     description: "Стелс от IO Interactive. Молодой Бонд",
     editions: {
       TR: [
-        { name: "Standard", clientPrice: 6500 },
+        { name: "Standard", clientPrice: 6450 },
       ],
     },
   },
@@ -257,7 +205,7 @@ export const preorderData: PreorderGame[] = [
         { name: "Standard", clientPrice: 2800 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 2700 },
+        { name: "Standard", clientPrice: 2650 },
       ],
     },
   },
@@ -274,7 +222,7 @@ export const preorderData: PreorderGame[] = [
         { name: "Standard", clientPrice: 3250 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 3000 },
+        { name: "Standard", clientPrice: 2950 },
       ],
     },
   },
@@ -289,11 +237,11 @@ export const preorderData: PreorderGame[] = [
     editions: {
       TR: [
         { name: "Standard", clientPrice: 3600 },
-        { name: "Deluxe", clientPrice: 4350 },
+        { name: "Deluxe", clientPrice: 4300 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 3200 },
-        { name: "Deluxe", clientPrice: 3750 },
+        { name: "Standard", clientPrice: 3150 },
+        { name: "Deluxe", clientPrice: 3700 },
       ],
     },
   },
@@ -307,10 +255,10 @@ export const preorderData: PreorderGame[] = [
     description: "The Kingdom of Myrtana has been invaded by an implacable hor",
     editions: {
       TR: [
-        { name: "Standard", clientPrice: 5650 },
+        { name: "Standard", clientPrice: 5600 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 4600 },
+        { name: "Standard", clientPrice: 4550 },
       ],
     },
   },
@@ -324,12 +272,12 @@ export const preorderData: PreorderGame[] = [
     description: "HD-2D RPG от Square Enix. В стиле Zelda",
     editions: {
       TR: [
-        { name: "Standard", clientPrice: 6500 },
-        { name: "Digital Deluxe", clientPrice: 7400 },
+        { name: "Standard", clientPrice: 6450 },
+        { name: "Digital Deluxe", clientPrice: 7350 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 5000 },
-        { name: "Digital Deluxe", clientPrice: 5450 },
+        { name: "Standard", clientPrice: 4950 },
+        { name: "Digital Deluxe", clientPrice: 5400 },
       ],
     },
   },
@@ -343,12 +291,12 @@ export const preorderData: PreorderGame[] = [
     description: "In EA SPORTS UFC 4 the fighter you become is shaped by your",
     editions: {
       TR: [
-        { name: "Standard", clientPrice: 8450 },
-        { name: "Ultimate", clientPrice: 11400 },
+        { name: "Standard", clientPrice: 8400 },
+        { name: "Ultimate", clientPrice: 11350 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 6300 },
-        { name: "Ultimate", clientPrice: 9000 },
+        { name: "Standard", clientPrice: 6250 },
+        { name: "Ultimate", clientPrice: 8950 },
       ],
     },
   },
@@ -363,11 +311,11 @@ export const preorderData: PreorderGame[] = [
     editions: {
       TR: [
         { name: "Standard", clientPrice: 4000 },
-        { name: "Deluxe", clientPrice: 6500 },
+        { name: "Deluxe", clientPrice: 6450 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 3850 },
-        { name: "Deluxe", clientPrice: 5700 },
+        { name: "Standard", clientPrice: 3800 },
+        { name: "Deluxe", clientPrice: 5600 },
       ],
     },
   },
@@ -381,12 +329,12 @@ export const preorderData: PreorderGame[] = [
     description: "Assasin's Creed IV: Black Flag is a pirate game. Being the f",
     editions: {
       TR: [
-        { name: "Standard", clientPrice: 4650 },
-        { name: "Deluxe", clientPrice: 5400 },
+        { name: "Standard", clientPrice: 4600 },
+        { name: "Deluxe", clientPrice: 5350 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 4600 },
-        { name: "Deluxe", clientPrice: 5250 },
+        { name: "Standard", clientPrice: 4550 },
+        { name: "Deluxe", clientPrice: 5200 },
       ],
     },
   },
@@ -400,14 +348,14 @@ export const preorderData: PreorderGame[] = [
     description: "RPG по Sword Art Online. Замок Айнкрад",
     editions: {
       TR: [
-        { name: "Standard", clientPrice: 6500 },
-        { name: "Deluxe", clientPrice: 8200 },
-        { name: "Ultimate", clientPrice: 9900 },
+        { name: "Standard", clientPrice: 6450 },
+        { name: "Deluxe", clientPrice: 8150 },
+        { name: "Ultimate", clientPrice: 9850 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 5000 },
-        { name: "Deluxe", clientPrice: 5900 },
-        { name: "Ultimate", clientPrice: 6750 },
+        { name: "Standard", clientPrice: 4950 },
+        { name: "Deluxe", clientPrice: 5850 },
+        { name: "Ultimate", clientPrice: 6650 },
       ],
     },
   },
@@ -421,12 +369,12 @@ export const preorderData: PreorderGame[] = [
     description: "Post-apocalyptic Japan lies in ruins and teeming with monstr",
     editions: {
       TR: [
-        { name: "Standard", clientPrice: 5150 },
-        { name: "Digital Deluxe", clientPrice: 6100 },
+        { name: "Standard", clientPrice: 5100 },
+        { name: "Digital Deluxe", clientPrice: 6050 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 4600 },
-        { name: "Digital Deluxe", clientPrice: 5450 },
+        { name: "Standard", clientPrice: 4550 },
+        { name: "Digital Deluxe", clientPrice: 5400 },
       ],
     },
   },
@@ -440,12 +388,12 @@ export const preorderData: PreorderGame[] = [
     description: "Файтинг от Arc System Works. 4v4 Marvel",
     editions: {
       TR: [
-        { name: "Standard", clientPrice: 6500 },
+        { name: "Standard", clientPrice: 6450 },
         { name: "Digital Deluxe", clientPrice: 8550 },
-        { name: "Ultimate", clientPrice: 9900 },
+        { name: "Ultimate", clientPrice: 9850 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 5000 },
+        { name: "Standard", clientPrice: 4950 },
       ],
     },
   },
@@ -459,10 +407,10 @@ export const preorderData: PreorderGame[] = [
     description: "Стелс от Konami. MGS4 + Peace Walker",
     editions: {
       TR: [
-        { name: "Standard", clientPrice: 4750 },
+        { name: "Standard", clientPrice: 4700 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 4050 },
+        { name: "Standard", clientPrice: 4000 },
       ],
     },
   },
@@ -476,10 +424,10 @@ export const preorderData: PreorderGame[] = [
     description: "Neon Abyss is a frantic roguelike action platformer features",
     editions: {
       TR: [
-        { name: "Standard", clientPrice: 4750 },
+        { name: "Standard", clientPrice: 4700 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 4050 },
+        { name: "Standard", clientPrice: 4000 },
       ],
     },
   },
@@ -495,6 +443,22 @@ export const preorderData: PreorderGame[] = [
       TR: [
         { name: "Standard", clientPrice: 2400 },
         { name: "Deluxe", clientPrice: 4000 },
+      ],
+    },
+  },
+  {
+    id: "diablo-iv-lord-of-hatred",
+    name: "Diablo IV: Lord of Hatred",
+    platforms: ["PS5","PS4"],
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202511/1201/0aa045b07431038b0f1a5dfd8d0ca532868b95a149496693.png",
+    releaseDate: null,
+    genre: "Экшен-RPG",
+    description: "RPG-DLC от Blizzard. Паладин и Чернокнижник",
+    editions: {
+      TR: [
+        { name: "Standard", clientPrice: 3750 },
+        { name: "Deluxe", clientPrice: 5250 },
+        { name: "Ultimate", clientPrice: 7650 },
       ],
     },
   },
