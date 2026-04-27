@@ -1,5 +1,5 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-04-26T09:00:56.553Z
+// Обновлено: 2026-04-27T09:00:55.393Z
 // Горящих новинок: 4
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
@@ -37,8 +37,8 @@ export const hotReleases: HotRelease[] = [
     genre: "Экшен",
     platforms: ["PS5"],
     cover: "https://image.api.playstation.com/vulcan/ap/rnd/202511/2605/b7ec5836e23affe26c8ad00124a1eddddab5e1bad456c03e.jpg",
-    hypeScore: 7,
-    totalScore: 6.6,
+    hypeScore: 6,
+    totalScore: 6.2,
     editions: {
       tr: [
         { name: "Standard", priceRUB: 5650 },
@@ -47,6 +47,49 @@ export const hotReleases: HotRelease[] = [
       ua: [
         { name: "Standard", priceRUB: 4600 },
         { name: "Deluxe", priceRUB: 5000 },
+      ],
+    },
+  },
+  {
+    id: "tides-of-tomorrow",
+    title: "Tides of Tomorrow",
+    slug: "tides-of-tomorrow",
+    description: "Приключение от DigixArt. Решения онлайн",
+    releaseDate: "22 апреля 2026",
+    metacritic: 81,
+    genre: "Инди",
+    platforms: ["PS5"],
+    cover: "https://image.api.playstation.com/vulcan/ap/rnd/202506/0502/83edea47457e08b4d5be5b6a38567d5ea8bfcb297e0ccba2.jpg",
+    hypeScore: 2,
+    totalScore: 5.5,
+    editions: {
+      tr: [
+        { name: "Standard", priceRUB: 3250 },
+      ],
+      ua: [
+        { name: "Standard", priceRUB: 3000 },
+      ],
+    },
+  },
+  {
+    id: "saros",
+    title: "SAROS",
+    slug: "saros",
+    description: "Рогалик-шутер от Housemarque. Щит из пуль",
+    releaseDate: "27 апреля 2026",
+    metacritic: 0,
+    genre: "Экшен",
+    platforms: ["PS5"],
+    cover: "https://image.api.playstation.com/vulcan/ap/rnd/202512/0216/559cda0aac5db568f4d5ab40f73ad0c45416c58ee852e673.jpg",
+    hypeScore: 4,
+    totalScore: 5.4,
+    editions: {
+      tr: [
+        { name: "Standard", priceRUB: 7400 },
+        { name: "Digital Deluxe", priceRUB: 8200 },
+      ],
+      ua: [
+        { name: "Standard", priceRUB: 5450 },
       ],
     },
   },
@@ -68,48 +111,6 @@ export const hotReleases: HotRelease[] = [
       ],
       ua: [
         { name: "Standard", priceRUB: 2850 },
-      ],
-    },
-  },
-  {
-    id: "tides-of-tomorrow",
-    title: "Tides of Tomorrow",
-    slug: "tides-of-tomorrow",
-    description: "Приключение от DigixArt. Решения онлайн",
-    releaseDate: "22 апреля 2026",
-    metacritic: 81,
-    genre: "Инди",
-    platforms: ["PS5"],
-    cover: "https://image.api.playstation.com/vulcan/ap/rnd/202506/0502/83edea47457e08b4d5be5b6a38567d5ea8bfcb297e0ccba2.jpg",
-    hypeScore: 1,
-    totalScore: 5.1,
-    editions: {
-      tr: [
-        { name: "Standard", priceRUB: 3250 },
-      ],
-      ua: [
-        { name: "Standard", priceRUB: 3000 },
-      ],
-    },
-  },
-  {
-    id: "sudden-strike-5",
-    title: "Sudden Strike 5",
-    slug: "sudden-strike-5",
-    description: "Стратегия от KITE Games. Бои ВМВ, 300+ юнитов",
-    releaseDate: "23 апреля 2026",
-    metacritic: 77,
-    genre: "Стратегия",
-    platforms: ["PS5"],
-    cover: "https://image.api.playstation.com/vulcan/ap/rnd/202507/0908/7b0b79a9f9a6be5c537543568960526e148af5c5ae1e5696.jpg",
-    hypeScore: 1,
-    totalScore: 5,
-    editions: {
-      tr: [
-        { name: "Standard", priceRUB: 4750 },
-      ],
-      ua: [
-        { name: "Standard", priceRUB: 4750 },
       ],
     },
   },
