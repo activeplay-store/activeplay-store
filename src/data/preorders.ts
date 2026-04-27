@@ -1,6 +1,6 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-04-27T06:04:43.168Z
-// Предзаказов: 26
+// Обновлено: 2026-04-27T18:05:22.957Z
+// Предзаказов: 27
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
 export interface PreorderEdition {
@@ -330,6 +330,25 @@ export const preorderData: PreorderGame[] = [
       UA: [
         { name: "Standard", clientPrice: 5000 },
         { name: "Digital Deluxe", clientPrice: 5450 },
+      ],
+    },
+  },
+  {
+    id: "ufc-6",
+    name: "UFC 6",
+    platforms: ["PS5"],
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202604/2216/7cc2882c6efb6815884ef18f06e113a7871a513ccda89b32.png",
+    releaseDate: "2026-06-19",
+    genre: "Спорт",
+    description: "In EA SPORTS UFC 4 the fighter you become is shaped by your",
+    editions: {
+      TR: [
+        { name: "Standard", clientPrice: 8450 },
+        { name: "Ultimate", clientPrice: 11400 },
+      ],
+      UA: [
+        { name: "Standard", clientPrice: 6300 },
+        { name: "Ultimate", clientPrice: 9000 },
       ],
     },
   },
