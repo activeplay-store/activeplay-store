@@ -1,6 +1,6 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-04-28T09:04:26.743Z
-// Предзаказов: 25
+// Обновлено: 2026-04-28T18:05:21.608Z
+// Предзаказов: 27
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
 export interface PreorderEdition {
@@ -441,6 +441,40 @@ export const preorderData: PreorderGame[] = [
       ],
       UA: [
         { name: "Standard", clientPrice: 4000 },
+      ],
+    },
+  },
+  {
+    id: "the-blood-of-dawnwalker",
+    name: "The Blood of Dawnwalker",
+    platforms: ["PS5"],
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202603/3009/0de89908bb791e48c078a1de80a959855f494a842353004d.jpg",
+    releaseDate: "2026-09-02",
+    genre: "Экшен",
+    description: "From Rebel Wolves, comes the first chapter of a brand new ro",
+    editions: {
+      TR: [
+        { name: "Standard", clientPrice: 6450 },
+      ],
+      UA: [
+        { name: "Standard", clientPrice: 4950 },
+      ],
+    },
+  },
+  {
+    id: "the-blood-of-dawnwalker-eclipse-edition",
+    name: "The Blood of Dawnwalker - Eclipse Edition",
+    platforms: ["PS5"],
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202604/0906/ca19474111582ae9a946cbe61d970b854dd87426213cfb22.jpg",
+    releaseDate: "2026-09-02",
+    genre: "Экшен",
+    description: "From Rebel Wolves, comes the first chapter of a brand new ro",
+    editions: {
+      TR: [
+        { name: "Standard", clientPrice: 7350 },
+      ],
+      UA: [
+        { name: "Standard", clientPrice: 5400 },
       ],
     },
   },
