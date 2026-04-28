@@ -1,6 +1,6 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-04-28T18:05:21.608Z
-// Предзаказов: 27
+// Обновлено: 2026-04-28T21:04:37.167Z
+// Предзаказов: 26
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
 export interface PreorderEdition {
@@ -24,23 +24,6 @@ export interface PreorderGame {
 
 export const preorderData: PreorderGame[] = [
   {
-    id: "motogp26",
-    name: "MotoGP 26",
-    platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202602/2015/f7d7f07d359ba0613bef8b43e1af74becad0e00357c1ccb3.jpg",
-    releaseDate: "2026-04-28",
-    genre: "Гонки",
-    description: "Мотогонки от Milestone. Реальные рейтинги",
-    editions: {
-      TR: [
-        { name: "Standard", clientPrice: 6450 },
-      ],
-      UA: [
-        { name: "Standard", clientPrice: 4950 },
-      ],
-    },
-  },
-  {
     id: "saros",
     name: "SAROS",
     platforms: ["PS5"],
@@ -53,7 +36,7 @@ export const preorderData: PreorderGame[] = [
         { name: "Standard", clientPrice: 7350 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 5400 },
+        { name: "Standard", clientPrice: 5350 },
       ],
     },
   },
@@ -67,10 +50,10 @@ export const preorderData: PreorderGame[] = [
     description: "Stories: The Path of Destinies is an action RPG developed by",
     editions: {
       TR: [
-        { name: "Standard", clientPrice: 3250 },
+        { name: "Standard", clientPrice: 3200 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 3050 },
+        { name: "Standard", clientPrice: 3000 },
       ],
     },
   },
@@ -101,7 +84,7 @@ export const preorderData: PreorderGame[] = [
     description: "In Bound, the player takes on the role of a dancing lady in",
     editions: {
       TR: [
-        { name: "Standard", clientPrice: 3250 },
+        { name: "Standard", clientPrice: 3200 },
       ],
       UA: [
         { name: "Standard", clientPrice: 2950 },
@@ -118,7 +101,7 @@ export const preorderData: PreorderGame[] = [
     description: "In this hybrid RPG/idol simulation, five idols wield Sound W",
     editions: {
       TR: [
-        { name: "Standard", clientPrice: 3250 },
+        { name: "Standard", clientPrice: 3200 },
       ],
       UA: [
         { name: "Standard", clientPrice: 2950 },
@@ -153,10 +136,10 @@ export const preorderData: PreorderGame[] = [
     editions: {
       TR: [
         { name: "Standard", clientPrice: 6450 },
-        { name: "Deluxe", clientPrice: 8150 },
+        { name: "Deluxe", clientPrice: 8100 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 4950 },
+        { name: "Standard", clientPrice: 4900 },
       ],
     },
   },
@@ -170,7 +153,7 @@ export const preorderData: PreorderGame[] = [
     description: "After strange disappearances hit Tokyo’s population, it’s up",
     editions: {
       TR: [
-        { name: "Standard", clientPrice: 3250 },
+        { name: "Standard", clientPrice: 3200 },
       ],
       UA: [
         { name: "Standard", clientPrice: 2950 },
@@ -232,7 +215,7 @@ export const preorderData: PreorderGame[] = [
     description: "Nickelodeon All-Star Brawl, is a new platform fighting game",
     editions: {
       TR: [
-        { name: "Standard", clientPrice: 3250 },
+        { name: "Standard", clientPrice: 3200 },
       ],
       UA: [
         { name: "Standard", clientPrice: 2950 },
@@ -268,10 +251,10 @@ export const preorderData: PreorderGame[] = [
     description: "The Kingdom of Myrtana has been invaded by an implacable hor",
     editions: {
       TR: [
-        { name: "Standard", clientPrice: 5600 },
+        { name: "Standard", clientPrice: 5550 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 4550 },
+        { name: "Standard", clientPrice: 4500 },
       ],
     },
   },
@@ -286,11 +269,11 @@ export const preorderData: PreorderGame[] = [
     editions: {
       TR: [
         { name: "Standard", clientPrice: 8400 },
-        { name: "Ultimate", clientPrice: 11350 },
+        { name: "Ultimate", clientPrice: 11300 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 6250 },
-        { name: "Ultimate", clientPrice: 8950 },
+        { name: "Standard", clientPrice: 6200 },
+        { name: "Ultimate", clientPrice: 8900 },
       ],
     },
   },
@@ -308,8 +291,8 @@ export const preorderData: PreorderGame[] = [
         { name: "Digital Deluxe", clientPrice: 7350 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 4950 },
-        { name: "Digital Deluxe", clientPrice: 5400 },
+        { name: "Standard", clientPrice: 4900 },
+        { name: "Digital Deluxe", clientPrice: 5350 },
       ],
     },
   },
@@ -323,7 +306,7 @@ export const preorderData: PreorderGame[] = [
     description: "3D-файтинг от Team NINJA. 29 бойцов на PS5",
     editions: {
       TR: [
-        { name: "Standard", clientPrice: 4000 },
+        { name: "Standard", clientPrice: 3950 },
         { name: "Deluxe", clientPrice: 6450 },
       ],
       UA: [
@@ -343,11 +326,11 @@ export const preorderData: PreorderGame[] = [
     editions: {
       TR: [
         { name: "Standard", clientPrice: 4600 },
-        { name: "Deluxe", clientPrice: 5350 },
+        { name: "Deluxe", clientPrice: 5300 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 4550 },
-        { name: "Deluxe", clientPrice: 5200 },
+        { name: "Standard", clientPrice: 4500 },
+        { name: "Deluxe", clientPrice: 5150 },
       ],
     },
   },
@@ -362,12 +345,12 @@ export const preorderData: PreorderGame[] = [
     editions: {
       TR: [
         { name: "Standard", clientPrice: 6450 },
-        { name: "Deluxe", clientPrice: 8150 },
-        { name: "Ultimate", clientPrice: 9850 },
+        { name: "Deluxe", clientPrice: 8100 },
+        { name: "Ultimate", clientPrice: 9750 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 4950 },
-        { name: "Deluxe", clientPrice: 5850 },
+        { name: "Standard", clientPrice: 4900 },
+        { name: "Deluxe", clientPrice: 5800 },
         { name: "Ultimate", clientPrice: 6650 },
       ],
     },
@@ -383,11 +366,11 @@ export const preorderData: PreorderGame[] = [
     editions: {
       TR: [
         { name: "Standard", clientPrice: 5100 },
-        { name: "Digital Deluxe", clientPrice: 6050 },
+        { name: "Digital Deluxe", clientPrice: 6000 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 4550 },
-        { name: "Digital Deluxe", clientPrice: 5400 },
+        { name: "Standard", clientPrice: 4500 },
+        { name: "Digital Deluxe", clientPrice: 5350 },
       ],
     },
   },
@@ -402,11 +385,11 @@ export const preorderData: PreorderGame[] = [
     editions: {
       TR: [
         { name: "Standard", clientPrice: 6450 },
-        { name: "Digital Deluxe", clientPrice: 8550 },
-        { name: "Ultimate", clientPrice: 9850 },
+        { name: "Digital Deluxe", clientPrice: 8500 },
+        { name: "Ultimate", clientPrice: 9750 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 4950 },
+        { name: "Standard", clientPrice: 4900 },
       ],
     },
   },
@@ -457,7 +440,7 @@ export const preorderData: PreorderGame[] = [
         { name: "Standard", clientPrice: 6450 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 4950 },
+        { name: "Standard", clientPrice: 4900 },
       ],
     },
   },
@@ -474,7 +457,7 @@ export const preorderData: PreorderGame[] = [
         { name: "Standard", clientPrice: 7350 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 5400 },
+        { name: "Standard", clientPrice: 5350 },
       ],
     },
   },
@@ -489,7 +472,7 @@ export const preorderData: PreorderGame[] = [
     editions: {
       TR: [
         { name: "Standard", clientPrice: 2400 },
-        { name: "Deluxe", clientPrice: 4000 },
+        { name: "Deluxe", clientPrice: 3950 },
       ],
     },
   },
