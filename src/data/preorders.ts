@@ -1,6 +1,6 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-04-28T06:04:25.977Z
-// Предзаказов: 26
+// Обновлено: 2026-04-28T09:04:26.743Z
+// Предзаказов: 25
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
 export interface PreorderEdition {
@@ -23,23 +23,6 @@ export interface PreorderGame {
 }
 
 export const preorderData: PreorderGame[] = [
-  {
-    id: "aphelion",
-    name: "Aphelion",
-    platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202601/2714/de6618b9259146abf211f578e1ffdb5f8caff248e3879162.jpg",
-    releaseDate: "2026-04-28",
-    genre: "Экшен-адвенчура",
-    description: "Sci-fi адвенчура от DON'T NOD. Два астронавта",
-    editions: {
-      TR: [
-        { name: "Standard", clientPrice: 3600 },
-      ],
-      UA: [
-        { name: "Standard", clientPrice: 3250 },
-      ],
-    },
-  },
   {
     id: "motogp26",
     name: "MotoGP 26",
