@@ -1,5 +1,5 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-04-28T03:04:22.567Z
+// Обновлено: 2026-04-28T06:04:25.977Z
 // Предзаказов: 26
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
@@ -24,23 +24,6 @@ export interface PreorderGame {
 
 export const preorderData: PreorderGame[] = [
   {
-    id: "motogp26",
-    name: "MotoGP 26",
-    platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202602/2015/f7d7f07d359ba0613bef8b43e1af74becad0e00357c1ccb3.jpg",
-    releaseDate: "2026-04-28",
-    genre: "Гонки",
-    description: "Мотогонки от Milestone. Реальные рейтинги",
-    editions: {
-      TR: [
-        { name: "Standard", clientPrice: 6450 },
-      ],
-      UA: [
-        { name: "Standard", clientPrice: 4950 },
-      ],
-    },
-  },
-  {
     id: "aphelion",
     name: "Aphelion",
     platforms: ["PS5"],
@@ -54,6 +37,23 @@ export const preorderData: PreorderGame[] = [
       ],
       UA: [
         { name: "Standard", clientPrice: 3250 },
+      ],
+    },
+  },
+  {
+    id: "motogp26",
+    name: "MotoGP 26",
+    platforms: ["PS5"],
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202602/2015/f7d7f07d359ba0613bef8b43e1af74becad0e00357c1ccb3.jpg",
+    releaseDate: "2026-04-28",
+    genre: "Гонки",
+    description: "Мотогонки от Milestone. Реальные рейтинги",
+    editions: {
+      TR: [
+        { name: "Standard", clientPrice: 6450 },
+      ],
+      UA: [
+        { name: "Standard", clientPrice: 4950 },
       ],
     },
   },
