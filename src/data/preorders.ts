@@ -1,5 +1,5 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-04-28T00:04:27.945Z
+// Обновлено: 2026-04-28T03:04:22.567Z
 // Предзаказов: 26
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
@@ -293,6 +293,25 @@ export const preorderData: PreorderGame[] = [
     },
   },
   {
+    id: "ufc-6",
+    name: "UFC 6",
+    platforms: ["PS5"],
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202604/2217/062d04994b5e270962724a172a640b122b0d4049c8471d05.png",
+    releaseDate: "2026-06-12",
+    genre: "Спорт",
+    description: "In EA SPORTS UFC 4 the fighter you become is shaped by your",
+    editions: {
+      TR: [
+        { name: "Standard", clientPrice: 8400 },
+        { name: "Ultimate", clientPrice: 11350 },
+      ],
+      UA: [
+        { name: "Standard", clientPrice: 6250 },
+        { name: "Ultimate", clientPrice: 8950 },
+      ],
+    },
+  },
+  {
     id: "the-adventures-of-elliot-the-millennium-tales",
     name: "The Adventures of Elliot: The Millennium Tales",
     platforms: ["PS5"],
@@ -308,25 +327,6 @@ export const preorderData: PreorderGame[] = [
       UA: [
         { name: "Standard", clientPrice: 4950 },
         { name: "Digital Deluxe", clientPrice: 5400 },
-      ],
-    },
-  },
-  {
-    id: "ufc-6",
-    name: "UFC 6",
-    platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202604/2216/7cc2882c6efb6815884ef18f06e113a7871a513ccda89b32.png",
-    releaseDate: "2026-06-19",
-    genre: "Спорт",
-    description: "In EA SPORTS UFC 4 the fighter you become is shaped by your",
-    editions: {
-      TR: [
-        { name: "Standard", clientPrice: 8400 },
-        { name: "Ultimate", clientPrice: 11350 },
-      ],
-      UA: [
-        { name: "Standard", clientPrice: 6250 },
-        { name: "Ultimate", clientPrice: 8950 },
       ],
     },
   },
