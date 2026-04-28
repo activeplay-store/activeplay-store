@@ -1,6 +1,6 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-04-27T21:04:27.954Z
-// Предзаказов: 25
+// Обновлено: 2026-04-28T00:04:27.945Z
+// Предзаказов: 26
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
 export interface PreorderEdition {
@@ -61,14 +61,13 @@ export const preorderData: PreorderGame[] = [
     id: "saros",
     name: "SAROS",
     platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202512/0216/559cda0aac5db568f4d5ab40f73ad0c45416c58ee852e673.jpg",
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202509/2318/89c3538003fb34870e745493412408eeeed5f02b32c55d23.png",
     releaseDate: "2026-04-29",
     genre: "Экшен",
     description: "Рогалик-шутер от Housemarque. Щит из пуль",
     editions: {
       TR: [
         { name: "Standard", clientPrice: 7350 },
-        { name: "Digital Deluxe", clientPrice: 8150 },
       ],
       UA: [
         { name: "Standard", clientPrice: 5400 },
@@ -76,19 +75,19 @@ export const preorderData: PreorderGame[] = [
     },
   },
   {
-    id: "magin-the-rat-project-stories",
-    name: "Magin: The Rat Project Stories",
+    id: "magin-the-rat-project-stories-essence-edition",
+    name: "Magin: The Rat Project Stories Essence Edition",
     platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202602/1809/ac344c7cdb7f1f6130a0048033a1686c9e671c0040f8a5c7.png",
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202602/1810/516a4c9f55826f986befa072858d1314ea05806d26708e40.png",
     releaseDate: "2026-04-29",
-    genre: "Карточная RPG",
-    description: "Deck-builder от Daedalic. Эмоции и карты",
+    genre: "Платформер",
+    description: "Stories: The Path of Destinies is an action RPG developed by",
     editions: {
       TR: [
-        { name: "Standard", clientPrice: 2400 },
+        { name: "Standard", clientPrice: 3250 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 2250 },
+        { name: "Standard", clientPrice: 3050 },
       ],
     },
   },
@@ -106,6 +105,23 @@ export const preorderData: PreorderGame[] = [
       ],
       UA: [
         { name: "Standard", clientPrice: 4350 },
+      ],
+    },
+  },
+  {
+    id: "bus-bound",
+    name: "Bus Bound",
+    platforms: ["PS5"],
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202602/0909/efad045c4766c0944329abc8ca80a585decde5fe214f3349.png",
+    releaseDate: "2026-04-30",
+    genre: "Экшен",
+    description: "In Bound, the player takes on the role of a dancing lady in",
+    editions: {
+      TR: [
+        { name: "Standard", clientPrice: 3250 },
+      ],
+      UA: [
+        { name: "Standard", clientPrice: 2950 },
       ],
     },
   },
@@ -175,6 +191,20 @@ export const preorderData: PreorderGame[] = [
       ],
       UA: [
         { name: "Standard", clientPrice: 2950 },
+      ],
+    },
+  },
+  {
+    id: "bubsy-4d",
+    name: "Bubsy 4D",
+    platforms: ["PS5"],
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202508/1222/2ecf79cd82dd87ef94fea0b917f0e6c1b147533a1681bc7b.jpg",
+    releaseDate: "2026-05-22",
+    genre: "Платформер",
+    description: "Join Bubsy on an intergalactic, platforming adventure! The i",
+    editions: {
+      TR: [
+        { name: "Standard", clientPrice: 2400 },
       ],
     },
   },
@@ -443,22 +473,6 @@ export const preorderData: PreorderGame[] = [
       TR: [
         { name: "Standard", clientPrice: 2400 },
         { name: "Deluxe", clientPrice: 4000 },
-      ],
-    },
-  },
-  {
-    id: "diablo-iv-lord-of-hatred",
-    name: "Diablo IV: Lord of Hatred",
-    platforms: ["PS5","PS4"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202511/1201/0aa045b07431038b0f1a5dfd8d0ca532868b95a149496693.png",
-    releaseDate: null,
-    genre: "Экшен-RPG",
-    description: "RPG-DLC от Blizzard. Паладин и Чернокнижник",
-    editions: {
-      TR: [
-        { name: "Standard", clientPrice: 3750 },
-        { name: "Deluxe", clientPrice: 5250 },
-        { name: "Ultimate", clientPrice: 7650 },
       ],
     },
   },
