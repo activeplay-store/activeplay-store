@@ -1,5 +1,5 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-04-29T09:04:31.885Z
+// Обновлено: 2026-04-29T15:05:13.776Z
 // Предзаказов: 26
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
@@ -36,24 +36,21 @@ export const preorderData: PreorderGame[] = [
         { name: "Standard", clientPrice: 7350 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 5350 },
+        { name: "Standard", clientPrice: 5400 },
       ],
     },
   },
   {
-    id: "magin-the-rat-project-stories-essence-edition",
-    name: "Magin: The Rat Project Stories Essence Edition",
+    id: "magin-the-rat-project-stories",
+    name: "Magin: The Rat Project Stories",
     platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202602/1810/516a4c9f55826f986befa072858d1314ea05806d26708e40.png",
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202602/1809/ac344c7cdb7f1f6130a0048033a1686c9e671c0040f8a5c7.png",
     releaseDate: "2026-04-29",
-    genre: "Платформер",
-    description: "Stories: The Path of Destinies is an action RPG developed by",
+    genre: "Карточная RPG",
+    description: "Deck-builder от Daedalic. Эмоции и карты",
     editions: {
       TR: [
-        { name: "Standard", clientPrice: 3200 },
-      ],
-      UA: [
-        { name: "Standard", clientPrice: 3000 },
+        { name: "Standard", clientPrice: 2400 },
       ],
     },
   },
@@ -139,7 +136,7 @@ export const preorderData: PreorderGame[] = [
         { name: "Deluxe", clientPrice: 8100 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 4900 },
+        { name: "Standard", clientPrice: 4950 },
       ],
     },
   },
@@ -254,7 +251,7 @@ export const preorderData: PreorderGame[] = [
         { name: "Standard", clientPrice: 5550 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 4500 },
+        { name: "Standard", clientPrice: 4550 },
       ],
     },
   },
@@ -272,8 +269,8 @@ export const preorderData: PreorderGame[] = [
         { name: "Ultimate", clientPrice: 11300 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 6200 },
-        { name: "Ultimate", clientPrice: 8900 },
+        { name: "Standard", clientPrice: 6250 },
+        { name: "Ultimate", clientPrice: 8950 },
       ],
     },
   },
@@ -291,8 +288,8 @@ export const preorderData: PreorderGame[] = [
         { name: "Digital Deluxe", clientPrice: 7350 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 4900 },
-        { name: "Digital Deluxe", clientPrice: 5350 },
+        { name: "Standard", clientPrice: 4950 },
+        { name: "Digital Deluxe", clientPrice: 5400 },
       ],
     },
   },
@@ -329,8 +326,8 @@ export const preorderData: PreorderGame[] = [
         { name: "Deluxe", clientPrice: 5300 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 4500 },
-        { name: "Deluxe", clientPrice: 5150 },
+        { name: "Standard", clientPrice: 4550 },
+        { name: "Deluxe", clientPrice: 5200 },
       ],
     },
   },
@@ -349,8 +346,8 @@ export const preorderData: PreorderGame[] = [
         { name: "Ultimate", clientPrice: 9750 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 4900 },
-        { name: "Deluxe", clientPrice: 5800 },
+        { name: "Standard", clientPrice: 4950 },
+        { name: "Deluxe", clientPrice: 5850 },
         { name: "Ultimate", clientPrice: 6650 },
       ],
     },
@@ -369,8 +366,8 @@ export const preorderData: PreorderGame[] = [
         { name: "Digital Deluxe", clientPrice: 6000 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 4500 },
-        { name: "Digital Deluxe", clientPrice: 5350 },
+        { name: "Standard", clientPrice: 4550 },
+        { name: "Digital Deluxe", clientPrice: 5400 },
       ],
     },
   },
@@ -389,7 +386,7 @@ export const preorderData: PreorderGame[] = [
         { name: "Ultimate", clientPrice: 9750 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 4900 },
+        { name: "Standard", clientPrice: 4950 },
       ],
     },
   },
@@ -440,7 +437,7 @@ export const preorderData: PreorderGame[] = [
         { name: "Standard", clientPrice: 6450 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 4900 },
+        { name: "Standard", clientPrice: 4950 },
       ],
     },
   },
@@ -457,7 +454,7 @@ export const preorderData: PreorderGame[] = [
         { name: "Standard", clientPrice: 7350 },
       ],
       UA: [
-        { name: "Standard", clientPrice: 5350 },
+        { name: "Standard", clientPrice: 5400 },
       ],
     },
   },
