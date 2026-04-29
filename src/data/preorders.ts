@@ -1,5 +1,5 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-04-29T06:04:04.758Z
+// Обновлено: 2026-04-29T09:04:31.885Z
 // Предзаказов: 26
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
@@ -29,7 +29,7 @@ export const preorderData: PreorderGame[] = [
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202509/2318/89c3538003fb34870e745493412408eeeed5f02b32c55d23.png",
     releaseDate: "2026-04-29",
-    genre: "",
+    genre: "Экшен",
     description: "Рогалик-шутер от Housemarque. Щит из пуль",
     editions: {
       TR: [
@@ -46,8 +46,8 @@ export const preorderData: PreorderGame[] = [
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202602/1810/516a4c9f55826f986befa072858d1314ea05806d26708e40.png",
     releaseDate: "2026-04-29",
-    genre: "",
-    description: "",
+    genre: "Платформер",
+    description: "Stories: The Path of Destinies is an action RPG developed by",
     editions: {
       TR: [
         { name: "Standard", clientPrice: 3200 },
@@ -63,7 +63,7 @@ export const preorderData: PreorderGame[] = [
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202512/0223/abae93143736137f8d17917de28aa0eedbf2f098ee3402e4.jpg",
     releaseDate: "2026-04-30",
-    genre: "",
+    genre: "Файтинг",
     description: "2D-файтинг от Skybound. 3v3 бои Invincible",
     editions: {
       TR: [
@@ -97,8 +97,8 @@ export const preorderData: PreorderGame[] = [
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202604/0807/507f1267c6b33c410dee46185e9ae09fd59f6dc79920a64c.png",
     releaseDate: "2026-05-11",
-    genre: "",
-    description: "",
+    genre: "Стратегия",
+    description: "In this hybrid RPG/idol simulation, five idols wield Sound W",
     editions: {
       TR: [
         { name: "Standard", clientPrice: 3200 },
@@ -114,7 +114,7 @@ export const preorderData: PreorderGame[] = [
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202408/0522/db14c69711a13cc2d73c3964201ac80587a865a816c3c5d8.png",
     releaseDate: "2026-05-12",
-    genre: "",
+    genre: "Приключения",
     description: "Хоррор от Supermassive. Мимики в космосе",
     editions: {
       TR: [
@@ -131,7 +131,7 @@ export const preorderData: PreorderGame[] = [
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202511/1118/3b572e6e923f360a52cfe7845d3e2adc6e6c9d5b0fdc6d6f.jpg",
     releaseDate: "2026-05-18",
-    genre: "",
+    genre: "Приключения",
     description: "Адвенчура от TT Games. Открытый Готэм",
     editions: {
       TR: [
@@ -149,8 +149,8 @@ export const preorderData: PreorderGame[] = [
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202512/0516/166e320836e1eaa2655e08f771a89010ffea1c5dfcd331ea.png",
     releaseDate: "2026-05-20",
-    genre: "",
-    description: "",
+    genre: "Экшен",
+    description: "After strange disappearances hit Tokyo’s population, it’s up",
     editions: {
       TR: [
         { name: "Standard", clientPrice: 3200 },
@@ -166,8 +166,8 @@ export const preorderData: PreorderGame[] = [
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202508/1222/2ecf79cd82dd87ef94fea0b917f0e6c1b147533a1681bc7b.jpg",
     releaseDate: "2026-05-22",
-    genre: "",
-    description: "",
+    genre: "Платформер",
+    description: "Join Bubsy on an intergalactic, platforming adventure! The i",
     editions: {
       TR: [
         { name: "Standard", clientPrice: 2400 },
@@ -180,7 +180,7 @@ export const preorderData: PreorderGame[] = [
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202507/0215/f54f11bcf773a3bcace540344dc12154973f53d3490b93fc.png",
     releaseDate: "2026-05-26",
-    genre: "",
+    genre: "Экшен",
     description: "Стелс от IO Interactive. Молодой Бонд",
     editions: {
       TR: [
@@ -211,8 +211,8 @@ export const preorderData: PreorderGame[] = [
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202602/2716/38ab1556e3ead5ede982b78cd321586fa949e7c5f14589d6.jpg",
     releaseDate: "2026-05-27",
-    genre: "",
-    description: "",
+    genre: "Экшен",
+    description: "Nickelodeon All-Star Brawl, is a new platform fighting game",
     editions: {
       TR: [
         { name: "Standard", clientPrice: 3200 },
@@ -247,8 +247,8 @@ export const preorderData: PreorderGame[] = [
     platforms: ["PS5","PS4"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202507/0714/248b43264c89e489f277a7a2030f6cfbf1a088f2852659c1.jpg",
     releaseDate: "2026-06-05",
-    genre: "",
-    description: "",
+    genre: "Экшен",
+    description: "The Kingdom of Myrtana has been invaded by an implacable hor",
     editions: {
       TR: [
         { name: "Standard", clientPrice: 5550 },
@@ -264,8 +264,8 @@ export const preorderData: PreorderGame[] = [
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202604/2217/062d04994b5e270962724a172a640b122b0d4049c8471d05.png",
     releaseDate: "2026-06-12",
-    genre: "",
-    description: "",
+    genre: "Спорт",
+    description: "In EA SPORTS UFC 4 the fighter you become is shaped by your",
     editions: {
       TR: [
         { name: "Standard", clientPrice: 8400 },
@@ -283,7 +283,7 @@ export const preorderData: PreorderGame[] = [
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202601/1912/b5a499582e76829925ef74ec1b9b11b7068c93267dfb429b.jpg",
     releaseDate: "2026-06-17",
-    genre: "",
+    genre: "Приключения",
     description: "HD-2D RPG от Square Enix. В стиле Zelda",
     editions: {
       TR: [
@@ -380,7 +380,7 @@ export const preorderData: PreorderGame[] = [
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202602/0512/7ba3a1fac3bdcf6df6ffd10662d2a7833abe9743529782fb.jpg",
     releaseDate: "2026-08-06",
-    genre: "",
+    genre: "Файтинг",
     description: "Файтинг от Arc System Works. 4v4 Marvel",
     editions: {
       TR: [
@@ -416,8 +416,8 @@ export const preorderData: PreorderGame[] = [
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202602/0500/fec32977d055a076022ac101496d414d5157e4bce5690753.jpg",
     releaseDate: "2026-08-26",
-    genre: "",
-    description: "",
+    genre: "Платформер",
+    description: "Neon Abyss is a frantic roguelike action platformer features",
     editions: {
       TR: [
         { name: "Standard", clientPrice: 4700 },
@@ -433,8 +433,8 @@ export const preorderData: PreorderGame[] = [
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202603/3009/0de89908bb791e48c078a1de80a959855f494a842353004d.jpg",
     releaseDate: "2026-09-02",
-    genre: "",
-    description: "",
+    genre: "Экшен",
+    description: "From Rebel Wolves, comes the first chapter of a brand new ro",
     editions: {
       TR: [
         { name: "Standard", clientPrice: 6450 },
@@ -450,8 +450,8 @@ export const preorderData: PreorderGame[] = [
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202604/0906/ca19474111582ae9a946cbe61d970b854dd87426213cfb22.jpg",
     releaseDate: "2026-09-02",
-    genre: "",
-    description: "",
+    genre: "Экшен",
+    description: "From Rebel Wolves, comes the first chapter of a brand new ro",
     editions: {
       TR: [
         { name: "Standard", clientPrice: 7350 },
