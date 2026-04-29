@@ -1,6 +1,6 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-04-29T18:04:32.411Z
-// Предзаказов: 26
+// Обновлено: 2026-04-29T21:04:08.605Z
+// Предзаказов: 25
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
 export interface PreorderEdition {
@@ -23,23 +23,6 @@ export interface PreorderGame {
 }
 
 export const preorderData: PreorderGame[] = [
-  {
-    id: "saros",
-    name: "SAROS",
-    platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202509/2318/89c3538003fb34870e745493412408eeeed5f02b32c55d23.png",
-    releaseDate: "2026-04-29",
-    genre: "Экшен",
-    description: "Рогалик-шутер от Housemarque. Щит из пуль",
-    editions: {
-      TR: [
-        { name: "Standard", clientPrice: 7350 },
-      ],
-      UA: [
-        { name: "Standard", clientPrice: 5400 },
-      ],
-    },
-  },
   {
     id: "invincible-vs",
     name: "Invincible VS",
@@ -466,7 +449,7 @@ export const preorderData: PreorderGame[] = [
     name: "CRYMELIGHT",
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202604/0205/baf360b1f72f1d88b1da64a7f89b20efacfb8be7806f243a.png",
-    releaseDate: "2026-11-02",
+    releaseDate: "2026-11-04",
     genre: "",
     description: "",
     editions: {
