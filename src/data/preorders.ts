@@ -1,5 +1,5 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-04-28T21:04:37.167Z
+// Обновлено: 2026-04-29T03:04:21.705Z
 // Предзаказов: 26
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
@@ -78,13 +78,13 @@ export const preorderData: PreorderGame[] = [
     id: "bus-bound",
     name: "Bus Bound",
     platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202602/0909/efad045c4766c0944329abc8ca80a585decde5fe214f3349.png",
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202603/2421/f16ce1ece2c04164106f28f406fa390ec64d8a5921a80c03.png",
     releaseDate: "2026-04-30",
     genre: "Экшен",
     description: "In Bound, the player takes on the role of a dancing lady in",
     editions: {
       TR: [
-        { name: "Standard", clientPrice: 3200 },
+        { name: "Deluxe", clientPrice: 3950 },
       ],
       UA: [
         { name: "Standard", clientPrice: 2950 },
