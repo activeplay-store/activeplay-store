@@ -1,5 +1,5 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-04-29T15:05:13.776Z
+// Обновлено: 2026-04-29T18:04:32.411Z
 // Предзаказов: 26
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
@@ -37,20 +37,6 @@ export const preorderData: PreorderGame[] = [
       ],
       UA: [
         { name: "Standard", clientPrice: 5400 },
-      ],
-    },
-  },
-  {
-    id: "magin-the-rat-project-stories",
-    name: "Magin: The Rat Project Stories",
-    platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202602/1809/ac344c7cdb7f1f6130a0048033a1686c9e671c0040f8a5c7.png",
-    releaseDate: "2026-04-29",
-    genre: "Карточная RPG",
-    description: "Deck-builder от Daedalic. Эмоции и карты",
-    editions: {
-      TR: [
-        { name: "Standard", clientPrice: 2400 },
       ],
     },
   },
@@ -252,6 +238,23 @@ export const preorderData: PreorderGame[] = [
       ],
       UA: [
         { name: "Standard", clientPrice: 4550 },
+      ],
+    },
+  },
+  {
+    id: "monopoly-star-wars-heroes-vs-villains",
+    name: "Monopoly: Star Wars Heroes vs. Villains",
+    platforms: ["PS5"],
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202604/0912/e2118793c28673394ef7134551f954d10f6c8b2940bf7279.jpg",
+    releaseDate: "2026-06-10",
+    genre: "Экшен",
+    description: "Master the art of starfighter combat in the authentic piloti",
+    editions: {
+      TR: [
+        { name: "Standard", clientPrice: 2750 },
+      ],
+      UA: [
+        { name: "Standard", clientPrice: 2850 },
       ],
     },
   },
@@ -463,7 +466,7 @@ export const preorderData: PreorderGame[] = [
     name: "CRYMELIGHT",
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202604/0205/baf360b1f72f1d88b1da64a7f89b20efacfb8be7806f243a.png",
-    releaseDate: "2026-11-04",
+    releaseDate: "2026-11-02",
     genre: "",
     description: "",
     editions: {
