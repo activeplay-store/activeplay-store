@@ -1,6 +1,6 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-04-29T21:04:08.605Z
-// Предзаказов: 25
+// Обновлено: 2026-04-30T15:04:34.166Z
+// Предзаказов: 26
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
 export interface PreorderEdition {
@@ -37,23 +37,6 @@ export const preorderData: PreorderGame[] = [
       ],
       UA: [
         { name: "Standard", clientPrice: 4350 },
-      ],
-    },
-  },
-  {
-    id: "bus-bound",
-    name: "Bus Bound",
-    platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202603/2421/f16ce1ece2c04164106f28f406fa390ec64d8a5921a80c03.png",
-    releaseDate: "2026-04-30",
-    genre: "Экшен",
-    description: "In Bound, the player takes on the role of a dancing lady in",
-    editions: {
-      TR: [
-        { name: "Deluxe", clientPrice: 3950 },
-      ],
-      UA: [
-        { name: "Standard", clientPrice: 2950 },
       ],
     },
   },
@@ -204,6 +187,23 @@ export const preorderData: PreorderGame[] = [
       UA: [
         { name: "Standard", clientPrice: 3150 },
         { name: "Deluxe", clientPrice: 3700 },
+      ],
+    },
+  },
+  {
+    id: "necrophosis-full-consciousness",
+    name: "Necrophosis: Full Consciousness",
+    platforms: ["PS5"],
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202601/2214/3d3c6d0311a5817e560593a0d7b13735346c7835fe24e4b1.jpg",
+    releaseDate: "2026-05-28",
+    genre: "Приключения",
+    description: "Our indecisive protagonist, Vincent, has been with his long-",
+    editions: {
+      TR: [
+        { name: "Standard", clientPrice: 2400 },
+      ],
+      UA: [
+        { name: "Standard", clientPrice: 2250 },
       ],
     },
   },
@@ -441,6 +441,24 @@ export const preorderData: PreorderGame[] = [
       ],
       UA: [
         { name: "Standard", clientPrice: 5400 },
+      ],
+    },
+  },
+  {
+    id: "star-wars-galactic-racer",
+    name: "STAR WARS: Galactic Racer",
+    platforms: ["PS5"],
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202602/1713/680412378bc32623d397c6ec51f7b48548879a86adca7fa7.png",
+    releaseDate: "2026-10-06",
+    genre: "Гонки",
+    description: "It has been eight years since the first spectacular Podracin",
+    editions: {
+      TR: [
+        { name: "Standard", clientPrice: 5550 },
+        { name: "Deluxe", clientPrice: 7350 },
+      ],
+      UA: [
+        { name: "Standard", clientPrice: 4550 },
       ],
     },
   },
