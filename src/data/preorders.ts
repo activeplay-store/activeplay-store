@@ -1,6 +1,6 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-04-30T15:04:34.166Z
-// Предзаказов: 26
+// Обновлено: 2026-04-30T18:04:30.711Z
+// Предзаказов: 25
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
 export interface PreorderEdition {
@@ -23,23 +23,6 @@ export interface PreorderGame {
 }
 
 export const preorderData: PreorderGame[] = [
-  {
-    id: "invincible-vs",
-    name: "Invincible VS",
-    platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202512/0223/abae93143736137f8d17917de28aa0eedbf2f098ee3402e4.jpg",
-    releaseDate: "2026-04-30",
-    genre: "Файтинг",
-    description: "2D-файтинг от Skybound. 3v3 бои Invincible",
-    editions: {
-      TR: [
-        { name: "Standard", clientPrice: 4700 },
-      ],
-      UA: [
-        { name: "Standard", clientPrice: 4350 },
-      ],
-    },
-  },
   {
     id: "nitro-gen-omega",
     name: "NITRO GEN OMEGA",
