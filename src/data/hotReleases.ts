@@ -1,5 +1,5 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-04-27T09:00:55.393Z
+// Обновлено: 2026-04-30T09:01:20.753Z
 // Горящих новинок: 4
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
@@ -28,25 +28,44 @@ export interface HotRelease {
 
 export const hotReleases: HotRelease[] = [
   {
-    id: "pragmata",
-    title: "PRAGMATA",
-    slug: "pragmata",
-    description: "Sci-fi адвенчура от Capcom. Дуэт с андроидом",
-    releaseDate: "16 апреля 2026",
+    id: "saros",
+    title: "SAROS",
+    slug: "saros",
+    description: "Рогалик-шутер от Housemarque. Щит из пуль",
+    releaseDate: "29 апреля 2026",
     metacritic: 0,
     genre: "Экшен",
     platforms: ["PS5"],
-    cover: "https://image.api.playstation.com/vulcan/ap/rnd/202511/2605/b7ec5836e23affe26c8ad00124a1eddddab5e1bad456c03e.jpg",
+    cover: "https://image.api.playstation.com/vulcan/ap/rnd/202509/2318/89c3538003fb34870e745493412408eeeed5f02b32c55d23.png",
     hypeScore: 6,
     totalScore: 6.2,
     editions: {
       tr: [
-        { name: "Standard", priceRUB: 5650 },
-        { name: "Deluxe", priceRUB: 6500 },
+        { name: "Standard", priceRUB: 7350 },
       ],
       ua: [
-        { name: "Standard", priceRUB: 4600 },
-        { name: "Deluxe", priceRUB: 5000 },
+        { name: "Standard", priceRUB: 5400 },
+      ],
+    },
+  },
+  {
+    id: "magin-the-rat-project-stories",
+    title: "Magin: The Rat Project Stories",
+    slug: "magin-the-rat-project-stories",
+    description: "Deck-builder от Daedalic. Эмоции и карты",
+    releaseDate: "29 апреля 2026",
+    metacritic: 74,
+    genre: "Платформер",
+    platforms: ["PS5"],
+    cover: "https://image.api.playstation.com/vulcan/ap/rnd/202602/1809/ac344c7cdb7f1f6130a0048033a1686c9e671c0040f8a5c7.png",
+    hypeScore: 3,
+    totalScore: 5.7,
+    editions: {
+      tr: [
+        { name: "Standard", priceRUB: 2400 },
+      ],
+      ua: [
+        { name: "Standard", priceRUB: 2400 },
       ],
     },
   },
@@ -64,53 +83,31 @@ export const hotReleases: HotRelease[] = [
     totalScore: 5.5,
     editions: {
       tr: [
-        { name: "Standard", priceRUB: 3250 },
+        { name: "Standard", priceRUB: 3200 },
       ],
       ua: [
-        { name: "Standard", priceRUB: 3000 },
+        { name: "Standard", priceRUB: 2950 },
       ],
     },
   },
   {
-    id: "saros",
-    title: "SAROS",
-    slug: "saros",
-    description: "Рогалик-шутер от Housemarque. Щит из пуль",
-    releaseDate: "27 апреля 2026",
+    id: "invincible-vs",
+    title: "Invincible VS",
+    slug: "invincible-vs",
+    description: "2D-файтинг от Skybound. 3v3 бои Invincible",
+    releaseDate: "30 апреля 2026",
     metacritic: 0,
-    genre: "Экшен",
+    genre: "Файтинг",
     platforms: ["PS5"],
-    cover: "https://image.api.playstation.com/vulcan/ap/rnd/202512/0216/559cda0aac5db568f4d5ab40f73ad0c45416c58ee852e673.jpg",
+    cover: "https://image.api.playstation.com/vulcan/ap/rnd/202512/0223/abae93143736137f8d17917de28aa0eedbf2f098ee3402e4.jpg",
     hypeScore: 4,
     totalScore: 5.4,
     editions: {
       tr: [
-        { name: "Standard", priceRUB: 7400 },
-        { name: "Digital Deluxe", priceRUB: 8200 },
+        { name: "Standard", priceRUB: 4700 },
       ],
       ua: [
-        { name: "Standard", priceRUB: 5450 },
-      ],
-    },
-  },
-  {
-    id: "kiln-fired-up-edition",
-    title: "Kiln Fired Up Edition",
-    slug: "kiln-fired-up-edition",
-    description: "",
-    releaseDate: "23 апреля 2026",
-    metacritic: 84,
-    genre: "Экшен",
-    platforms: ["PS5"],
-    cover: "https://image.api.playstation.com/vulcan/ap/rnd/202603/2600/9b613ce65ca534cfe6f1a117217d105b56ab60bd74c7322e.jpg",
-    hypeScore: 1,
-    totalScore: 5.2,
-    editions: {
-      tr: [
-        { name: "Standard", priceRUB: 3050 },
-      ],
-      ua: [
-        { name: "Standard", priceRUB: 2850 },
+        { name: "Standard", priceRUB: 4350 },
       ],
     },
   },
