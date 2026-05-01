@@ -1,5 +1,5 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-04-30T18:04:30.711Z
+// Обновлено: 2026-05-01T03:03:58.180Z
 // Предзаказов: 25
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
@@ -431,7 +431,7 @@ export const preorderData: PreorderGame[] = [
     id: "star-wars-galactic-racer",
     name: "STAR WARS: Galactic Racer",
     platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202602/1713/680412378bc32623d397c6ec51f7b48548879a86adca7fa7.png",
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202604/2012/20bdb4865991fe33b571f41d38def2fbf6cd2a146c80c826.png",
     releaseDate: "2026-10-06",
     genre: "Гонки",
     description: "It has been eight years since the first spectacular Podracin",
