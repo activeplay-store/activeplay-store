@@ -1,5 +1,5 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-04-30T09:01:20.753Z
+// Обновлено: 2026-05-01T09:01:18.662Z
 // Горящих новинок: 4
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
@@ -28,44 +28,23 @@ export interface HotRelease {
 
 export const hotReleases: HotRelease[] = [
   {
-    id: "saros",
-    title: "SAROS",
-    slug: "saros",
-    description: "Рогалик-шутер от Housemarque. Щит из пуль",
-    releaseDate: "29 апреля 2026",
-    metacritic: 0,
+    id: "bus-bound",
+    title: "Bus Bound",
+    slug: "bus-bound",
+    description: "",
+    releaseDate: "30 апреля 2026",
+    metacritic: 71,
     genre: "Экшен",
     platforms: ["PS5"],
-    cover: "https://image.api.playstation.com/vulcan/ap/rnd/202509/2318/89c3538003fb34870e745493412408eeeed5f02b32c55d23.png",
-    hypeScore: 6,
-    totalScore: 6.2,
-    editions: {
-      tr: [
-        { name: "Standard", priceRUB: 7350 },
-      ],
-      ua: [
-        { name: "Standard", priceRUB: 5400 },
-      ],
-    },
-  },
-  {
-    id: "magin-the-rat-project-stories",
-    title: "Magin: The Rat Project Stories",
-    slug: "magin-the-rat-project-stories",
-    description: "Deck-builder от Daedalic. Эмоции и карты",
-    releaseDate: "29 апреля 2026",
-    metacritic: 74,
-    genre: "Платформер",
-    platforms: ["PS5"],
-    cover: "https://image.api.playstation.com/vulcan/ap/rnd/202602/1809/ac344c7cdb7f1f6130a0048033a1686c9e671c0040f8a5c7.png",
+    cover: "https://image.api.playstation.com/vulcan/ap/rnd/202603/2421/f16ce1ece2c04164106f28f406fa390ec64d8a5921a80c03.png",
     hypeScore: 3,
-    totalScore: 5.7,
+    totalScore: 5.6,
     editions: {
       tr: [
-        { name: "Standard", priceRUB: 2400 },
+        { name: "Deluxe", priceRUB: 3950 },
       ],
       ua: [
-        { name: "Standard", priceRUB: 2400 },
+        { name: "Standard", priceRUB: 2950 },
       ],
     },
   },
@@ -108,6 +87,27 @@ export const hotReleases: HotRelease[] = [
       ],
       ua: [
         { name: "Standard", priceRUB: 4350 },
+      ],
+    },
+  },
+  {
+    id: "saros",
+    title: "SAROS",
+    slug: "saros",
+    description: "Рогалик-шутер от Housemarque. Щит из пуль",
+    releaseDate: "29 апреля 2026",
+    metacritic: 0,
+    genre: "Экшен",
+    platforms: ["PS5"],
+    cover: "https://image.api.playstation.com/vulcan/ap/rnd/202509/2318/89c3538003fb34870e745493412408eeeed5f02b32c55d23.png",
+    hypeScore: 4,
+    totalScore: 5.4,
+    editions: {
+      tr: [
+        { name: "Standard", priceRUB: 7350 },
+      ],
+      ua: [
+        { name: "Standard", priceRUB: 5400 },
       ],
     },
   },
