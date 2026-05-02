@@ -1,5 +1,5 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-05-01T03:03:58.180Z
+// Обновлено: 2026-05-02T12:04:09.759Z
 // Предзаказов: 25
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
@@ -287,8 +287,8 @@ export const preorderData: PreorderGame[] = [
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202603/1215/866aea007130d2610c97731cd33f6c725181924cbc8154dd.jpg",
     releaseDate: "2026-07-08",
-    genre: "Экшен",
-    description: "Assasin's Creed IV: Black Flag is a pirate game. Being the f",
+    genre: "Приключения",
+    description: "The iconic solo pirate adventure returns. Sail the Caribbean",
     editions: {
       TR: [
         { name: "Standard", clientPrice: 4600 },
