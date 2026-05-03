@@ -1,5 +1,5 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-05-02T09:01:13.899Z
+// Обновлено: 2026-05-03T09:01:24.748Z
 // Горящих новинок: 4
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
@@ -27,6 +27,27 @@ export interface HotRelease {
 }
 
 export const hotReleases: HotRelease[] = [
+  {
+    id: "tides-of-tomorrow",
+    title: "Tides of Tomorrow",
+    slug: "tides-of-tomorrow",
+    description: "Приключение от DigixArt. Решения онлайн",
+    releaseDate: "22 апреля 2026",
+    metacritic: 81,
+    genre: "Инди",
+    platforms: ["PS5"],
+    cover: "https://image.api.playstation.com/vulcan/ap/rnd/202506/0502/83edea47457e08b4d5be5b6a38567d5ea8bfcb297e0ccba2.jpg",
+    hypeScore: 2,
+    totalScore: 5.5,
+    editions: {
+      tr: [
+        { name: "Standard", priceRUB: 3200 },
+      ],
+      ua: [
+        { name: "Standard", priceRUB: 2950 },
+      ],
+    },
+  },
   {
     id: "invincible-vs",
     title: "Invincible VS",
@@ -87,27 +108,6 @@ export const hotReleases: HotRelease[] = [
       ],
       ua: [
         { name: "Standard", priceRUB: 4700 },
-      ],
-    },
-  },
-  {
-    id: "magin-the-rat-project-stories",
-    title: "Magin: The Rat Project Stories",
-    slug: "magin-the-rat-project-stories",
-    description: "Deck-builder от Daedalic. Эмоции и карты",
-    releaseDate: "29 апреля 2026",
-    metacritic: 74,
-    genre: "Платформер",
-    platforms: ["PS5"],
-    cover: "https://image.api.playstation.com/vulcan/ap/rnd/202602/1809/ac344c7cdb7f1f6130a0048033a1686c9e671c0040f8a5c7.png",
-    hypeScore: 2,
-    totalScore: 5.3,
-    editions: {
-      tr: [
-        { name: "Standard", priceRUB: 2400 },
-      ],
-      ua: [
-        { name: "Standard", priceRUB: 2400 },
       ],
     },
   },
