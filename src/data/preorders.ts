@@ -1,5 +1,5 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-05-04T12:04:43.364Z
+// Обновлено: 2026-05-04T21:05:10.491Z
 // Предзаказов: 25
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
@@ -288,7 +288,7 @@ export const preorderData: PreorderGame[] = [
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202603/1215/866aea007130d2610c97731cd33f6c725181924cbc8154dd.jpg",
     releaseDate: "2026-07-08",
     genre: "Приключения",
-    description: "The iconic solo pirate adventure returns. Sail the Caribbean",
+    description: "",
     editions: {
       TR: [
         { name: "Standard", clientPrice: 4600 },
