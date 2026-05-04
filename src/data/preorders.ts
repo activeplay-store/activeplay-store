@@ -1,5 +1,5 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-05-02T12:04:09.759Z
+// Обновлено: 2026-05-04T06:04:59.211Z
 // Предзаказов: 25
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
@@ -249,7 +249,7 @@ export const preorderData: PreorderGame[] = [
     platforms: ["PS5"],
     coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202601/1912/b5a499582e76829925ef74ec1b9b11b7068c93267dfb429b.jpg",
     releaseDate: "2026-06-17",
-    genre: "Приключения",
+    genre: "",
     description: "HD-2D RPG от Square Enix. В стиле Zelda",
     editions: {
       TR: [
