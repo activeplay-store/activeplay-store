@@ -1,5 +1,5 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-05-05T00:04:10.214Z
+// Обновлено: 2026-05-05T21:04:31.188Z
 // Предзаказов: 25
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
@@ -23,23 +23,6 @@ export interface PreorderGame {
 }
 
 export const preorderData: PreorderGame[] = [
-  {
-    id: "nitro-gen-omega",
-    name: "NITRO GEN OMEGA",
-    platforms: ["PS5"],
-    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202604/0807/507f1267c6b33c410dee46185e9ae09fd59f6dc79920a64c.png",
-    releaseDate: "2026-05-11",
-    genre: "Стратегия",
-    description: "In this hybrid RPG/idol simulation, five idols wield Sound W",
-    editions: {
-      TR: [
-        { name: "Standard", clientPrice: 3250 },
-      ],
-      UA: [
-        { name: "Standard", clientPrice: 2950 },
-      ],
-    },
-  },
   {
     id: "directive-8020",
     name: "Directive 8020",
@@ -457,6 +440,23 @@ export const preorderData: PreorderGame[] = [
       TR: [
         { name: "Standard", clientPrice: 2400 },
         { name: "Deluxe", clientPrice: 4000 },
+      ],
+    },
+  },
+  {
+    id: "nitro-gen-omega",
+    name: "NITRO GEN OMEGA",
+    platforms: ["PS5"],
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202604/0807/507f1267c6b33c410dee46185e9ae09fd59f6dc79920a64c.png",
+    releaseDate: null,
+    genre: "Стратегия",
+    description: "In this hybrid RPG/idol simulation, five idols wield Sound W",
+    editions: {
+      TR: [
+        { name: "Standard", clientPrice: 3250 },
+      ],
+      UA: [
+        { name: "Standard", clientPrice: 2950 },
       ],
     },
   },
