@@ -259,27 +259,31 @@ async function checkAnnouncements() {
 
 async function checkCatalogRelease() {
   const today = getTodayMoscow();
+  const isEssentialReleaseDay = PS_PLUS_CALENDAR.essential.release.includes(today);
+  const isExtraReleaseDay = PS_PLUS_CALENDAR.extra.release.includes(today);
 
-  if (PS_PLUS_CALENDAR.essential.release.includes(today)) {
-    console.log('[Каталог] Сегодня релиз Essential — парсим...');
-    try {
-      const result = await catalogMonitor.checkEssential();
-      if (!result.changed) console.log('[Каталог] Essential — пока без изменений, повтор в 22:00');
-    } catch (err) {
-      console.error('[Каталог] Essential ошибка:', err.message);
+  console.log(isEssentialReleaseDay
+    ? '[Каталог] Сегодня релиз Essential — парсим...'
+    : '[Каталог] Ежедневная проверка Essential...');
+  try {
+    const result = await catalogMonitor.checkEssential();
+    if (isEssentialReleaseDay && !result.changed) {
+      console.log('[Каталог] Essential — пока без изменений, повтор в 22:00');
     }
+  } catch (err) {
+    console.error('[Каталог] Essential ошибка:', err.message);
   }
 
-  if (PS_PLUS_CALENDAR.extra.release.includes(today)) {
-    console.log('[Каталог] Сегодня релиз Extra/Deluxe — парсим...');
-    try {
-      const result = await catalogMonitor.checkAllExtra();
-      if (!result.extra?.changed && !result.classics?.changed) {
-        console.log('[Каталог] Extra/Deluxe — пока без изменений, повтор в 22:00');
-      }
-    } catch (err) {
-      console.error('[Каталог] Extra/Deluxe ошибка:', err.message);
+  console.log(isExtraReleaseDay
+    ? '[Каталог] Сегодня релиз Extra/Deluxe — парсим...'
+    : '[Каталог] Ежедневная проверка Extra/Deluxe/Classics...');
+  try {
+    const result = await catalogMonitor.checkAllExtra();
+    if (isExtraReleaseDay && !result.extra?.changed && !result.classics?.changed) {
+      console.log('[Каталог] Extra/Deluxe — пока без изменений, повтор в 22:00');
     }
+  } catch (err) {
+    console.error('[Каталог] Extra/Deluxe ошибка:', err.message);
   }
 }
 
