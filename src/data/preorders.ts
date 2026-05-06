@@ -1,6 +1,6 @@
 // Автоматически сгенерировано AI-агентом ActivePlay
-// Обновлено: 2026-05-06T00:04:13.090Z
-// Предзаказов: 25
+// Обновлено: 2026-05-06T06:04:32.526Z
+// Предзаказов: 26
 // НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ — файл перезаписывается агентом
 
 export interface PreorderEdition {
@@ -72,6 +72,23 @@ export const preorderData: PreorderGame[] = [
       ],
       UA: [
         { name: "Standard", clientPrice: 5000 },
+      ],
+    },
+  },
+  {
+    id: "coffee-talk-tokyo",
+    name: "Coffee Talk Tokyo",
+    platforms: ["PS5"],
+    coverUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202506/1703/f8b630d92852eada4dec547810b8e94602e46d40d0945ce0.png",
+    releaseDate: "2026-05-20",
+    genre: "Казуальная",
+    description: "Coffee Talk is a game about listening to people’s problems a",
+    editions: {
+      TR: [
+        { name: "Standard", clientPrice: 1950 },
+      ],
+      UA: [
+        { name: "Standard", clientPrice: 1850 },
       ],
     },
   },
